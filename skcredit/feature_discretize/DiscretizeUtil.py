@@ -1,0 +1,203 @@
+# coding:utf-8
+
+import gc
+import numpy as np
+import pandas as pd
+from skcredit.feature_discretize.DiscretizeMethod import chi_merge, tree_split
+np.random.seed(7)
+pd.set_option("max_row", None)
+pd.set_option("max_columns", None)
+
+
+def calc_table(X, col, col_type):
+    """
+    :param X:
+    :param col:
+    :param col_type:
+    :return:
+    """
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    columns = ["Lower", "Upper", "CntRec", "CntGood", "CntBad", "GoodRate", "BadRate", "WoE", "IV"]
+    if col_type == "numeric":
+        lower_bin = x.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
+        upper_bin = x.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
+        cnt_rec = x.groupby(col + "_bin")["target"].agg(len).to_frame("CntRec").reset_index(drop=True)
+        cnt_bad = x.groupby(col + "_bin")["target"].agg(sum).to_frame("CntBad").reset_index(drop=True)
+        table = pd.concat([lower_bin, upper_bin, cnt_rec, cnt_bad], axis=1)
+        table["CntGood"] = table["CntRec"] - table["CntBad"]
+
+        table["CntBad"] = table["CntBad"].replace({0: 0.5})
+        table["CntGood"] = table["CntGood"].replace({0: 0.5})
+
+        table["BadRate"] = table["CntBad"] / table["CntBad"].sum()
+        table["GoodRate"] = table["CntGood"] / table["CntGood"].sum()
+
+        table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
+        table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
+        table = table[columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
+
+        del lower_bin, upper_bin, cnt_rec, cnt_bad
+        gc.collect()
+    else:
+        cnt_rec = x.groupby(col)["target"].agg(len).to_frame("CntRec")
+        cnt_bad = x.groupby(col)["target"].agg(sum).to_frame("CntBad")
+        table = pd.concat([cnt_rec, cnt_bad], axis=1)
+        table["CntGood"] = table["CntRec"] - table["CntBad"]
+
+        table["CntBad"] = table["CntBad"].replace({0: 0.5})
+        table["CntGood"] = table["CntGood"].replace({0: 0.5})
+
+        table["BadRate"] = table["CntBad"] / table["CntBad"].sum()
+        table["GoodRate"] = table["CntGood"] / table["CntGood"].sum()
+
+        table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
+        table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
+        table = table[columns].reset_index(drop=False)
+
+        del cnt_rec, cnt_bad
+        gc.collect()
+
+    return table
+
+
+def merge_num_table(X, col):
+    """
+    :param X:
+    :param col:
+    :return:
+    """
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    x_non = x.loc[x[col] != -9999, :].copy(deep=True)  # non missing data
+    x_mis = x.loc[x[col] == -9999, :].copy(deep=True)  # missing data
+
+    group_list = None  # 保留 chi merge 中间结果
+    chi_table, tree_table = [None for _ in range(2)]
+
+    # chi merge
+    for max_bins in np.arange(10, 1, -1):
+        if max_bins == 10:
+            x_non[col + "_bin"], group_list = chi_merge(
+                x_non, col, max_bins=max_bins, min_samples_bins=0.05)
+            x_mis[col + "_bin"] = -9999
+        else:
+            x_non[col + "_bin"], group_list = chi_merge(
+                x_non, col, max_bins=max_bins, min_samples_bins=0.05, group_list=group_list)
+            x_mis[col + "_bin"] = -9999
+
+        non_table = calc_table(x_non, col, "numeric")
+        if non_table["WoE"].is_monotonic_increasing or non_table["WoE"].is_monotonic_decreasing:
+            if x_mis.empty is False:  # 存在缺失值
+                mis_table = calc_table(x_mis, col, "numeric")
+                chi_table = pd.concat([non_table, mis_table]).reset_index(drop=True)
+                chi_table.loc[0, "Lower"], chi_table.loc[chi_table.shape[0] - 2, "Upper"] = -np.inf, np.inf
+            else:  # 不存在缺失值
+                chi_table = non_table
+                chi_table.loc[0, "Lower"], chi_table.loc[chi_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
+
+            break
+        else:
+            continue
+
+    # tree split
+    for min_samples_bins in np.arange(0.05, 0.55, 0.025):
+        x_non[col + "_bin"] = tree_split(x_non, col, min_samples_bins=min_samples_bins)
+        x_mis[col + "_bin"] = -9999
+
+        non_table = calc_table(x_non, col, "numeric")
+        if non_table["WoE"].is_monotonic_increasing or non_table["WoE"].is_monotonic_decreasing:
+            if x_mis.empty is False:  # 存在缺失值
+                mis_table = calc_table(x_mis, col, "numeric")
+                tree_table = pd.concat([non_table, mis_table]).reset_index(drop=True)
+                tree_table.loc[0, "Lower"], tree_table.loc[tree_table.shape[0] - 2, "Upper"] = -np.inf, np.inf
+            else:  # 不存在缺失值
+                tree_table = non_table
+                tree_table.loc[0, "Lower"], tree_table.loc[tree_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
+
+            break
+        else:
+            continue
+
+    table = chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
+
+    return table
+
+
+def merge_cat_table(X, col):
+    """
+        :param X:
+        :param col:
+        :return:
+        """
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    table = calc_table(x, col, "categorical")
+    gc.collect()
+
+    mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
+    non_table = (table.loc[table[col] != "missing", :]
+                 .sort_values(by="WoE", ascending=True)
+                 .reset_index(drop=True)
+                 .copy(deep=True))
+
+    merge_flag = non_table["WoE"].diff().min()
+    while merge_flag <= 0.2:
+        idx = list(non_table["WoE"].diff()).index(merge_flag)
+
+        x = x.replace({non_table.loc[idx - 1, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
+        x = x.replace({non_table.loc[idx, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
+
+        table = calc_table(x, col, "categorical")
+        mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
+        non_table = (table.loc[table[col] != "missing", :]
+                     .sort_values(by="WoE", ascending=True)
+                     .reset_index(drop=True)
+                     .copy(deep=True))
+        merge_flag = non_table["WoE"].diff().min()
+    table = pd.concat([non_table, mis_table]).reset_index(drop=True)
+
+    return table
+
+
+def replace_num_woe(x, upper, woe):
+    num = len(upper)
+
+    if x == -9999.0:
+        return woe[-1]
+    elif x <= upper[0]:
+        return woe[0]
+    else:
+        for i in range(num - 1):
+            if upper[i] < x <= upper[i + 1]:
+                return woe[i + 1]
+
+
+def replace_cat_woe(x, categories, woe):
+    categories_woe = dict()
+
+    for i, j in zip(categories, woe):
+        for k in i.split(", "):
+            categories_woe[k] = j
+
+    for i, j in categories_woe.items():
+        if x == i:
+            return j
+
+
+if __name__ == "__main__":
+    train = pd.read_csv("D:\\Work\\Data\\WeCash\\train.csv", encoding="GBK")
+    # merge_num_table(
+    #     train[["user_gray.contacts_number_statistic.pct_black_ratio", "target"]],
+    #     "user_gray.contacts_number_statistic.pct_black_ratio"
+    # )
+    merge_num_table(
+        train[["user_gray.contacts_rfm.call_cnt_be_all", "target"]].fillna(-9999),
+        "user_gray.contacts_rfm.call_cnt_be_all"
+    )
