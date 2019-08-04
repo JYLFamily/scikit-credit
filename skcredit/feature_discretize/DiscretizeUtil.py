@@ -192,7 +192,7 @@ def replace_cat_woe(x, categories, woe):
 
 
 if __name__ == "__main__":
-    train = pd.read_csv("D:\\Work\\Data\\WeCash\\train.csv", encoding="GBK")
+    train = pd.read_csv("C:\\Users\\15795\\Desktop\\train.csv", encoding="GBK")
     # merge_num_table(
     #     train[["user_gray.contacts_number_statistic.pct_black_ratio", "target"]],
     #     "user_gray.contacts_number_statistic.pct_black_ratio"
