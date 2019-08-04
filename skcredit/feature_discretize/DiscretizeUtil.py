@@ -20,24 +20,51 @@ def calc_table(X, col, col_type):
     del X
     gc.collect()
 
+    x_non = x.loc[x[col] != -9999, :].copy(deep=True)
+    x_mis = x.loc[x[col] == -9999, :].copy(deep=True)
+
     columns = ["Lower", "Upper", "CntRec", "CntGood", "CntBad", "GoodRate", "BadRate", "WoE", "IV"]
     if col_type == "numeric":
-        lower_bin = x.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
-        upper_bin = x.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
-        cnt_rec = x.groupby(col + "_bin")["target"].agg(len).to_frame("CntRec").reset_index(drop=True)
-        cnt_bad = x.groupby(col + "_bin")["target"].agg(sum).to_frame("CntBad").reset_index(drop=True)
-        table = pd.concat([lower_bin, upper_bin, cnt_rec, cnt_bad], axis=1)
-        table["CntGood"] = table["CntRec"] - table["CntBad"]
+        lower_bin = x_non.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
+        upper_bin = x_non.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
+        cnt_rec = x_non.groupby(col + "_bin")["target"].agg(len).to_frame("CntRec").reset_index(drop=True)
+        cnt_bad = x_non.groupby(col + "_bin")["target"].agg(sum).to_frame("CntBad").reset_index(drop=True)
+        non_table = pd.concat([lower_bin, upper_bin, cnt_rec, cnt_bad], axis=1)
+        non_table["CntGood"] = non_table["CntRec"] - non_table["CntBad"]
 
-        table["CntBad"] = table["CntBad"].replace({0: 0.5})
-        table["CntGood"] = table["CntGood"].replace({0: 0.5})
+        non_table["CntBad"] = non_table["CntBad"].replace({0: 0.5})
+        non_table["CntGood"] = non_table["CntGood"].replace({0: 0.5})
 
-        table["BadRate"] = table["CntBad"] / table["CntBad"].sum()
-        table["GoodRate"] = table["CntGood"] / table["CntGood"].sum()
+        non_table["BadRate"] = non_table["CntBad"] / non_table["CntBad"].sum()
+        non_table["GoodRate"] = non_table["CntGood"] / non_table["CntGood"].sum()
 
-        table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
-        table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
-        table = table[columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
+        non_table["WoE"] = np.log(non_table["GoodRate"] / non_table["BadRate"])
+        non_table["IV"] = (non_table["GoodRate"] - non_table["BadRate"]) * non_table["WoE"]
+        non_table = non_table[columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
+
+        if x_mis.empty is False:
+            lower_bin = x_mis.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
+            upper_bin = x_mis.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
+            cnt_rec = x_mis.groupby(col + "_bin")["target"].agg(len).to_frame("CntRec").reset_index(drop=True)
+            cnt_bad = x_mis.groupby(col + "_bin")["target"].agg(sum).to_frame("CntBad").reset_index(drop=True)
+            mis_table = pd.concat([lower_bin, upper_bin, cnt_rec, cnt_bad], axis=1)
+            mis_table["CntGood"] = mis_table["CntRec"] - mis_table["CntBad"]
+
+            mis_table["CntBad"] = mis_table["CntBad"].replace({0: 0.5})
+            mis_table["CntGood"] = mis_table["CntGood"].replace({0: 0.5})
+
+            mis_table["BadRate"] = mis_table["CntBad"] / (non_table["CntBad"].sum() + mis_table["CntBad"].sum())
+            mis_table["GoodRate"] = mis_table["CntGood"] / (non_table["CntGood"].sum() + mis_table["CntGood"].sum())
+
+            mis_table["WoE"] = np.log(mis_table["GoodRate"] / mis_table["BadRate"])
+            mis_table["IV"] = (mis_table["GoodRate"] - mis_table["BadRate"]) * mis_table["WoE"]
+
+            table = pd.concat([non_table, mis_table], axis=0, sort=False)
+            table.loc[0, "Lower"], table.loc[table.shape[0] - 2, "Upper"] = -np.inf, np.inf
+            print(table)
+        else:
+            table = non_table
+            table.loc[0, "Lower"], table.loc[table.shape[0] - 1, "Upper"] = -np.inf, np.inf
 
         del lower_bin, upper_bin, cnt_rec, cnt_bad
         gc.collect()
@@ -55,7 +82,7 @@ def calc_table(X, col, col_type):
 
         table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
         table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
-        table = table[columns].reset_index(drop=False)
+        table = table[columns].reset_index(drop=True)
 
         del cnt_rec, cnt_bad
         gc.collect()
@@ -73,8 +100,8 @@ def merge_num_table(X, col):
     del X
     gc.collect()
 
-    x_non = x.loc[x[col] != -9999, :].copy(deep=True)  # non missing data
-    x_mis = x.loc[x[col] == -9999, :].copy(deep=True)  # missing data
+    x_non = x.loc[x[col] != -9999, :].copy(deep=True)
+    x_mis = x.loc[x[col] == -9999, :].copy(deep=True)
 
     group_list = None  # 保留 chi merge 中间结果
     chi_table, tree_table = [None for _ in range(2)]
@@ -82,24 +109,16 @@ def merge_num_table(X, col):
     # chi merge
     for max_bins in np.arange(10, 1, -1):
         if max_bins == 10:
-            x_non[col + "_bin"], group_list = chi_merge(
-                x_non, col, max_bins=max_bins, min_samples_bins=0.05)
+            x_non[col + "_bin"], group_list = chi_merge(x_non, col, max_bins=max_bins, min_samples_bins=0.05)
             x_mis[col + "_bin"] = -9999
         else:
             x_non[col + "_bin"], group_list = chi_merge(
                 x_non, col, max_bins=max_bins, min_samples_bins=0.05, group_list=group_list)
             x_mis[col + "_bin"] = -9999
+        x = pd.concat([x_non, x_mis], axis=0, sort=False)
 
-        non_table = calc_table(x_non, col, "numeric")
-        if non_table["WoE"].is_monotonic_increasing or non_table["WoE"].is_monotonic_decreasing:
-            if x_mis.empty is False:  # 存在缺失值
-                mis_table = calc_table(x_mis, col, "numeric")
-                chi_table = pd.concat([non_table, mis_table]).reset_index(drop=True)
-                chi_table.loc[0, "Lower"], chi_table.loc[chi_table.shape[0] - 2, "Upper"] = -np.inf, np.inf
-            else:  # 不存在缺失值
-                chi_table = non_table
-                chi_table.loc[0, "Lower"], chi_table.loc[chi_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
-
+        chi_table = calc_table(x, col, "numeric")
+        if chi_table["WoE"][:-1].is_monotonic_increasing or chi_table["WoE"][:-1].is_monotonic_decreasing:
             break
         else:
             continue
@@ -108,21 +127,15 @@ def merge_num_table(X, col):
     for min_samples_bins in np.arange(0.05, 0.55, 0.025):
         x_non[col + "_bin"] = tree_split(x_non, col, min_samples_bins=min_samples_bins)
         x_mis[col + "_bin"] = -9999
+        x = pd.concat([x_non, x_mis], axis=0, sort=False)
 
-        non_table = calc_table(x_non, col, "numeric")
-        if non_table["WoE"].is_monotonic_increasing or non_table["WoE"].is_monotonic_decreasing:
-            if x_mis.empty is False:  # 存在缺失值
-                mis_table = calc_table(x_mis, col, "numeric")
-                tree_table = pd.concat([non_table, mis_table]).reset_index(drop=True)
-                tree_table.loc[0, "Lower"], tree_table.loc[tree_table.shape[0] - 2, "Upper"] = -np.inf, np.inf
-            else:  # 不存在缺失值
-                tree_table = non_table
-                tree_table.loc[0, "Lower"], tree_table.loc[tree_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
-
+        tree_table = calc_table(x, col, "numeric")
+        if tree_table["WoE"][:-1].is_monotonic_increasing or tree_table["WoE"][:-1].is_monotonic_decreasing:
             break
         else:
             continue
-
+    print(chi_table)
+    print(tree_table)
     table = chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
     return table
