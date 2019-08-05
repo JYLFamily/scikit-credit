@@ -4,7 +4,6 @@ import gc
 import numpy as np
 import pandas as pd
 from operator import *
-from scipy.stats import chi2_contingency
 from sklearn.tree import DecisionTreeClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -16,7 +15,18 @@ def chisq(X):
     del X
     gc.collect()
 
-    chi2, _, _, _ = chi2_contingency(x)
+    r = [x.iloc[0, :].sum(), x.iloc[1, :].sum()]
+    c = [x.iloc[:, 0].sum(), x.iloc[:, 1].sum()]
+    n = x.to_numpy().sum()
+    chi2 = 0.0
+
+    for row in np.arange(2):
+        for col in np.arange(2):
+            expect = r[row] * c[col] / n
+            actual = x.loc[row, col]
+            expect = 0.5 if expect < 0.5 else expect
+            chi2 += pow((actual - expect), 2) / float(expect)
+
     return chi2
 
 
@@ -49,9 +59,9 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
             # 列联表
             observed = pd.DataFrame(np.vstack((
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_list.append(chisq(observed))
 
@@ -72,17 +82,17 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         else:  # 中间箱
             observed_after = pd.DataFrame(np.vstack((   # 后一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_after = chisq(observed_after)
 
             observed_before = pd.DataFrame(np.vstack((  # 前一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[sub(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_before = chisq(observed_before)
 
@@ -107,17 +117,17 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         else:  # 中间箱
             observed_after = pd.DataFrame(np.vstack((   # 后一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_after = chisq(observed_after)
 
             observed_before = pd.DataFrame(np.vstack((  # 前一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[sub(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_before = chisq(observed_before)
 
@@ -142,17 +152,17 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         else:  # 中间箱
             observed_after = pd.DataFrame(np.vstack((   # 后一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_after = chisq(observed_after)
 
             observed_before = pd.DataFrame(np.vstack((  # 前一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True),
+                    axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[sub(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=1, keepdims=True)
+                    axis=0, keepdims=True)
             )))
             chisq_before = chisq(observed_before)
 
@@ -176,7 +186,3 @@ def tree_split(X, col, min_samples_bins=0.05):
     clf.fit(x[[col]], x["target"])
 
     return clf.predict_proba(x[[col]])[:, 1].tolist()
-
-
-if __name__ == "__main__":
-    pass
