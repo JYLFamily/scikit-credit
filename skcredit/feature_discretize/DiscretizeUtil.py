@@ -41,6 +41,7 @@ def calc_table(X, col, col_type):
         non_table["WoE"] = np.log(non_table["GoodRate"] / non_table["BadRate"])
         non_table["IV"] = (non_table["GoodRate"] - non_table["BadRate"]) * non_table["WoE"]
         non_table = non_table[columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
+        non_table.loc[0, "Lower"], non_table.loc[non_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
 
         if x_mis.empty is False:
             lower_bin = x_mis.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
@@ -58,13 +59,9 @@ def calc_table(X, col, col_type):
 
             mis_table["WoE"] = np.log(mis_table["GoodRate"] / mis_table["BadRate"])
             mis_table["IV"] = (mis_table["GoodRate"] - mis_table["BadRate"]) * mis_table["WoE"]
-
-            table = pd.concat([non_table, mis_table], axis=0, sort=False)
-            table.loc[0, "Lower"], table.loc[table.shape[0] - 2, "Upper"] = -np.inf, np.inf
-            print(table)
+            table = pd.concat([non_table, mis_table[non_table.columns]])
         else:
             table = non_table
-            table.loc[0, "Lower"], table.loc[table.shape[0] - 1, "Upper"] = -np.inf, np.inf
 
         del lower_bin, upper_bin, cnt_rec, cnt_bad
         gc.collect()
@@ -82,12 +79,11 @@ def calc_table(X, col, col_type):
 
         table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
         table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
-        table = table[columns].reset_index(drop=True)
 
         del cnt_rec, cnt_bad
         gc.collect()
 
-    return table
+    return table[columns].reset_index(drop=True)
 
 
 def merge_num_table(X, col):
@@ -115,10 +111,11 @@ def merge_num_table(X, col):
             x_non[col + "_bin"], group_list = chi_merge(
                 x_non, col, max_bins=max_bins, min_samples_bins=0.05, group_list=group_list)
             x_mis[col + "_bin"] = -9999
-        x = pd.concat([x_non, x_mis], axis=0, sort=False)
+        x = pd.concat([x_non, x_mis[x_non.columns]])
 
         chi_table = calc_table(x, col, "numeric")
-        if chi_table["WoE"][:-1].is_monotonic_increasing or chi_table["WoE"][:-1].is_monotonic_decreasing:
+        if (chi_table.loc[chi_table["Upper"] != -9999, "WoE"].is_monotonic_increasing or
+                chi_table.loc[chi_table["Upper"] != -9999, "WoE"].is_monotonic_decreasing):
             break
         else:
             continue
@@ -127,18 +124,18 @@ def merge_num_table(X, col):
     for min_samples_bins in np.arange(0.05, 0.55, 0.025):
         x_non[col + "_bin"] = tree_split(x_non, col, min_samples_bins=min_samples_bins)
         x_mis[col + "_bin"] = -9999
-        x = pd.concat([x_non, x_mis], axis=0, sort=False)
+        x = pd.concat([x_non, x_mis[x_non.columns]])
 
         tree_table = calc_table(x, col, "numeric")
-        if tree_table["WoE"][:-1].is_monotonic_increasing or tree_table["WoE"][:-1].is_monotonic_decreasing:
+        if (tree_table.loc[tree_table["Upper"] != -9999, "WoE"].is_monotonic_increasing or
+                tree_table.loc[tree_table["Upper"] != -9999, "WoE"].is_monotonic_decreasing):
             break
         else:
             continue
     print(chi_table)
     print(tree_table)
-    table = chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
-    return table
+    return chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
 
 def merge_cat_table(X, col):
@@ -202,15 +199,3 @@ def replace_cat_woe(x, categories, woe):
     for i, j in categories_woe.items():
         if x == i:
             return j
-
-
-if __name__ == "__main__":
-    train = pd.read_csv("C:\\Users\\15795\\Desktop\\train.csv", encoding="GBK")
-    # merge_num_table(
-    #     train[["user_gray.contacts_number_statistic.pct_black_ratio", "target"]],
-    #     "user_gray.contacts_number_statistic.pct_black_ratio"
-    # )
-    merge_num_table(
-        train[["user_gray.contacts_rfm.call_cnt_be_all", "target"]].fillna(-9999),
-        "user_gray.contacts_rfm.call_cnt_be_all"
-    )
