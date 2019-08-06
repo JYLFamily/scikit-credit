@@ -13,35 +13,35 @@ np.random.seed(7)
 plt.style.use("ggplot")
 
 
-def save_table(binning, path):
+def save_table(discretize, path):
     """
-    :param binning:
+    :param discretize:
     :param path:
     :return:
 
-    >>> save_table(binning, path)
+    >>> save_table(discretize, path)
     """
     table = dict()
-    table.update(binning.num_table_)
-    table.update(binning.cat_table_)
+    table.update(discretize.num_table_)
+    table.update(discretize.cat_table_)
 
     with pd.ExcelWriter(Path(path) / "table.xlsx") as writer:
         for feature, table in table.items():
             table.to_excel(writer, sheet_name=feature[-30:], index=False)
 
 
-def plot_importance(binning):
+def plot_importance(discretize):
     """
-    :param binning:
+    :param discretize:
     :return:
 
-    >>> plot_importance(binning)
+    >>> plot_importance(discretize)
     >>> plt.show()
     """
 
     table = pd.DataFrame({
-        "feature": list(binning.information_values_.keys()),
-        "information value": list(binning.information_values_.values())
+        "feature": list(discretize.information_values_.keys()),
+        "information value": list(discretize.information_values_.values())
     })
     fig, ax = plt.subplots()
     ax = table.plot(
