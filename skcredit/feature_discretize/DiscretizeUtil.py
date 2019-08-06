@@ -23,7 +23,8 @@ def calc_table(X, col, col_type):
     x_non = x.loc[x[col] != -9999, :].copy(deep=True)
     x_mis = x.loc[x[col] == -9999, :].copy(deep=True)
 
-    columns = ["Lower", "Upper", "CntRec", "CntGood", "CntBad", "GoodRate", "BadRate", "WoE", "IV"]
+    cat_columns = ["CntRec", "CntGood", "CntBad", "GoodRate", "BadRate", "WoE", "IV"]
+    num_columns = ["Lower", "Upper", "CntRec", "CntGood", "CntBad", "GoodRate", "BadRate", "WoE", "IV"]
     if col_type == "numeric":
         lower_bin = x_non.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
         upper_bin = x_non.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
@@ -40,7 +41,7 @@ def calc_table(X, col, col_type):
 
         non_table["WoE"] = np.log(non_table["GoodRate"] / non_table["BadRate"])
         non_table["IV"] = (non_table["GoodRate"] - non_table["BadRate"]) * non_table["WoE"]
-        non_table = non_table[columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
+        non_table = non_table[num_columns].sort_values(by="Lower", ascending=True).reset_index(drop=True)
         non_table.loc[0, "Lower"], non_table.loc[non_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
 
         if x_mis.empty is False:
@@ -79,11 +80,12 @@ def calc_table(X, col, col_type):
 
         table["WoE"] = np.log(table["GoodRate"] / table["BadRate"])
         table["IV"] = (table["GoodRate"] - table["BadRate"]) * table["WoE"]
+        table = table[cat_columns].reset_index(drop=False)
 
         del cnt_rec, cnt_bad
         gc.collect()
 
-    return table[columns].reset_index(drop=True)
+    return table
 
 
 def merge_num_table(X, col):
@@ -132,8 +134,6 @@ def merge_num_table(X, col):
             break
         else:
             continue
-    print(chi_table)
-    print(tree_table)
 
     return chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
