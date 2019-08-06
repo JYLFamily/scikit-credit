@@ -3,7 +3,7 @@
 import os
 import numpy as np
 import pandas as pd
-from skcredit.feature_discretize.Discretize import save_table, Discretize
+from skcredit.feature_discretize.Discretize import Discretize
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 np.random.seed(7)
