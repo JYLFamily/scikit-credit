@@ -22,7 +22,7 @@ def chisq(X):
 
     for row in np.arange(2):
         for col in np.arange(2):
-            expect = r[row] * c[col] / n
+            expect = r[row] * c[col] / float(n)
             actual = x.loc[row, col]
             expect = 0.5 if expect < 0.5 else expect
             chi2 += pow((actual - expect), 2) / float(expect)
@@ -39,11 +39,12 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         group_list = kwargs["group_list"]
     else:
         if x[col].nunique() <= 100:
-            group_list = [[value] for value in sorted(x[col].unique().tolist())]
+            group_list = [[value] for value in sorted(x[col].unique())]
         else:
             # 使用分位数上限制代替原始值
-            group_list = [[value] for value in np.quantile(x[col], np.linspace(0.01, 1, 100)).tolist()]
-            x[col] = x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0]).tolist()
+            _, group_list = pd.qcut(x[col], q=100, retbins=True, duplicates="drop")
+            group_list = [[value] for value in group_list]
+    x[col] = x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0])  # 使用分位数上限制代替原始值
 
     # total 样本数, positive 样本数, negative 样本数
     regroup = pd.concat([
