@@ -3,9 +3,10 @@
 import gc
 import numpy as np
 import pandas as pd
-from skcredit.feature_discretize.DiscretizeMethod import chi_merge, tree_split
+from skcredit.feature_discretize.DiscretizeChiMerge import chi_merge
+from skcredit.feature_discretize.DiscretizeTreeSplit import tree_split
 np.random.seed(7)
-pd.set_option("max_row", None)
+pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
@@ -32,9 +33,6 @@ def calc_table(X, col, col_type):
         cnt_bad = x_non.groupby(col + "_bin")["target"].agg(sum).to_frame("CntBad").reset_index(drop=True)
         non_table = pd.concat([lower_bin, upper_bin, cnt_rec, cnt_bad], axis=1)
         non_table["CntGood"] = non_table["CntRec"] - non_table["CntBad"]
-
-        non_table["CntBad"] = non_table["CntBad"].replace({0: 0.5})
-        non_table["CntGood"] = non_table["CntGood"].replace({0: 0.5})
 
         non_table["BadRate"] = non_table["CntBad"] / non_table["CntBad"].sum()
         non_table["GoodRate"] = non_table["CntGood"] / non_table["CntGood"].sum()
@@ -101,7 +99,7 @@ def merge_num_table(X, col):
     x_non = x.loc[x[col] != -9999, :].copy(deep=True)
     x_mis = x.loc[x[col] == -9999, :].copy(deep=True)
 
-    group_list = None  # 保留 chi merge 中间结果
+    group_list = None
     chi_table, tree_table = [None for _ in range(2)]
 
     # chi merge
@@ -123,9 +121,14 @@ def merge_num_table(X, col):
             continue
 
     # tree split
-    for min_samples_bins in np.arange(0.05, 0.55, 0.025):
-        x_non[col + "_bin"] = tree_split(x_non, col, min_samples_bins=min_samples_bins)
-        x_mis[col + "_bin"] = -9999
+    for min_samples_bins in np.arange(0.1, 0.55, 0.05):
+        if min_samples_bins == 0.1:
+            x_non[col + "_bin"], group_list = tree_split(x_non, col, min_samples_bins=min_samples_bins)
+            x_mis[col + "_bin"] = -9999
+        else:
+            x_non[col + "_bin"], group_list = tree_split(
+                x_non, col, min_samples_bins=min_samples_bins, group_list=group_list)
+            x_mis[col + "_bin"] = -9999
         x = pd.concat([x_non, x_mis[x_non.columns]])
 
         tree_table = calc_table(x, col, "numeric")
@@ -140,10 +143,10 @@ def merge_num_table(X, col):
 
 def merge_cat_table(X, col):
     """
-        :param X:
-        :param col:
-        :return:
-        """
+    :param X:
+    :param col:
+    :return:
+    """
     x = X.copy(deep=True)
     del X
     gc.collect()
@@ -199,3 +202,14 @@ def replace_cat_woe(x, categories, woe):
     for i, j in categories_woe.items():
         if x == i:
             return j
+
+
+if __name__ == "__main__":
+    train = pd.read_csv("D:\\Work\\Data\\WeCash\\train_subset.csv", encoding="GBK")
+    train_label = train["target"]
+    train_feature = train.drop(["target"], axis=1)
+    merge_num_table(
+        pd.concat(
+            [train_feature[["user_searched_history_by_day.d_90.cnt_org_cash"]], train_label.to_frame("target")], axis=1),
+        "user_searched_history_by_day.d_90.cnt_org_cash"
+    )
