@@ -4,7 +4,6 @@ import gc
 import numpy as np
 import pandas as pd
 from operator import *
-from sklearn.tree import DecisionTreeClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -38,11 +37,11 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
     if "group_list" in kwargs.keys():
         group_list = kwargs["group_list"]
     else:
-        if x[col].nunique() <= 100:
+        if x[col].nunique() <= 50:
             group_list = [[value] for value in sorted(x[col].unique())]
         else:
             # 使用分位数上限制代替原始值
-            _, group_list = pd.qcut(x[col], q=100, retbins=True, duplicates="drop")
+            _, group_list = pd.qcut(x[col], q=50, retbins=True, duplicates="drop")
             group_list = [[value] for value in group_list]
     x[col] = x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0])  # 使用分位数上限制代替原始值
 
@@ -176,14 +175,3 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         count_list = [regroup.loc[regroup[col].isin(group), "total"].sum() for group in group_list]
 
     return x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0]).tolist(), group_list
-
-
-def tree_split(X, col, min_samples_bins=0.05):
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
-
-    clf = DecisionTreeClassifier(min_samples_leaf=min_samples_bins)
-    clf.fit(x[[col]], x["target"])
-
-    return clf.predict_proba(x[[col]])[:, 1].tolist()
