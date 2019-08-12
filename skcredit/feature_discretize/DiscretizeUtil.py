@@ -202,14 +202,3 @@ def replace_cat_woe(x, categories, woe):
     for i, j in categories_woe.items():
         if x == i:
             return j
-
-
-if __name__ == "__main__":
-    train = pd.read_csv("D:\\Work\\Data\\WeCash\\train_subset.csv", encoding="GBK")
-    train_label = train["target"]
-    train_feature = train.drop(["target"], axis=1)
-    merge_num_table(
-        pd.concat(
-            [train_feature[["user_searched_history_by_day.d_90.cnt_org_cash"]], train_label.to_frame("target")], axis=1),
-        "user_searched_history_by_day.d_90.cnt_org_cash"
-    )
