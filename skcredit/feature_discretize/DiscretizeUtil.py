@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import gc
+import logging
 import numpy as np
 import pandas as pd
 from skcredit.feature_discretize.DiscretizeChiMerge import chi_merge
@@ -8,6 +9,7 @@ from skcredit.feature_discretize.DiscretizeTreeSplit import tree_split
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
+logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
 def calc_table(X, col, col_type):
@@ -103,8 +105,8 @@ def merge_num_table(X, col):
     chi_table, tree_table = [None for _ in range(2)]
 
     # chi merge
-    for max_bins in np.arange(10, 1, -1):
-        if max_bins == 10:
+    for max_bins in np.arange(5, 1, -1):
+        if max_bins == 5:
             x_non[col + "_bin"], group_list = chi_merge(x_non, col, max_bins=max_bins, min_samples_bins=0.05)
             x_mis[col + "_bin"] = -9999
         else:
@@ -119,10 +121,11 @@ def merge_num_table(X, col):
             break
         else:
             continue
+    logging.info(col + " chi merge complete !")
 
     # tree split
-    for min_samples_bins in np.arange(0.1, 0.55, 0.05):
-        if min_samples_bins == 0.1:
+    for min_samples_bins in np.arange(0.2, 0.55, 0.05):
+        if min_samples_bins == 0.2:
             x_non[col + "_bin"], group_list = tree_split(x_non, col, min_samples_bins=min_samples_bins)
             x_mis[col + "_bin"] = -9999
         else:
@@ -137,6 +140,7 @@ def merge_num_table(X, col):
             break
         else:
             continue
+    logging.info(col + " tree split complete !")
 
     return chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
@@ -175,6 +179,7 @@ def merge_cat_table(X, col):
                      .copy(deep=True))
         merge_flag = non_table["WoE"].diff().min()
     table = pd.concat([non_table, mis_table]).reset_index(drop=True)
+    logging.info(col + " complete !")
 
     return table
 
