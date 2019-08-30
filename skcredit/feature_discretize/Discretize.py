@@ -52,16 +52,17 @@ def plot_importance(discretize):
         kind="bar",
         ax=ax
     )
-    ax.hlines(y=0.01, xmin=ax.get_xlim()[0], xmax=ax.get_xlim()[1], linestyles="dashed")
+    ax.hlines(y=0.02, xmin=ax.get_xlim()[0], xmax=ax.get_xlim()[1], linestyles="dashed")
     ax.set_title(label="information value")
 
     return ax
 
 
 class Discretize(BaseEstimator, TransformerMixin):
-    def __init__(self, *, cat_columns, num_columns, threshold=0.01):
+    def __init__(self, *, cat_columns, num_columns, keep_columns, threshold=0.02):
         self.__cat_columns = cat_columns
         self.__num_columns = num_columns
+        self.__keep_columns = keep_columns
         self.__threshold = threshold
 
         self.cat_table_ = dict()
@@ -83,17 +84,20 @@ class Discretize(BaseEstimator, TransformerMixin):
                 self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
                     merge_cat_table, [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in
                                       self.__cat_columns])))
+        self.cat_table_ = {
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__threshold}
 
+        with Pool() as pool:
             if self.__num_columns is not None:
                 x[self.__num_columns] = x[self.__num_columns].fillna(-9999.0)
                 self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
                     merge_num_table, [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in
                                       self.__num_columns])))
+        self.num_table_ = {
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.__threshold}
 
-        self.information_values_.update({
-            col: val["IV"].sum() for col, val in self.cat_table_.items() if val["IV"].sum() > self.__threshold})
-        self.information_values_.update({
-            col: val["IV"].sum() for col, val in self.num_table_.items() if val["IV"].sum() > self.__threshold})
+        self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
+        self.information_values_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
 
         return self
 
@@ -123,7 +127,7 @@ class Discretize(BaseEstimator, TransformerMixin):
                 upper = self.num_table_[col]["Upper"].tolist()
                 x[col] = x[col].apply(lambda element: replace_num_woe(element, upper, woe))
 
-        return x[list(self.information_values_.keys())]
+        return x[list(self.information_values_.keys()) + self.__keep_columns]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)
