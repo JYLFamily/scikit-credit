@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
 from skcredit.util.entropy import information_gain
-
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -107,22 +106,19 @@ class DecisionTreeSplit(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        return [self.__predict_proba(x.loc[idx, :]) for idx in range(x.shape[0])]
+        return x.squeeze().apply(lambda element: self.__predict_proba(element))
 
-    def __predict_proba(self, X, node=None):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
+    def __predict_proba(self, x, node=None):
         if node is None:
             node = self.__root_node
 
         if node.leaf_value is not None:
             return node.leaf_value
 
-        if x.squeeze() <= node.threshold:
+        if x <= node.threshold:
             node = node.left_branch
         else:
             node = node.right_branch
 
         return self.__predict_proba(x, node)
+

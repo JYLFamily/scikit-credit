@@ -1,0 +1,100 @@
+path: E:\Work\QD
+
+dataset:
+  tra: train.csv
+  tes: test.csv
+
+columns:
+  keep: backdate
+  drop: [occupation, company_name]
+  target: target
+
+feature gen:
+  add:
+  sub:
+  mul:
+  div:
+  stats:
+  concat:
+
+feature dis:
+  cat cols: [
+    province,
+    is_midnight,
+    have_car_flag,
+    have_fang_flag,
+    ovd_order_cnt_1m,
+    ovd_order_amt_1m,
+    ovd_order_cnt_3m,
+    ovd_order_amt_3m,
+    ovd_order_cnt_6m,
+    ovd_order_amt_6m,
+    ovd_order_cnt_12m,
+    ovd_order_amt_12m,
+    ovd_order_cnt_3m_m1_status,
+    ovd_order_cnt_6m_m1_status,
+    ovd_order_cnt_12m_m1_status,
+    ovd_order_cnt_12m_m3_status,
+    ovd_order_cnt_12m_m6_status,
+    ovd_order_cnt_2y_m3_status,
+    ovd_order_cnt_2y_m6_status,
+    ovd_order_cnt_5y_m3_status,
+    ovd_order_cnt_5y_m6_status
+  ]
+  num cols: [
+    age,
+    sns_pii,
+    zmscore,
+    avg_frd_zms,
+    my_trd_amt_1y,
+    my_trd_cnt_1y,
+    game_trd_amt_1y,
+    game_trd_cnt_1y,
+    jz_trd_amt_3m,
+    jz_trd_cnt_3m,
+    car_trd_amt_1y,
+    car_trd_cnt_1y,
+    hl_trd_amt_1y,
+    hl_trd_cnt_1y,
+    last_1m_avg_asset_total,
+    last_3m_avg_asset_total,
+    last_6m_avg_asset_total,
+    last_1y_avg_asset_total,
+    fnd_ern_amt_1m,
+    fnd_ern_amt_3m,
+    fnd_ern_amt_6m,
+    fnd_ern_amt_1y,
+    fnd_ern_amt_std,
+    tot_pay_amt_1m,
+    tot_pay_amt_3m,
+    tot_pay_amt_6m,
+    ebill_pay_amt_1m,
+    ebill_pay_amt_3m,
+    ebill_pay_amt_6m,
+    avg_puc_sdm_last_1y,
+    pre_1y_pay_cnt,
+    pre_1y_pay_amount,
+    xfdc_index,
+    auth_fin_last_1m_cnt,
+    auth_fin_last_3m_cnt,
+    auth_fin_last_6m_cnt,
+    credit_pay_amt_1m,
+    credit_pay_amt_3m,
+    credit_pay_amt_6m,
+    credit_pay_amt_1y,
+    credit_pay_months_1y,
+    credit_total_pay_months,
+    credit_duration,
+    positive_biz_cnt_1y,
+    relevant_stability,
+    consume_steady_byxs_1y,
+    use_mobile_2_cnt_1y,
+    mobile_fixed_days,
+    adr_stability_days,
+    activity_area_stability,
+    last_1y_total_active_biz_cnt
+  ]
+
+feature sel:
+
+

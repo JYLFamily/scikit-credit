@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="clean code">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/Script/config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_generate/Generate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TestDiscretize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,10 +23,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py">
+        <entry file="file://$PROJECT_DIR$/demo/Script/config.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="139" selection-start-line="139" selection-end-line="139" />
+            <state>
+              <caret column="14" selection-start-column="14" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/demo/Script/DiscretizeExample.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+              <folding>
+                <element signature="e#19#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="85" selection-start-line="85" selection-end-line="85" />
               <folding>
                 <element signature="e#16#25#0" expanded="true" />
               </folding>
@@ -31,11 +55,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skcredit/feature_generate/Generate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="118" selection-start-line="115" selection-end-line="118" />
+            <state relative-caret-position="2349">
+              <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
+              <folding>
+                <element signature="e#16#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skcredit/feature_select/PSI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-189">
+              <caret line="32" column="92" selection-start-line="32" selection-start-column="92" selection-end-line="32" selection-end-column="92" />
+              <folding>
+                <element signature="e#18#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
               <folding>
                 <element signature="e#16#25#0" expanded="true" />
               </folding>
@@ -54,23 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>chi2</find>
-      <find>Tree object</find>
-      <find>Tree</find>
-      <find>inf</find>
-      <find>False</find>
-      <find>user_gray.contacts_rfm.time_spent_be_applied</find>
-      <find>m_12.cnt_cc</find>
-      <find>cnt_org_cash</find>
-      <find>.m_9.cnt_org</find>
-      <find>user_age</find>
-      <find>contacts_gray_score</find>
-      <find>m_24.pct_cnt_org_cc</find>
-      <find>user_gray.contacts_query.org_cnt_2</find>
-      <find>contacts_query.org_cnt_2</find>
-      <find>call_cnt_to_applied</find>
-      <find>print</find>
-      <find>10</find>
       <find>tolist</find>
       <find>basic</find>
       <find>information_values_</find>
@@ -79,6 +110,28 @@
       <find>verbose</find>
       <find>chunksize</find>
       <find>user_phone_operator</find>
+      <find>sample_weight</find>
+      <find>min_weight_fraction_leaf</find>
+      <find>min_samples_leaf</find>
+      <find>weight</find>
+      <find>user_basic</find>
+      <find>period</find>
+      <find>backdate</find>
+      <find>/</find>
+      <find>div</find>
+      <find>近1月整额消费总笔数</find>
+      <find>近6月保险交易总笔数</find>
+      <find>feature_im</find>
+      <find>综合信用分</find>
+      <find>tree_</find>
+      <find>learning_</find>
+      <find>plot_type</find>
+      <find>approximate_interactions</find>
+      <find>expected_value</find>
+      <find>self.data</find>
+      <find>data_missing</find>
+      <find>model_output</find>
+      <find>predict</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -87,24 +140,44 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/skcredit/feature_select/FeatureSelectUtil.py" />
         <option value="$PROJECT_DIR$/demo/TestMRMR.py" />
         <option value="$PROJECT_DIR$/skcredit/feature_select/MRMR.py" />
         <option value="$PROJECT_DIR$/demo/TestDiscretize.py" />
         <option value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeMethod.py" />
-        <option value="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" />
         <option value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" />
+        <option value="$PROJECT_DIR$/demo/SampleWeight.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeWeightedTreeSplit.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize_weighted/Discretize.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeWeighted.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeTreeSplitWeighted.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeUtilWeighted.py" />
+        <option value="$PROJECT_DIR$/demo/dfa.py" />
+        <option value="$PROJECT_DIR$/demo/PSI.py" />
+        <option value="$PROJECT_DIR$/demo/config.yaml" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize/__init__.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_generate/__init__.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_select/__init__.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_generate/Generate.py" />
         <option value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" />
+        <option value="$PROJECT_DIR$/demo/Script/example.py" />
+        <option value="$PROJECT_DIR$/demo/Script/DiscretizeFCBF.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_select/FCBF.py" />
+        <option value="$PROJECT_DIR$/demo/Script/FcbfExample.py" />
         <option value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" />
+        <option value="$PROJECT_DIR$/skcredit/feature_select/PSI.py" />
+        <option value="$PROJECT_DIR$/demo/Script/config.yaml" />
+        <option value="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="667" />
-    <option name="y" value="318" />
-    <option name="width" value="1364" />
-    <option name="height" value="735" />
+    <option name="x" value="673" />
+    <option name="y" value="199" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -127,19 +200,13 @@
             <path>
               <item name="scikit-credit" type="b2602c69:ProjectViewProjectNode" />
               <item name="scikit-credit" type="462c0819:PsiDirectoryNode" />
-              <item name="skcredit" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+              <item name="Script" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="scikit-credit" type="b2602c69:ProjectViewProjectNode" />
               <item name="scikit-credit" type="462c0819:PsiDirectoryNode" />
               <item name="skcredit" type="462c0819:PsiDirectoryNode" />
-              <item name="feature_discretize" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="scikit-credit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="scikit-credit" type="462c0819:PsiDirectoryNode" />
-              <item name="skcredit" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -149,16 +216,19 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/feature_select" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/feature_discretize_weighted" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_weighted_discretize" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\util" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretize" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
   </component>
@@ -174,8 +244,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DiscretizeUtil">
-    <configuration name="DiscretizeTreeSplit" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.DiscretizeExample">
+    <configuration name="DiscretizeExample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -183,11 +253,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretize" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -196,7 +266,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="DiscretizeUtil" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="FcbfExample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -204,11 +274,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretize" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Script/FcbfExample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,7 +287,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="MRMR" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Generate" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -225,11 +295,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_select" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_generate" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_select/MRMR.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_generate/Generate.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -238,7 +308,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TestDiscretize" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -246,11 +316,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/TestDiscretize.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script\DiscretizeExample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -259,7 +329,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TestMRMR" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="parsers" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -267,11 +337,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
+      <option name="WORKING_DIRECTORY" value="D:/SoftWare/Anaconda3/Lib/site-packages/pandas/io" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/TestMRMR.py" />
+      <option name="SCRIPT_NAME" value="D:/SoftWare/Anaconda3/Lib/site-packages/pandas/io/parsers.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -282,11 +352,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.DiscretizeUtil" />
-        <item itemvalue="Python.DiscretizeTreeSplit" />
-        <item itemvalue="Python.TestDiscretize" />
-        <item itemvalue="Python.TestMRMR" />
-        <item itemvalue="Python.MRMR" />
+        <item itemvalue="Python.DiscretizeExample" />
+        <item itemvalue="Python.FcbfExample" />
+        <item itemvalue="Python.example" />
+        <item itemvalue="Python.parsers" />
+        <item itemvalue="Python.Generate" />
       </list>
     </recent_temporary>
   </component>
@@ -392,7 +462,49 @@
       <option name="project" value="LOCAL" />
       <updated>1565602968846</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="new tree split py">
+      <created>1565603170005</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1565603170005</updated>
+    </task>
+    <task id="LOCAL-00015" summary="clean code">
+      <created>1565603216226</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1565603216226</updated>
+    </task>
+    <task id="LOCAL-00016" summary="use multiprocessing">
+      <created>1565603305147</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1565603305147</updated>
+    </task>
+    <task id="LOCAL-00017" summary="clean code">
+      <created>1565605228015</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1565605228015</updated>
+    </task>
+    <task id="LOCAL-00018" summary="init">
+      <created>1567157583649</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1567157583649</updated>
+    </task>
+    <task id="LOCAL-00019" summary="use psi select feature">
+      <created>1567157756145</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1567157756145</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -431,22 +543,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49683544" visible="true" weight="0.27901787" />
-      <window_info id="Structure" order="1" sideWeight="0.5031645" side_tool="true" weight="0.11160714" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49315068" visible="true" weight="0.15700738" />
+      <window_info id="Structure" order="1" sideWeight="0.5068493" side_tool="true" weight="0.27901787" />
       <window_info id="Favorites" order="2" sideWeight="0.500994" side_tool="true" weight="0.21601686" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" x="11" y="337" width="1898" height="366" id="Run" order="2" sideWeight="0.9299262" weight="0.7652474" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.52819335" />
+      <window_info anchor="bottom" x="11" y="337" width="1898" height="366" id="Run" order="2" sideWeight="0.9293994" weight="0.48995537" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.52790177" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32796317" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32911393" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32796317" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.07007376" side_tool="true" weight="0.63060987" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.8872267" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.07060063" side_tool="true" weight="0.6651786" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.96651787" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -475,251 +587,367 @@
     <MESSAGE value="init feature discretize" />
     <MESSAGE value="accelerate chi merge" />
     <MESSAGE value="update calc chi2 function" />
-    <MESSAGE value="init" />
     <MESSAGE value="add feature discretize demo" />
     <MESSAGE value="update calc table function" />
     <MESSAGE value="update chi merge function" />
-    <MESSAGE value="clean code" />
     <MESSAGE value="calc entropy" />
     <MESSAGE value="init feature select" />
     <MESSAGE value="new chi merge py" />
-    <option name="LAST_COMMIT_MESSAGE" value="new chi merge py" />
+    <MESSAGE value="new tree split py" />
+    <MESSAGE value="use multiprocessing" />
+    <MESSAGE value="clean code" />
+    <MESSAGE value="init" />
+    <MESSAGE value="use psi select feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="use psi select feature" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://E:/ProgramFiles/Anaconda3/Lib/copy.py" />
-    <entry file="file://E:/ProgramFiles/Anaconda3/Lib/site-packages/sklearn/tree/tree.py" />
-    <entry file="file://E:/ProgramFiles/Anaconda3/Lib/site-packages/pandas/core/reshape/concat.py" />
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/reshape/concat.py">
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/arrays/datetimes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+        <state relative-caret-position="86">
+          <caret line="1978" selection-start-line="1978" selection-end-line="1978" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/scipy/stats/contingency.py">
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/linear_model/logistic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="161" column="17" selection-start-line="161" selection-start-column="17" selection-end-line="161" selection-end-column="32" />
+        <state relative-caret-position="276">
+          <caret line="1246" column="37" selection-start-line="1246" selection-start-column="24" selection-end-line="1246" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/IPython/core/interactiveshell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="3048" selection-start-line="3048" selection-end-line="3048" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/SampleWeight.py" />
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeUtilWeighted.py" />
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeWeighted.py" />
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize_weighted/DiscretizeTreeSplitWeighted.py" />
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/~rrays/interval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-120">
+          <caret line="782" column="8" selection-start-line="782" selection-start-column="8" selection-end-line="782" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/groupby/generic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="1187" column="23" selection-start-line="1187" selection-start-column="14" selection-end-line="1187" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1653496950/numpy/core/_multiarray_umath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12">
+          <caret line="4769" column="4" lean-forward="true" selection-start-line="4769" selection-start-column="4" selection-end-line="4769" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="395" column="39" selection-start-line="395" selection-start-column="34" selection-end-line="395" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/generic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="3081" column="11" selection-start-line="3081" selection-start-column="8" selection-end-line="3081" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/dfa.py" />
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/tools/datetimes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="621" column="10" selection-start-line="621" selection-start-column="4" selection-end-line="621" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/PSI.py" />
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/indexing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="1403" selection-start-line="1403" selection-end-line="1403" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/series.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="852" selection-start-line="852" selection-end-line="852" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/operator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="103" column="7" selection-start-line="103" selection-start-column="4" selection-end-line="103" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/numpy/core/tests/test_numeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="2732" column="12" selection-start-line="2732" selection-start-column="12" selection-end-line="2732" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-612">
+          <caret line="1966" column="85" selection-start-line="1966" selection-start-column="77" selection-end-line="1966" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/yaml/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="109" column="22" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/yaml/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/ensemble/forest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="1188" column="24" selection-start-line="1188" selection-start-column="4" selection-end-line="1188" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="54">
-            <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <first_editor relative-caret-position="81">
+            <caret line="3" selection-start-line="3" selection-end-line="3" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/utils/validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="234" selection-start-line="234" selection-end-line="234" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/multipledispatch/__init__.py">
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+          <caret selection-end-line="4" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/concurrent/futures/_base.py">
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_select/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_generate/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/xgboost/sklearn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2295">
+          <caret line="590" column="40" selection-start-line="590" selection-start-column="30" selection-end-line="590" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/lightgbm/sklearn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/plots/dependence.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/plots/force.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2052">
+          <caret line="87" column="9" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/plots/summary.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
-          <caret line="383" selection-start-line="383" selection-end-line="383" />
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/_parallel_backends.py">
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/common.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="520" selection-start-line="520" selection-end-line="520" />
+        <state relative-caret-position="68">
+          <caret line="275" column="28" selection-start-line="275" selection-start-column="4" selection-end-line="275" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/parallel.py">
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="420" column="32" selection-start-line="420" selection-start-column="32" selection-end-line="420" selection-end-column="32" />
+        <state relative-caret-position="135">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/linear_model/logistic.py">
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/shap/explainers/tree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="432" selection-start-line="432" selection-end-line="432" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/multiprocessing/__init__.pyi">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+        <state relative-caret-position="537">
+          <caret line="718" column="59" selection-start-line="718" selection-start-column="59" selection-end-line="718" selection-end-column="65" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/SoftWare/Anaconda3/Lib/multiprocessing/pool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="672" lean-forward="true" selection-start-line="672" selection-end-line="672" />
+        <state relative-caret-position="150">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1653496950/builtins.py">
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="2871" column="8" selection-start-line="2871" selection-start-column="8" selection-end-line="2871" selection-end-column="8" />
+        <state relative-caret-position="398">
+          <caret line="685" lean-forward="true" selection-start-line="685" selection-end-line="685" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py">
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1653496950/sklearn/tree/_tree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="34" column="19" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="19" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/feature_select/MRMR.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="35" column="9" lean-forward="true" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/TestMRMR.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-183">
-          <caret line="264" column="13" selection-start-line="264" selection-start-column="8" selection-end-line="264" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/1653496950/numpy/core/_multiarray_umath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="1436" column="4" selection-start-line="1436" selection-start-column="4" selection-end-line="1436" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/TestDiscretize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="74" column="49" lean-forward="true" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/util/entropy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="39" column="73" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="73" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#16#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/internals/managers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="778" selection-start-line="778" selection-end-line="778" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/series.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="1803" selection-start-line="1803" selection-end-line="1803" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/generic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="976" selection-start-line="976" selection-end-line="976" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/ops/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="1127" selection-start-line="1127" selection-end-line="1127" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="363" selection-start-line="363" selection-end-line="363" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/pandas/core/frame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="2945" selection-start-line="2945" selection-end-line="2945" />
+        <state relative-caret-position="6927">
+          <caret line="874" column="8" selection-start-line="874" selection-start-column="8" selection-end-line="874" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/tree/tree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="346" column="13" selection-start-line="346" selection-start-column="13" selection-end-line="346" selection-end-column="13" />
+        <state relative-caret-position="402">
+          <caret line="832" column="30" selection-start-line="832" selection-start-column="30" selection-end-line="832" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py">
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="139" selection-start-line="139" selection-end-line="139" />
+        <state relative-caret-position="428">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="e#16#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py">
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/site-packages/sklearn/feature_selection/rfe.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="118" selection-start-line="115" selection-end-line="118" />
+        <state relative-caret-position="-5682">
+          <caret line="75" column="12" selection-start-line="75" selection-start-column="4" selection-end-line="75" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_select/FCBF.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
           <folding>
             <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/Script/FcbfExample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="12" column="53" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="53" />
+          <folding>
+            <element signature="e#19#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/SoftWare/Anaconda3/Lib/logging/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-201">
+          <caret line="1831" column="4" selection-start-line="1831" selection-start-column="4" selection-end-line="1831" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1921">
+          <caret line="39" column="25" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="25" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_select/PSI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-189">
+          <caret line="32" column="92" selection-start-line="32" selection-start-column="92" selection-end-line="32" selection-end-column="92" />
+          <folding>
+            <element signature="e#18#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_generate/Generate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2349">
+          <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+          <folding>
+            <element signature="e#16#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/Script/config.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/Script/DiscretizeExample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="14" column="63" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="63" />
+          <folding>
+            <element signature="e#19#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
