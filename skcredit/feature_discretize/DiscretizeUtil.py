@@ -121,7 +121,6 @@ def merge_num_table(X, col):
             break
         else:
             continue
-    logging.info(col + " chi merge complete !")
 
     # tree split
     for min_samples_bins in np.arange(0.2, 0.55, 0.05):
@@ -140,7 +139,8 @@ def merge_num_table(X, col):
             break
         else:
             continue
-    logging.info(col + " tree split complete !")
+
+    logging.info(col + " complete !")
 
     return chi_table if chi_table["IV"].sum() > tree_table["IV"].sum() else tree_table
 
@@ -179,6 +179,7 @@ def merge_cat_table(X, col):
                      .copy(deep=True))
         merge_flag = non_table["WoE"].diff().min()
     table = pd.concat([non_table, mis_table]).reset_index(drop=True)
+
     logging.info(col + " complete !")
 
     return table
