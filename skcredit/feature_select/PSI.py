@@ -12,7 +12,7 @@ pd.set_option("max_columns", None)
 
 class PSI(BaseEstimator, TransformerMixin):
     def __init__(self, *, keep_columns):
-        self.__keep_columns = keep_columns
+        self.__keep_columns = keep_columns  # ["backdate"]
         self.__population_stability_index_x = None
         self.__population_stability_index_y = None
 
@@ -22,7 +22,10 @@ class PSI(BaseEstimator, TransformerMixin):
         gc.collect()
 
         cols = [col for col in x.columns if col not in self.__keep_columns]
+        # pd.to_datetime(dataset["backdate"])
+        # dataset["backdate"].apply(lambda x: x.strftime("%Y%m"))
         tdxs = sorted(x["backdate"].unique().tolist())
+
         self.__population_stability_index_x = [[] for _ in cols]
         self.__population_stability_index_y = [[] for _ in cols]
 
