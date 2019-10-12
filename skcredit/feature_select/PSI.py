@@ -21,10 +21,11 @@ class PSI(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        cols = [col for col in x.columns if col not in self.__keep_columns]
-        # pd.to_datetime(dataset["backdate"])
-        # dataset["backdate"].apply(lambda x: x.strftime("%Y%m"))
-        tdxs = sorted(x["backdate"].unique().tolist())
+        x["backdate"] = pd.to_datetime(x["backdate"])
+        x["backdate"] = x["backdate"].apply(lambda element: element.strftime("%Y%m"))
+
+        cols = x.columns.difference(pd.Index(self.__keep_columns))
+        tdxs = np.sort(x["backdate"].unique().tolist())
 
         self.__population_stability_index_x = [[] for _ in cols]
         self.__population_stability_index_y = [[] for _ in cols]
