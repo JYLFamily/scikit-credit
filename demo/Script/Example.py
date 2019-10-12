@@ -6,6 +6,7 @@ import yaml
 import numpy as np
 import pandas as pd
 from skcredit.feature_discretize.Discretize import Discretize
+from skcredit.feature_select.PSI import PSI
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -32,3 +33,8 @@ if __name__ == "__main__":
     discretize.fit(train_input, train_output)
     train_input = discretize.transform(train_input)
     test_input = discretize.transform(test_input)
+
+    psi = PSI(keep_columns=config["columns"]["keep"])
+    psi.fit(train_input, train_output)
+    train_input = psi.transform(train_input)
+    test_input = psi.transform(test_input)
