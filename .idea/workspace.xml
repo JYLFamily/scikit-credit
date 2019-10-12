@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Script/Example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Script/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Script/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_select/PSI.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_select/PSI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -207,7 +202,7 @@
       <workItem from="1568877189241" duration="146000" />
       <workItem from="1568877482963" duration="187000" />
       <workItem from="1569738101895" duration="1499000" />
-      <workItem from="1570868537900" duration="1637000" />
+      <workItem from="1570868537900" duration="2022000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -356,7 +351,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567652730640</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="clean code">
+      <created>1570873826398</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1570873826398</updated>
+    </task>
+    <task id="LOCAL-00023" summary="init commit">
+      <created>1570873866794</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1570873866794</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -422,11 +431,12 @@
     <MESSAGE value="new chi merge py" />
     <MESSAGE value="new tree split py" />
     <MESSAGE value="use multiprocessing" />
-    <MESSAGE value="clean code" />
     <MESSAGE value="use psi select feature" />
     <MESSAGE value="init" />
     <MESSAGE value="add doc" />
-    <option name="LAST_COMMIT_MESSAGE" value="add doc" />
+    <MESSAGE value="clean code" />
+    <MESSAGE value="init commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
