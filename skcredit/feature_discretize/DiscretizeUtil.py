@@ -105,8 +105,8 @@ def merge_num_table(X, col):
     chi_table, tree_table = [None for _ in range(2)]
 
     # chi merge
-    for max_bins in np.arange(5, 1, -1):
-        if max_bins == 5:
+    for max_bins in np.arange(10, 1, -1):
+        if max_bins == 10:
             x_non[col + "_bin"], group_list = chi_merge(x_non, col, max_bins=max_bins, min_samples_bins=0.05)
             x_mis[col + "_bin"] = -9999
         else:
@@ -123,8 +123,8 @@ def merge_num_table(X, col):
             continue
 
     # tree split
-    for min_samples_bins in np.arange(0.2, 0.55, 0.05):
-        if min_samples_bins == 0.2:
+    for min_samples_bins in np.arange(0.1, 0.55, 0.05):
+        if min_samples_bins == 0.1:
             x_non[col + "_bin"], group_list = tree_split(x_non, col, min_samples_bins=min_samples_bins)
             x_mis[col + "_bin"] = -9999
         else:

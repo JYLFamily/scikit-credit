@@ -80,7 +80,7 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
             group_list[idx] = group_list[idx] + group_list[sub(idx, 1)]
             group_list.remove(group_list[sub(idx, 1)])
         else:  # 中间箱
-            observed_after = pd.DataFrame(np.vstack((   # 后一箱
+            observed_after = pd.DataFrame(np.vstack((  # 后一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
                     axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
@@ -115,7 +115,7 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
             group_list[idx] = group_list[idx] + group_list[sub(idx, 1)]
             group_list.remove(group_list[sub(idx, 1)])
         else:  # 中间箱
-            observed_after = pd.DataFrame(np.vstack((   # 后一箱
+            observed_after = pd.DataFrame(np.vstack((  # 后一箱
                 regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
                     axis=0, keepdims=True),
                 regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
