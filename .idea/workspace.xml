@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="clean code">
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Script/Example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Script/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Script/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_select/PSI.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_select/PSI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,40 +27,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>tolist</find>
-      <find>basic</find>
-      <find>information_values_</find>
-      <find>__threshold</find>
-      <find>merge_num_table</find>
-      <find>verbose</find>
-      <find>chunksize</find>
-      <find>user_phone_operator</find>
-      <find>sample_weight</find>
-      <find>min_weight_fraction_leaf</find>
-      <find>min_samples_leaf</find>
-      <find>weight</find>
-      <find>user_basic</find>
-      <find>period</find>
-      <find>backdate</find>
-      <find>/</find>
-      <find>div</find>
-      <find>近1月整额消费总笔数</find>
-      <find>近6月保险交易总笔数</find>
-      <find>feature_im</find>
-      <find>综合信用分</find>
-      <find>tree_</find>
-      <find>learning_</find>
-      <find>plot_type</find>
-      <find>approximate_interactions</find>
-      <find>expected_value</find>
-      <find>self.data</find>
-      <find>data_missing</find>
-      <find>model_output</find>
-      <find>predict</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -90,7 +63,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.PSI">
+  <component name="RunManager" selected="Python.Example">
+    <configuration name="Discretize" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretize" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="DiscretizeExample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -104,7 +99,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Script/DiscretizeExample.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script\Example.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Example" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Script/Example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -157,57 +174,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script\DiscretizeExample.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="parsers" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/SoftWare/Anaconda3/Lib/site-packages/pandas/io" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:/SoftWare/Anaconda3/Lib/site-packages/pandas/io/parsers.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.PSI" />
+        <item itemvalue="Python.Example" />
         <item itemvalue="Python.DiscretizeExample" />
+        <item itemvalue="Python.Discretize" />
+        <item itemvalue="Python.PSI" />
         <item itemvalue="Python.FcbfExample" />
-        <item itemvalue="Python.example" />
-        <item itemvalue="Python.parsers" />
       </list>
     </recent_temporary>
   </component>
@@ -221,7 +194,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1564919808187</updated>
-      <workItem from="1567650916887" duration="1654000" />
+      <workItem from="1567650916887" duration="1838000" />
+      <workItem from="1567652776629" duration="4000" />
+      <workItem from="1567734820432" duration="937000" />
+      <workItem from="1568014981586" duration="1060000" />
+      <workItem from="1568016313573" duration="640000" />
+      <workItem from="1568250046814" duration="1871000" />
+      <workItem from="1568776543062" duration="81000" />
+      <workItem from="1568776870308" duration="9506000" />
+      <workItem from="1568854227539" duration="609000" />
+      <workItem from="1568877098959" duration="54000" />
+      <workItem from="1568877189241" duration="146000" />
+      <workItem from="1568877482963" duration="187000" />
+      <workItem from="1569738101895" duration="1499000" />
+      <workItem from="1570868537900" duration="1637000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -356,7 +342,21 @@
       <option name="project" value="LOCAL" />
       <updated>1567157756145</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="init">
+      <created>1567652696579</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1567652696579</updated>
+    </task>
+    <task id="LOCAL-00021" summary="add doc">
+      <created>1567652730640</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1567652730640</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -402,7 +402,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -421,11 +423,15 @@
     <MESSAGE value="new tree split py" />
     <MESSAGE value="use multiprocessing" />
     <MESSAGE value="clean code" />
-    <MESSAGE value="init" />
     <MESSAGE value="use psi select feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="use psi select feature" />
+    <MESSAGE value="init" />
+    <MESSAGE value="add doc" />
+    <option name="LAST_COMMIT_MESSAGE" value="add doc" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1568785746092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo/Script" />
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeExample.coverage" NAME="DiscretizeExample Coverage Results" MODIFIED="1568778782024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo/Script" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Discretize.coverage" NAME="Discretize Coverage Results" MODIFIED="1568777906640" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretize" />
   </component>
 </project>
