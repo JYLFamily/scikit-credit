@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="clean code">
+      <change afterPath="$PROJECT_DIR$/data/table.xlsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/taiwan-credit.csv" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/demo/Example.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/demo/config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeChiMerge.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeTreeSplit.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/skcredit/models/LRClassifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Script/Example.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Script/config.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/features/Discretize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeChiMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeUtil.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/__init__.py" beforeDir="false" />
@@ -220,7 +222,7 @@
       <workItem from="1571017062807" duration="37728000" />
       <workItem from="1571211709350" duration="801000" />
       <workItem from="1571724258499" duration="14698000" />
-      <workItem from="1571792695078" duration="38564000" />
+      <workItem from="1571792695078" duration="38789000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -471,12 +473,12 @@
     <MESSAGE value="new tree split py" />
     <MESSAGE value="use multiprocessing" />
     <MESSAGE value="use psi select feature" />
-    <MESSAGE value="init" />
     <MESSAGE value="add doc" />
     <MESSAGE value="init commit" />
     <MESSAGE value="add more example" />
     <MESSAGE value="clean code" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean code" />
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />

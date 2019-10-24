@@ -1,0 +1,32 @@
+path: C:\Users\P1352\PycharmProjects\scikit-credit\data
+
+dataset:
+  tra: taiwan-credit.csv
+  tes:
+
+columns:
+  keep: [ID]
+  drop: []
+  date: []
+  target: [default.payment.next.month]
+
+feature dis:
+  cat cols: [
+    SEX,
+    EDUCATION,
+    MARRIAGE
+  ]
+  num cols: [
+    LIMIT_BAL,
+    AGE,
+    PAY_0,
+    PAY_1,
+    PAY_2,
+    PAY_3,
+    PAY_4,
+    PAY_5,
+  ]
+
+feature sel: []
+
+

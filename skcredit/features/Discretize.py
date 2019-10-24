@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from path import Path
 from multiprocessing import Pool
 from sklearn.base import BaseEstimator, TransformerMixin
-from skcredit.feature_discretize.DiscretizeUtil import merge_num_table, merge_cat_table
-from skcredit.feature_discretize.DiscretizeUtil import replace_num_woe, replace_cat_woe
+from skcredit.features.DiscretizeUtil import merge_num_table, merge_cat_table
+from skcredit.features.DiscretizeUtil import replace_num_woe, replace_cat_woe
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -59,10 +59,13 @@ def plot_importance(discretize):
 
 
 class Discretize(BaseEstimator, TransformerMixin):
-    def __init__(self, *, cat_columns, num_columns, keep_columns, threshold=0.02):
+    def __init__(self, *, cat_columns, num_columns, keep_columns, merge_threshold, min_samples_bins, threshold):
         self.__cat_columns = cat_columns
         self.__num_columns = num_columns
         self.__keep_columns = keep_columns
+
+        self.__merge_threshold = merge_threshold
+        self.__min_samples_bins = min_samples_bins
         self.__threshold = threshold
 
         self.cat_table_ = dict()
@@ -82,8 +85,9 @@ class Discretize(BaseEstimator, TransformerMixin):
             if self.__cat_columns is not None:
                 x[self.__cat_columns] = x[self.__cat_columns].fillna("missing").astype(str)
                 self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
-                    merge_cat_table, [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in
-                                      self.__cat_columns])))
+                    merge_cat_table,
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_threshold) for col in
+                        self.__cat_columns])))
         self.cat_table_ = {
             col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__threshold}
 
@@ -91,8 +95,9 @@ class Discretize(BaseEstimator, TransformerMixin):
             if self.__num_columns is not None:
                 x[self.__num_columns] = x[self.__num_columns].fillna(-9999.0)
                 self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
-                    merge_num_table, [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in
-                                      self.__num_columns])))
+                    merge_num_table,
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__min_samples_bins) for col in
+                        self.__num_columns])))
         self.num_table_ = {
             col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.__threshold}
 
