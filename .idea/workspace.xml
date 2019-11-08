@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteUtil.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeighted.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedTreeSplit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedUtil.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBIN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectVIF.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/models/TrAdaBoost.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/features/Discretize.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/Discrete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteChiMerge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeTreeSplit.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeUtil.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/models/LRClassifier.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -241,7 +227,7 @@
       <workItem from="1572831054614" duration="52364000" />
       <workItem from="1573030532424" duration="5465000" />
       <workItem from="1573097635076" duration="9000" />
-      <workItem from="1573106540447" duration="30471000" />
+      <workItem from="1573106540447" duration="30734000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -460,7 +446,42 @@
       <option name="project" value="LOCAL" />
       <updated>1573200702045</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="init commit">
+      <created>1573200739386</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1573200739386</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feature select">
+      <created>1573200805939</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1573200805939</updated>
+    </task>
+    <task id="LOCAL-00034" summary="init commit">
+      <created>1573200853094</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1573200853094</updated>
+    </task>
+    <task id="LOCAL-00035" summary="code need test">
+      <created>1573200913901</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1573200913901</updated>
+    </task>
+    <task id="LOCAL-00036" summary="update discrete alg">
+      <created>1573200957444</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1573200957444</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -531,10 +552,13 @@
     <MESSAGE value="add more example" />
     <MESSAGE value="clean code" />
     <MESSAGE value="init" />
-    <MESSAGE value="init commit" />
     <MESSAGE value="code example" />
     <MESSAGE value="TrAdaboost demo" />
-    <option name="LAST_COMMIT_MESSAGE" value="TrAdaboost demo" />
+    <MESSAGE value="feature select" />
+    <MESSAGE value="init commit" />
+    <MESSAGE value="code need test" />
+    <MESSAGE value="update discrete alg" />
+    <option name="LAST_COMMIT_MESSAGE" value="update discrete alg" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit__1_.coverage" NAME="DiscretizeTreeSplit (1) Coverage Results" MODIFIED="1572508256301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discrete" />
