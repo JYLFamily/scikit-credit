@@ -4,6 +4,7 @@ import gc
 import numpy as np
 import pandas as pd
 from operator import *
+from sklearn.tree import DecisionTreeClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -21,12 +22,29 @@ def chisq(X):
 
     for row in np.arange(2):
         for col in np.arange(2):
-            expect = r[row] * c[col] / float(n)
+            expect = r[row] * c[col] / n
             actual = x.loc[row, col]
             expect = 0.5 if expect < 0.5 else expect
-            chi2 += pow((actual - expect), 2) / float(expect)
+            chi2 += pow((actual - expect), 2) / expect
 
     return chi2
+
+
+def group(X, col, merge_bin):
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    min_element, max_element = x[col].min(), x[col].max()
+
+    clf = DecisionTreeClassifier(min_samples_leaf=merge_bin, random_state=7)
+    clf.fit(x[[col]], x["target"])
+    # from sklearn.tree import _tree
+    # _tree.TREE_UNDEFINED == -2
+    group_list = [[element] for element in np.sort(clf.tree_.threshold) if element != -2]  # sort
+    group_list = [[min_element]] + group_list + [[max_element]]
+
+    return group_list
 
 
 def check(X, col, idx, group_list):
@@ -67,7 +85,7 @@ def check(X, col, idx, group_list):
     return group_list
 
 
-def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
+def chi_merge(X, col, max_bins, merge_bin, **kwargs):
     x = X.copy(deep=True)
     del X
     gc.collect()
@@ -108,24 +126,24 @@ def chi_merge(X, col, max_bins, min_samples_bins, **kwargs):
         group_list.remove(group_list[add(idx, 1)])
 
     # 存在 negative == 0 的 group
-    count_list = [regroup.loc[regroup[col].isin(group), "negative"].count() for group in group_list]
+    count_list = [regroup.loc[regroup[col].isin(g), "negative"].count() for g in group_list]
     while min(count_list) == 0:
         idx = count_list.index(0)
         group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(group), "negative"].count() for group in group_list]
+        count_list = [regroup.loc[regroup[col].isin(g), "negative"].count() for g in group_list]
 
     # 存在 positive == 0 的 group
-    count_list = [regroup.loc[regroup[col].isin(group), "positive"].count() for group in group_list]
+    count_list = [regroup.loc[regroup[col].isin(g), "positive"].count() for g in group_list]
     while min(count_list) == 0:
         idx = count_list.index(0)
         group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(group), "positive"].count() for group in group_list]
+        count_list = [regroup.loc[regroup[col].isin(g), "positive"].count() for g in group_list]
 
-    # min_samples 检查
-    count_list = [regroup.loc[regroup[col].isin(group), "total"].sum() for group in group_list]
-    while truediv(min(count_list), sum(count_list)) < min_samples_bins:
+    # merge bin 检查
+    count_list = [regroup.loc[regroup[col].isin(g), "total"].sum() for g in group_list]
+    while truediv(min(count_list), sum(count_list)) < merge_bin:
         idx = count_list.index(min(count_list))
         group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(group), "total"].sum() for group in group_list]
+        count_list = [regroup.loc[regroup[col].isin(g), "total"].sum() for g in group_list]
 
     return x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0]).tolist(), group_list

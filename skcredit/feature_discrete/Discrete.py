@@ -4,69 +4,29 @@ import gc
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from path import Path
 from multiprocessing import Pool
+from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
-from skcredit.features.DiscretizeUtil import merge_num_table, merge_cat_table
-from skcredit.features.DiscretizeUtil import replace_num_woe, replace_cat_woe
+from skcredit.feature_discrete.DiscreteUtil import merge_num_table, merge_cat_table
+from skcredit.feature_discrete.DiscreteUtil import replace_num_woe, replace_cat_woe
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 plt.style.use("ggplot")
 
 
-def save_table(discretize, path):
-    """
-    :param discretize:
-    :param path:
-    :return:
-
-    >>> save_table(discretize, path)
-    """
-    table = dict()
-    table.update(discretize.num_table_)
-    table.update(discretize.cat_table_)
-
-    with pd.ExcelWriter(Path(path) / "table.xlsx") as writer:
-        for feature, table in table.items():
-            table.to_excel(writer, sheet_name=feature[-30:], index=False)
-
-
-def plot_importance(discretize):
-    """
-    :param discretize:
-    :return:
-
-    >>> plot_importance(discretize)
-    >>> plt.show()
-    """
-
-    table = pd.DataFrame({
-        "feature": list(discretize.information_values_.keys()),
-        "information value": list(discretize.information_values_.values())
-    })
-    fig, ax = plt.subplots()
-    ax = table.plot(
-        x="feature",
-        y="information value",
-        kind="bar",
-        ax=ax
-    )
-    ax.hlines(y=0.02, xmin=ax.get_xlim()[0], xmax=ax.get_xlim()[1], linestyles="dashed")
-    ax.set_title(label="information value")
-
-    return ax
-
-
-class Discretize(BaseEstimator, TransformerMixin):
-    def __init__(self, *, cat_columns, num_columns, keep_columns, merge_threshold, min_samples_bins, threshold):
+class Discrete(BaseEstimator, TransformerMixin):
+    def __init__(
+            self, *,
+            keep_columns, cat_columns, num_columns,
+            merge_gap, merge_bin, information_value_threshold=0.1):
+        self.__keep_columns = keep_columns
         self.__cat_columns = cat_columns
         self.__num_columns = num_columns
-        self.__keep_columns = keep_columns
 
-        self.__merge_threshold = merge_threshold
-        self.__min_samples_bins = min_samples_bins
-        self.__threshold = threshold
+        self.__merge_gap = merge_gap
+        self.__merge_bin = merge_bin
+        self.__information_value_threshold = information_value_threshold
 
         self.cat_table_ = dict()
         self.num_table_ = dict()
@@ -74,9 +34,9 @@ class Discretize(BaseEstimator, TransformerMixin):
         self.cat_columns_ = None
         self.num_columns_ = None
 
-        self.information_values_ = dict()
+        self.information_values_ = OrderedDict()
 
-    def fit(self, X, y=None):
+    def fit(self, X, y):
         x = X.copy(deep=True)
         del X
         gc.collect()
@@ -86,23 +46,25 @@ class Discretize(BaseEstimator, TransformerMixin):
                 x[self.__cat_columns] = x[self.__cat_columns].fillna("missing").astype(str)
                 self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
                     merge_cat_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_threshold) for col in
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_gap) for col in
                         self.__cat_columns])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__threshold}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__information_value_threshold}
 
         with Pool() as pool:
             if self.__num_columns is not None:
                 x[self.__num_columns] = x[self.__num_columns].fillna(-9999.0)
                 self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
                     merge_num_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__min_samples_bins) for col in
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_bin) for col in
                         self.__num_columns])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.__threshold}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.__information_value_threshold}
 
         self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.information_values_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
+        self.information_values_ = OrderedDict(
+            sorted(self.information_values_.items(), key=lambda t: t[1], reverse=True))
 
         return self
 
@@ -132,7 +94,7 @@ class Discretize(BaseEstimator, TransformerMixin):
                 upper = self.num_table_[col]["Upper"].tolist()
                 x[col] = x[col].apply(lambda element: replace_num_woe(element, upper, woe))
 
-        return x[list(self.information_values_.keys()) + self.__keep_columns]
+        return x[self.__keep_columns + list(self.information_values_.keys())]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)
