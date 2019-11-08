@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="clean code">
-      <change afterPath="$PROJECT_DIR$/data/table.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/taiwan-credit.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/Example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeChiMerge.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeTreeSplit.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/models/LRClassifier.py" afterDir="false" />
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteUtil.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeighted.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedTreeSplit.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedUtil.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBIN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectVIF.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/models/TrAdaBoost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/Script/Example.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/Script/config.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/Discretize.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/features/Discretize.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeChiMerge.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeTreeSplit.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/DiscretizeUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/features/DiscretizeUtil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretize/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_generate/Generate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_generate/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_select/PSI.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_select/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/util/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Example.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/features/Discretize.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/Discrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteChiMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeTreeSplit.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/features/DiscretizeUtil.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/models/LRClassifier.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="scikit-credit" />
@@ -46,11 +59,12 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../We_Cash" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/models" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
@@ -74,7 +88,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.LRClassifier">
+  <component name="RunManager" selected="Python.Example (1)">
+    <configuration name="DiscretizeTreeSplit (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discrete" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discrete\DiscreteWeightedTreeSplit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="DiscretizeTreeSplit" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -111,28 +147,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Example.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Example" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo/Script" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -187,11 +201,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.LRClassifier" />
         <item itemvalue="Python.Example (1)" />
+        <item itemvalue="Python.DiscretizeTreeSplit (1)" />
+        <item itemvalue="Python.LRClassifier" />
         <item itemvalue="Python.setup" />
         <item itemvalue="Python.DiscretizeTreeSplit" />
-        <item itemvalue="Python.Example" />
       </list>
     </recent_temporary>
   </component>
@@ -222,7 +236,16 @@
       <workItem from="1571017062807" duration="37728000" />
       <workItem from="1571211709350" duration="801000" />
       <workItem from="1571724258499" duration="14698000" />
-      <workItem from="1571792695078" duration="38789000" />
+      <workItem from="1571792695078" duration="39047000" />
+      <workItem from="1572226770769" duration="4781000" />
+      <workItem from="1572420251536" duration="164000" />
+      <workItem from="1572420547509" duration="607000" />
+      <workItem from="1572500070226" duration="26718000" />
+      <workItem from="1572828421292" duration="2594000" />
+      <workItem from="1572831054614" duration="52364000" />
+      <workItem from="1573030532424" duration="5465000" />
+      <workItem from="1573097635076" duration="9000" />
+      <workItem from="1573106540447" duration="30221000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -406,7 +429,21 @@
       <option name="project" value="LOCAL" />
       <updated>1570874252964</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="init">
+      <created>1571912073905</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1571912073907</updated>
+    </task>
+    <task id="LOCAL-00028" summary="init">
+      <created>1571912188999</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1571912189000</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -481,8 +518,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit__1_.coverage" NAME="DiscretizeTreeSplit (1) Coverage Results" MODIFIED="1572508256301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discrete" />
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
-    <SUITE FILE_PATH="coverage/scikit_credit$Example__1_.coverage" NAME="Example (1) Coverage Results" MODIFIED="1571881332229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Example__1_.coverage" NAME="Example (1) Coverage Results" MODIFIED="1573197603444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit.coverage" NAME="DiscretizeTreeSplit Coverage Results" MODIFIED="1571796563064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretize" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1571133698464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo/Script" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeExample.coverage" NAME="DiscretizeExample Coverage Results" MODIFIED="1568778782024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo/Script" />
