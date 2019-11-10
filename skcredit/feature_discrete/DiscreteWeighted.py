@@ -46,7 +46,7 @@ class DiscreteWeighted(BaseEstimator, TransformerMixin):
             sample_weight, pd.Series) else pd.Series(sample_weight, index=y.index)
 
         with Pool() as pool:
-            if self.__cat_columns is not None:
+            if len(self.__cat_columns) != 0:
                 x[self.__cat_columns] = x[self.__cat_columns].fillna("missing").astype(str)
                 self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
                     merge_cat_table,
@@ -56,7 +56,7 @@ class DiscreteWeighted(BaseEstimator, TransformerMixin):
             col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__information_value_threshold}
 
         with Pool() as pool:
-            if self.__num_columns is not None:
+            if len(self.__num_columns) != 0:
                 x[self.__num_columns] = x[self.__num_columns].fillna(-9999.0)
                 self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
                     merge_num_table,

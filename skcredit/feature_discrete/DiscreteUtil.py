@@ -70,18 +70,16 @@ def calc_table(X, col, col_type):
 
     if col_type == "numeric":
         if x_mis.empty is True:
-            non_table = calc_part_table(x_non, col, col_type)
+            table = calc_part_table(x_non, col, col_type)
 
-            non_table["PositiveRate"] = non_table["CntPositive"] / non_table["CntPositive"].sum()
-            non_table["NegativeRate"] = non_table["CntNegative"] / non_table["CntNegative"].sum()
+            table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
+            table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
 
-            non_table["WoE"] = np.log(non_table["PositiveRate"] / non_table["NegativeRate"])
-            non_table["IV"] = (non_table["PositiveRate"] - non_table["NegativeRate"]) * non_table["WoE"]
+            table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
+            table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
 
-            non_table = non_table.reindex(columns=num_columns).reset_index(drop=True)
-            non_table.loc[0, "Lower"], non_table.loc[non_table.shape[0] - 1, "Upper"] = -np.inf, np.inf
-
-            table = non_table
+            table = table.reindex(columns=num_columns).reset_index(drop=True)
+            table.loc[0, "Lower"], table.loc[table.shape[0] - 1, "Upper"] = -np.inf, np.inf
         else:
             non_table = calc_part_table(x_non, col, col_type)
             mis_table = calc_part_table(x_mis, col, col_type)

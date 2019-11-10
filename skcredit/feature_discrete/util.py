@@ -9,17 +9,17 @@ pd.set_option("max_columns", None)
 plt.style.use("ggplot")
 
 
-def save_table(discretize, path):
+def save_table(discrete, path):
     """
-    :param discretize:
+    :param discrete:
     :param path:
     :return:
 
-    >>> save_table(discretize, path)
+    >>> save_table(discrete, path)
     """
     table = dict()
-    table.update(discretize.num_table_)
-    table.update(discretize.cat_table_)
+    table.update(discrete.num_table_)
+    table.update(discrete.cat_table_)
 
     with pd.ExcelWriter(os.path.join(path, "table.xlsx")) as writer:
         for feature, table in table.items():
