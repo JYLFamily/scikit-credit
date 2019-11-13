@@ -28,6 +28,7 @@ class SelectBIN(BaseEstimator, TransformerMixin):
 
         beta_0 = np.log(y.sum() / (y.shape[0] - y.sum()))
         beta_1 = 1
+
         for idx, col in enumerate(self.__feature_columns):
             logit_mod = sm.Logit(y, sm.add_constant(x[[col]], prepend=False))
             logit_res = logit_mod.fit(disp=0)  # disp=0 slience
@@ -35,7 +36,7 @@ class SelectBIN(BaseEstimator, TransformerMixin):
             if (abs(logit_res.params["const"] - beta_0) > 0.00001 and
                     abs(logit_res.params[col] - beta_1) > 0.00001):
                 self.__feature_support[idx] = False
-                logging.info(col + " remove SELECTBIN !")
+                logging.info(col + " remove !")
 
         return self
 

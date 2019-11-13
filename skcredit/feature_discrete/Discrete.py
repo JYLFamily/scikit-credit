@@ -17,7 +17,7 @@ plt.style.use("ggplot")
 
 class Discrete(BaseEstimator, TransformerMixin):
     def __init__(
-            self, *,
+            self,
             keep_columns, cat_columns, num_columns,
             merge_gap, merge_bin, information_value_threshold=0.1):
         self.__keep_columns = keep_columns

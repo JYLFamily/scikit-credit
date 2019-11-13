@@ -4,7 +4,7 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from operator import add
+from operator import add, sub, truediv
 from sklearn.linear_model import LinearRegression
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
@@ -14,7 +14,7 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 class SelectVIF(BaseEstimator, TransformerMixin):
-    def __init__(self, *, keep_columns, vif_threshold):
+    def __init__(self, *, keep_columns, vif_threshold=5):
         self.__keep_columns, self.__vif_threshold = keep_columns, vif_threshold
         self.__feature_columns = None
         self.__feature_support = None
@@ -27,17 +27,16 @@ class SelectVIF(BaseEstimator, TransformerMixin):
         self.__feature_columns = np.array([col for col in x.columns if col not in self.__keep_columns])
         self.__feature_support = np.ones(len(self.__feature_columns), dtype=bool)
 
-        num_feature = len(self.__feature_columns)
-        for p in range(num_feature):
-            for q in range(add(p, 1), num_feature):
-                if self.__feature_support[q]:
-                    lm = LinearRegression()
-                    lm.fit(x.iloc[:, [p]], x.iloc[:, q])
-                    vif = 1 / (1 - lm.score(x.iloc[:, [p]], x.iloc[:, q]))
+        for i in range(len(self.__feature_columns)):
+            for j in range(add(i, 1), len(self.__feature_columns)):
+                if self.__feature_support[j]:
+                    model = LinearRegression()
+                    model.fit(x.iloc[:, [i]], x.iloc[:, j])
+                    r_square = model.score(x.iloc[:, [i]], x.iloc[:, j])
 
-                    if vif >= self.__vif_threshold:
-                        self.__feature_support[q] = False
-                        logging.info(self.__feature_columns[q] + " remove SELECTVIF !")
+                    if r_square >= truediv(sub(self.__vif_threshold, 1), self.__vif_threshold):
+                        self.__feature_support[j] = False
+                        logging.info(self.__feature_columns[j] + " remove !")
 
         return self
 
