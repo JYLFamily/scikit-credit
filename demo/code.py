@@ -10,7 +10,7 @@ from skcredit.feature_discrete import Discrete
 from skcredit.feature_discrete import save_table
 from skcredit.feature_selection import SelectBIN
 from skcredit.feature_selection import SelectVIF
-from sklearn.linear_model import LogisticRegression
+from skcredit.models import LRClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -55,11 +55,8 @@ if __name__ == "__main__":
     tra_feature = svif.transform(tra_feature)
     tes_feature = svif.transform(tes_feature)
 
-    model = LogisticRegression(solver="lbfgs", random_state=7)
+    model = LRClassifier(keep_columns=[], c=1, random_state=7)
     model.fit(tra_feature, tra_label)
 
-    from sklearn.metrics import roc_auc_score
-    print(tra_feature.columns.tolist())
-    print(model.coef_)
-    print(roc_auc_score(tra_label, model.predict_proba(tra_feature)[:, 1]))
-    print(roc_auc_score(tes_label, model.predict_proba(tes_feature)[:, 1]))
+    print(model.score(tra_feature, tra_label))
+    print(model.score(tes_feature, tes_label))
