@@ -140,41 +140,74 @@ def merge_num_table(X, col, split_bin):
     return table
 
 
-def merge_cat_table(X, col, merge_gap):
-    """
-    :param X:
+def merge_cat_table(X, col, merge_bin):
+    """    :param X:
     :param col:
-    :param merge_gap:
+    :param merge_bin:
     :return:
     """
     x = X.copy(deep=True)
     del X
     gc.collect()
 
-    table = calc_table(x, col, "categorical")
-    gc.collect()
+    # cat to num
+    x_non = x.loc[x[col] != "missing", :].copy(deep=True)
+    x_mis = x.loc[x[col] == "missing", :].copy(deep=True)
 
-    mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
-    non_table = table.loc[table[col] != "missing", :].sort_values(
-        by="WoE", ascending=True).reset_index(
-        drop=True).copy(deep=True)
+    weights = 1 / (1 + np.exp(-(x_non.groupby(col).size() - 1)))
+    mapping = (1 - weights) * x_non["target"].mean() + weights * x_non.groupby(col)["target"].mean()
+    mapping = mapping.to_dict()
 
-    merge_flag = non_table["WoE"].diff().min()
-    while merge_flag <= merge_gap:
-        idx = list(non_table["WoE"].diff()).index(merge_flag)
+    x_non[col] = x_non[col].replace(mapping)
+    x_mis[col] = x_mis[col].replace({"missing": -9999.0})
 
-        x = x.replace({non_table.loc[idx - 1, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
-        x = x.replace({non_table.loc[idx, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
+    # merge num table
+    table = merge_num_table(pd.concat([x_non, x_mis]), col, merge_bin)
 
-        table = calc_table(x, col, "categorical")
-        mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
-        non_table = table.loc[table[col] != "missing", :].sort_values(
-            by="WoE", ascending=True).reset_index(
-            drop=True).copy(deep=True)
-        merge_flag = non_table["WoE"].diff().min()
-    table = pd.concat([mis_table, non_table.reindex(columns=mis_table.columns)]).reset_index(drop=True)
+    # clean num table
+    level = [[] for _ in range(len(table))]
 
-    logging.info(col + " complete !")
+    non_table = table.loc[table["Upper"] != -9999, :].copy(deep=True)
+    mis_table = table.loc[table["Upper"] == -9999, :].copy(deep=True)
+
+    for key, val in mapping.items():
+        for index, upper in enumerate(non_table["Upper"]):
+            if val <= upper:
+                level[index].append(key)
+                break
+
+    if not mis_table.empty:
+        level[-1].append("missing")
+
+    table = pd.concat([
+        pd.Series([", ".join(element) for element in level]).to_frame(col),
+        pd.concat([
+            non_table.drop(["Lower", "Upper"], axis=1),
+            mis_table.drop(["Lower", "Upper"], axis=1)
+        ])
+    ], axis=1)
+
+    # table = calc_table(x, col, "categorical")
+
+    # mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
+    # non_table = table.loc[table[col] != "missing", :].sort_values(
+    #     by="WoE", ascending=True).reset_index(
+    #     drop=True).copy(deep=True)
+    #
+    # merge_flag = non_table["WoE"].diff().min()
+    # while merge_flag <= merge_gap:
+    #     idx = list(non_table["WoE"].diff()).index(merge_flag)
+    #
+    #     x = x.replace({non_table.loc[idx - 1, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
+    #     x = x.replace({non_table.loc[idx, col]: (non_table.loc[idx - 1, col] + ", " + non_table.loc[idx, col])})
+    #
+    #     table = calc_table(x, col, "categorical")
+    #     mis_table = table.loc[table[col] == "missing", :].copy(deep=True)
+    #     non_table = table.loc[table[col] != "missing", :].sort_values(
+    #         by="WoE", ascending=True).reset_index(
+    #         drop=True).copy(deep=True)
+    #     merge_flag = non_table["WoE"].diff().min()
+    # table = pd.concat([mis_table, non_table.reindex(columns=mis_table.columns)]).reset_index(drop=True)
 
     return table
 
