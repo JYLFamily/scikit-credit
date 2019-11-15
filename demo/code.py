@@ -5,12 +5,10 @@ import gc
 import yaml
 import numpy as np
 import pandas as pd
-from sklearn.metrics import roc_auc_score
-from skcredit.feature_discrete import Discrete
-from skcredit.feature_discrete import save_table
-from skcredit.feature_selection import SelectBIN
-from skcredit.feature_selection import SelectVIF
 from skcredit.models import LRClassifier
+from skcredit.feature_selection import SelectBin
+from skcredit.feature_selection import SelectVif
+from skcredit.feature_discretization import save_table, Discrete
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -36,7 +34,6 @@ if __name__ == "__main__":
         keep_columns=[],
         cat_columns=[],
         num_columns=tra_feature.columns.tolist(),
-        merge_gap=None,
         merge_bin=0.05,
         information_value_threshold=0.002
     )
@@ -45,12 +42,12 @@ if __name__ == "__main__":
     tes_feature = discrete.transform(tes_feature)
     save_table(discrete, config["path"])
 
-    sbin = SelectBIN(keep_columns=[])
+    sbin = SelectBin(keep_columns=[])
     sbin.fit(tra_feature, tra_label)
     tra_feature = sbin.transform(tra_feature)
     tes_feature = sbin.transform(tes_feature)
 
-    svif = SelectVIF(keep_columns=[], vif_threshold=2)
+    svif = SelectVif(keep_columns=[], vif_threshold=2)
     svif.fit(tra_feature, tra_label)
     tra_feature = svif.transform(tra_feature)
     tes_feature = svif.transform(tes_feature)
