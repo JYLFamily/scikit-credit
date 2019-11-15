@@ -12,13 +12,13 @@ pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-class SelectBIN(BaseEstimator, TransformerMixin):
+class SelectBin(BaseEstimator, TransformerMixin):
     def __init__(self, *, keep_columns):
         self.__keep_columns = keep_columns
         self.__feature_columns = None
         self.__feature_support = None
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
@@ -30,7 +30,7 @@ class SelectBIN(BaseEstimator, TransformerMixin):
         beta_1 = 1
 
         for idx, col in enumerate(self.__feature_columns):
-            logit_mod = sm.Logit(y, sm.add_constant(x[[col]], prepend=False))
+            logit_mod = sm.Logit(y, sm.add_constant(x[[col]].to_numpy(), prepend=False))
             logit_res = logit_mod.fit(disp=0)  # disp=0 slience
 
             if (abs(logit_res.params["const"] - beta_0) > 0.00001 and

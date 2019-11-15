@@ -1,9 +1,9 @@
 # coding: utf-8
 
-from skcredit.feature_selection.SelectBIN import SelectBIN
-from skcredit.feature_selection.SelectVIF import SelectVIF
+from skcredit.feature_selection.SelectBin import SelectBin
+from skcredit.feature_selection.SelectVif import SelectVif
 
 __all__ = [
-    "SelectBIN",
-    "SelectVIF"
+    "SelectBin",
+    "SelectVif"
 ]

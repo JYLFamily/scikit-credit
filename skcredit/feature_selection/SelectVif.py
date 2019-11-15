@@ -13,7 +13,7 @@ pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-class SelectVIF(BaseEstimator, TransformerMixin):
+class SelectVif(BaseEstimator, TransformerMixin):
     def __init__(self, *, keep_columns, vif_threshold=5):
         self.__keep_columns, self.__vif_threshold = keep_columns, vif_threshold
         self.__feature_columns = None
