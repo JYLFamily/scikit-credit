@@ -5,9 +5,7 @@ import logging
 import numpy as np
 import pandas as pd
 from itertools import compress
-from scipy.stats import variation
 from sklearn.metrics import roc_curve
-from sklearn.model_selection import StratifiedKFold
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.linear_model import LinearRegression, LogisticRegression
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
@@ -17,10 +15,10 @@ pd.set_option("max_columns", None)
 
 
 class LRClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, *, c, keep_columns, random_state):
-        self.__c = c
-        self.__keep_columns = keep_columns
-        self.__random_state = random_state
+    def __init__(self, c, keep_columns, random_state):
+        self.c = c
+        self.keep_columns = keep_columns
+        self.random_state = random_state
 
         self.__feature_columns = None
         self.__model = None
@@ -32,14 +30,17 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         # perturb
-        # self.__feature_columns = np.array([col for col in x.columns if col not in self.__keep_columns])
+        # from scipy.stats import variation
+        # from sklearn.model_selection import StratifiedKFold
         #
-        # kfold = StratifiedKFold(5, shuffle=True, random_state=self.__random_state)
+        # self.__feature_columns = np.array([col for col in x.columns if col not in self.keep_columns])
+        #
+        # kfold = StratifiedKFold(5, shuffle=True, random_state=self.random_state)
         # kfold_coeff = np.zeros((5, self.__feature_columns.shape[0]))
         #
         # for n_flod, (trn_idx, _) in enumerate(kfold.split(x, y)):
         #     model = LogisticRegression(
-        #         C=self.__c, solver="lbfgs", max_iter=10000, random_state=self.__random_state)
+        #         C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
         #     model.fit(x.iloc[trn_idx], y.iloc[trn_idx])
         #     kfold_coeff[n_flod, :] = model.coef_.reshape(-1, )
         #
@@ -47,10 +48,10 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
 
         # variance inflation factor
         self.__feature_columns = np.array(
-            [col for col in x.columns if col not in self.__keep_columns])
+            [col for col in x.columns if col not in self.keep_columns])
 
         self.__model = LogisticRegression(
-            C=self.__c, solver="lbfgs", max_iter=10000, random_state=self.__random_state)
+            C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
         self.__model.fit(x[self.__feature_columns], y)
 
         while np.any(self.__model.coef_.reshape(-1, ) < 0):
@@ -71,7 +72,7 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
                 logging.info(col_list[vif_list.index(max(vif_list))] + " remove !")
 
             self.__model = LogisticRegression(
-                C=self.__c, solver="lbfgs", max_iter=10000, random_state=self.__random_state)
+                C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
             self.__model.fit(x[self.__feature_columns], y)
             self.__coeff = self.__model.coef_.reshape(-1,)
 
@@ -101,7 +102,7 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         return self.__model.predict(
-            x[self.__keep_columns + self.__feature_columns.tolist()])
+            x[self.keep_columns + self.__feature_columns.tolist()])
 
     def predict_proba(self, X):
         x = X.copy(deep=True)
@@ -109,5 +110,5 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         return self.__model.predict_proba(
-            x[self.__keep_columns + self.__feature_columns.tolist()])
+            x[self.keep_columns + self.__feature_columns.tolist()])
 
