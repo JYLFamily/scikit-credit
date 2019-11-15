@@ -15,6 +15,7 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 class SelectBin(BaseEstimator, TransformerMixin):
     def __init__(self, *, keep_columns):
         self.__keep_columns = keep_columns
+
         self.__feature_columns = None
         self.__feature_support = None
 

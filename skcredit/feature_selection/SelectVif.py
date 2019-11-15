@@ -4,7 +4,7 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from operator import add, sub, truediv
+from operator import add
 from sklearn.linear_model import LinearRegression
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
@@ -14,8 +14,10 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 class SelectVif(BaseEstimator, TransformerMixin):
-    def __init__(self, *, keep_columns, vif_threshold=5):
-        self.__keep_columns, self.__vif_threshold = keep_columns, vif_threshold
+    def __init__(self, *, keep_columns, rs_threshold):
+        self.__keep_columns = keep_columns
+        self.__rs_threshold = rs_threshold
+
         self.__feature_columns = None
         self.__feature_support = None
 
@@ -32,9 +34,9 @@ class SelectVif(BaseEstimator, TransformerMixin):
                 if self.__feature_support[j]:
                     model = LinearRegression()
                     model.fit(x.iloc[:, [i]], x.iloc[:, j])
-                    r_square = model.score(x.iloc[:, [i]], x.iloc[:, j])
+                    rs = model.score(x.iloc[:, [i]], x.iloc[:, j])
 
-                    if r_square >= truediv(sub(self.__vif_threshold, 1), self.__vif_threshold):
+                    if rs >= self.__rs_threshold:
                         self.__feature_support[j] = False
                         logging.info(self.__feature_columns[j] + " remove !")
 
