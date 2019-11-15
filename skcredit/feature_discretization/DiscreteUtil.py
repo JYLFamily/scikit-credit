@@ -4,7 +4,7 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from skcredit.feature_discrete.DiscreteChiMerge import group, chi_merge
+from skcredit.feature_discretization.DiscreteChiMerge import group, chi_merge
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)

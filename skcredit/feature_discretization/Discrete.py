@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
-from skcredit.feature_discrete.DiscreteUtil import merge_num_table, merge_cat_table
-from skcredit.feature_discrete.DiscreteUtil import replace_num_woe, replace_cat_woe
+from skcredit.feature_discretization.DiscreteUtil import merge_num_table, merge_cat_table
+from skcredit.feature_discretization.DiscreteUtil import replace_num_woe, replace_cat_woe
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -19,12 +19,11 @@ class Discrete(BaseEstimator, TransformerMixin):
     def __init__(
             self,
             keep_columns, cat_columns, num_columns,
-            merge_gap, merge_bin, information_value_threshold=0.1):
+            merge_bin, information_value_threshold=0.1):
         self.__keep_columns = keep_columns
         self.__cat_columns = cat_columns
         self.__num_columns = num_columns
 
-        self.__merge_gap = merge_gap
         self.__merge_bin = merge_bin
         self.__information_value_threshold = information_value_threshold
 
@@ -36,24 +35,22 @@ class Discrete(BaseEstimator, TransformerMixin):
 
         self.information_values_ = OrderedDict()
 
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
         with Pool() as pool:
             if len(self.__cat_columns) != 0:
-                x[self.__cat_columns] = x[self.__cat_columns].fillna("missing").astype(str)
                 self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
                     merge_cat_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_gap) for col in
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_bin) for col in
                         self.__cat_columns])))
         self.cat_table_ = {
             col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__information_value_threshold}
 
         with Pool() as pool:
             if len(self.__num_columns) != 0:
-                x[self.__num_columns] = x[self.__num_columns].fillna(-9999.0)
                 self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
                     merge_num_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_bin) for col in
@@ -78,7 +75,6 @@ class Discrete(BaseEstimator, TransformerMixin):
 
         if len(self.cat_columns_) != 0:
             x = x.drop(list(set(self.__cat_columns).difference(self.cat_columns_)), axis=1)
-            x[self.cat_columns_] = x[self.cat_columns_].fillna("missing").astype(str)
 
             for col in self.cat_table_.keys():
                 woe = self.cat_table_[col]["WoE"].tolist()
@@ -87,7 +83,6 @@ class Discrete(BaseEstimator, TransformerMixin):
 
         if len(self.num_columns_) != 0:
             x = x.drop(list(set(self.__num_columns).difference(self.num_columns_)), axis=1)
-            x[self.num_columns_] = x[self.num_columns_].fillna(-9999.0)
 
             for col in self.num_table_.keys():
                 woe = self.num_table_[col]["WoE"].tolist()
