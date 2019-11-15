@@ -5,10 +5,11 @@ import gc
 import yaml
 import numpy as np
 import pandas as pd
-from skcredit.models import LRClassifier
+from skcredit.models import cv, LRClassifier
 from skcredit.feature_selection import SelectBin
 from skcredit.feature_selection import SelectVif
-from skcredit.feature_discretization import save_table, Discrete
+from skcredit.feature_discretization import Discrete
+from skcredit.feature_preprocessing import PreProcess
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -30,30 +31,24 @@ if __name__ == "__main__":
     del tra, tes
     gc.collect()
 
-    discrete = Discrete(
-        keep_columns=[],
-        cat_columns=[],
-        num_columns=tra_feature.columns.tolist(),
-        merge_bin=0.05,
-        information_value_threshold=0.002
-    )
-    discrete.fit(tra_feature, tra_label)
-    tra_feature = discrete.transform(tra_feature)
-    tes_feature = discrete.transform(tes_feature)
-    save_table(discrete, config["path"])
+    from pprint import pprint
+    from sklearn.pipeline import Pipeline
 
-    sbin = SelectBin(keep_columns=[])
-    sbin.fit(tra_feature, tra_label)
-    tra_feature = sbin.transform(tra_feature)
-    tes_feature = sbin.transform(tes_feature)
+    pipeline = Pipeline([
+        ("preprocess", PreProcess(
+                        keep_columns=[],
+                        cat_columns=[],
+                        num_columns=tra_feature.columns.tolist())),
+        ("discrete", Discrete(
+                        keep_columns=[],
+                        cat_columns=[],
+                        num_columns=tra_feature.columns.tolist(),
+                        merge_bin=0.05,
+                        information_value_threshold=0.002)),
+        ("sbin", SelectBin(keep_columns=[])),
+        ("svif", SelectVif(keep_columns=[], rs_threshold=0.8)),
+        ("model", LRClassifier(keep_columns=[], c=1, random_state=7)),
+    ])
 
-    svif = SelectVif(keep_columns=[], vif_threshold=2)
-    svif.fit(tra_feature, tra_label)
-    tra_feature = svif.transform(tra_feature)
-    tes_feature = svif.transform(tes_feature)
-
-    model = LRClassifier(keep_columns=[], c=1, random_state=7)
-    model.fit(tra_feature, tra_label)
-
-    print(model.score(tra_feature, tra_label))
-    print(model.score(tes_feature, tes_label))
+    result = cv([0.25, 0.5, 1.], pipeline, tra_feature, tra_label, 7)
+    pprint(result)

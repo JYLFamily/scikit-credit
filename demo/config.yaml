@@ -1,8 +1,8 @@
-path: C:\Users\P1352\Desktop
+path: C:\Users\P1352\PycharmProjects\scikit-credit\data
 
 dataset:
-  tra: train.csv
-  tes: test.csv
+  tra: A_train_final.csv
+  tes: B_train_final.csv
 
 columns:
   keep:
