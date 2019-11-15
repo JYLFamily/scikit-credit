@@ -1,6 +1,5 @@
 # coding:utf-8
 
-import os
 import gc
 import numpy as np
 import pandas as pd
@@ -8,8 +7,8 @@ import matplotlib.pyplot as plt
 from multiprocessing import Pool
 from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
-from skcredit.feature_discrete.DiscreteWeightedUtil import merge_cat_table, merge_num_table
-from skcredit.feature_discrete.DiscreteWeightedUtil import replace_cat_woe, replace_num_woe
+from skcredit.experimental.DiscreteWeightedUtil import merge_cat_table, merge_num_table
+from skcredit.experimental.DiscreteWeightedUtil import replace_cat_woe, replace_num_woe
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
