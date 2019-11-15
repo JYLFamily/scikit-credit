@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/experimental/TrAdaBoost.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/models/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/code.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeighted.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/experimental/DiscreteWeighted.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedTreeSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/experimental/DiscreteWeightedTreeSplit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/DiscreteWeightedUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/experimental/DiscreteWeightedUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/util/entropy.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,17 +52,17 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\data" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_weighted_discretize" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -84,7 +91,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discrete\DiscreteWeightedTreeSplit.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental\DiscreteWeightedTreeSplit.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -232,6 +239,9 @@
       <workItem from="1573461253407" duration="50462000" />
       <workItem from="1573691557565" duration="22000" />
       <workItem from="1573695920728" duration="19285000" />
+      <workItem from="1573719874216" duration="50000" />
+      <workItem from="1573720452533" duration="99000" />
+      <workItem from="1573781829484" duration="8561000" />
     </task>
     <task id="LOCAL-00001" summary="init feature discretize">
       <created>1564920120942</created>
@@ -541,7 +551,35 @@
       <option name="project" value="LOCAL" />
       <updated>1573718837401</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="init commit">
+      <created>1573719893680</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1573719893681</updated>
+    </task>
+    <task id="LOCAL-00046" summary="clean code">
+      <created>1573799279734</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1573799279734</updated>
+    </task>
+    <task id="LOCAL-00047" summary="clean code">
+      <created>1573799322966</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1573799322966</updated>
+    </task>
+    <task id="LOCAL-00048" summary="add PreProcess">
+      <created>1573799472412</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1573799472412</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -596,7 +634,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="accelerate chi merge" />
     <MESSAGE value="update calc chi2 function" />
     <MESSAGE value="add feature discretize demo" />
     <MESSAGE value="update calc table function" />
@@ -614,21 +651,22 @@
     <MESSAGE value="feature select" />
     <MESSAGE value="code need test" />
     <MESSAGE value="update discrete alg" />
-    <MESSAGE value="clean code" />
     <MESSAGE value="update LRClassifier" />
-    <MESSAGE value="init commit" />
     <MESSAGE value="code example" />
     <MESSAGE value="update merge_cat_table function" />
     <MESSAGE value="update merge_cat_table function (keep old version)" />
     <MESSAGE value="transfer learning data set" />
-    <option name="LAST_COMMIT_MESSAGE" value="transfer learning data set" />
+    <MESSAGE value="init commit" />
+    <MESSAGE value="clean code" />
+    <MESSAGE value="add PreProcess" />
+    <option name="LAST_COMMIT_MESSAGE" value="add PreProcess" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit__1_.coverage" NAME="DiscretizeTreeSplit (1) Coverage Results" MODIFIED="1572508256301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discrete" />
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example__1_.coverage" NAME="Example (1) Coverage Results" MODIFIED="1573197603444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit.coverage" NAME="DiscretizeTreeSplit Coverage Results" MODIFIED="1571796563064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretize" />
-    <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1573717182643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1573787694163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeExample.coverage" NAME="DiscretizeExample Coverage Results" MODIFIED="1568778782024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo/Script" />
     <SUITE FILE_PATH="coverage/scikit_credit$Discretize.coverage" NAME="Discretize Coverage Results" MODIFIED="1571037681836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretize" />
     <SUITE FILE_PATH="coverage/scikit_credit$code.coverage" NAME="code Coverage Results" MODIFIED="1573632876334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
