@@ -19,13 +19,13 @@ class Discrete(BaseEstimator, TransformerMixin):
     def __init__(
             self,
             keep_columns, cat_columns, num_columns,
-            merge_bin, information_value_threshold=0.1):
-        self.__keep_columns = keep_columns
-        self.__cat_columns = cat_columns
-        self.__num_columns = num_columns
+            merge_bin, information_value_threshold=0.02):
+        self.keep_columns = keep_columns
+        self.cat_columns = cat_columns
+        self.num_columns = num_columns
 
-        self.__merge_bin = merge_bin
-        self.__information_value_threshold = information_value_threshold
+        self.merge_bin = merge_bin
+        self.information_value_threshold = information_value_threshold
 
         self.cat_table_ = dict()
         self.num_table_ = dict()
@@ -41,22 +41,22 @@ class Discrete(BaseEstimator, TransformerMixin):
         gc.collect()
 
         with Pool() as pool:
-            if len(self.__cat_columns) != 0:
-                self.cat_table_ = dict(zip(self.__cat_columns, pool.starmap(
+            if len(self.cat_columns) != 0:
+                self.cat_table_ = dict(zip(self.cat_columns, pool.starmap(
                     merge_cat_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_bin) for col in
-                        self.__cat_columns])))
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.merge_bin) for col in
+                        self.cat_columns])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.__information_value_threshold}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.information_value_threshold}
 
         with Pool() as pool:
-            if len(self.__num_columns) != 0:
-                self.num_table_ = dict(zip(self.__num_columns, pool.starmap(
+            if len(self.num_columns) != 0:
+                self.num_table_ = dict(zip(self.num_columns, pool.starmap(
                     merge_num_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.__merge_bin) for col in
-                        self.__num_columns])))
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.merge_bin) for col in
+                        self.num_columns])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.__information_value_threshold}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.information_value_threshold}
 
         self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.information_values_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
@@ -74,7 +74,7 @@ class Discrete(BaseEstimator, TransformerMixin):
         self.cat_columns_ = list(self.cat_table_.keys())
 
         if len(self.cat_columns_) != 0:
-            x = x.drop(list(set(self.__cat_columns).difference(self.cat_columns_)), axis=1)
+            x = x.drop(list(set(self.cat_columns).difference(self.cat_columns_)), axis=1)
 
             for col in self.cat_table_.keys():
                 woe = self.cat_table_[col]["WoE"].tolist()
@@ -82,14 +82,14 @@ class Discrete(BaseEstimator, TransformerMixin):
                 x[col] = x[col].apply(lambda element: replace_cat_woe(element, categories, woe))
 
         if len(self.num_columns_) != 0:
-            x = x.drop(list(set(self.__num_columns).difference(self.num_columns_)), axis=1)
+            x = x.drop(list(set(self.num_columns).difference(self.num_columns_)), axis=1)
 
             for col in self.num_table_.keys():
                 woe = self.num_table_[col]["WoE"].tolist()
                 upper = self.num_table_[col]["Upper"].tolist()
                 x[col] = x[col].apply(lambda element: replace_num_woe(element, upper, woe))
 
-        return x[self.__keep_columns + list(self.information_values_.keys())]
+        return x[self.keep_columns + list(self.information_values_.keys())]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)
