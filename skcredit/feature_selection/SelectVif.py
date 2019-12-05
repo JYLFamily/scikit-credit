@@ -14,31 +14,31 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 class SelectVif(BaseEstimator, TransformerMixin):
-    def __init__(self, *, keep_columns, rs_threshold):
-        self.__keep_columns = keep_columns
-        self.__rs_threshold = rs_threshold
+    def __init__(self, *, keep_columns, rs_threshold=0.8):
+        self.keep_columns = keep_columns
+        self.rs_threshold = rs_threshold
 
-        self.__feature_columns = None
-        self.__feature_support = None
+        self.feature_columns_ = None
+        self.feature_support_ = None
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        self.__feature_columns = np.array([col for col in x.columns if col not in self.__keep_columns])
-        self.__feature_support = np.ones(len(self.__feature_columns), dtype=bool)
+        self.feature_columns_ = np.array([col for col in x.columns if col not in self.keep_columns])
+        self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
 
-        for i in range(len(self.__feature_columns)):
-            for j in range(add(i, 1), len(self.__feature_columns)):
-                if self.__feature_support[j]:
+        for i in range(len(self.feature_columns_)):
+            for j in range(add(i, 1), len(self.feature_columns_)):
+                if self.feature_support_[j]:
                     model = LinearRegression()
                     model.fit(x.iloc[:, [i]], x.iloc[:, j])
                     rs = model.score(x.iloc[:, [i]], x.iloc[:, j])
 
-                    if rs >= self.__rs_threshold:
-                        self.__feature_support[j] = False
-                        logging.info(self.__feature_columns[j] + " remove !")
+                    if rs >= self.rs_threshold:
+                        self.feature_support_[j] = False
+                        logging.info(self.feature_columns_[j] + " remove !")
 
         return self
 
@@ -47,7 +47,7 @@ class SelectVif(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        return x[self.__keep_columns + self.__feature_columns[self.__feature_support].tolist()]
+        return x[self.keep_columns + self.feature_columns_[self.feature_support_].tolist()]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)

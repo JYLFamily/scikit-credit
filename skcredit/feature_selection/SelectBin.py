@@ -14,29 +14,29 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 class SelectBin(BaseEstimator, TransformerMixin):
     def __init__(self, *, keep_columns):
-        self.__keep_columns = keep_columns
+        self.keep_columns = keep_columns
 
-        self.__feature_columns = None
-        self.__feature_support = None
+        self.feature_columns_ = None
+        self.feature_support_ = None
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        self.__feature_columns = np.array([col for col in x.columns if col not in self.__keep_columns])
-        self.__feature_support = np.ones(len(self.__feature_columns), dtype=bool)
+        self.feature_columns_ = np.array([col for col in x.columns if col not in self.keep_columns])
+        self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
 
         beta_0 = np.log(y.sum() / (y.shape[0] - y.sum()))
         beta_1 = 1
 
-        for idx, col in enumerate(self.__feature_columns):
+        for idx, col in enumerate(self.feature_columns_):
             logit_mod = sm.Logit(y, sm.add_constant(x[[col]].to_numpy(), prepend=False))
             logit_res = logit_mod.fit(disp=0)  # disp=0 slience
 
             if (abs(logit_res.params["const"] - beta_0) > 0.00001 and
                     abs(logit_res.params[col] - beta_1) > 0.00001):
-                self.__feature_support[idx] = False
+                self.feature_support_[idx] = False
                 logging.info(col + " remove !")
 
         return self
@@ -46,7 +46,7 @@ class SelectBin(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        return x[self.__keep_columns + self.__feature_columns[self.__feature_support].tolist()]
+        return x[self.keep_columns + self.feature_columns_[self.feature_support_].tolist()]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)
