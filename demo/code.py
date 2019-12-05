@@ -5,11 +5,11 @@ import gc
 import yaml
 import numpy as np
 import pandas as pd
-from skcredit.models import cv, LRClassifier
+from skcredit.models import LRClassifier
 from skcredit.feature_selection import SelectBin
 from skcredit.feature_selection import SelectVif
 from skcredit.feature_discretization import Discrete
-from skcredit.feature_preprocessing import PreProcess
+from skcredit.feature_preprocessing import TidyTabula, SaveMemory
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -30,25 +30,3 @@ if __name__ == "__main__":
                               tes[config["columns"]["target"]].copy(deep=True))
     del tra, tes
     gc.collect()
-
-    from pprint import pprint
-    from sklearn.pipeline import Pipeline
-
-    pipeline = Pipeline([
-        ("preprocess", PreProcess(
-                        keep_columns=[],
-                        cat_columns=[],
-                        num_columns=tra_feature.columns.tolist())),
-        ("discrete", Discrete(
-                        keep_columns=[],
-                        cat_columns=[],
-                        num_columns=tra_feature.columns.tolist(),
-                        merge_bin=0.05,
-                        information_value_threshold=0.002)),
-        ("sbin", SelectBin(keep_columns=[])),
-        ("svif", SelectVif(keep_columns=[], rs_threshold=0.8)),
-        ("model", LRClassifier(keep_columns=[], c=1, random_state=7)),
-    ])
-
-    result = cv([0.25, 0.5, 1.], pipeline, tra_feature, tra_label, 7)
-    pprint(result)
