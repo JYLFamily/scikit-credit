@@ -5,7 +5,7 @@ import gc
 import yaml
 import numpy as np
 import pandas as pd
-from skcredit.models import LRClassifier
+from skcredit.linear_model import LRClassifier
 from skcredit.feature_selection import SelectBin
 from skcredit.feature_selection import SelectVif
 from skcredit.feature_discretization import Discrete

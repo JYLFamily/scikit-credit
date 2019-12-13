@@ -96,7 +96,7 @@ def merge_num_table(X, col, merge_bin):
 
     # init group list
     group_list = group(x_non, col, merge_bin=merge_bin)
-
+    print(group_list)
     # merge bin
     for max_bins in np.arange(10, 1, -1):
         x_non[col + "_bin"], group_list = chi_merge(
@@ -105,6 +105,7 @@ def merge_num_table(X, col, merge_bin):
         x = pd.concat([x_non, x_mis[x_non.columns]])
 
         table = calc_table(x, col)
+        print(table)
         if (table.loc[table["Upper"] != -9999, "WoE"].is_monotonic_increasing or
                 table.loc[table["Upper"] != -9999, "WoE"].is_monotonic_decreasing):
             break

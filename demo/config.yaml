@@ -1,12 +1,12 @@
-path: E:\
+path: F:\
 
 dataset:
-  tra: tra_woe.csv
-  tes: tes_woe.csv
+  tra: tra.csv
+  tes: tes.csv
 
 columns:
   keep:
-  drop: no
-  target: flag
+  drop:
+  target:
 
 

@@ -11,4 +11,4 @@ pd.set_option("max_columns", None)
 def ks_score(estimator, X, y):
     fpr, tpr, _ = roc_curve(y, estimator.predict_proba(X)[:, 1])
 
-    return np.max(tpr - fpr)
+    return round(np.max(tpr - fpr), 5)

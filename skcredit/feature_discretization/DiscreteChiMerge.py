@@ -36,6 +36,7 @@ def group(X, col, merge_bin):
     gc.collect()
 
     min_element, max_element = x[col].min(), x[col].max()
+    print(min_element, max_element)
 
     clf = DecisionTreeClassifier(min_samples_leaf=merge_bin, random_state=7)
     clf.fit(x[[col]], x["target"])

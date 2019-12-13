@@ -4,10 +4,12 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from itertools import compress
+from itertools import count
+from skcredit.linear_model import ks_score
 from sklearn.metrics import roc_curve
+from sklearn.linear_model import LogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.linear_model import LinearRegression, LogisticRegression
+from mlxtend.feature_selection import SequentialFeatureSelector
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -29,41 +31,49 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        # coefficient selection
+        # iter counter
+        counter = count(25, -1)
+
+        # embed feature selection
         self.feature_columns_ = np.array(
             [col for col in x.columns if col not in self.keep_columns])
 
+        select = SequentialFeatureSelector(
+            estimator=LogisticRegression(
+                C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state),
+            k_features=next(counter),
+            forward=True, floating=True,
+            scoring=ks_score,
+            cv=None, n_jobs=-1
+        )
+        select.fit(x[self.feature_columns_], y)
+
         self.model_ = LogisticRegression(
             C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        self.model_.fit(x[self.feature_columns_], y)
+        self.model_.fit(
+            x[np.array(select.k_feature_names_)], y)
         self.coeff_ = self.model_.coef_.reshape(-1,)
+        del select
 
         while np.any(self.coeff_ < 0):
-            vif_list = list()
-            col_list = list()
-
-            for col in list(compress(self.feature_columns_, self.coeff_ < 0)):
-                feature = np.setdiff1d(self.feature_columns_, np.array([col]))
-
-                regressor = LinearRegression()
-                regressor.fit(x.loc[:, feature], x.loc[:, col])
-
-                col_list.append(col)
-                vif_list.append(regressor.score(x.loc[:, feature], x.loc[:, col]))
-            else:
-                self.feature_columns_ = np.setdiff1d(
-                    self.feature_columns_, np.array([col_list[vif_list.index(max(vif_list))]]))
-                logging.info(col_list[vif_list.index(max(vif_list))] + " remove !")
+            select = SequentialFeatureSelector(
+                estimator=LogisticRegression(
+                    C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state),
+                k_features=next(counter),
+                forward=True, floating=True,
+                scoring=ks_score,
+                cv=None, n_jobs=-1
+            )
+            select.fit(x[self.feature_columns_], y)
 
             self.model_ = LogisticRegression(
                 C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-            self.model_.fit(x[self.feature_columns_], y)
+            self.model_.fit(
+                x[np.array(select.k_feature_names_)], y)
             self.coeff_ = self.model_.coef_.reshape(-1,)
-
-        self.model_ = LogisticRegression(
-            C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        self.model_.fit(x[self.feature_columns_], y)
-        self.coeff_ = self.model_.coef_.reshape(-1,)
+        else:
+            self.feature_columns_ = np.array(
+                select.k_feature_names_)
 
         return self
 
@@ -74,8 +84,12 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
 
     def result(self):
         result = dict()
+
         result["column"] = self.feature_columns_.tolist()
+        result["column"].append("intercept")
+
         result["coefficient"] = np.round(self.coeff_, 5).tolist()
+        result["coefficient"].append(self.model_.intercept_[0])
 
         return result
 

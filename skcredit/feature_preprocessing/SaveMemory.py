@@ -51,8 +51,9 @@ class SaveMemory(object):
         gc.collect()
 
         for col in self.num_columns:
+            print(x[col].min(), x[col].max())
             x[col] = x[col].astype(self.num_dtype_[col])
-
+            print(x[col].min(), x[col].max())
         return x
 
     def fit_transform(self, X, y=None, **fit_params):
