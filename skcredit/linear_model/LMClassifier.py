@@ -2,23 +2,34 @@
 
 import gc
 import logging
+import tempfile
 import numpy as np
 import pandas as pd
+from joblib import Memory
 from itertools import count
-from skcredit.linear_model import ks_score
 from sklearn.metrics import roc_curve
+from sklearn.cluster import FeatureAgglomeration
 from sklearn.linear_model import LogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
-from mlxtend.feature_selection import SequentialFeatureSelector
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-class LRClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, c, keep_columns, random_state):
-        self.c = c
+def first_feature_in_group(labels):
+    d = dict()
+
+    for idx, val in enumerate(labels):
+        if val not in d.keys():
+            d[val] = idx
+
+    return np.array(list(d.values()))
+
+
+class LMClassifier(BaseEstimator, ClassifierMixin):
+    def __init__(self, C, PDO, BASE, ODDS, keep_columns, random_state):
+        self.C = C
         self.keep_columns = keep_columns
         self.random_state = random_state
 
@@ -26,54 +37,47 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         self.model_ = None
         self.coeff_ = None
 
+        self.b_ = PDO / np.log(2)
+        self.a_ = BASE - self.b_ * np.log(ODDS)
+
     def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        # iter counter
-        counter = count(25, -1)
-
-        # embed feature selection
         self.feature_columns_ = np.array(
             [col for col in x.columns if col not in self.keep_columns])
 
-        select = SequentialFeatureSelector(
-            estimator=LogisticRegression(
-                C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state),
-            k_features=next(counter),
-            forward=True, floating=True,
-            scoring=ks_score,
-            cv=None, n_jobs=-1
-        )
-        select.fit(x[self.feature_columns_], y)
-
+        # # iter counter
+        # counter = count(15, -1) if len(self.feature_columns_) > 15 else count(len(self.feature_columns_), -1)
+        #
+        # # feature agglomeration
+        # ward = FeatureAgglomeration(
+        #     n_clusters=next(counter), memory=Memory(location=tempfile.mkdtemp(), verbose=0))
+        # ward.fit(x[self.feature_columns_])
+        # self.feature_columns_ = self.feature_columns_[first_feature_in_group(ward.labels_)]
+        #
+        # self.model_ = LogisticRegression(
+        #     C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
+        # self.model_.fit(x[self.feature_columns_], y)
+        # self.coeff_ = self.model_.coef_.reshape(-1,)
+        #
+        # while np.any(self.coeff_ < 0):
+        #     ward = FeatureAgglomeration(
+        #         n_clusters=next(counter), memory=Memory(location=tempfile.mkdtemp(), verbose=0))
+        #     ward.fit(x[self.feature_columns_])
+        #     self.feature_columns_ = self.feature_columns_[first_feature_in_group(ward.labels_)]
+        #
+        #     self.model_ = LogisticRegression(
+        #         C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
+        #     self.model_.fit(x[self.feature_columns_], y)
+        #     self.coeff_ = self.model_.coef_.reshape(-1,)
+        # self.model_ = LogisticRegression(
+        #     C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
         self.model_ = LogisticRegression(
-            C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        self.model_.fit(
-            x[np.array(select.k_feature_names_)], y)
+            C=self.C, max_iter=10000, random_state=self.random_state)
+        self.model_.fit(x[self.feature_columns_], y)
         self.coeff_ = self.model_.coef_.reshape(-1,)
-        del select
-
-        while np.any(self.coeff_ < 0):
-            select = SequentialFeatureSelector(
-                estimator=LogisticRegression(
-                    C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state),
-                k_features=next(counter),
-                forward=True, floating=True,
-                scoring=ks_score,
-                cv=None, n_jobs=-1
-            )
-            select.fit(x[self.feature_columns_], y)
-
-            self.model_ = LogisticRegression(
-                C=self.c, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-            self.model_.fit(
-                x[np.array(select.k_feature_names_)], y)
-            self.coeff_ = self.model_.coef_.reshape(-1,)
-        else:
-            self.feature_columns_ = np.array(
-                select.k_feature_names_)
 
         return self
 
@@ -85,11 +89,13 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
     def result(self):
         result = dict()
 
-        result["column"] = self.feature_columns_.tolist()
-        result["column"].append("intercept")
+        column = self.feature_columns_.tolist()
+        column.append("intercept")
+        coeffs = self.coeff_.tolist()
+        coeffs.append(self.model_.intercept_[0])
 
-        result["coefficient"] = np.round(self.coeff_, 5).tolist()
-        result["coefficient"].append(self.model_.intercept_[0])
+        for k, v in zip(column, coeffs):
+            result[k] = v
 
         return result
 
@@ -99,7 +105,7 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         return self.model_.predict(
-            x[self.keep_columns + self.feature_columns_.tolist()])
+            x[self.feature_columns_.tolist()])
 
     def predict_proba(self, X):
         x = X.copy(deep=True)
@@ -107,5 +113,14 @@ class LRClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         return self.model_.predict_proba(
-            x[self.keep_columns + self.feature_columns_.tolist()])
+            x[self.feature_columns_.tolist()])
+
+    def predict_score(self, X):
+        x = X.copy(deep=True)
+        del X
+        gc.collect()
+
+        y = np.log(self.predict_proba(x)[:, 1] / self.predict_proba(x)[:, 0])
+
+        return np.round(self.a_ + self.b_ * (- y))
 

@@ -36,9 +36,7 @@ class SaveMemory(object):
                 elif col_min > np.iinfo(np.int64).min and col_max < np.iinfo(np.int64).max:
                     self.num_dtype_[col] = np.int64
             else:
-                if col_min > np.finfo(np.float16).min and col_max < np.finfo(np.float16).max:
-                    self.num_dtype_[col] = np.float16
-                elif col_min > np.finfo(np.float32).min and col_max < np.finfo(np.float32).max:
+                if col_min > np.finfo(np.float32).min and col_max < np.finfo(np.float32).max:
                     self.num_dtype_[col] = np.float32
                 elif col_min > np.finfo(np.float64).min and col_max < np.finfo(np.float64).max:
                     self.num_dtype_[col] = np.float64
@@ -51,9 +49,7 @@ class SaveMemory(object):
         gc.collect()
 
         for col in self.num_columns:
-            print(x[col].min(), x[col].max())
             x[col] = x[col].astype(self.num_dtype_[col])
-            print(x[col].min(), x[col].max())
         return x
 
     def fit_transform(self, X, y=None, **fit_params):

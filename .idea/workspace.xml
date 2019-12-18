@@ -2,19 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/demo/Example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/Example2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/linear_model/LMWrapper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/Monitor.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/monitor/BEndReport.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/monitor/FEndReport.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/monitor/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/code.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Example.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/Example2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/code.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteChiMerge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteUtil.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteChiMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteUtil.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessing/SaveMemory.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessing/SaveMemory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/models/LRClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/models/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/models/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMWrapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/util.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +92,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Example">
+  <component name="RunManager" selected="Python.Monitor">
     <configuration name="Example" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -105,7 +115,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Example2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="FEndReport" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -113,12 +123,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/monitor" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Example2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/monitor/FEndReport.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -171,7 +181,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="dfd" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Monitor" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -179,12 +189,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/models" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/models/dfd.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Monitor.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -195,11 +205,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Monitor" />
         <item itemvalue="Python.Example" />
+        <item itemvalue="Python.FEndReport" />
         <item itemvalue="Python.LMWrapper (1)" />
         <item itemvalue="Python.LMWrapper" />
-        <item itemvalue="Python.Example2" />
-        <item itemvalue="Python.dfd" />
       </list>
     </recent_temporary>
   </component>
@@ -258,14 +268,10 @@
       <workItem from="1575854128954" duration="16000" />
       <workItem from="1575857349319" duration="46214000" />
       <workItem from="1576115560060" duration="18653000" />
-      <workItem from="1576144324299" duration="28012000" />
-    </task>
-    <task id="LOCAL-00015" summary="clean code">
-      <created>1565603216226</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1565603216226</updated>
+      <workItem from="1576144324299" duration="78466000" />
+      <workItem from="1576630370303" duration="795000" />
+      <workItem from="1576631196331" duration="11665000" />
+      <workItem from="1576649960517" duration="10792000" />
     </task>
     <task id="LOCAL-00016" summary="use multiprocessing">
       <created>1565603305147</created>
@@ -603,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575530642544</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="init commit">
+      <created>1576232314270</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1576232314278</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -699,19 +712,21 @@
     <MESSAGE value="add cv" />
     <MESSAGE value="code example" />
     <MESSAGE value="compatible pipeline" />
-    <MESSAGE value="init commit" />
     <MESSAGE value="add cv support" />
     <MESSAGE value="add TidyTabula &amp; SaveMemory class" />
     <MESSAGE value="remove" />
     <MESSAGE value="add example" />
-    <option name="LAST_COMMIT_MESSAGE" value="add example" />
+    <MESSAGE value="init commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$LMWrapper.coverage" NAME="LMWrapper Coverage Results" MODIFIED="1576203741396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/models" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscretizeTreeSplit__1_.coverage" NAME="DiscretizeTreeSplit (1) Coverage Results" MODIFIED="1572508256301" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discrete" />
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example__1_.coverage" NAME="Example (1) Coverage Results" MODIFIED="1573197603444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
-    <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1576230004137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
+    <SUITE FILE_PATH="coverage/scikit_credit$FEndReport.coverage" NAME="FEndReport Coverage Results" MODIFIED="1576562069856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/monitor" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Monitor.coverage" NAME="Monitor Coverage Results" MODIFIED="1576661157484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1576639100505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$LRClassifier.coverage" NAME="LRClassifier Coverage Results" MODIFIED="1575514918882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/models" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example2.coverage" NAME="Example2 Coverage Results" MODIFIED="1575966029046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$LMWrapper__1_.coverage" NAME="LMWrapper (1) Coverage Results" MODIFIED="1576224596522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/linear_model" />

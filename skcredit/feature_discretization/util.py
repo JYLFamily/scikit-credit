@@ -25,29 +25,3 @@ def save_table(discrete, path):
     with pd.ExcelWriter(os.path.join(path, "table.xlsx")) as writer:
         for feature, table in table.items():
             table.to_excel(writer, sheet_name=feature[-30:], index=False)
-
-
-def plot_importance(discretize):
-    """
-    :param discretize:
-    :return:
-
-    >>> plot_importance(discretize)
-    >>> plt.show()
-    """
-
-    table = pd.DataFrame({
-        "feature": list(discretize.information_values_.keys()),
-        "information value": list(discretize.information_values_.values())
-    })
-    fig, ax = plt.subplots()
-    ax = table.plot(
-        x="feature",
-        y="information value",
-        kind="bar",
-        ax=ax
-    )
-    ax.hlines(y=0.02, xmin=ax.get_xlim()[0], xmax=ax.get_xlim()[1], linestyles="dashed")
-    ax.set_title(label="information value")
-
-    return ax

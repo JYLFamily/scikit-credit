@@ -1,8 +1,7 @@
-path: F:\
+path: C:\Users\P1352\Desktop
 
 dataset:
-  tra: tra.csv
-  tes: tes.csv
+  dataset.pkl
 
 columns:
   keep:

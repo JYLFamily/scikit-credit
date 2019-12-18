@@ -1,10 +1,13 @@
 # coding: utf-8
 
-from skcredit.feature_discretization.Discrete import Discrete
-from skcredit.feature_discretization.util import save_table, plot_importance
+from skcredit.feature_discretization.BaseDiscrete import BaseDiscrete
+from skcredit.feature_discretization.DiscreteAuto import DiscreteAuto
+from skcredit.feature_discretization.DiscreteCust import DiscreteCust
+from skcredit.feature_discretization.util import save_table
 
 __all__ = [
-    "Discrete",
     "save_table",
-    "plot_importance"
+    "BaseDiscrete",
+    "DiscreteAuto",
+    "DiscreteCust"
 ]
