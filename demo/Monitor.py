@@ -130,7 +130,7 @@ if __name__ == "__main__":
     print(result["tes"]["ks"], result["tes"]["auc"])
     print("=" * 78)
 
-    result = BEndReport.performance(
+    result = BEndReport.report(
         discrete,
         model,
         tidy.transform(tra_tabular),
@@ -138,7 +138,7 @@ if __name__ == "__main__":
         tidy.transform(tes_tabular),
         tes_label
     )
-    print("=" * 36 + "perfor" + "=" * 36)
+    print("=" * 36 + "report" + "=" * 36)
     print(result["tra"])
     print(result["tes"])
     print("=" * 78)
