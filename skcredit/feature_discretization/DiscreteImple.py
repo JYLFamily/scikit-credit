@@ -11,11 +11,11 @@ pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-def calc_part_table(X, col, column_type):
+def calc_part_table(X, col, col_type):
     """
     :param X:
     :param col:
-    :param column_type:
+    :param col_type:
     :return:
     """
     x = X.copy(deep=True)
@@ -24,14 +24,17 @@ def calc_part_table(X, col, column_type):
 
     part_table = pd.DataFrame
 
-    if column_type == "cat":
-        cnt_rec = x.groupby(col)["target"].agg(len).to_frame("CntRec")
-        cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive")
-        cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
+    if col_type == "cat":
+        cnt_rec = x.groupby(col + "_bin")["target"].agg(len).to_frame("CntRec")
+        cnt_positive = x.loc[x["target"] == 1, [col + "_bin", "target"]].groupby(
+            col + "_bin")["target"].agg(len).to_frame("CntPositive")
+        cnt_negative = x.loc[x["target"] == 0, [col + "_bin", "target"]].groupby(
+            col + "_bin")["target"].agg(len).to_frame("CntNegative")
 
         part_table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
+        part_table = part_table.reset_index().rename(columns={col + "_bin": col})
 
-    elif column_type == "num":
+    elif col_type == "num":
         lower_bin = x.groupby(col + "_bin")[col].min().to_frame("Lower").reset_index(drop=True)
         upper_bin = x.groupby(col + "_bin")[col].max().to_frame("Upper").reset_index(drop=True)
 
@@ -46,11 +49,11 @@ def calc_part_table(X, col, column_type):
     return part_table
 
 
-def calc_table(X, col, column_type):
+def calc_table(X, col, col_type):
     """
     :param X:
     :param col:
-    :param column_type:
+    :param col_type:
     :return:
     """
     x = X.copy(deep=True)
@@ -59,15 +62,15 @@ def calc_table(X, col, column_type):
 
     table = pd.DataFrame
 
-    if column_type == "cat":
-        x_non = x.loc[x[col] != "missing", :].copy(deep=True)
-        x_mis = x.loc[x[col] == "missing", :].copy(deep=True)
+    if col_type == "cat":
+        x_non = x.loc[x[col + "_bin"] != "missing", :].copy(deep=True)
+        x_mis = x.loc[x[col + "_bin"] == "missing", :].copy(deep=True)
 
         cat_columns = [
             col, "CntRec", "CntPositive", "CntNegative", "PositiveRate", "NegativeRate", "WoE", "IV"]
 
         if x_mis.empty is True:
-            table = calc_part_table(x_non, col, "cat").reset_index()
+            table = calc_part_table(x_non, col, "cat")
 
             table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
             table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
@@ -77,8 +80,8 @@ def calc_table(X, col, column_type):
 
             table = table.reindex(columns=cat_columns)
         else:
-            non_table = calc_part_table(x_non, col, "cat").reset_index()
-            mis_table = calc_part_table(x_mis, col, "cat").reset_index()
+            non_table = calc_part_table(x_non, col, "cat")
+            mis_table = calc_part_table(x_mis, col, "cat")
             table = pd.concat([non_table.reindex(columns=cat_columns), mis_table.reindex(columns=cat_columns)])
 
             table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
@@ -89,7 +92,7 @@ def calc_table(X, col, column_type):
 
             table = table.reindex(columns=cat_columns)
 
-    elif column_type == "num":
+    elif col_type == "num":
         x_non = x.loc[x[col] != -9999, :].copy(deep=True)
         x_mis = x.loc[x[col] == -9999, :].copy(deep=True)
 
@@ -251,7 +254,8 @@ def force_cat_table(X, col, force_bin):
     x_non = x.loc[x[col] != "missing", :].copy(deep=True)
     x_mis = x.loc[x[col] == "missing", :].copy(deep=True)
 
-    x_non[col] = x_non[col].apply(lambda i: [", ".join(f) for f in force_bin if i in f][0])
+    x_non[col + "_bin"] = x_non[col].apply(lambda i: [", ".join(f) for f in force_bin if i in f][0])
+    x_mis[col + "_bin"] = "missing"
     x = pd.concat([x_non, x_mis[x_non.columns]])
 
     table = calc_table(x, col, "cat")
