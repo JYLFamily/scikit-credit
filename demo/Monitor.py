@@ -67,8 +67,8 @@ if __name__ == "__main__":
         "user_gray.contacts_query.org_cnt_2": [-np.inf, 6.0, 17.0, 27.0, np.inf]
     }
 
-    tra = pd.read_csv("F:\\work\\ZhongHe\\tra.csv", encoding="GBK")
-    tes = pd.read_csv("F:\\work\\ZhongHe\\tes.csv", encoding="GBK")
+    tra = pd.read_csv("H:\\tra_sy.csv", encoding="GBK")
+    tes = pd.read_csv("H:\\tes_sy.csv", encoding="GBK")
 
     tra_tabular = tra[cat_columns + num_columns].copy(deep=True)
     tes_tabular = tes[cat_columns + num_columns].copy(deep=True)
@@ -89,6 +89,7 @@ if __name__ == "__main__":
 
     model = LMClassifier(C=0.05, PDO=20, BASE=600, ODDS=1, keep_columns=[], random_state=7)
     model.fit(tra_feature, tra_label)
+    pprint(model.result())
 
     result = FEndReport.psi(discrete, model, tidy.transform(tra_tabular), tidy.transform(tes_tabular))
     print("=" * 36 + "PSI" + "=" * 36)

@@ -78,7 +78,7 @@ class BEndReport(object):
         return result
 
     @staticmethod
-    def performance(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
+    def report(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
         tra_feature = discrete.transform(tra_feature)
         tes_feature = discrete.transform(tes_feature)
 
