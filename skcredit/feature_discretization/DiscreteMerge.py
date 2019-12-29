@@ -10,142 +10,120 @@ pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-def chisq(X):
+def calc_chisq(X, col, idx, break_list):
+    """
+    :param X: regroup
+    :param col:
+    :param idx:
+    :param break_list:
+    :return:
+    """
     x = X.copy(deep=True)
     del X
     gc.collect()
 
-    r = [x.iloc[0, :].sum(), x.iloc[1, :].sum()]
-    c = [x.iloc[:, 0].sum(), x.iloc[:, 1].sum()]
-    n = x.to_numpy().sum()
-    chi2 = 0.0
+    table = np.vstack((
+        x.loc[x[col].isin(break_list[idx]), ["CntPositive", "CntNegative"]].to_numpy().sum(
+            axis=0, keepdims=True),
+        x.loc[x[col].isin(break_list[add(idx, 1)]), ["CntPositive", "CntNegative"]].to_numpy().sum(
+            axis=0, keepdims=True)
+    ))
 
-    for row in np.arange(2):
-        for col in np.arange(2):
+    r = table.sum(axis=1)  # [x.iloc[0, :].sum(), x.iloc[1, :].sum()]
+    c = table.sum(axis=0)  # [x.iloc[:, 0].sum(), x.iloc[:, 1].sum()]
+    n = table.sum()
+    result = 0.0
+
+    for row in range(2):
+        for col in range(2):
             expect = r[row] * c[col] / n
-            actual = x.loc[row, col]
+            actual = table[row, col]
             expect = 0.5 if expect < 0.5 else expect
-            chi2 += pow((actual - expect), 2) / expect
+            result += pow((actual - expect), 2) / expect
 
-    return chi2
+    return result
 
 
-def group(X, col, merge_bin):
+def exam_break(X, col, idx, break_list):
+    """
+    :param X: regroup
+    :param col:
+    :param idx:
+    :param break_list:
+    :return:
+    """
     x = X.copy(deep=True)
     del X
     gc.collect()
 
-    min_element, max_element = x[col].min(), x[col].max()
+    # 第一箱
+    if idx == 0:
+        break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
+        break_list.remove(break_list[add(idx, 1)])
+    # 最后箱
+    elif idx == len(break_list) - 1:
+        break_list[idx] = break_list[idx] + break_list[sub(idx, 1)]
+        break_list.remove(break_list[sub(idx, 1)])
+    # 中间箱
+    else:
+        # 后一箱
+        chisq_after = calc_chisq(x, col, idx, break_list)
 
-    clf = DecisionTreeClassifier(min_samples_leaf=merge_bin, random_state=7)
+        # 前一箱
+        chisq_before = calc_chisq(x, col, idx, break_list)
+
+        if chisq_after < chisq_before:
+            break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
+            break_list.remove(break_list[add(idx, 1)])
+        else:
+            break_list[idx] = break_list[idx] + break_list[sub(idx, 1)]
+            break_list.remove(break_list[sub(idx, 1)])
+
+    return break_list
+
+
+def chisq_merge(X, col):
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    # 初始分箱
+    clf = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col]], x["target"])
 
     # from sklearn.tree import _tree
     # _tree.TREE_UNDEFINED == -2
-    group_list = [[element] for element in np.sort(clf.tree_.threshold) if element != -2]  # sort
-    group_list = [[min_element]] + group_list + [[max_element]]
+    break_list = [[element] for element in np.sort(clf.tree_.threshold) if element != -2]  # sort
+    break_list = [[- np.inf]] + break_list + [[x[col].max()]]
+    x[col] = x[col].apply(
+        lambda element: [max(l) for l in break_list if element <= max(l)][0])
 
-    return group_list
-
-
-def check(X, col, idx, group_list):
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
-
-    if idx == 0:  # 第一箱
-        group_list[idx] = group_list[idx] + group_list[add(idx, 1)]
-        group_list.remove(group_list[add(idx, 1)])
-    elif idx == len(group_list) - 1:  # 最后箱
-        group_list[idx] = group_list[idx] + group_list[sub(idx, 1)]
-        group_list.remove(group_list[sub(idx, 1)])
-    else:  # 中间箱
-        observed_after = pd.DataFrame(np.vstack((  # 后一箱
-            x.loc[x[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                axis=0, keepdims=True),
-            x.loc[x[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                axis=0, keepdims=True)
-        )))
-        chisq_after = chisq(observed_after)
-
-        observed_before = pd.DataFrame(np.vstack((  # 前一箱
-            x.loc[x[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                axis=0, keepdims=True),
-            x.loc[x[col].isin(group_list[sub(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                axis=0, keepdims=True)
-        )))
-        chisq_before = chisq(observed_before)
-
-        if chisq_after < chisq_before:
-            group_list[idx] = group_list[idx] + group_list[add(idx, 1)]
-            group_list.remove(group_list[add(idx, 1)])
-        else:
-            group_list[idx] = group_list[idx] + group_list[sub(idx, 1)]
-            group_list.remove(group_list[sub(idx, 1)])
-
-    return group_list
-
-
-def chi_merge(X, col, max_bins, merge_bin, **kwargs):
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
-
-    if "group_list" in kwargs.keys():
-        group_list = kwargs["group_list"]
-    else:
-        # if x[col].nunique() <= 50:
-        #     group_list = [[value] for value in sorted(x[col].unique())]
-        # else:
-        #     # 使用分位数上限制代替原始值
-        #     _, group_list = pd.qcut(x[col], q=50, retbins=True, duplicates="drop")
-        #     group_list = [[value] for value in group_list]
-        group_list = [[value] for value in sorted(x[col].unique())]
-    x[col] = x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0])  # 使用分位数上限制代替原始值
-
-    # total 样本数, positive 样本数, negative 样本数
     regroup = pd.concat([
-        x.groupby(col)["target"].count().to_frame("total"),
-        x.groupby(col)["target"].sum().to_frame("positive")
+        x.groupby(col)["target"].agg(len).to_frame("CntRec"),
+        x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive"),
+        x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
     ], axis=1).reset_index()
-    regroup["negative"] = regroup["total"] - regroup["positive"]
 
-    # 分箱
-    while len(group_list) > max_bins:
-        chisq_list = []
-        for idx in np.arange(sub(len(group_list), 1)):
-            # 列联表
-            observed = pd.DataFrame(np.vstack((
-                regroup.loc[regroup[col].isin(group_list[idx]), ["positive", "negative"]].to_numpy().sum(
-                    axis=0, keepdims=True),
-                regroup.loc[regroup[col].isin(group_list[add(idx, 1)]), ["positive", "negative"]].to_numpy().sum(
-                    axis=0, keepdims=True)
-            )))
-            chisq_list.append(chisq(observed))
-
+    # 分箱过程 [0.900, df=1 2.705543] [0.950, df=1 3.841459] [0.990, df=1 6.634897] [0.999, df=1 10.82757]
+    chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
+    while min(chisq_list) < 10.82757:
         idx = chisq_list.index(min(chisq_list))
-        group_list[idx] = group_list[idx] + group_list[add(idx, 1)]
-        group_list.remove(group_list[add(idx, 1)])
+        break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
+        break_list.remove(break_list[add(idx, 1)])
+        chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
 
-    # 存在 negative == 0 的 group
-    count_list = [regroup.loc[regroup[col].isin(g), "negative"].count() for g in group_list]
-    while min(count_list) == 0:
-        idx = count_list.index(0)
-        group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(g), "negative"].count() for g in group_list]
-
-    # 存在 positive == 0 的 group
-    count_list = [regroup.loc[regroup[col].isin(g), "positive"].count() for g in group_list]
-    while min(count_list) == 0:
-        idx = count_list.index(0)
-        group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(g), "positive"].count() for g in group_list]
-
-    # merge bin 检查
-    count_list = [regroup.loc[regroup[col].isin(g), "total"].sum() for g in group_list]
-    while truediv(min(count_list), sum(count_list)) < merge_bin:
+    # 分箱检查 存在 positive <= 25 的 break
+    count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
+    while min(count_list) <= 25:
         idx = count_list.index(min(count_list))
-        group_list = check(regroup, col, idx, group_list)
-        count_list = [regroup.loc[regroup[col].isin(g), "total"].sum() for g in group_list]
+        break_list = exam_break(regroup, col, idx, break_list)
+        count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
 
-    return x[col].apply(lambda i: [max(g) for g in group_list if i <= max(g)][0]).tolist(), group_list
+    # 分箱检查 存在 negative <= 25 的 break
+    count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
+    while min(count_list) <= 25:
+        idx = count_list.index(min(count_list))
+        break_list = exam_break(regroup, col, idx, break_list)
+        count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
+
+    return [- np.inf] + [max(l) for l in break_list][:-1] + [np.inf]

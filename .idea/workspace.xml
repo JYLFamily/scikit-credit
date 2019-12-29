@@ -4,7 +4,13 @@
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/monitor/BEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/monitor/BEndReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/util.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +50,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -253,6 +259,8 @@
       <workItem from="1576631196331" duration="11665000" />
       <workItem from="1576649960517" duration="14380000" />
       <workItem from="1577000768052" duration="2961000" />
+      <workItem from="1577587681104" duration="864000" />
+      <workItem from="1577619494280" duration="3310000" />
     </task>
     <task id="LOCAL-00017" summary="clean code">
       <created>1565605228015</created>

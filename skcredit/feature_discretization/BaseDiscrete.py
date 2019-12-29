@@ -7,17 +7,13 @@ from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, repla
 
 
 class BaseDiscrete(BaseEstimator, TransformerMixin):
-    def __init__(self,
-            keep_columns, cat_columns, num_columns):
+    def __init__(self, keep_columns):
         self.keep_columns = keep_columns
-        self.cat_columns = cat_columns
-        self.num_columns = num_columns
+        self.cat_columns_ = None
+        self.num_columns_ = None
 
         self.cat_table_ = dict()
         self.num_table_ = dict()
-
-        self.cat_columns_ = None
-        self.num_columns_ = None
 
         self.information_values_ = OrderedDict()
 
@@ -29,24 +25,19 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        self.num_columns_ = list(self.num_table_.keys())
-        self.cat_columns_ = list(self.cat_table_.keys())
+        x = x[self.keep_columns + list(self.information_values_.keys())]
 
-        if len(self.cat_columns_) != 0:
-            x = x.drop(list(set(self.cat_columns).difference(self.cat_columns_)), axis=1)
-
+        if self.cat_table_.keys():
             for col in self.cat_table_.keys():
                 woe = self.cat_table_[col]["WoE"].tolist()
-                categories = self.cat_table_[col][col].tolist()
-                x[col] = x[col].apply(lambda element: replace_cat_woe(element, categories, woe))
+                group_list = self.cat_table_[col][col].tolist()
+                x[col] = x[col].apply(lambda element: replace_cat_woe(element, group_list, woe))
 
-        if len(self.num_columns_) != 0:
-            x = x.drop(list(set(self.num_columns).difference(self.num_columns_)), axis=1)
-
+        if self.num_table_.keys():
             for col in self.num_table_.keys():
                 woe = self.num_table_[col]["WoE"].tolist()
-                upper = self.num_table_[col]["Upper"].tolist()
-                x[col] = x[col].apply(lambda element: replace_num_woe(element, upper, woe))
+                break_list = self.num_table_[col][col].tolist()
+                x[col] = x[col].apply(lambda element: replace_num_woe(element, break_list, woe))
 
         return x[self.keep_columns + list(self.information_values_.keys())]
 

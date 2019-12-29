@@ -36,7 +36,21 @@ if __name__ == "__main__":
         "user_gray.contacts_query.org_cnt_2"
     ]
 
-    force_bin = {
+    group_dict = {
+        "user_basic.user_province": [
+            ["上海市", "北京市", "吉林省", "天津市", "宁夏回族自治区", "山西省",
+             "新疆维吾尔自治区", "江西省", "河北省", "河南省", "海南省", "西藏自治区"],
+            ["云南省", "内蒙古自治区", "四川省", "安徽省", "山东省", "江苏省", "浙江省", "湖北省", "陕西省"],
+            ["广东省", "广西壮族自治区", "湖南省", "甘肃省", "福建省", "贵州省", "辽宁省", "重庆市", "青海省", "黑龙江省"]],
+        "user_basic.user_phone_province": [
+            ["北京", "吉林", "新疆", "海南"],
+            ["上海", "云南", "湖北", "西藏"],
+            ["内蒙古", "四川", "宁夏", "安徽", "山东", "山西", "江苏", "江西", "河北", "河南", "浙江", "陕西"],
+            ["天津", "广东", "湖南", "甘肃", "辽宁", "重庆", "黑龙江"],
+            ["广西", "福建", "贵州", "青海"]]
+    }
+
+    break_dict = {
         "user_searched_history_by_day.m_12.cnt_cc": [-np.inf, 1.0, np.inf],
         "user_gray.contacts_rfm.call_cnt_to_applied": [-np.inf, 7, np.inf],
         "user_searched_history_by_day.d_90.cnt_org_cash": [-np.inf, 1.0, 2.0, 4.0, 6.0, 11.0, 15.0, np.inf],
@@ -44,18 +58,7 @@ if __name__ == "__main__":
         "user_gray.contacts_gray_score.be_mean": [-np.inf, 44.21, 51.774, np.inf],
         "user_gray.contacts_relation_distribution.be_not_familiar": [-np.inf, 37.0, np.inf],
         "user_searched_history_by_day.d_7.pct_cnt_org_cash": [-np.inf, 0.696, 0.871, 0.958, np.inf],
-        "user_basic.user_province": [
-            ["上海市", "北京市", "吉林省", "天津市", "宁夏回族自治区", "山西省",
-             "新疆维吾尔自治区", "江西省", "河北省", "河南省", "海南省", "西藏自治区"],
-            ["云南省", "内蒙古自治区", "四川省", "安徽省", "山东省", "江苏省", "浙江省", "湖北省", "陕西省"],
-            ["广东省", "广西壮族自治区", "湖南省", "甘肃省", "福建省", "贵州省", "辽宁省", "重庆市", "青海省", "黑龙江省"]],
         "user_gray.contacts_query.to_org_cnt_3": [-np.inf, 10.0, 29.0, np.inf],
-        "user_basic.user_phone_province": [
-            ["北京", "吉林", "新疆", "海南"],
-            ["上海", "云南", "湖北", "西藏"],
-            ["内蒙古", "四川", "宁夏", "安徽", "山东", "山西", "江苏", "江西", "河北", "河南", "浙江", "陕西"],
-            ["天津", "广东", "湖南", "甘肃", "辽宁", "重庆", "黑龙江"],
-            ["广西", "福建", "贵州", "青海"]],
         "user_gray.phone_gray_score": [-np.inf, 3.291, 43.04, np.inf],
         "user_searched_history_by_day.m_9.cnt_org": [-np.inf, 10.0, 14.0, 31.0, np.inf],
         "user_searched_history_by_day.m_9.pct_cnt_cf": [-np.inf, 0.601, 0.828, 0.994, np.inf],
@@ -82,7 +85,7 @@ if __name__ == "__main__":
     tra_feature = tidy.transform(tra_feature)
     tes_feature = tidy.transform(tes_feature)
 
-    discrete = DiscreteCust(keep_columns=[], cat_columns=cat_columns, num_columns=num_columns, force_bin=force_bin)
+    discrete = DiscreteCust(keep_columns=[], group_dict=group_dict, break_dict=break_dict)
     discrete.fit(tra_feature, tra_label)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)

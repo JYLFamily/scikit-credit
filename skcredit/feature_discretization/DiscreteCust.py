@@ -13,30 +13,34 @@ pd.set_option("max_columns", None)
 
 
 class DiscreteCust(BaseDiscrete):
-    def __init__(self, keep_columns, cat_columns, num_columns, force_bin):
-        super().__init__(keep_columns, cat_columns, num_columns)
+    def __init__(self, keep_columns, group_dict, break_dict):
+        super().__init__(keep_columns)
 
-        self.force_bin = force_bin
+        self.group_dict = group_dict
+        self.break_dict = break_dict
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
+        self.cat_columns_ = [col for col in x.select_dtypes(include="object").columns if col not in self.keep_columns]
+        self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.keep_columns]
+
         with Pool() as pool:
-            if len(self.cat_columns) != 0:
-                self.cat_table_ = dict(zip(self.cat_columns, pool.starmap(
+            if self.cat_columns_:
+                self.cat_table_ = dict(zip(self.cat_columns_, pool.starmap(
                     force_cat_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.force_bin[col]) for col in
-                     self.cat_columns])))
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.group_dict[col]) for col in
+                     self.cat_columns_])))
         self.cat_table_ = {col: val for col, val in self.cat_table_.items()}
 
         with Pool() as pool:
-            if len(self.num_columns) != 0:
-                self.num_table_ = dict(zip(self.num_columns, pool.starmap(
+            if self.num_columns_:
+                self.num_table_ = dict(zip(self.num_columns_, pool.starmap(
                     force_num_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.force_bin[col]) for col in
-                        self.num_columns])))
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col, self.break_dict[col]) for col in
+                        self.num_columns_])))
         self.num_table_ = {col: val for col, val in self.num_table_.items()}
 
         self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
