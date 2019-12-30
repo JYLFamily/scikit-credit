@@ -6,7 +6,7 @@ from pprint import pprint
 from skcredit.linear_model import LMClassifier
 from skcredit.monitor import FEndReport, BEndReport
 from skcredit.feature_preprocessing import TidyTabula
-from skcredit.feature_discretization import DiscreteCust
+from skcredit.feature_discretization import save_table, DiscreteCust
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -51,27 +51,27 @@ if __name__ == "__main__":
     }
 
     break_dict = {
-        "user_searched_history_by_day.m_12.cnt_cc": [-np.inf, 1.0, np.inf],
-        "user_gray.contacts_rfm.call_cnt_to_applied": [-np.inf, 7, np.inf],
-        "user_searched_history_by_day.d_90.cnt_org_cash": [-np.inf, 1.0, 2.0, 4.0, 6.0, 11.0, 15.0, np.inf],
-        "user_gray.contacts_rfm.time_spent_be_applied": [-np.inf, 1405.0, 7647.16, np.inf],
-        "user_gray.contacts_gray_score.be_mean": [-np.inf, 44.21, 51.774, np.inf],
-        "user_gray.contacts_relation_distribution.be_not_familiar": [-np.inf, 37.0, np.inf],
-        "user_searched_history_by_day.d_7.pct_cnt_org_cash": [-np.inf, 0.696, 0.871, 0.958, np.inf],
-        "user_gray.contacts_query.to_org_cnt_3": [-np.inf, 10.0, 29.0, np.inf],
-        "user_gray.phone_gray_score": [-np.inf, 3.291, 43.04, np.inf],
-        "user_searched_history_by_day.m_9.cnt_org": [-np.inf, 10.0, 14.0, 31.0, np.inf],
-        "user_searched_history_by_day.m_9.pct_cnt_cf": [-np.inf, 0.601, 0.828, 0.994, np.inf],
-        "user_gray.contacts_number_statistic.pct_black_ratio": [-np.inf, 0.863, np.inf],
-        "user_gray.contacts_number_statistic.pct_router_ratio": [-np.inf, 0.366, 0.666, 0.827, 0.967, np.inf],
-        "user_basic.user_age": [-np.inf, 27.0, 32.0, np.inf],
-        "user_searched_history_by_day.m_24.pct_cnt_org_cc": [-np.inf, 0.697, 0.768, 0.996, np.inf],
-        "user_gray.contacts_number_statistic.pct_cnt_to_black": [-np.inf, 0.83, np.inf],
-        "user_gray.contacts_query.org_cnt_2": [-np.inf, 6.0, 17.0, 27.0, np.inf]
+        "user_searched_history_by_day.m_12.cnt_cc": pd.IntervalIndex.from_breaks([-np.inf, 1.0, np.inf], closed="left"),
+        "user_gray.contacts_rfm.call_cnt_to_applied": pd.IntervalIndex.from_breaks([-np.inf, 7, np.inf], closed="left"),
+        "user_searched_history_by_day.d_90.cnt_org_cash": pd.IntervalIndex.from_breaks([-np.inf, 1.0, 2.0, 4.0, 6.0, 11.0, 15.0, np.inf], closed="left"),
+        "user_gray.contacts_rfm.time_spent_be_applied": pd.IntervalIndex.from_breaks([-np.inf, 1405.0, 7647.16, np.inf], closed="left"),
+        "user_gray.contacts_gray_score.be_mean": pd.IntervalIndex.from_breaks([-np.inf, 44.21, 51.774, np.inf], closed="left"),
+        "user_gray.contacts_relation_distribution.be_not_familiar": pd.IntervalIndex.from_breaks([-np.inf, 37.0, np.inf], closed="left"),
+        "user_searched_history_by_day.d_7.pct_cnt_org_cash": pd.IntervalIndex.from_breaks([-np.inf, 0.696, 0.871, 0.958, np.inf], closed="left"),
+        "user_gray.contacts_query.to_org_cnt_3": pd.IntervalIndex.from_breaks([-np.inf, 10.0, 29.0, np.inf], closed="left"),
+        "user_gray.phone_gray_score": pd.IntervalIndex.from_breaks([-np.inf, 3.291, 43.04, np.inf], closed="left"),
+        "user_searched_history_by_day.m_9.cnt_org": pd.IntervalIndex.from_breaks([-np.inf, 10.0, 14.0, 31.0, np.inf], closed="left"),
+        "user_searched_history_by_day.m_9.pct_cnt_cf": pd.IntervalIndex.from_breaks([-np.inf, 0.601, 0.828, 0.994, np.inf], closed="left"),
+        "user_gray.contacts_number_statistic.pct_black_ratio": pd.IntervalIndex.from_breaks([-np.inf, 0.863, np.inf], closed="left"),
+        "user_gray.contacts_number_statistic.pct_router_ratio": pd.IntervalIndex.from_breaks([-np.inf, 0.366, 0.666, 0.827, 0.967, np.inf], closed="left"),
+        "user_basic.user_age": pd.IntervalIndex.from_breaks([-np.inf, 27.0, 32.0, np.inf], closed="left"),
+        "user_searched_history_by_day.m_24.pct_cnt_org_cc": pd.IntervalIndex.from_breaks([-np.inf, 0.697, 0.768, 0.996, np.inf], closed="left"),
+        "user_gray.contacts_number_statistic.pct_cnt_to_black": pd.IntervalIndex.from_breaks([-np.inf, 0.83, np.inf], closed="left"),
+        "user_gray.contacts_query.org_cnt_2": pd.IntervalIndex.from_breaks([-np.inf, 6.0, 17.0, 27.0, np.inf], closed="left")
     }
 
-    tra = pd.read_csv("H:\\tra_sy.csv", encoding="GBK")
-    tes = pd.read_csv("H:\\tes_sy.csv", encoding="GBK")
+    tra = pd.read_csv("H:\\work\\ZhongHe\\tra_sy.csv", encoding="GBK")
+    tes = pd.read_csv("H:\\work\\ZhongHe\\tes_sy.csv", encoding="GBK")
 
     tra_tabular = tra[cat_columns + num_columns].copy(deep=True)
     tes_tabular = tes[cat_columns + num_columns].copy(deep=True)
@@ -89,6 +89,7 @@ if __name__ == "__main__":
     discrete.fit(tra_feature, tra_label)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)
+    save_table(discrete, "C:\\Users\\15795\\Desktop")
 
     model = LMClassifier(C=0.05, PDO=20, BASE=600, ODDS=1, keep_columns=[], random_state=7)
     model.fit(tra_feature, tra_label)

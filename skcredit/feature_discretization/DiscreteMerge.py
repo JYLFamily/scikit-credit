@@ -126,4 +126,4 @@ def chisq_merge(X, col):
         break_list = exam_break(regroup, col, idx, break_list)
         count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
 
-    return [- np.inf] + [max(l) for l in break_list][:-1] + [np.inf]
+    return pd.IntervalIndex.from_breaks([- np.inf] + [max(l) for l in break_list][:-1] + [np.inf])

@@ -4,7 +4,6 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from skcredit.feature_discretization.util import cat_to_num
 from skcredit.feature_discretization.DiscreteMerge import chisq_merge
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -22,24 +21,16 @@ def calc_table(X, col):
     del X
     gc.collect()
 
-    columns = [col, "CntRec", "CntPositive", "CntNegative", "PositiveRate", "NegativeRate", "WoE", "IV"]
+    columns = [col, "CntRec", "CntPositive", "CntNegative"]
 
     cnt_rec = x.groupby(col)["target"].agg(len).to_frame("CntRec")
-    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(
-        col)["target"].agg(len).to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(
-        col)["target"].agg(len).to_frame("CntNegative")
+    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
-    table = table.reset_index()
+    table = table.reset_index().reindex(columns=columns)
 
-    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
-
-    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
-    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
-
-    return table.reindex(columns=columns)
+    return table
 
 
 def calc_cat_table(X, col, group_list):
@@ -61,6 +52,12 @@ def calc_cat_table(X, col, group_list):
         mis_table = calc_table(x_mis, col)
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
+
+    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+
+    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
+    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
 
     return table
 
@@ -85,6 +82,12 @@ def calc_num_table(X, col, break_list):
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
 
+    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+
+    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
+    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
+
     return table
 
 
@@ -100,11 +103,16 @@ def merge_cat_table(X, col):
 
     # cat to num
     x_non = x.loc[x[col] != "missing"].copy(deep=True)
-    x_non, mapping = cat_to_num(x_non, col)
 
-    # brak_list to group_list
-    break_list = pd.IntervalIndex.from_breaks(chisq_merge(x_non, col))
-    group_list = [[] for _ in range(len(break_list))]
+    weights = (1 / (1 + np.exp(-(x_non.groupby(col).size() - 1))))
+    mapping = (1 - weights) * x_non["target"].mean() + weights * x_non.groupby(col)["target"].mean()
+    mapping = mapping.to_dict()
+
+    x_non[col] = x_non[col].replace(mapping)
+
+    # brk to grp
+    break_list = chisq_merge(x_non,  col)
+    group_list = [[] for _ in break_list]
 
     for k, v in mapping.items():
         for idx, brk in enumerate(break_list):
@@ -133,7 +141,7 @@ def merge_num_table(X, col):
     x_non = x.loc[x[col] != -9999].copy(deep=True)
 
     # break list
-    break_list = pd.IntervalIndex.from_breaks(chisq_merge(x_non, col))
+    break_list = chisq_merge(x_non, col)
 
     # calc num table
     table = calc_num_table(x, col, break_list)

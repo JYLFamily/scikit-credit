@@ -8,16 +8,6 @@ pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-def cat_to_num(x, col):
-    weights = (1 / (1 + np.exp(-(x.groupby(col).size() - 1))))
-    mapping = (1 - weights) * x["target"].mean() + weights * x.groupby(col)["target"].mean()
-    mapping = mapping.to_dict()
-
-    x[col] = x[col].replace(mapping)
-
-    return x, mapping
-
-
 def save_table(discrete, path):
     """
     :param discrete:
