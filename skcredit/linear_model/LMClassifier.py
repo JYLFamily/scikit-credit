@@ -2,14 +2,10 @@
 
 import gc
 import logging
-import tempfile
 import numpy as np
 import pandas as pd
-from joblib import Memory
-from itertools import count
+import statsmodels.api as sm
 from sklearn.metrics import roc_curve
-from sklearn.cluster import FeatureAgglomeration
-from sklearn.linear_model import LogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -17,23 +13,41 @@ pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-def first_feature_in_group(labels):
-    d = dict()
+def inclusion(X, y, feature_columns, feature_subsets):
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
 
-    for idx, val in enumerate(labels):
-        if val not in d.keys():
-            d[val] = idx
+    feature_remains = feature_columns - feature_subsets
+    feature_pvalues = dict()
 
-    return np.array(list(d.values()))
+    for col in feature_remains:
+        logit_mod = sm.Logit(y, sm.add_constant(x[list(feature_subsets | {col})]))
+        logit_res = logit_mod.fit(method="lbfgs", disp=False)
+        feature_pvalues[col] = logit_res.pvalues[col]
+
+    return feature_pvalues
+
+
+def exclusion(X, y, feature_subsets):
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    logit_mod = sm.Logit(y, sm.add_constant(x[list(feature_subsets)]))
+    logit_res = logit_mod.fit(method="lbfgs", disp=False)
+    feature_pvalues = logit_res.pvalues.to_dict()
+    feature_pvalues.pop("const")
+
+    return feature_pvalues
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, C, PDO, BASE, ODDS, keep_columns, random_state):
-        self.C = C
+    def __init__(self, keep_columns, PDO, BASE, ODDS):
         self.keep_columns = keep_columns
-        self.random_state = random_state
 
         self.feature_columns_ = None
+        self.feature_subsets_ = None
         self.model_ = None
         self.coeff_ = None
 
@@ -45,39 +59,20 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        self.feature_columns_ = np.array(
-            [col for col in x.columns if col not in self.keep_columns])
+        self.feature_columns_ = set([col for col in x.columns if col not in self.keep_columns])
+        self.feature_subsets_ = set()
 
-        # # iter counter
-        # counter = count(15, -1) if len(self.feature_columns_) > 15 else count(len(self.feature_columns_), -1)
-        #
-        # # feature agglomeration
-        # ward = FeatureAgglomeration(
-        #     n_clusters=next(counter), memory=Memory(location=tempfile.mkdtemp(), verbose=0))
-        # ward.fit(x[self.feature_columns_])
-        # self.feature_columns_ = self.feature_columns_[first_feature_in_group(ward.labels_)]
-        #
-        # self.model_ = LogisticRegression(
-        #     C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        # self.model_.fit(x[self.feature_columns_], y)
-        # self.coeff_ = self.model_.coef_.reshape(-1,)
-        #
-        # while np.any(self.coeff_ < 0):
-        #     ward = FeatureAgglomeration(
-        #         n_clusters=next(counter), memory=Memory(location=tempfile.mkdtemp(), verbose=0))
-        #     ward.fit(x[self.feature_columns_])
-        #     self.feature_columns_ = self.feature_columns_[first_feature_in_group(ward.labels_)]
-        #
-        #     self.model_ = LogisticRegression(
-        #         C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        #     self.model_.fit(x[self.feature_columns_], y)
-        #     self.coeff_ = self.model_.coef_.reshape(-1,)
-        # self.model_ = LogisticRegression(
-        #     C=self.C, solver="lbfgs", max_iter=10000, random_state=self.random_state)
-        self.model_ = LogisticRegression(
-            C=self.C, max_iter=10000, random_state=self.random_state)
-        self.model_.fit(x[self.feature_columns_], y)
-        self.coeff_ = self.model_.coef_.reshape(-1,)
+        # stepwise
+        feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
+        while min(feature_pvalues.values()) < 0.01:
+            self.feature_subsets_ = self.feature_subsets_ | {min(feature_pvalues, key=feature_pvalues.get)}
+
+            feature_pvalues = exclusion(x, y, self.feature_subsets_)
+            while max(feature_pvalues.values()) > 0.01:
+                self.feature_subsets_ = self.feature_subsets_ - {max(feature_pvalues, key=feature_pvalues.get)}
+                feature_pvalues = exclusion(x, y, self.feature_subsets_)
+
+            feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
 
         return self
 
