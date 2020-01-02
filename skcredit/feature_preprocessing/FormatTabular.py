@@ -3,14 +3,14 @@
 import gc
 import numpy as np
 import pandas as pd
-from multiprocessing import Pool
+from sklearn.feature_selection import VarianceThreshold
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-class TidyTabula(BaseEstimator, TransformerMixin):
+class FormatTabular(BaseEstimator, TransformerMixin):
     def __init__(self, keep_columns, cat_columns, num_columns):
         self.keep_columns = keep_columns
         self.cat_columns = cat_columns
@@ -24,11 +24,14 @@ class TidyTabula(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        if len(self.cat_columns) != 0:
+        if self.cat_columns:
             x[self.cat_columns] = x[self.cat_columns].fillna("missing").astype(str)
 
             for col in self.cat_columns:
                 self.cat_value_[col] = x[col].value_counts().to_dict()
+
+        if self.num_columns:
+            pass
 
         return self
 
@@ -37,7 +40,7 @@ class TidyTabula(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        if len(self.cat_columns) != 0:
+        if self.cat_columns:
             x[self.cat_columns] = x[self.cat_columns].fillna("missing").astype(str)
 
             for col in self.cat_columns:
@@ -46,7 +49,7 @@ class TidyTabula(BaseEstimator, TransformerMixin):
                 x[col] = x[col].apply(
                     lambda element: element if element in self.cat_value_[col].keys() else to_rep)
 
-        if len(self.num_columns) != 0:
+        if self.num_columns:
             x[self.num_columns] = x[self.num_columns].fillna(self.num_value_)
 
         return x

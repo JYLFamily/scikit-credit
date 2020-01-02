@@ -1,9 +1,7 @@
 # coding: utf-8
 
-from skcredit.feature_preprocessing.TidyTabula import TidyTabula
-from skcredit.feature_preprocessing.SaveMemory import SaveMemory
+from skcredit.feature_preprocessing.FormatTabular import FormatTabular
 
 __all__ = [
-    "TidyTabula",
-    "SaveMemory"
+    "FormatTabular"
 ]

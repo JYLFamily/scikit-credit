@@ -22,8 +22,8 @@ def inclusion(X, y, feature_columns, feature_subsets):
     feature_pvalues = dict()
 
     for col in feature_remains:
-        logit_mod = sm.Logit(y, sm.add_constant(x[list(feature_subsets | {col})]))
-        logit_res = logit_mod.fit(method="lbfgs", disp=False)
+        logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets | {col})]), family=sm.families.Binomial())
+        logit_res = logit_mod.fit()
         feature_pvalues[col] = logit_res.pvalues[col]
 
     return feature_pvalues
@@ -34,12 +34,10 @@ def exclusion(X, y, feature_subsets):
     del X
     gc.collect()
 
-    logit_mod = sm.Logit(y, sm.add_constant(x[list(feature_subsets)]))
-    logit_res = logit_mod.fit(method="lbfgs", disp=False)
-    feature_pvalues = logit_res.pvalues.to_dict()
-    feature_pvalues.pop("const")
+    logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets)]), family=sm.families.Binomial())
+    logit_res = logit_mod.fit()
 
-    return feature_pvalues
+    return logit_res.pvalues.drop("const").to_dict()
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
@@ -64,58 +62,44 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
 
         # stepwise
         feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
-        while min(feature_pvalues.values()) < 0.01:
+        while min(feature_pvalues.values()) < 0.00001:
             self.feature_subsets_ = self.feature_subsets_ | {min(feature_pvalues, key=feature_pvalues.get)}
 
             feature_pvalues = exclusion(x, y, self.feature_subsets_)
-            while max(feature_pvalues.values()) > 0.01:
+            while max(feature_pvalues.values()) > 0.00001:
                 self.feature_subsets_ = self.feature_subsets_ - {max(feature_pvalues, key=feature_pvalues.get)}
                 feature_pvalues = exclusion(x, y, self.feature_subsets_)
 
             feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
 
+        logit_mod = sm.GLM(y, sm.add_constant(x[list(self.feature_subsets_)]), family=sm.families.Binomial())
+        self.model_ = logit_mod.fit()
+
         return self
 
     def score(self, X, y=None, sample_weight=None):
-        fpr, tpr, _ = roc_curve(y, self.predict_proba(X)[:, 1])
+        fpr, tpr, _ = roc_curve(y, self.predict_proba(X))
 
         return round(max(tpr - fpr), 5)
 
     def result(self):
-        result = dict()
 
-        column = self.feature_columns_.tolist()
-        column.append("intercept")
-        coeffs = self.coeff_.tolist()
-        coeffs.append(self.model_.intercept_[0])
-
-        for k, v in zip(column, coeffs):
-            result[k] = v
-
-        return result
-
-    def predic(self, X):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
-        return self.model_.predict(
-            x[self.feature_columns_.tolist()])
+        return self.model_.summary()
 
     def predict_proba(self, X):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        return self.model_.predict_proba(
-            x[self.feature_columns_.tolist()])
+        return self.model_.predict(
+            sm.add_constant(x[list(self.feature_subsets_)]))
 
     def predict_score(self, X):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        y = np.log(self.predict_proba(x)[:, 1] / self.predict_proba(x)[:, 0])
+        y = np.log(self.predict_proba(x) / (1 - self.predict_proba(x)))
 
         return np.round(self.a_ + self.b_ * (- y))
 
