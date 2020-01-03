@@ -4,8 +4,8 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from operator import add
-from sklearn.linear_model import LinearRegression
+import statsmodels.api as sm
+from sklearn.metrics import r2_score
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -29,11 +29,20 @@ class SelectVif(BaseEstimator, TransformerMixin):
         self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
 
         for i in range(len(self.feature_columns_)):
+            from operator import add
             for j in range(add(i, 1), len(self.feature_columns_)):
                 if self.feature_support_[j]:
-                    model = LinearRegression()
-                    model.fit(x.iloc[:, [i]], x.iloc[:, j])
-                    rs = model.score(x.iloc[:, [i]], x.iloc[:, j])
+                    ols_mod = sm.GLM(
+                        x[self.feature_columns_].iloc[:, j],
+                        sm.add_constant(x[self.feature_columns_].iloc[:, [i]]),
+                        family=sm.families.Gaussian()
+                    ).fit()
+                    ols_res = ols_mod.fit(disp=False)
+
+                    rs = r2_score(
+                        x[self.feature_columns_].iloc[:, j],
+                        ols_res.predict(sm.add_constant(x[self.feature_columns_].iloc[:, [i]]))
+                    )
 
                     if rs >= 0.8:
                         self.feature_support_[j] = False

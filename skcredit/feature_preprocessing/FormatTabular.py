@@ -3,7 +3,6 @@
 import gc
 import numpy as np
 import pandas as pd
-from sklearn.feature_selection import VarianceThreshold
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -17,7 +16,7 @@ class FormatTabular(BaseEstimator, TransformerMixin):
         self.num_columns = num_columns
 
         self.cat_value_ = dict()
-        self.num_value_ = -9999.
+        self.num_value_ = dict()
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
@@ -28,10 +27,15 @@ class FormatTabular(BaseEstimator, TransformerMixin):
             x[self.cat_columns] = x[self.cat_columns].fillna("missing").astype(str)
 
             for col in self.cat_columns:
-                self.cat_value_[col] = x[col].value_counts().to_dict()
+                stats = x[col].value_counts(normalize=True)
+                if 1 - stats.max() >= 0.05:
+                    self.cat_value_[col] = stats.to_dict()
 
         if self.num_columns:
-            pass
+            for col in self.num_columns:
+                stats = x[col].std()
+                if stats > 0.:
+                    self.num_value_[col] = -9999.
 
         return self
 
@@ -40,17 +44,20 @@ class FormatTabular(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        if self.cat_columns:
-            x[self.cat_columns] = x[self.cat_columns].fillna("missing").astype(str)
+        x = x[self.keep_columns + list(self.cat_value_.keys()) + list(self.num_value_.keys())]
 
-            for col in self.cat_columns:
+        if self.cat_value_.keys():
+            x[list(self.cat_value_.keys())] = x[list(self.cat_value_.keys())].fillna("missing").astype(str)
+
+            for col in self.cat_value_.keys():
                 to_rep = ("missing" if "missing" in self.cat_value_[col].keys()
                           else list(self.cat_value_[col].keys())[0])
                 x[col] = x[col].apply(
                     lambda element: element if element in self.cat_value_[col].keys() else to_rep)
 
-        if self.num_columns:
-            x[self.num_columns] = x[self.num_columns].fillna(self.num_value_)
+        if self.num_value_.keys():
+            for col in self.num_value_.keys():
+                x[col] = x[col].fillna(self.num_value_[col])
 
         return x
 

@@ -19,7 +19,7 @@ class FEndReport(object):
 
         bins = np.append(
             np.array([0]),
-            np.arange(np.floor(tra_score.min() / 10) * 10, np.ceil(tra_score.max() / 10) * 10, 10)
+            np.arange(np.ceil(tra_score.min() / 10) * 10, np.floor(tra_score.max() / 10) * 10, 10)
         )
         bins = np.append(bins, np.array([999]))
 
