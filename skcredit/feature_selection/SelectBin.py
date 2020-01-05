@@ -32,7 +32,7 @@ class SelectBin(BaseEstimator, TransformerMixin):
 
         for idx, col in enumerate(self.feature_columns_):
             logit_mod = sm.GLM(y, sm.add_constant(x[[col]]), family=sm.families.Binomial())
-            logit_res = logit_mod.fit(disp=False)  # disp=False slience
+            logit_res = logit_mod.fit()
 
             if (abs(logit_res.params["const"] - beta_0) > 0.00001 and
                     abs(logit_res.params[col] - beta_1) > 0.00001):

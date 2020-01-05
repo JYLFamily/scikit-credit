@@ -36,8 +36,8 @@ class SelectVif(BaseEstimator, TransformerMixin):
                         x[self.feature_columns_].iloc[:, j],
                         sm.add_constant(x[self.feature_columns_].iloc[:, [i]]),
                         family=sm.families.Gaussian()
-                    ).fit()
-                    ols_res = ols_mod.fit(disp=False)
+                    )
+                    ols_res = ols_mod.fit()
 
                     rs = r2_score(
                         x[self.feature_columns_].iloc[:, j],

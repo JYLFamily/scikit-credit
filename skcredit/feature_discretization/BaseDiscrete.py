@@ -1,6 +1,8 @@
 # coding: utf-8
 
+import os
 import gc
+import pandas as pd
 from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
 from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, replace_num_woe
@@ -46,4 +48,19 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
 
         return self.transform(X)
 
+    def save_order(self, path):
+        order = pd.DataFrame.from_dict(self.information_values_, orient="index", columns=["IV"])
+        order = order.reset_index().rename(columns={"index": "feature"})
+
+        with pd.ExcelWriter(os.path.join(path, "order.xlsx")) as writer:
+            order.to_excel(writer, index=False)
+
+    def save_table(self, path):
+        table = dict()
+        table.update(self.num_table_)
+        table.update(self.cat_table_)
+
+        with pd.ExcelWriter(os.path.join(path, "table.xlsx")) as writer:
+            for feature, table in table.items():
+                table.to_excel(writer, sheet_name=feature[-30:], index=False)
 

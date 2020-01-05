@@ -17,9 +17,12 @@ class FEndReport(object):
         tra_score = lmclassifier.predict_score(tra_feature)
         tes_score = lmclassifier.predict_score(tes_feature)
 
+        # np.ceil  向上取整 np.floor 向下取整
+        # tra min score [0,    np.ceil(tra_score.min() / 10) * 10]
+        # tra max score [np.floor(tra_score.max() / 10) * 10, 999]
         bins = np.append(
             np.array([0]),
-            np.arange(np.ceil(tra_score.min() / 10) * 10, np.floor(tra_score.max() / 10) * 10, 10)
+            np.arange(np.ceil(tra_score.min() / 10) * 10, np.floor(tra_score.max() / 10) * 10 + 10, 10)
         )
         bins = np.append(bins, np.array([999]))
 
@@ -47,7 +50,7 @@ class FEndReport(object):
         tables.update(discrete.cat_table_)
         tables.update(discrete.num_table_)
 
-        coeffs = lmclassifier.result()
+        coeffs = lmclassifier.coeff_
 
         result = dict()
 

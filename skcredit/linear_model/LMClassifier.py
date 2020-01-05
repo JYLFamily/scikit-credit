@@ -40,6 +40,28 @@ def exclusion(X, y, feature_subsets):
     return logit_res.pvalues.drop("const").to_dict()
 
 
+def stepwises(X, y, feature_columns, feature_subsets, lrmodel_pvalues):
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    feature_pvalues = inclusion(x, y, feature_columns, feature_subsets)
+    while min(feature_pvalues.values()) < lrmodel_pvalues:
+        feature_subsets = feature_subsets | {min(feature_pvalues, key=feature_pvalues.get)}
+
+        feature_pvalues = exclusion(x, y, feature_subsets)
+        while max(feature_pvalues.values()) > lrmodel_pvalues:
+            feature_subsets = feature_subsets - {max(feature_pvalues, key=feature_pvalues.get)}
+            feature_pvalues = exclusion(x, y, feature_subsets)
+
+        feature_pvalues = inclusion(x, y, feature_columns, feature_subsets)
+
+    logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets)]), family=sm.families.Binomial())
+    logit_res = logit_mod.fit()
+
+    return logit_res, feature_subsets
+
+
 class LMClassifier(BaseEstimator, ClassifierMixin):
     def __init__(self, keep_columns, PDO, BASE, ODDS):
         self.keep_columns = keep_columns
@@ -57,23 +79,29 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
+        lrmodel_pvalues = 0.001
         self.feature_columns_ = set([col for col in x.columns if col not in self.keep_columns])
         self.feature_subsets_ = set()
 
-        # stepwise
-        feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
-        while min(feature_pvalues.values()) < 0.00001:
-            self.feature_subsets_ = self.feature_subsets_ | {min(feature_pvalues, key=feature_pvalues.get)}
+        self.model_, self.feature_subsets_ = stepwises(
+            x, y,
+            self.feature_columns_,
+            self.feature_subsets_,
+            lrmodel_pvalues
+        )
+        self.coeff_ = self.model_.params.drop("const")
 
-            feature_pvalues = exclusion(x, y, self.feature_subsets_)
-            while max(feature_pvalues.values()) > 0.00001:
-                self.feature_subsets_ = self.feature_subsets_ - {max(feature_pvalues, key=feature_pvalues.get)}
-                feature_pvalues = exclusion(x, y, self.feature_subsets_)
+        while np.any(self.coeff_ < 0):
+            lrmodel_pvalues /= 10
+            self.feature_subsets_ = set()
 
-            feature_pvalues = inclusion(x, y, self.feature_columns_, self.feature_subsets_)
-
-        logit_mod = sm.GLM(y, sm.add_constant(x[list(self.feature_subsets_)]), family=sm.families.Binomial())
-        self.model_ = logit_mod.fit()
+            self.model_, self.feature_subsets_ = stepwises(
+                x, y,
+                self.feature_columns_,
+                self.feature_subsets_,
+                lrmodel_pvalues
+            )
+            self.coeff_ = self.model_.params.drop("const")
 
         return self
 

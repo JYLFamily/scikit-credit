@@ -13,10 +13,8 @@ pd.set_option("max_columns", None)
 
 
 class DiscreteAuto(BaseDiscrete):
-    def __init__(self, keep_columns, information_value_threshold):
+    def __init__(self, keep_columns):
         super().__init__(keep_columns)
-
-        self.information_value_threshold = information_value_threshold
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
@@ -32,7 +30,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_cat_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.cat_columns_])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > self.information_value_threshold}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() > 0.1}
 
         with Pool() as pool:
             if self.num_columns_:
@@ -40,7 +38,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_num_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() > self.information_value_threshold}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() > 0.1}
 
         self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.information_values_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
