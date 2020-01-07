@@ -3,6 +3,7 @@
 import gc
 import numpy as np
 import pandas as pd
+import multiprocessing as mp
 from multiprocessing import Pool
 from collections import OrderedDict
 from skcredit.feature_discretization import BaseDiscrete
@@ -27,7 +28,7 @@ class DiscreteCust(BaseDiscrete):
         self.cat_columns_ = [col for col in x.select_dtypes(include="object").columns if col not in self.keep_columns]
         self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.keep_columns]
 
-        with Pool() as pool:
+        with Pool(mp.cpu_count() - 2) as pool:
             if self.cat_columns_:
                 self.cat_table_ = dict(zip(self.cat_columns_, pool.starmap(
                     force_cat_table,
@@ -35,7 +36,7 @@ class DiscreteCust(BaseDiscrete):
                      self.cat_columns_])))
         self.cat_table_ = {col: val for col, val in self.cat_table_.items()}
 
-        with Pool() as pool:
+        with Pool(mp.cpu_count() - 2) as pool:
             if self.num_columns_:
                 self.num_table_ = dict(zip(self.num_columns_, pool.starmap(
                     force_num_table,

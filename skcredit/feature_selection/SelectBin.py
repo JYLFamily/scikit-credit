@@ -34,8 +34,9 @@ class SelectBin(BaseEstimator, TransformerMixin):
             logit_mod = sm.GLM(y, sm.add_constant(x[[col]]), family=sm.families.Binomial())
             logit_res = logit_mod.fit()
 
-            if (abs(logit_res.params["const"] - beta_0) > 0.00001 and
-                    abs(logit_res.params[col] - beta_1) > 0.00001):
+            if (abs(logit_res.params["const"] - beta_0) > 1e-8 and
+                    abs(logit_res.params[col] - beta_1) > 1e-8 and
+                    logit_res.pvalues[col] != 0.):
                 self.feature_support_[idx] = False
                 logging.info(col + " remove !")
 

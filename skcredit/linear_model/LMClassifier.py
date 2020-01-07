@@ -46,20 +46,25 @@ def stepwises(X, y, feature_columns, feature_subsets, lrmodel_pvalues):
     gc.collect()
 
     feature_pvalues = inclusion(x, y, feature_columns, feature_subsets)
-    while min(feature_pvalues.values()) < lrmodel_pvalues:
-        feature_subsets = feature_subsets | {min(feature_pvalues, key=feature_pvalues.get)}
+    inclusion_flags = min(feature_pvalues.values()) < lrmodel_pvalues
 
+    while inclusion_flags:
+        feature_subsets = feature_subsets | {min(feature_pvalues, key=feature_pvalues.get)}
         feature_pvalues = exclusion(x, y, feature_subsets)
-        while max(feature_pvalues.values()) > lrmodel_pvalues:
+        exclusion_flags = max(feature_pvalues.values()) > lrmodel_pvalues
+
+        while exclusion_flags:
             feature_subsets = feature_subsets - {max(feature_pvalues, key=feature_pvalues.get)}
             feature_pvalues = exclusion(x, y, feature_subsets)
+            exclusion_flags = max(feature_pvalues.values()) > lrmodel_pvalues
 
         feature_pvalues = inclusion(x, y, feature_columns, feature_subsets)
+        inclusion_flags = bool(feature_pvalues) and (min(feature_pvalues.values()) < lrmodel_pvalues)
 
     logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets)]), family=sm.families.Binomial())
     logit_res = logit_mod.fit()
 
-    return logit_res, feature_subsets
+    return logit_res
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
@@ -83,7 +88,7 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         self.feature_columns_ = set([col for col in x.columns if col not in self.keep_columns])
         self.feature_subsets_ = set()
 
-        self.model_, self.feature_subsets_ = stepwises(
+        self.model_ = stepwises(
             x, y,
             self.feature_columns_,
             self.feature_subsets_,
@@ -93,15 +98,16 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
 
         while np.any(self.coeff_ < 0):
             lrmodel_pvalues /= 10
-            self.feature_subsets_ = set()
 
-            self.model_, self.feature_subsets_ = stepwises(
+            self.model_ = stepwises(
                 x, y,
                 self.feature_columns_,
                 self.feature_subsets_,
                 lrmodel_pvalues
             )
             self.coeff_ = self.model_.params.drop("const")
+
+        self.feature_subsets_ = self.coeff_.index.tolist()
 
         return self
 
@@ -120,7 +126,7 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         gc.collect()
 
         return self.model_.predict(
-            sm.add_constant(x[list(self.feature_subsets_)]))
+            sm.add_constant(x[self.feature_subsets_]))
 
     def predict_score(self, X):
         x = X.copy(deep=True)

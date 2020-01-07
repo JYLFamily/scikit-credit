@@ -43,7 +43,6 @@ class SelectVif(BaseEstimator, TransformerMixin):
                         x[self.feature_columns_].iloc[:, j],
                         ols_res.predict(sm.add_constant(x[self.feature_columns_].iloc[:, [i]]))
                     )
-
                     if rs >= 0.8:
                         self.feature_support_[j] = False
                         logging.info(self.feature_columns_[j] + " remove !")
