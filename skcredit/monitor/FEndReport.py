@@ -32,18 +32,19 @@ class FEndReport(object):
         table = pd.DataFrame({
             "CntTra": pd.cut(tra_score, bins=bins).value_counts(),
             "CntTes": pd.cut(tes_score, bins=bins).value_counts()
-        }).replace({0.0: 0.5})
+        })
+        table = table.reset_index().rename(columns={"index": "score"})
+        table = table.replace({0.0: 0.5})
 
         table["RatTra"] = table["CntTra"] / table["CntTra"].sum()
         table["RatTes"] = table["CntTes"] / table["CntTes"].sum()
         table["(RatTes - RatTra)"] = table["RatTes"] - table["RatTra"]
         table["LN(RatTes/RatTra)"] = table["RatTes"] / table["RatTra"]
-        table = table.reset_index().rename(columns={"index": "score"})
 
-        psi = np.round(np.sum((table["(RatTes - RatTra)"]) * np.log(table["LN(RatTes/RatTra)"])), 5)
+        score = np.round(np.sum(table["(RatTes - RatTra)"] * table["LN(RatTes/RatTra)"]), 5)
 
         result["table"] = table
-        result["score"] = psi
+        result["score"] = score
 
         return result
 
@@ -67,6 +68,7 @@ class FEndReport(object):
 
             table = table.merge(tra_cnt, left_on="WoE", right_on="WoE", how="left")
             table = table.merge(tes_cnt, left_on="WoE", right_on="WoE", how="left")
+            table = table.replace({0.0: 0.5})
 
             # psi
             table["RatTra"] = table["CntTra"] / table["CntTra"].sum()
@@ -74,14 +76,15 @@ class FEndReport(object):
             table["(RatTes - RatTra)"] = table["RatTes"] - table["RatTra"]
             table["LN(RatTes/RatTra)"] = table["RatTes"] / table["RatTra"]
 
+            psi_score = np.round(np.sum(table["(RatTes - RatTra)"] * table["LN(RatTes/RatTra)"]), 5)
+
             # csi
             table["PScore"] = - table["WoE"] * coeffs[col] * lmclassifier.b_
             table["SScore"] = (table["RatTes"] - table["RatTra"]) * table["PScore"]
 
-            psi = np.round(np.sum((table["(RatTes - RatTra)"]) * np.log(table["LN(RatTes/RatTra)"])), 5)
-            csi = np.round(table["SScore"].sum(), 5)
+            csi_score = np.round(table["SScore"].sum(), 5)
 
-            result[col] = {"table": table, "psi_score": psi, "csi_score": csi}
+            result[col] = {"table": table, "psi_score": psi_score, "csi_score": csi_score}
 
         return result
 
@@ -99,16 +102,18 @@ class FEndReport(object):
 
         summary = dict()
         summary["table"] = OrderedDict()
-        summary["score"] = OrderedDict()
+        summary["score"] = np.zeros(shape=(len(week), ))
 
-        for _, row in week.iterrows():
+        for i, (_, row) in enumerate(week.iterrows()):
             subset = tes_feature.loc[(tes_feature[lmclassifier.keep_columns].squeeze() >= row["Lower"]) &
                                      (tes_feature[lmclassifier.keep_columns].squeeze() <= row["Upper"])]
 
             result = FEndReport().psi(discrete, lmclassifier, tra_feature, subset)
 
             summary["table"]["{}, {}".format(row["Lower"], row["Upper"])] = result["table"]
-            summary["score"]["{}, {}".format(row["Lower"], row["Upper"])] = result["score"]
+            summary["score"][i] = result["score"]
+
+        summary["score"] = pd.Series(summary["score"], index=week["Lower"] + ", " + week["Upper"])
 
         return summary
 
@@ -126,19 +131,26 @@ class FEndReport(object):
 
         summary = dict()
         summary["table"] = OrderedDict()
-        summary["psi_score"] = OrderedDict()
-        summary["csi_score"] = OrderedDict()
+        summary["psi_score"] = np.zeros(shape=(len(lmclassifier.feature_subsets_), len(week)))
+        summary["csi_score"] = np.zeros(shape=(len(lmclassifier.feature_subsets_), len(week)))
 
-        for _, row in week.iterrows():
+        for i, (_, row) in enumerate(week.iterrows()):
             subset = tes_feature.loc[(tes_feature[lmclassifier.keep_columns].squeeze() >= row["Lower"]) &
                                      (tes_feature[lmclassifier.keep_columns].squeeze() <= row["Upper"])]
 
             result = FEndReport().csi(discrete, lmclassifier, tra_feature, subset)
 
-            for col in result.keys():
+            for j, col in enumerate(result.keys()):
                 summary["table"][("{}, {}".format(row["Lower"], row["Upper"]), col)] = result[col]["table"]
-                summary["psi_score"][("{}, {}".format(row["Lower"], row["Upper"]), col)] = result[col]["psi_score"]
-                summary["csi_score"][("{}, {}".format(row["Lower"], row["Upper"]), col)] = result[col]["csi_score"]
+                summary["psi_score"][j, i] = result[col]["psi_score"]
+                summary["csi_score"][j, i] = result[col]["csi_score"]
+
+        summary["psi_score"] = pd.DataFrame(summary["psi_score"],
+            index=lmclassifier.feature_subsets_, columns=week["Lower"] + ", " + week["Upper"]
+        )
+        summary["csi_score"] = pd.DataFrame(summary["csi_score"],
+            index=lmclassifier.feature_subsets_, columns=week["Lower"] + ", " + week["Upper"]
+        )
 
         return summary
 

@@ -18,8 +18,8 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    tra = pd.read_csv("F:\\work\\QuDian\\tra.csv")
-    tes = pd.read_csv("F:\\work\\QuDian\\tes.csv")
+    tra = pd.read_csv("H:\\work\\QuDian\\tra.csv")
+    tes = pd.read_csv("H:\\work\\QuDian\\tes.csv")
 
     columns = [
         "apply_time",
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     discrete.fit(tra_feature, tra_target)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)
-    discrete.save_order("C:\\Users\\P1352\\Desktop")
-    discrete.save_table("C:\\Users\\P1352\\Desktop")
+    discrete.save_order("C:\\Users\\15795\\Desktop")
+    discrete.save_table("C:\\Users\\15795\\Desktop")
 
     sbin = SelectBin(keep_columns=["apply_time"])
     sbin.fit(tra_feature, tra_target)
