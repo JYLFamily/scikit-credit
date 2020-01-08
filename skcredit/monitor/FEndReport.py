@@ -39,7 +39,7 @@ class FEndReport(object):
         table["RatTra"] = table["CntTra"] / table["CntTra"].sum()
         table["RatTes"] = table["CntTes"] / table["CntTes"].sum()
         table["(RatTes - RatTra)"] = table["RatTes"] - table["RatTra"]
-        table["LN(RatTes/RatTra)"] = table["RatTes"] / table["RatTra"]
+        table["LN(RatTes/RatTra)"] = np.log(table["RatTes"] / table["RatTra"])
 
         score = np.round(np.sum(table["(RatTes - RatTra)"] * table["LN(RatTes/RatTra)"]), 5)
 
@@ -74,7 +74,7 @@ class FEndReport(object):
             table["RatTra"] = table["CntTra"] / table["CntTra"].sum()
             table["RatTes"] = table["CntTes"] / table["CntTes"].sum()
             table["(RatTes - RatTra)"] = table["RatTes"] - table["RatTra"]
-            table["LN(RatTes/RatTra)"] = table["RatTes"] / table["RatTra"]
+            table["LN(RatTes/RatTra)"] = np.log(table["RatTes"] / table["RatTra"])
 
             psi_score = np.round(np.sum(table["(RatTes - RatTra)"] * table["LN(RatTes/RatTra)"]), 5)
 
@@ -90,6 +90,8 @@ class FEndReport(object):
 
     @staticmethod
     def psi_by_week(discrete, lmclassifier, tra_feature, tes_feature):
+        time = "[{}, {}]".format
+
         week = pd.DataFrame({
             "week": tes_feature[lmclassifier.keep_columns].squeeze().dt.week,
             "date": tes_feature[lmclassifier.keep_columns].squeeze()
@@ -100,7 +102,7 @@ class FEndReport(object):
             week.groupby("week")["date"].max().dt.strftime("%Y-%m-%d").to_frame("Upper")
         ], axis=1)
 
-        summary = dict()
+        summary = OrderedDict()
         summary["table"] = OrderedDict()
         summary["score"] = np.zeros(shape=(len(week), ))
 
@@ -110,15 +112,17 @@ class FEndReport(object):
 
             result = FEndReport().psi(discrete, lmclassifier, tra_feature, subset)
 
-            summary["table"]["{}, {}".format(row["Lower"], row["Upper"])] = result["table"]
+            summary["table"][time(row["Lower"], row["Upper"])] = result["table"]
             summary["score"][i] = result["score"]
 
-        summary["score"] = pd.Series(summary["score"], index=week["Lower"] + ", " + week["Upper"])
+        summary["score"] = pd.Series(summary["score"], index=[time(i, j) for i, j in zip(week["Lower"], week["Upper"])])
 
         return summary
 
     @staticmethod
     def csi_by_week(discrete, lmclassifier, tra_feature, tes_feature):
+        time = "[{}, {}]".format
+
         week = pd.DataFrame({
             "week": tes_feature[lmclassifier.keep_columns].squeeze().dt.week,
             "date": tes_feature[lmclassifier.keep_columns].squeeze()
@@ -129,7 +133,7 @@ class FEndReport(object):
             week.groupby("week")["date"].max().dt.strftime("%Y-%m-%d").to_frame("Upper")
         ], axis=1)
 
-        summary = dict()
+        summary = OrderedDict()
         summary["table"] = OrderedDict()
         summary["psi_score"] = np.zeros(shape=(len(lmclassifier.feature_subsets_), len(week)))
         summary["csi_score"] = np.zeros(shape=(len(lmclassifier.feature_subsets_), len(week)))
@@ -140,17 +144,17 @@ class FEndReport(object):
 
             result = FEndReport().csi(discrete, lmclassifier, tra_feature, subset)
 
+            summary["table"][time(row["Lower"], row["Upper"])] = OrderedDict()
+
             for j, col in enumerate(result.keys()):
-                summary["table"][("{}, {}".format(row["Lower"], row["Upper"]), col)] = result[col]["table"]
+                summary["table"][time(row["Lower"], row["Upper"])][col] = result[col]["table"]
                 summary["psi_score"][j, i] = result[col]["psi_score"]
                 summary["csi_score"][j, i] = result[col]["csi_score"]
 
         summary["psi_score"] = pd.DataFrame(summary["psi_score"],
-            index=lmclassifier.feature_subsets_, columns=week["Lower"] + ", " + week["Upper"]
-        )
+            index=lmclassifier.feature_subsets_, columns=[time(i, j) for i, j in zip(week["Lower"], week["Upper"])])
         summary["csi_score"] = pd.DataFrame(summary["csi_score"],
-            index=lmclassifier.feature_subsets_, columns=week["Lower"] + ", " + week["Upper"]
-        )
+            index=lmclassifier.feature_subsets_, columns=[time(i, j) for i, j in zip(week["Lower"], week["Upper"])])
 
         return summary
 
