@@ -18,8 +18,8 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    tra = pd.read_csv("H:\\work\\QuDian\\tra.csv")
-    tes = pd.read_csv("H:\\work\\QuDian\\tes.csv")
+    tra = pd.read_csv("C:\\Users\\P1352\\Desktop\\tra.csv")
+    tes = pd.read_csv("C:\\Users\\P1352\\Desktop\\tes.csv")
 
     columns = [
         "apply_time",
@@ -54,8 +54,6 @@ if __name__ == "__main__":
     discrete.fit(tra_feature, tra_target)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)
-    discrete.save_order("C:\\Users\\15795\\Desktop")
-    discrete.save_table("C:\\Users\\15795\\Desktop")
 
     sbin = SelectBin(keep_columns=["apply_time"])
     sbin.fit(tra_feature, tra_target)
@@ -69,13 +67,19 @@ if __name__ == "__main__":
 
     lmclassifier = LMClassifier(keep_columns=["apply_time"], PDO=20, BASE=600, ODDS=1)
     lmclassifier.fit(tra_feature, tra_target)
-    print(lmclassifier.score(tra_feature, tra_target))
-    print(lmclassifier.score(tes_feature, tes_target))
-    print(lmclassifier.result())
 
     result = FEndReport.psi_by_week(discrete, lmclassifier, tra_feature_tmp, tes_feature_tmp)
+    pprint(result["table"])
     pprint(result["score"])
 
     result = FEndReport.csi_by_week(discrete, lmclassifier, tra_feature_tmp, tes_feature_tmp)
+    pprint(result["table"])
     pprint(result["psi_score"])
     pprint(result["csi_score"])
+
+    result = BEndReport.metric_by_week(discrete, lmclassifier, tra_feature_tmp, tra_target, tes_feature_tmp, tes_target)
+    pprint(result)
+
+    result = BEndReport.report_by_week(discrete, lmclassifier, tra_feature_tmp, tra_target, tes_feature_tmp, tes_target)
+    pprint(result)
+    pprint(result)
