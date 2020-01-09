@@ -28,7 +28,8 @@ def calc_table(X, col):
     cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
-    table = table.reset_index().reindex(columns=columns)
+    table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
+    table = table.reset_index()
 
     return table
 

@@ -92,29 +92,33 @@ def chisq_merge(X, col):
         x.groupby(col)["target"].agg(len).to_frame("CntRec"),
         x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive"),
         x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
-    ], axis=1).reset_index()
-    print(regroup)
+    ], axis=1)
+    regroup = regroup.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
+    regroup = regroup.reset_index()
+
     chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
-    print(break_list)
-    while min(chisq_list) < chi2.ppf(.95, df=1):
-        print(break_list)
+    while min(chisq_list) < chi2.ppf(.999, df=1) and len(break_list) > 2:
         idx = chisq_list.index(min(chisq_list))
         break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
         break_list.remove(break_list[add(idx, 1)])
         chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
 
     # 分箱检查 存在 positive <= 25 的 break
-    count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].count() for l in break_list]
-    while min(count_list) <= 25:
+    count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
+    while min(count_list) <= 25 and len(break_list) > 2:
         idx = count_list.index(min(count_list))
         break_list = exam_break(regroup, col, idx, break_list)
-        count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].count() for l in break_list]
+        count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
 
     # 分箱检查 存在 negative <= 25 的 break
-    count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].count() for l in break_list]
-    while min(count_list) <= 25:
+    count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
+    while min(count_list) <= 25 and len(break_list) > 2:
         idx = count_list.index(min(count_list))
         break_list = exam_break(regroup, col, idx, break_list)
-        count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].count() for l in break_list]
+        count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
+
+    # print(regroup)
+    # for l in break_list:
+    #     print(regroup.loc[regroup[col].isin(l)])
 
     return pd.IntervalIndex.from_breaks([- np.inf] + [max(l) for l in break_list][:-1] + [np.inf])

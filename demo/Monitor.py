@@ -18,11 +18,11 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    tra = pd.read_csv("F:\\work\\ZhongHe\\tra_sy.csv", encoding="GBK")
-    tes = pd.read_csv("F:\\work\\ZhongHe\\tes_sy.csv", encoding="GBK")
+    tra = pd.read_csv("H:\\work\\ZhongHe\\tra_sy.csv", encoding="GBK")
+    tes = pd.read_csv("H:\\work\\ZhongHe\\oot_sy.csv")
 
-    tra = tra.loc[tra["period"] == 6].drop(["period"], axis=1)
-    tes = tes.loc[tes["period"] == 6].drop(["period"], axis=1)
+    tra = tra.loc[tra["period"] == 1].drop(["period"], axis=1)
+    tes = tes.loc[tes["period"] == 1].drop(["period"], axis=1)
 
     cat_columns = ["user_basic.user_province", "user_basic.user_phone_province"]
     num_columns = [col for col in tra.columns if col not in ["target"] + cat_columns]
@@ -39,8 +39,8 @@ if __name__ == "__main__":
     discrete.fit(tra_feature, tra_target)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)
-    discrete.save_order("F:\\work\\ZhongHe")
-    discrete.save_table("F:\\work\\ZhongHe")
+    discrete.save_order("H:\\work\\ZhongHe")
+    discrete.save_table("H:\\work\\ZhongHe")
 
     sbin = SelectBin(keep_columns=[])
     sbin.fit(tra_feature, tra_target)
