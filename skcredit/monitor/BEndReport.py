@@ -22,7 +22,7 @@ def calc_table(X):
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
     table["LIFT"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["ODDS"] = table["CntNegative"] / table["CntPositive"]
+    table["ODDS"] = table["CntPositive"] / table["CntNegative"]
     table["LN(ODDS)"] = np.log(table["ODDS"])
 
     return table.reset_index()
