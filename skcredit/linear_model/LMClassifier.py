@@ -50,11 +50,13 @@ def stepwises(X, y, feature_columns, feature_subsets, lrmodel_pvalues):
 
     while inclusion_flags:
         feature_subsets = feature_subsets | {min(feature_pvalues, key=feature_pvalues.get)}
+        print(feature_subsets)
         feature_pvalues = exclusion(x, y, feature_subsets)
         exclusion_flags = max(feature_pvalues.values()) > lrmodel_pvalues
 
         while exclusion_flags:
             feature_subsets = feature_subsets - {max(feature_pvalues, key=feature_pvalues.get)}
+            print(feature_subsets)
             feature_pvalues = exclusion(x, y, feature_subsets)
             exclusion_flags = max(feature_pvalues.values()) > lrmodel_pvalues
 

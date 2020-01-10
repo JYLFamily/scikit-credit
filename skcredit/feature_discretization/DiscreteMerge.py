@@ -4,8 +4,7 @@ import gc
 import numpy as np
 import pandas as pd
 from operator import *
-from scipy.stats import chi2
-from scipy.stats import chi2_contingency
+from scipy.stats import chi2, chi2_contingency
 from sklearn.tree import DecisionTreeClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -34,7 +33,14 @@ def calc_chisq(X, col, idx, break_list):
     return chi2_contingency(table)[0]
 
 
-def exam_break(X, col, idx, break_list):
+def merge_break(idx, break_list):
+    break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
+    break_list.remove(break_list[add(idx, 1)])
+
+    return break_list
+
+
+def check_break(X, col, idx, break_list):
     """
     :param X: regroup
     :param col:
@@ -77,14 +83,12 @@ def chisq_merge(X, col):
     del X
     gc.collect()
 
-    # 初始分箱
     clf = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col]], x["target"])
 
-    # from sklearn.tree import _tree
-    # _tree.TREE_UNDEFINED == -2
-    break_list = [[element] for element in np.sort(clf.tree_.threshold) if element != -2]  # sort
-    break_list = break_list + [[x[col].max()]]
+    break_list = x.groupby(pd.Series(clf.apply(x[[col]])))[col].max().tolist()
+    break_list = [[l] for l in sorted(break_list)]
+
     x[col] = x[col].apply(
         lambda element: [max(l) for l in break_list if element <= max(l)][0])
 
@@ -97,28 +101,21 @@ def chisq_merge(X, col):
     regroup = regroup.reset_index()
 
     chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
-    while min(chisq_list) < chi2.ppf(.999, df=1) and len(break_list) > 2:
+    while len(break_list) > 2 and min(chisq_list) < chi2.ppf(.999, df=1):
         idx = chisq_list.index(min(chisq_list))
-        break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
-        break_list.remove(break_list[add(idx, 1)])
+        break_list = merge_break(idx, break_list)
         chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
 
-    # 分箱检查 存在 positive <= 25 的 break
     count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
-    while min(count_list) <= 25 and len(break_list) > 2:
+    while len(break_list) > 2 and min(count_list) <= 25:
         idx = count_list.index(min(count_list))
-        break_list = exam_break(regroup, col, idx, break_list)
+        break_list = check_break(regroup, col, idx, break_list)
         count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
 
-    # 分箱检查 存在 negative <= 25 的 break
     count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
-    while min(count_list) <= 25 and len(break_list) > 2:
+    while len(break_list) > 2 and min(count_list) <= 25:
         idx = count_list.index(min(count_list))
-        break_list = exam_break(regroup, col, idx, break_list)
+        break_list = check_break(regroup, col, idx, break_list)
         count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
-
-    # print(regroup)
-    # for l in break_list:
-    #     print(regroup.loc[regroup[col].isin(l)])
 
     return pd.IntervalIndex.from_breaks([- np.inf] + [max(l) for l in break_list][:-1] + [np.inf])

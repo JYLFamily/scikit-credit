@@ -21,8 +21,6 @@ def calc_table(X, col):
     del X
     gc.collect()
 
-    columns = [col, "CntRec", "CntPositive", "CntNegative"]
-
     cnt_rec = x.groupby(col)["target"].agg(len).to_frame("CntRec")
     cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive")
     cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
@@ -104,6 +102,7 @@ def merge_cat_table(X, col):
 
     # cat to num
     x_non = x.loc[x[col] != "missing"].copy(deep=True)
+    x_non = x_non.reset_index(drop=True)
 
     weights = (1 / (1 + np.exp(-(x_non.groupby(col).size() - 1))))
     mapping = (1 - weights) * x_non["target"].mean() + weights * x_non.groupby(col)["target"].mean()
@@ -140,6 +139,7 @@ def merge_num_table(X, col):
 
     # num
     x_non = x.loc[x[col] != -9999].copy(deep=True)
+    x_non = x_non.reset_index(drop=True)
 
     # break list
     break_list = chisq_merge(x_non, col)
