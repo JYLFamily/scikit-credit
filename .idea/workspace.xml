@@ -4,11 +4,7 @@
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessing/FormatTabular.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessing/FormatTabular.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -274,14 +270,8 @@
       <workItem from="1578534672593" duration="12953000" />
       <workItem from="1578554757582" duration="4398000" />
       <workItem from="1578572203024" duration="5911000" />
-      <workItem from="1578615811371" duration="29579000" />
-    </task>
-    <task id="LOCAL-00022" summary="clean code">
-      <created>1570873826398</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1570873826398</updated>
+      <workItem from="1578615811371" duration="29611000" />
+      <workItem from="1578876201140" duration="6669000" />
     </task>
     <task id="LOCAL-00023" summary="init commit">
       <created>1570873866794</created>
@@ -619,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578469799924</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="init commit">
+      <created>1578652743637</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1578652743637</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -728,7 +725,7 @@
     <SUITE FILE_PATH="coverage/scikit_credit$PSI.coverage" NAME="PSI Coverage Results" MODIFIED="1567652474545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_select" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example__1_.coverage" NAME="Example (1) Coverage Results" MODIFIED="1573197603444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$FEndReport.coverage" NAME="FEndReport Coverage Results" MODIFIED="1576562069856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/monitor" />
-    <SUITE FILE_PATH="coverage/scikit_credit$Monitor.coverage" NAME="Monitor Coverage Results" MODIFIED="1578649840858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
+    <SUITE FILE_PATH="coverage/scikit_credit$Monitor.coverage" NAME="Monitor Coverage Results" MODIFIED="1578879560210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$Example.coverage" NAME="Example Coverage Results" MODIFIED="1576639100505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/demo" />
     <SUITE FILE_PATH="coverage/scikit_credit$LRClassifier.coverage" NAME="LRClassifier Coverage Results" MODIFIED="1575514918882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/models" />
     <SUITE FILE_PATH="coverage/scikit_credit$DiscreteMerge.coverage" NAME="DiscreteMerge Coverage Results" MODIFIED="1578539706116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />

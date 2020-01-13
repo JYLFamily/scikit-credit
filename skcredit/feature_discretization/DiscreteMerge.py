@@ -4,14 +4,14 @@ import gc
 import numpy as np
 import pandas as pd
 from operator import *
-from scipy.stats import chi2, chi2_contingency
+from scipy.stats import chi2_contingency
 from sklearn.tree import DecisionTreeClassifier
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-def calc_chisq(X, col, idx, break_list):
+def table_chisq(X, col, idx, break_list):
     """
     :param X: regroup
     :param col:
@@ -33,13 +33,6 @@ def calc_chisq(X, col, idx, break_list):
     return chi2_contingency(table)[0]
 
 
-def merge_break(idx, break_list):
-    break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
-    break_list.remove(break_list[add(idx, 1)])
-
-    return break_list
-
-
 def check_break(X, col, idx, break_list):
     """
     :param X: regroup
@@ -58,15 +51,15 @@ def check_break(X, col, idx, break_list):
         break_list.remove(break_list[add(idx, 1)])
     # 最后箱
     elif idx == len(break_list) - 1:
-        break_list[idx] = break_list[idx] + break_list[sub(idx, 1)]
+        break_list[idx] = break_list[sub(idx, 1)] + break_list[idx]
         break_list.remove(break_list[sub(idx, 1)])
     # 中间箱
     else:
         # 后一箱
-        chisq_aft = calc_chisq(x, col, idx, break_list)
+        chisq_aft = table_chisq(x, col, idx, break_list)
 
         # 前一箱
-        chisq_bef = calc_chisq(x, col, sub(idx, 1), break_list)
+        chisq_bef = table_chisq(x, col, sub(idx, 1), break_list)
 
         if chisq_aft < chisq_bef:
             break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
@@ -83,6 +76,7 @@ def chisq_merge(X, col):
     del X
     gc.collect()
 
+    # setup
     clf = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col]], x["target"])
 
@@ -100,11 +94,13 @@ def chisq_merge(X, col):
     regroup = regroup.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
     regroup = regroup.reset_index()
 
-    chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
-    while len(break_list) > 2 and min(chisq_list) < chi2.ppf(.999, df=1):
+    # merge
+    chisq_list = [table_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
+    while len(break_list) > 2 and min(chisq_list) <= 10:
         idx = chisq_list.index(min(chisq_list))
-        break_list = merge_break(idx, break_list)
-        chisq_list = [calc_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
+        break_list[idx] = break_list[idx] + break_list[add(idx, 1)]
+        break_list.remove(break_list[add(idx, 1)])
+        chisq_list = [table_chisq(regroup, col, idx, break_list) for idx in range(sub(len(break_list), 1))]
 
     count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
     while len(break_list) > 2 and min(count_list) <= 25:
