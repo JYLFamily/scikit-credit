@@ -4,7 +4,8 @@
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/Monitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Monitor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteMerge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -271,14 +272,7 @@
       <workItem from="1578554757582" duration="4398000" />
       <workItem from="1578572203024" duration="5911000" />
       <workItem from="1578615811371" duration="29611000" />
-      <workItem from="1578876201140" duration="6669000" />
-    </task>
-    <task id="LOCAL-00023" summary="init commit">
-      <created>1570873866794</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1570873866794</updated>
+      <workItem from="1578876201140" duration="9963000" />
     </task>
     <task id="LOCAL-00024" summary="init commit">
       <created>1570874114344</created>
@@ -616,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578652743637</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="init commit">
+      <created>1578883208719</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1578883208721</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -647,6 +648,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

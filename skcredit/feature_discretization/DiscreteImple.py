@@ -110,7 +110,7 @@ def merge_cat_table(X, col):
 
     x_non[col] = x_non[col].replace(mapping)
 
-    # brk to grp
+    # break list to group list
     break_list = chisq_merge(x_non,  col)
     group_list = [[] for _ in break_list]
 
