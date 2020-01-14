@@ -84,7 +84,7 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        lrmodel_pvalues = 0.001
+        lrmodel_pvalues = 0.00001
         self.feature_columns_ = set([col for col in x.columns if col not in self.keep_columns])
         self.feature_subsets_ = set()
 
@@ -94,29 +94,28 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
             self.feature_subsets_,
             lrmodel_pvalues
         )
-        self.coeff_ = self.model_.params.drop("const")
 
-        while np.any(self.coeff_ < 0):
-            lrmodel_pvalues /= 10
+        # while np.any(self.model_.params.drop("const") < 0):
+        #     lrmodel_pvalues /= 10
+        #
+        #     self.model_ = stepwises(
+        #         x, y,
+        #         self.feature_columns_,
+        #         self.feature_subsets_,
+        #         lrmodel_pvalues
+        #     )
 
-            self.model_ = stepwises(
-                x, y,
-                self.feature_columns_,
-                self.feature_subsets_,
-                lrmodel_pvalues
-            )
-            self.coeff_ = self.model_.params.drop("const")
-
-        self.feature_subsets_ = self.coeff_.index.tolist()
+        self.coeff_ = self.model_.params
+        self.feature_subsets_ = self.coeff_.drop("const").index.tolist()
 
         return self
 
     def score(self, X, y=None, sample_weight=None):
-        fpr, tpr, _ = roc_curve(y, self.predict_proba(X))
+        fpr, tpr, _ = roc_curve(y, self.predict_proba(X)["proba_positive"])
 
         return round(max(tpr - fpr), 5)
 
-    def result(self):
+    def model(self):
 
         return self.model_.summary()
 
@@ -125,15 +124,17 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        return self.model_.predict(
-            sm.add_constant(x[self.feature_subsets_]))
+        proba_positive = self.model_.predict(sm.add_constant(x[self.feature_subsets_])).to_frame("proba_positive")
+        proba_negative = (1 - proba_positive.squeeze()).to_frame("proba_negative")
+
+        return pd.concat([proba_negative, proba_positive], axis=1)
 
     def predict_score(self, X):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        y = np.log(self.predict_proba(x) / (1 - self.predict_proba(x)))
+        y = np.log(self.predict_proba(x)["proba_positive"] / (1 - self.predict_proba(x)["proba_positive"]))
 
         return np.round(self.a_ + self.b_ * (- y))
 

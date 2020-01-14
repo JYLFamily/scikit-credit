@@ -33,7 +33,7 @@ def table_chisq(X, col, idx, break_list):
     return chi2_contingency(table)[0]
 
 
-def check_break(X, col, idx, break_list):
+def merge_break(X, col, idx, break_list):
     """
     :param X: regroup
     :param col:
@@ -105,13 +105,13 @@ def chisq_merge(X, col):
     count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
     while len(break_list) > 2 and min(count_list) <= 25:
         idx = count_list.index(min(count_list))
-        break_list = check_break(regroup, col, idx, break_list)
+        break_list = merge_break(regroup, col, idx, break_list)
         count_list = [regroup.loc[regroup[col].isin(l), "CntPositive"].sum() for l in break_list]
 
     count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
     while len(break_list) > 2 and min(count_list) <= 25:
         idx = count_list.index(min(count_list))
-        break_list = check_break(regroup, col, idx, break_list)
+        break_list = merge_break(regroup, col, idx, break_list)
         count_list = [regroup.loc[regroup[col].isin(l), "CntNegative"].sum() for l in break_list]
 
     return pd.IntervalIndex.from_breaks([- np.inf] + [max(l) for l in break_list][:-1] + [np.inf])
