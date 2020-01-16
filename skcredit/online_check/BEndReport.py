@@ -30,31 +30,31 @@ def calc_table(X):
 
 class BEndReport(object):
     @staticmethod
-    def metric(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
-        tra_feature = discrete.transform(tra_feature)
-        tes_feature = discrete.transform(tes_feature)
+    def metric(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
+        tra_input = discrete.transform(tra_input)
+        tes_input = discrete.transform(tes_input)
 
         result = OrderedDict()
 
-        fpr, tpr, _ = roc_curve(tra_label, lmclassifier.predict_proba(tra_feature))
-        auc = roc_auc_score(tra_label, lmclassifier.predict_proba(tra_feature))
+        fpr, tpr, _ = roc_curve(tra_label, lmclassifier.predict_proba(tra_input))
+        auc = roc_auc_score(tra_label, lmclassifier.predict_proba(tra_input))
 
         result["tra"] = {"ks": np.round(np.max(tpr - fpr), 5), "auc": np.round(auc, 5)}
 
-        fpr, tpr, _ = roc_curve(tes_label, lmclassifier.predict_proba(tes_feature))
-        auc = roc_auc_score(tes_label, lmclassifier.predict_proba(tes_feature))
+        fpr, tpr, _ = roc_curve(tes_label, lmclassifier.predict_proba(tes_input))
+        auc = roc_auc_score(tes_label, lmclassifier.predict_proba(tes_input))
 
         result["tes"] = {"ks": np.round(np.max(tpr - fpr), 5), "auc": np.round(auc, 5)}
 
         return result
 
     @staticmethod
-    def report(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
-        tra_feature = discrete.transform(tra_feature)
-        tes_feature = discrete.transform(tes_feature)
+    def report(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
+        tra_input = discrete.transform(tra_input)
+        tes_input = discrete.transform(tes_input)
 
-        tra_score = lmclassifier.predict_score(tra_feature)
-        tes_score = lmclassifier.predict_score(tes_feature)
+        tra_score = lmclassifier.predict_score(tra_input)
+        tes_score = lmclassifier.predict_score(tes_input)
 
         result = OrderedDict()
 
@@ -79,12 +79,12 @@ class BEndReport(object):
         return result
 
     @staticmethod
-    def metric_by_week(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
+    def metric_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
         time = "[{}, {}]".format
 
         week = pd.DataFrame({
-            "week": tes_feature[lmclassifier.keep_columns].squeeze().dt.week,
-            "date": tes_feature[lmclassifier.keep_columns].squeeze()
+            "week": tes_input[lmclassifier.tim_columns].squeeze().dt.week,
+            "date": tes_input[lmclassifier.tim_columns].squeeze()
         })
 
         week = pd.concat([
@@ -95,23 +95,23 @@ class BEndReport(object):
         summary = OrderedDict()
 
         for i, (_, row) in enumerate(week.iterrows()):
-            subset_feature = tes_feature.loc[(tes_feature[lmclassifier.keep_columns].squeeze() >= row["Lower"]) &
-                                             (tes_feature[lmclassifier.keep_columns].squeeze() <= row["Upper"])]
+            subset_feature = tes_input.loc[(tes_input[lmclassifier.tim_columns].squeeze() >= row["Lower"]) &
+                                           (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
             subset_label = tes_label.loc[subset_feature.index]
 
-            result = BEndReport().metric(discrete, lmclassifier, tra_feature, tra_label, subset_feature, subset_label)
+            result = BEndReport().metric(discrete, lmclassifier, tra_input, tra_label, subset_feature, subset_label)
 
             summary[time(row["Lower"], row["Upper"])] = result
 
         return summary
 
     @staticmethod
-    def report_by_week(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label):
+    def report_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
         time = "[{}, {}]".format
 
         week = pd.DataFrame({
-            "week": tes_feature[lmclassifier.keep_columns].squeeze().dt.week,
-            "date": tes_feature[lmclassifier.keep_columns].squeeze()
+            "week": tes_input[lmclassifier.tim_columns].squeeze().dt.week,
+            "date": tes_input[lmclassifier.tim_columns].squeeze()
         })
 
         week = pd.concat([
@@ -122,11 +122,11 @@ class BEndReport(object):
         summary = OrderedDict()
 
         for i, (_, row) in enumerate(week.iterrows()):
-            subset_feature = tes_feature.loc[(tes_feature[lmclassifier.keep_columns].squeeze() >= row["Lower"]) &
-                                             (tes_feature[lmclassifier.keep_columns].squeeze() <= row["Upper"])]
+            subset_feature = tes_input.loc[(tes_input[lmclassifier.tim_columns].squeeze() >= row["Lower"]) &
+                                           (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
             subset_label = tes_label.loc[subset_feature.index]
 
-            result = BEndReport().report(discrete, lmclassifier, tra_feature, tra_label, subset_feature, subset_label)
+            result = BEndReport().report(discrete, lmclassifier, tra_input, tra_label, subset_feature, subset_label)
 
             summary[time(row["Lower"], row["Upper"])] = result
 

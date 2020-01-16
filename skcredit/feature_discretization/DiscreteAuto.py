@@ -14,16 +14,16 @@ pd.set_option("max_columns", None)
 
 
 class DiscreteAuto(BaseDiscrete):
-    def __init__(self, keep_columns):
-        super().__init__(keep_columns)
+    def __init__(self, tim_columns):
+        super().__init__(tim_columns)
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
         del X
         gc.collect()
 
-        self.cat_columns_ = [col for col in x.select_dtypes(include="object").columns if col not in self.keep_columns]
-        self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.keep_columns]
+        self.cat_columns_ = [col for col in x.select_dtypes(include="object").columns if col not in self.tim_columns]
+        self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.tim_columns]
 
         with Pool(mp.cpu_count() - 2) as pool:
             if self.cat_columns_:

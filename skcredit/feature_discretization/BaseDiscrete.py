@@ -9,8 +9,8 @@ from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, repla
 
 
 class BaseDiscrete(BaseEstimator, TransformerMixin):
-    def __init__(self, keep_columns):
-        self.keep_columns = keep_columns
+    def __init__(self, tim_columns):
+        self.tim_columns = tim_columns
         self.cat_columns_ = None
         self.num_columns_ = None
 
@@ -27,7 +27,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        x = x[self.keep_columns + list(self.information_values_.keys())]
+        x = x[self.tim_columns + list(self.information_values_.keys())]
 
         if self.cat_table_.keys():
             for col in self.cat_table_.keys():
@@ -41,7 +41,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                 break_list = self.num_table_[col][col].tolist()
                 x[col] = x[col].apply(lambda element: replace_num_woe(element, break_list, woe))
 
-        return x[self.keep_columns + list(self.information_values_.keys())]
+        return x[self.tim_columns + list(self.information_values_.keys())]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)

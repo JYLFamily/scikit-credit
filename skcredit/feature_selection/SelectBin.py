@@ -13,8 +13,8 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 class SelectBin(BaseEstimator, TransformerMixin):
-    def __init__(self, *, keep_columns):
-        self.keep_columns = keep_columns
+    def __init__(self, tim_columns):
+        self.tim_columns = tim_columns
 
         self.feature_columns_ = None
         self.feature_support_ = None
@@ -24,7 +24,7 @@ class SelectBin(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        self.feature_columns_ = np.array([col for col in x.columns if col not in self.keep_columns])
+        self.feature_columns_ = np.array([col for col in x.columns if col not in self.tim_columns])
         self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
 
         beta_0 = np.log(y.sum() / (y.shape[0] - y.sum()))
@@ -47,7 +47,7 @@ class SelectBin(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        return x[self.keep_columns + self.feature_columns_[self.feature_support_].tolist()]
+        return x[self.tim_columns + self.feature_columns_[self.feature_support_].tolist()]
 
     def fit_transform(self, X, y=None, **fit_params):
         self.fit(X, y)

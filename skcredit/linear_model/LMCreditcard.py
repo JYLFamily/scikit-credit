@@ -1,44 +1,36 @@
-# coding: utf-8
+# coding:utf-8
 
 import copy
 import numpy as np
 import pandas as pd
+import multiprocessing as mp
+from multiprocessing import Pool
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
+def calc_table(lmclassifier, tables, col):
+    table = copy.deepcopy(tables[col][[col, "WoE"]])
+    table["Coefficients"] = lmclassifier.coeff_[col]
+    table["PartialScore"] = lmclassifier.coeff_[col] * lmclassifier.b_ * table["WoE"]
+
+    return table
+
+
 class LMCreditcard(object):
-    @staticmethod
-    def score_alignment(discrete, lmn):
-        pass
+    def __init__(self, discrete, lmclassifier):
+        self.discrete = discrete
+        self.lmclassifier = lmclassifier
 
-    @staticmethod
-    def attribute_alignment(discrete, lmclassifier, feature, target):
-        feature = discrete.transform(feature)
-        print(feature.head())
-
+    def __call__(self, *args, **kwargs):
         tables = dict()
-        tables.update(discrete.cat_table_)
-        tables.update(discrete.num_table_)
+        tables.update(self.discrete.cat_table_)
+        tables.update(self.discrete.num_table_)
 
-        result = dict()
-
-        for col in lmclassifier.feature_subsets_:
-            table = copy.deepcopy(tables[col][[col, "WoE", "CntRec", "CntPositive", "CntNegative"]])
-
-            e_cnt_positive = lmclassifier.predict_proba(feature)["proba_positive"].groupby(
-                feature[col]).sum().to_frame("ECntPositive")
-            e_cnt_negative = lmclassifier.predict_proba(feature)["proba_negative"].groupby(
-                feature[col]).sum().to_frame("ECntNegative")
-
-            table = table.merge(e_cnt_positive, left_on=["WoE"], right_index=True, how="left")
-            table = table.merge(e_cnt_negative, left_on=["WoE"], right_index=True, how="left")
-
-            table["Delta"] = lmclassifier.b_ * np.log(
-                (table["CntPositive"] / table["CntNegative"]) / (table["ECntPositive"] / table["ECntNegative"]))
-
-            result[col] = table
+        with Pool(mp.cpu_count() - 2) as pool:
+            result = dict(zip(self.lmclassifier.feature_subsets_, pool.starmap(
+                calc_table,
+                [(self.lmclassifier, tables, col) for col in self.lmclassifier.feature_subsets_])))
 
         return result
-

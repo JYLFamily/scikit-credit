@@ -10,8 +10,8 @@ pd.set_option("max_columns", None)
 
 
 class FormatTabular(BaseEstimator, TransformerMixin):
-    def __init__(self, keep_columns, cat_columns, num_columns):
-        self.keep_columns = keep_columns
+    def __init__(self, tim_columns, cat_columns, num_columns):
+        self.tim_columns = tim_columns
         self.cat_columns = cat_columns
         self.num_columns = num_columns
 
@@ -46,7 +46,8 @@ class FormatTabular(BaseEstimator, TransformerMixin):
         del X
         gc.collect()
 
-        x = x[self.keep_columns + list(self.cat_value_.keys()) + list(self.num_value_.keys())]
+        x = x[self.tim_columns + list(self.cat_value_.keys()) + list(self.num_value_.keys())]
+        x[self.tim_columns[0]] = pd.to_datetime(x[self.tim_columns[0]])
 
         if self.cat_value_.keys():
             x[list(self.cat_value_.keys())] = x[list(self.cat_value_.keys())].fillna("missing").astype(str)

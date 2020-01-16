@@ -1,12 +1,15 @@
 # encoding: utf-8
 
+import os
+import yaml
 import warnings
 import numpy as np
 import pandas as pd
+from pprint import pprint
 from skcredit.feature_preprocessing import FormatTabular
 from skcredit.feature_discretization import DiscreteAuto
-from skcredit.feature_selection import SelectBin, SelectVif
-from skcredit.linear_model import LMClassifier, LMCreditcard
+from skcredit.linear_model import LMClassifier, LMCreditcard, LMValidation
+from skcredit.online_check import FEndReport, BEndReport
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -16,47 +19,50 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    columns = [
-        "zmscore",
-        "avg_frd_zms",
-        "tot_pay_amt_1m",
-        "ebill_pay_amt_1m",
-        "credit_pay_amt_1m",
-        "pre_1y_pay_amount",
-        "mobile_fixed_days",
-        "adr_stability_days",
-        "positive_biz_cnt_1y",
-        "last_6m_avg_asset_total",
-        "last_1m_avg_asset_total",
-        "target"]
+    with open("config.yaml", encoding="UTF-8") as config_file:
+        config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    tra = pd.read_csv("F:\\work\\QuDian\\tra.csv")
-    tes = pd.read_csv("F:\\work\\QuDian\\tes.csv")
+    tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))
+    tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
 
-    tra = tra[columns]
-    tes = tes[columns]
+    tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
+    tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
 
-    tra_feature, tra_target = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
-    tes_feature, tes_target = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
+    tim_columns = ["apply_time"]
+    cat_columns = ["province", "is_midnight"]
+    num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(
-        keep_columns=[],
-        cat_columns=[],
-        num_columns=[col for col in columns if col not in ["target"]]
-    )
-    ft.fit(tra_feature, tra_target)
-    tra_feature = ft.transform(tra_feature)
-    tes_feature = ft.transform(tes_feature)
+        tim_columns=tim_columns,
+        cat_columns=cat_columns,
+        num_columns=num_columns)
+    ft.fit(tra_input, tra_label)
+    tra_feature = ft.transform(tra_input)
+    tes_feature = ft.transform(tes_input)
 
-    discrete = DiscreteAuto(keep_columns=[])
-    discrete.fit(tra_feature, tra_target)
+    discrete = DiscreteAuto(
+        tim_columns=tim_columns)
+    discrete.fit(tra_feature, tra_label)
     tra_feature = discrete.transform(tra_feature)
     tes_feature = discrete.transform(tes_feature)
 
-    lmclassifier = LMClassifier(keep_columns=[], PDO=20, BASE=600, ODDS=1)
-    lmclassifier.fit(tra_feature, tra_target)
-    print("{:.5f}".format(lmclassifier.score(tra_feature, tra_target)))
-    print("{:.5f}".format(lmclassifier.score(tes_feature, tes_target)))
-    print(lmclassifier.model())
+    lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
+    lmclassifier.fit(tra_feature, tra_label)
+    pprint("{:.5f}".format(lmclassifier.score(tra_feature, tra_label)))
+    pprint("{:.5f}".format(lmclassifier.score(tes_feature, tes_label)))
+    pprint(lmclassifier.model())
 
-    LMCreditcard.attribute_alignment(discrete, lmclassifier, tra_feature, tra_target)
+    lmcreditcard = LMCreditcard(discrete, lmclassifier)
+    pprint(lmcreditcard())
+    print("=" * 72)
+    pprint(LMValidation.intercept_alignment(tra_label, tes_label))
+    print("=" * 72)
+    pprint(LMValidation.attribute_alignment(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label))
+    print("=" * 72)
+    pprint(FEndReport.psi_by_week(discrete, lmclassifier, tra_input, tes_input))
+    print("=" * 72)
+    pprint(FEndReport.csi_by_week(discrete, lmclassifier, tra_input, tes_input))
+    print("=" * 72)
+    pprint(BEndReport.metric(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
+    print("=" * 72)
+    pprint(BEndReport.report(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))

@@ -68,8 +68,8 @@ def stepwises(X, y, feature_columns, feature_subsets, lrmodel_pvalues):
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, keep_columns, PDO, BASE, ODDS):
-        self.keep_columns = keep_columns
+    def __init__(self, tim_columns, PDO, BASE, ODDS):
+        self.tim_columns = tim_columns
 
         self.feature_columns_ = None
         self.feature_subsets_ = None
@@ -84,8 +84,8 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        lrmodel_pvalues = 0.00001
-        self.feature_columns_ = set([col for col in x.columns if col not in self.keep_columns])
+        lrmodel_pvalues = 0.0000001
+        self.feature_columns_ = set([col for col in x.columns if col not in self.tim_columns])
         self.feature_subsets_ = set()
 
         self.model_ = stepwises(
@@ -95,29 +95,29 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
             lrmodel_pvalues
         )
 
-        # while np.any(self.model_.params.drop("const") < 0):
-        #     lrmodel_pvalues /= 10
-        #
-        #     self.model_ = stepwises(
-        #         x, y,
-        #         self.feature_columns_,
-        #         self.feature_subsets_,
-        #         lrmodel_pvalues
-        #     )
+        while np.any(self.model_.params.drop("const") < 0):
+            lrmodel_pvalues /= 10
+
+            self.model_ = stepwises(
+                x, y,
+                self.feature_columns_,
+                self.feature_subsets_,
+                lrmodel_pvalues
+            )
 
         self.coeff_ = self.model_.params
         self.feature_subsets_ = self.coeff_.drop("const").index.tolist()
 
         return self
 
+    def model(self):
+
+        return self.model_.summary()
+
     def score(self, X, y=None, sample_weight=None):
         fpr, tpr, _ = roc_curve(y, self.predict_proba(X)["proba_positive"])
 
         return round(max(tpr - fpr), 5)
-
-    def model(self):
-
-        return self.model_.summary()
 
     def predict_proba(self, X):
         x = X.copy(deep=True)
