@@ -8,8 +8,8 @@ import pandas as pd
 from pprint import pprint
 from skcredit.feature_preprocessing import FormatTabular
 from skcredit.feature_discretization import DiscreteAuto
-from skcredit.linear_model import LMClassifier, LMCreditcard, LMValidation
 from skcredit.online_check import FEndReport, BEndReport
+from skcredit.linear_model import LMClassifier, LMCreditcard, LMValidation
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -28,8 +28,11 @@ if __name__ == "__main__":
     tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
     tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
 
+    tra_input = tra_input.iloc[:, :10]
+    tes_input = tes_input.iloc[:, :10]
+
     tim_columns = ["apply_time"]
-    cat_columns = ["province", "is_midnight"]
+    cat_columns = []  # ["province", "is_midnight"]
     num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(
@@ -37,14 +40,14 @@ if __name__ == "__main__":
         cat_columns=cat_columns,
         num_columns=num_columns)
     ft.fit(tra_input, tra_label)
-    tra_feature = ft.transform(tra_input)
-    tes_feature = ft.transform(tes_input)
+    tra_input = ft.transform(tra_input)
+    tes_input = ft.transform(tes_input)
 
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
-    discrete.fit(tra_feature, tra_label)
-    tra_feature = discrete.transform(tra_feature)
-    tes_feature = discrete.transform(tes_feature)
+    discrete.fit(tra_input, tra_label)
+    tra_feature = discrete.transform(tra_input)
+    tes_feature = discrete.transform(tes_input)
 
     lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
     lmclassifier.fit(tra_feature, tra_label)
@@ -63,6 +66,6 @@ if __name__ == "__main__":
     print("=" * 72)
     pprint(FEndReport.csi_by_week(discrete, lmclassifier, tra_input, tes_input))
     print("=" * 72)
-    pprint(BEndReport.metric(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
+    pprint(BEndReport.metric_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
     print("=" * 72)
-    pprint(BEndReport.report(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
+    pprint(BEndReport.report_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))

@@ -31,18 +31,18 @@ def calc_table(X):
 class BEndReport(object):
     @staticmethod
     def metric(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
-        tra_input = discrete.transform(tra_input)
-        tes_input = discrete.transform(tes_input)
+        tra_feature = discrete.transform(tra_input)
+        tes_feature = discrete.transform(tes_input)
 
         result = OrderedDict()
 
-        fpr, tpr, _ = roc_curve(tra_label, lmclassifier.predict_proba(tra_input))
-        auc = roc_auc_score(tra_label, lmclassifier.predict_proba(tra_input))
+        fpr, tpr, _ = roc_curve(tra_label, lmclassifier.predict_proba(tra_feature)["proba_positive"])
+        auc = roc_auc_score(tra_label, lmclassifier.predict_proba(tra_feature)["proba_positive"])
 
         result["tra"] = {"ks": np.round(np.max(tpr - fpr), 5), "auc": np.round(auc, 5)}
 
-        fpr, tpr, _ = roc_curve(tes_label, lmclassifier.predict_proba(tes_input))
-        auc = roc_auc_score(tes_label, lmclassifier.predict_proba(tes_input))
+        fpr, tpr, _ = roc_curve(tes_label, lmclassifier.predict_proba(tes_feature)["proba_positive"])
+        auc = roc_auc_score(tes_label, lmclassifier.predict_proba(tes_feature)["proba_positive"])
 
         result["tes"] = {"ks": np.round(np.max(tpr - fpr), 5), "auc": np.round(auc, 5)}
 
@@ -50,11 +50,11 @@ class BEndReport(object):
 
     @staticmethod
     def report(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label):
-        tra_input = discrete.transform(tra_input)
-        tes_input = discrete.transform(tes_input)
+        tra_feature = discrete.transform(tra_input)
+        tes_feature = discrete.transform(tes_input)
 
-        tra_score = lmclassifier.predict_score(tra_input)
-        tes_score = lmclassifier.predict_score(tes_input)
+        tra_score = lmclassifier.predict_score(tra_feature)
+        tes_score = lmclassifier.predict_score(tes_feature)
 
         result = OrderedDict()
 

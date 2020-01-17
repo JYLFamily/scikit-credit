@@ -6,7 +6,6 @@ import pandas as pd
 import multiprocessing as mp
 from multiprocessing import Pool
 from collections import OrderedDict
-from imblearn.under_sampling import RandomUnderSampler
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -21,7 +20,7 @@ def calc_table(lmclassifier, tables, feature, label, proba, col):
         feature.loc[label == 0, col]).agg(len).to_frame("ActualCntNegative")
 
     expect_cnt_positive = np.round(proba.groupby(feature[col]).sum().to_frame("ExpectCntPositive"))
-    expect_cnt_negative = np.round(proba.groupby(feature[col]).sum().to_frame("ExpectCntNegative"))
+    expect_cnt_negative = np.round((1 - proba).groupby(feature[col]).sum().to_frame("ExpectCntNegative"))
 
     table = table.merge(actual_cnt_positive, left_on=["WoE"], right_index=True, how="left")
     table = table.merge(actual_cnt_negative, left_on=["WoE"], right_index=True, how="left")
@@ -40,8 +39,8 @@ class LMValidation(object):
     def intercept_alignment(tra_label, tes_label):
         result = OrderedDict()
 
-        result["tra"] = np.log(tra_label.value_counts()[1] / tra_label.value_counts()[0])
-        result["tes"] = np.log(tes_label.value_counts()[1] / tes_label.value_counts()[0])
+        result["tra"] = tra_label.value_counts()[1] / tra_label.value_counts()[0]
+        result["tes"] = tes_label.value_counts()[1] / tes_label.value_counts()[0]
 
         return result
 
@@ -67,17 +66,14 @@ class LMValidation(object):
         # tes
         # tra_label.mean() > tes_label.mean() under-sample majority class
         # tra_label.mean() < tes_label.mean() under-sample minority class
-        tes_cnt_negative, tes_cnt_positive = tes_label.value_counts()[0], tes_label.value_counts()[1],
-
-        rus = (
-            RandomUnderSampler({0: int(tes_cnt_positive / tra_label.mean()), 1: tes_cnt_positive}, random_state=7)
-            if tra_label.mean() > tes_label.mean() else
-            RandomUnderSampler({0: tes_cnt_negative, 1: int(tes_cnt_negative * tra_label.mean())}, random_state=7)
-        )
-        rus.fit(tes_feature, tes_label)
-
-        tes_feature = tes_feature.iloc[rus.sample_indices_, :].reset_index(drop=True)
-        tes_label = tes_label.iloc[rus.sample_indices_].reset_index(drop=True)
+        # from imblearn.under_sampling import RandomUnderSampler
+        # tes_cnt_negative, tes_cnt_positive = tes_label.value_counts()[0], tes_label.value_counts()[1]
+        # rus = (
+        #     RandomUnderSampler({0: int(tes_cnt_positive / tra_label.mean()), 1: tes_cnt_positive}, random_state=7)
+        #     if tra_label.mean() > tes_label.mean() else
+        #     RandomUnderSampler({0: tes_cnt_negative, 1: int(tes_cnt_negative * tra_label.mean())}, random_state=7)
+        # )
+        # tes_feature, tes_label = rus.fit_resample(tes_feature, tes_label)
         tes_proba = lmclassifier.predict_proba(tes_feature)["proba_positive"]
 
         with Pool(mp.cpu_count() - 2) as pool:

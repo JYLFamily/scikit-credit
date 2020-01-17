@@ -12,11 +12,11 @@ pd.set_option("max_columns", None)
 class FEndReport(object):
     @staticmethod
     def psi(discrete, lmclassifier, tra_input, tes_input):
-        tra_input = discrete.transform(tra_input)
-        tes_input = discrete.transform(tes_input)
+        tra_feature = discrete.transform(tra_input)
+        tes_feature = discrete.transform(tes_input)
 
-        tra_score = lmclassifier.predict_score(tra_input)
-        tes_score = lmclassifier.predict_score(tes_input)
+        tra_score = lmclassifier.predict_score(tra_feature)
+        tes_score = lmclassifier.predict_score(tes_feature)
 
         result = dict()
 
@@ -49,8 +49,8 @@ class FEndReport(object):
 
     @staticmethod
     def csi(discrete, lmclassifier, tra_input, tes_input):
-        tra_input = discrete.transform(tra_input)
-        tes_input = discrete.transform(tes_input)
+        tra_feature = discrete.transform(tra_input)
+        tes_feature = discrete.transform(tes_input)
 
         tables = dict()
         tables.update(discrete.cat_table_)
@@ -62,8 +62,8 @@ class FEndReport(object):
 
         for col in lmclassifier.feature_subsets_:
             table = copy.deepcopy(tables[col][[col, "WoE"]])
-            tra_cnt = tra_input[col].value_counts().to_frame("CntTra")
-            tes_cnt = tes_input[col].value_counts().to_frame("CntTes")
+            tra_cnt = tra_feature[col].value_counts().to_frame("CntTra")
+            tes_cnt = tes_feature[col].value_counts().to_frame("CntTes")
 
             table = table.merge(tra_cnt, left_on="WoE", right_index=True, how="left")
             table = table.merge(tes_cnt, left_on="WoE", right_index=True, how="left")
@@ -107,7 +107,7 @@ class FEndReport(object):
 
         for i, (_, row) in enumerate(week.iterrows()):
             subset = tes_input.loc[(tes_input[lmclassifier.tim_columns].squeeze() >= row["Lower"]) &
-                                     (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
+                                   (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
             result = FEndReport().psi(discrete, lmclassifier, tra_input, subset)
 
             summary["table"][time(row["Lower"], row["Upper"])] = result["table"]
@@ -138,7 +138,7 @@ class FEndReport(object):
 
         for i, (_, row) in enumerate(week.iterrows()):
             subset = tes_input.loc[(tes_input[lmclassifier.tim_columns].squeeze() >= row["Lower"]) &
-                                     (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
+                                   (tes_input[lmclassifier.tim_columns].squeeze() <= row["Upper"])]
             result = FEndReport().csi(discrete, lmclassifier, tra_input, subset)
 
             summary["table"][time(row["Lower"], row["Upper"])] = OrderedDict()
