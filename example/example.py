@@ -9,6 +9,7 @@ from pprint import pprint
 from skcredit.feature_preprocessing import FormatTabular
 from skcredit.feature_discretization import DiscreteAuto
 from skcredit.online_check import FEndReport, BEndReport
+from skcredit.feature_selection import SelectBin, SelectVif
 from skcredit.linear_model import LMClassifier, LMCreditcard, LMValidation
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -28,11 +29,8 @@ if __name__ == "__main__":
     tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
     tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
 
-    tra_input = tra_input.iloc[:, :10]
-    tes_input = tes_input.iloc[:, :10]
-
     tim_columns = ["apply_time"]
-    cat_columns = []  # ["province", "is_midnight"]
+    cat_columns = ["province", "is_midnight"]
     num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(
@@ -48,6 +46,18 @@ if __name__ == "__main__":
     discrete.fit(tra_input, tra_label)
     tra_feature = discrete.transform(tra_input)
     tes_feature = discrete.transform(tes_input)
+
+    selectbin = SelectBin(
+        tim_columns=tim_columns)
+    selectbin.fit(tra_feature, tra_label)
+    tra_feature = selectbin.transform(tra_feature)
+    tes_feature = selectbin.transform(tes_feature)
+
+    selectvif = SelectVif(
+        tim_columns=tim_columns)
+    selectvif.fit(tra_feature, tra_label)
+    tra_feature = selectvif.transform(tra_feature)
+    tes_feature = selectvif.transform(tes_feature)
 
     lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
     lmclassifier.fit(tra_feature, tra_label)

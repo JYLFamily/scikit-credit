@@ -19,8 +19,8 @@ def calc_table(lmclassifier, tables, feature, label, proba, col):
     actual_cnt_negative = label.loc[label == 0].groupby(
         feature.loc[label == 0, col]).agg(len).to_frame("ActualCntNegative")
 
-    expect_cnt_positive = np.round(proba.groupby(feature[col]).sum().to_frame("ExpectCntPositive"))
-    expect_cnt_negative = np.round((1 - proba).groupby(feature[col]).sum().to_frame("ExpectCntNegative"))
+    expect_cnt_positive = np.int(proba["proba_positive"].groupby(feature[col]).sum().to_frame("ExpectCntPositive"))
+    expect_cnt_negative = np.int(proba["proba_negative"].groupby(feature[col]).sum().to_frame("ExpectCntNegative"))
 
     table = table.merge(actual_cnt_positive, left_on=["WoE"], right_index=True, how="left")
     table = table.merge(actual_cnt_negative, left_on=["WoE"], right_index=True, how="left")
@@ -55,7 +55,7 @@ class LMValidation(object):
         result["tes"] = dict()
 
         # tra
-        tra_proba = lmclassifier.predict_proba(tra_feature)["proba_positive"]
+        tra_proba = lmclassifier.predict_proba(tra_feature)
 
         with Pool(mp.cpu_count() - 2) as pool:
             result["tra"] = dict(zip(lmclassifier.feature_subsets_, pool.starmap(
@@ -74,7 +74,7 @@ class LMValidation(object):
         #     RandomUnderSampler({0: tes_cnt_negative, 1: int(tes_cnt_negative * tra_label.mean())}, random_state=7)
         # )
         # tes_feature, tes_label = rus.fit_resample(tes_feature, tes_label)
-        tes_proba = lmclassifier.predict_proba(tes_feature)["proba_positive"]
+        tes_proba = lmclassifier.predict_proba(tes_feature)
 
         with Pool(mp.cpu_count() - 2) as pool:
             result["tes"] = dict(zip(lmclassifier.feature_subsets_, pool.starmap(
