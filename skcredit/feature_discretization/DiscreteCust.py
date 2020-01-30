@@ -44,9 +44,9 @@ class DiscreteCust(BaseDiscrete):
                         self.num_columns_])))
         self.num_table_ = {col: val for col, val in self.num_table_.items()}
 
-        self.information_values_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
-        self.information_values_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
-        self.information_values_ = OrderedDict(
-            sorted(self.information_values_.items(), key=lambda t: t[1], reverse=True))
+        self.information_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
+        self.information_value_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
+        self.information_value_ = OrderedDict(
+            sorted(self.information_value_.items(), key=lambda t: t[1], reverse=True))
 
         return self

@@ -19,8 +19,10 @@ def calc_table(lmclassifier, tables, feature, label, proba, col):
     actual_cnt_negative = label.loc[label == 0].groupby(
         feature.loc[label == 0, col]).agg(len).to_frame("ActualCntNegative")
 
-    expect_cnt_positive = np.int(proba["proba_positive"].groupby(feature[col]).sum().to_frame("ExpectCntPositive"))
-    expect_cnt_negative = np.int(proba["proba_negative"].groupby(feature[col]).sum().to_frame("ExpectCntNegative"))
+    expect_cnt_positive = proba["proba_positive"].groupby(
+        feature[col]).sum().to_frame("ExpectCntPositive").astype(int)
+    expect_cnt_negative = proba["proba_negative"].groupby(
+        feature[col]).sum().to_frame("ExpectCntNegative").astype(int)
 
     table = table.merge(actual_cnt_positive, left_on=["WoE"], right_index=True, how="left")
     table = table.merge(actual_cnt_negative, left_on=["WoE"], right_index=True, how="left")
