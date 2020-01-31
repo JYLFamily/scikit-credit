@@ -42,14 +42,14 @@ def dleaf_rules(tree, feature_list):
             rule_dict[0][feature] = Interval.open(-np.inf, +np.inf)
     else:
         recursions(node=0, rull=rule_list)
-    print(rule_list)
-    print(rule_dict)
-    rule_dict = pd.DataFrame.from_dict(rule_dict, orient="index").reset_index(drop=True)
 
-    if feature_list[-1] not in rule_dict.columns:
-        rule_dict[feature_list[-1]] = Interval.open(-np.inf, +np.inf)
+    rule_dict = pd.DataFrame.from_dict(rule_dict,   orient="index")
+
+    for feature in feature_list:
+        if feature not in rule_dict.columns:
+            rule_dict[feature] = Interval.open(-np.inf,  +np.inf)
     rule_dict = rule_dict.fillna(Interval.open(-np.inf, +np.inf))
-    rule_dict = rule_dict.reindex(columns=feature_list)
+    rule_dict = rule_dict.reindex(columns=feature_list).reset_index(drop=True)
 
     return rule_dict
 

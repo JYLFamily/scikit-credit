@@ -23,14 +23,14 @@ if __name__ == "__main__":
     with open("config.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))[["apply_time", "fnd_ern_amt_3m", "fnd_ern_amt_6m", "target"]].head(100000)
+    tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))
     tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
 
     tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
     tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
 
     tim_columns = ["apply_time"]
-    cat_columns = []  # ["province", "is_midnight"]
+    cat_columns = ["province", "is_midnight"]
     num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(

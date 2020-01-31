@@ -450,8 +450,6 @@ def merge_num_table_cross(X, col_1, col_2):
 
     # break list
     break_list_1, break_list_2 = dtree_split_cross(x_non, col_1, col_2)
-    print(break_list_1)
-    print(break_list_2)
 
     # calc num table
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
