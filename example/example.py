@@ -32,6 +32,9 @@ if __name__ == "__main__":
     tim_columns = ["apply_time"]
     cat_columns = ["province", "is_midnight"]
     num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
+    # tim_columns = ["period"]
+    # cat_columns = ["user_basic.user_province", "user_basic.user_phone_province"]
+    # num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(
         tim_columns=tim_columns,
@@ -48,26 +51,28 @@ if __name__ == "__main__":
     discrete.save_table(config["path"])
     discrete.save_order_cross(config["path"])
     discrete.save_table_cross(config["path"])
-    # tra_feature = discrete.transform(tra_input)
-    # tes_feature = discrete.transform(tes_input)
-    #
-    # selectbin = SelectBin(
-    #     tim_columns=tim_columns)
-    # selectbin.fit(tra_feature, tra_label)
-    # tra_feature = selectbin.transform(tra_feature)
-    # tes_feature = selectbin.transform(tes_feature)
-    #
-    # selectvif = SelectVif(
-    #     tim_columns=tim_columns)
-    # selectvif.fit(tra_feature, tra_label)
-    # tra_feature = selectvif.transform(tra_feature)
-    # tes_feature = selectvif.transform(tes_feature)
-    #
-    # lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
-    # lmclassifier.fit(tra_feature, tra_label)
-    # pprint("{:.5f}".format(lmclassifier.score(tra_feature, tra_label)))
-    # pprint("{:.5f}".format(lmclassifier.score(tes_feature, tes_label)))
-    # pprint(lmclassifier.model())
+    tra_feature = discrete.transform(tra_input)
+    tes_feature = discrete.transform(tes_input)
+
+    selectbin = SelectBin(
+        tim_columns=tim_columns)
+    selectbin.fit(tra_feature, tra_label)
+    tra_feature = selectbin.transform(tra_feature)
+    tes_feature = selectbin.transform(tes_feature)
+    tra_feature.to_csv(os.path.join(config["path"], "tra_feature.csv"), index=False)
+    tes_feature.to_csv(os.path.join(config["path"], "tes_feature.csv"), index=False)
+
+    selectvif = SelectVif(
+        tim_columns=tim_columns)
+    selectvif.fit(tra_feature, tra_label)
+    tra_feature = selectvif.transform(tra_feature)
+    tes_feature = selectvif.transform(tes_feature)
+
+    lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
+    lmclassifier.fit(tra_feature, tra_label)
+    pprint("{:.5f}".format(lmclassifier.score(tra_feature, tra_label)))
+    pprint("{:.5f}".format(lmclassifier.score(tes_feature, tes_label)))
+    pprint(lmclassifier.model())
     #
     # lmcreditcard = LMCreditcard(discrete, lmclassifier)
     # pprint(lmcreditcard())

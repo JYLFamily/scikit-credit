@@ -18,6 +18,8 @@ pd.set_option("max_columns", None)
 class DiscreteAuto(BaseDiscrete):
     def __init__(self,   tim_columns):
         super().__init__(tim_columns)
+        self.cat_columns_ = None
+        self.num_columns_ = None
 
     def fit(self, X, y=None):
         x = X.copy(deep=True)
@@ -54,21 +56,21 @@ class DiscreteAuto(BaseDiscrete):
             sorted(self.information_value_.items(), key=lambda t: t[1], reverse=True))
 
         # feature cross
-        # with Pool(mp.cpu_count() - 2) as pool:
-        #     if len(self.cat_value_.keys()) >= 2:
-        #         self.cat_table_cross_ = dict(zip(
-        #             ["{} @ {}".format(col_1, col_2) for col_1, col_2 in combinations(self.cat_value_.keys(), 2)],
-        #             pool.starmap(
-        #                 merge_cat_table_cross,
-        #                 [(pd.concat([x[[col_1, col_2]], y.to_frame("target")], axis=1), col_1, col_2)
-        #                  for col_1, col_2 in combinations(self.cat_value_.keys(), 2)]
-        #             )
-        #         ))
-        # self.cat_table_cross_ = {
-        #     col: val for col, val in self.cat_table_cross_.items()
-        #     if val["IV"].sum() > self.cat_value_[col.split(" @ ")[0]]}
-        # self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
-        # self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
+        with Pool(mp.cpu_count() - 2) as pool:
+            if len(self.cat_value_.keys()) >= 2:
+                self.cat_table_cross_ = dict(zip(
+                    ["{} @ {}".format(col_1, col_2) for col_1, col_2 in combinations(self.cat_value_.keys(), 2)],
+                    pool.starmap(
+                        merge_cat_table_cross,
+                        [(pd.concat([x[[col_1, col_2]], y.to_frame("target")], axis=1), col_1, col_2)
+                         for col_1, col_2 in combinations(self.cat_value_.keys(), 2)]
+                    )
+                ))
+        self.cat_table_cross_ = {
+            col: val for col, val in self.cat_table_cross_.items()
+            if val["IV"].sum() > 1.25 * self.cat_value_[col.split(" @ ")[0]]}
+        self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
+        self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
 
         with Pool(mp.cpu_count() - 2) as pool:
             if len(self.num_value_.keys()) >= 2:
@@ -82,7 +84,7 @@ class DiscreteAuto(BaseDiscrete):
                 ))
         self.num_table_cross_ = {
             col: val for col, val in self.num_table_cross_.items()
-            if val["IV"].sum() > self.num_value_[col.split(" @ ")[0]]}
+            if val["IV"].sum() > 1.25 * self.num_value_[col.split(" @ ")[0]]}
         self.num_value_cross_.update({col: val["IV"].sum() for col, val in self.num_table_cross_.items()})
         self.num_value_cross_ = OrderedDict(sorted(self.num_value_cross_.items(), key=lambda t: t[1], reverse=True))
 

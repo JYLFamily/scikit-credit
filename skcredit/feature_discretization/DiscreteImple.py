@@ -21,19 +21,17 @@ def calc_non_table(X, col, lst):
     x = X.copy(deep=True)
     del X
     gc.collect()
-    try:
-        cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(
-            lambda index: [idx for idx, val in lst.items() if x.loc[index, col] in val][0]
-        )["target"].agg(len).to_frame("CntPositive")
-        cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(
-            lambda index: [idx for idx, val in lst.items() if x.loc[index, col] in val][0]
-        )["target"].agg(len).to_frame("CntNegative")
-        cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
-        table = pd.concat([lst.to_frame(col), cnt_rec, cnt_positive, cnt_negative], axis=1)
-        table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
-    except:
-        print(col)
+    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(
+        lambda index: [idx for idx, val in lst.items() if x.loc[index, col] in val][0]
+    ).size().to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(
+        lambda index: [idx for idx, val in lst.items() if x.loc[index, col] in val][0]
+    ).size().to_frame("CntNegative")
+    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+
+    table = pd.concat([lst.to_frame(col), cnt_rec, cnt_positive, cnt_negative], axis=1)
+    table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
 
     return table
 
@@ -47,16 +45,14 @@ def calc_mis_table(X, col):
     x = X.copy(deep=True)
     del X
     gc.collect()
-    try:
-        cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntPositive")
-        cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col)["target"].agg(len).to_frame("CntNegative")
-        cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
-        table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
-        table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
-        table = table.reset_index()
-    except:
-        print(col)
+    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col).size().to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col).size().to_frame("CntNegative")
+    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+
+    table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
+    table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
+    table = table.reset_index()
 
     return table
 
@@ -159,7 +155,7 @@ def merge_cat_table(X, col):
     # calc cat table
     table = calc_cat_table(x, col, group_list)
 
-    logging.info(col + " complete !")
+    logging.info("{} complete !".format(col))
 
     return table
 
@@ -184,7 +180,7 @@ def merge_num_table(X, col):
     # calc num table
     table = calc_num_table(x, col, break_list)
 
-    logging.info(col + " complete !")
+    logging.info("{} complete !".format(col))
 
     return table
 
@@ -202,7 +198,7 @@ def force_cat_table(X, col, group_list):
 
     table = calc_cat_table(x, col, group_list)
 
-    logging.info(col + " complete !")
+    logging.info("{} complete !".format(col))
 
     return table
 
@@ -220,24 +216,9 @@ def force_num_table(X, col, break_list):
 
     table = calc_num_table(x, col, break_list)
 
-    logging.info(col + " complete !")
+    logging.info("{} complete !".format(col))
 
     return table
-
-
-def replace_num_woe(element, break_list, woe):
-    """
-    :param element:
-    :param break_list:
-    :param woe:
-    :return:
-    """
-    if element == -9999.0:
-        return woe[-1]
-    else:
-        for i, l in enumerate(break_list):
-            if element in l:
-                return woe[i]
 
 
 def replace_cat_woe(element, group_list, woe):
@@ -255,6 +236,21 @@ def replace_cat_woe(element, group_list, woe):
                 return woe[i]
 
 
+def replace_num_woe(element, break_list, woe):
+    """
+    :param element:
+    :param break_list:
+    :param woe:
+    :return:
+    """
+    if element == -9999.0:
+        return woe[-1]
+    else:
+        for i, l in enumerate(break_list):
+            if element in l:
+                return woe[i]
+
+
 def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
     """
     :param X:
@@ -267,21 +263,19 @@ def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
     x = X.copy(deep=True)
     del X
     gc.collect()
-    try:
-        cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
-            lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                           if x.loc[index, col_1] in val_1 and x.loc[index, col_2] in val_2][0]
-        )["target"].agg(len).to_frame("CntPositive")
-        cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
-            lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                           if x.loc[index, col_1] in val_1 and x.loc[index, col_2] in val_2][0]
-        )["target"].agg(len).to_frame("CntNegative")
-        cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
-        table = pd.concat([lst_1.to_frame(col_1), lst_2.to_frame(col_2), cnt_rec, cnt_positive, cnt_negative], axis=1)
-        table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
-    except:
-        print(col_1, col_2)
+    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
+        lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
+                       if x.loc[index, col_1] in val_1 and x.loc[index, col_2] in val_2][0]
+    ).size().to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
+        lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
+                       if x.loc[index, col_1] in val_1 and x.loc[index, col_2] in val_2][0]
+    ).size().to_frame("CntNegative")
+    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+
+    table = pd.concat([lst_1.to_frame(col_1), lst_2.to_frame(col_2), cnt_rec, cnt_positive, cnt_negative], axis=1)
+    table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
 
     return table
 
@@ -296,18 +290,16 @@ def calc_mis_table_cross(X, col_1, col_2):
     x = X.copy(deep=True)
     del X
     gc.collect()
-    try:
-        cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
-            [col_1, col_2])["target"].agg(len).to_frame("CntPositive")
-        cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
-            [col_1, col_2])["target"].agg(len).to_frame("CntNegative")
-        cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
-        table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
-        table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
-        table = table.reset_index()
-    except:
-        print(col_1, col_2)
+    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
+        [col_1, col_2]).size().to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
+        [col_1, col_2]).size().to_frame("CntNegative")
+    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+
+    table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
+    table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
+    table = table.reset_index()
 
     return table
 
@@ -428,7 +420,9 @@ def merge_cat_table_cross(X, col_1, col_2):
     group_list_2 = pd.Series([", ".join(l) for l in group_list_2])
 
     # calc cat table
-    table = calc_cat_table_cross(x, col_1,col_2, group_list_1, group_list_2)
+    table = calc_cat_table_cross(x, col_1, col_2, group_list_1, group_list_2)
+
+    logging.info("{} @ {} complete !".format(col_1, col_2))
 
     return table
 
@@ -454,6 +448,82 @@ def merge_num_table_cross(X, col_1, col_2):
     # calc num table
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
 
-    logging.info("{} {} complete !".format(col_1, col_2))
+    logging.info("{} @ {} complete !".format(col_1, col_2))
 
     return table
+
+
+def force_cat_table_cross(X, col_1, col_2, group_list_1, group_list_2):
+    """
+    :param X:
+    :param col_1:
+    :param col_2:
+    :param group_list_1:
+    :param group_list_2:
+    :return:
+    """
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    table = calc_cat_table_cross(x, col_1, col_2, group_list_1, group_list_2)
+
+    logging.info("{} @ {} complete !".format(col_1, col_2))
+
+    return table
+
+
+def force_num_table_cross(X, col_1, col_2, break_list_1, break_list_2):
+    """
+    :param X:
+    :param col_1:
+    :param col_2:
+    :param break_list_1:
+    :param break_list_2:
+    :return:
+    """
+    x = X.copy(deep=True)
+    del X
+    gc.collect()
+
+    table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
+
+    logging.info("{} @ {} complete !".format(col_1, col_2))
+
+    return table
+
+
+def replace_cat_woe_cross(element, col_1, col_2, group_list_1, group_list_2, woe):
+    """
+    :param element:
+    :param col_1
+    :param col_2
+    :param group_list_1:
+    :param group_list_2:
+    :param woe:
+    :return:
+    """
+    if element[col_1] == "missing" or element[col_2] == "missing":
+        return woe[-1]
+    else:
+        for i, (l_1, l_2) in enumerate(zip(group_list_1, group_list_2)):
+            if element[col_1] in l_1 and element[col_2] in l_2:
+                return woe[i]
+
+
+def replace_num_woe_cross(element, col_1, col_2, break_list_1, break_list_2, woe):
+    """
+    :param element:
+    :param col_1
+    :param col_2
+    :param break_list_1:
+    :param break_list_2:
+    :param woe:
+    :return:
+    """
+    if element[col_1] == -9999.0 or element[col_2] == -9999.0:
+        return woe[-1]
+    else:
+        for i, (l_1, l_2) in enumerate(zip(break_list_1, break_list_2)):
+            if element[col_1] in l_1 and element[col_2] in l_2:
+                return woe[i]

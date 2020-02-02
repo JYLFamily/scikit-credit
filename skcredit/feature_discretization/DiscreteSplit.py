@@ -13,7 +13,6 @@ pd.set_option("max_columns", None)
 
 def dleaf_rules(tree, feature_list):
     rule_tple = namedtuple("rule", ["feature", "interval"])
-    rule_list = list()
     rule_dict = dict()
 
     feature, threshold = tree.feature, tree.threshold
@@ -41,7 +40,7 @@ def dleaf_rules(tree, feature_list):
         for feature in feature_list:
             rule_dict[0][feature] = Interval.open(-np.inf, +np.inf)
     else:
-        recursions(node=0, rull=rule_list)
+        recursions(node=0, rull=[])
 
     rule_dict = pd.DataFrame.from_dict(rule_dict,   orient="index")
 
@@ -60,7 +59,7 @@ def dtree_split(X, col):
     gc.collect()
 
     clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=0.001, min_samples_leaf=0.05, random_state=7)
+        criterion="entropy", min_impurity_decrease=0.005, min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col]], x["target"])
 
     return dleaf_rules(clf.tree_, [col])[col]
@@ -72,7 +71,7 @@ def dtree_split_cross(X, col_1, col_2):
     gc.collect()
 
     clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=0.001, min_samples_leaf=0.05, random_state=7)
+        criterion="entropy", min_impurity_decrease=0.005, min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col_1, col_2]], x["target"])
 
     return dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]
