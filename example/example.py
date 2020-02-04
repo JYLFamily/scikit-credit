@@ -23,50 +23,60 @@ if __name__ == "__main__":
     with open("config.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))
-    tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
-
-    tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
-    tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
-
-    tim_columns = ["apply_time"]
-    cat_columns = ["province", "is_midnight"]
-    num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
+    # tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))
+    # tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
+    #
+    # tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
+    # tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
+    #
+    # tim_columns = ["apply_time"]
+    # cat_columns = ["province", "is_midnight"]
+    # num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
     # tim_columns = ["period"]
     # cat_columns = ["user_basic.user_province", "user_basic.user_phone_province"]
     # num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
+    #
+    # ft = FormatTabular(
+    #     tim_columns=tim_columns,
+    #     cat_columns=cat_columns,
+    #     num_columns=num_columns)
+    # ft.fit(tra_input, tra_label)
+    # tra_input = ft.transform(tra_input)
+    # tes_input = ft.transform(tes_input)
+    #
+    # discrete = DiscreteAuto(
+    #     tim_columns=tim_columns)
+    # discrete.fit(tra_input, tra_label)
+    # discrete.save_order(config["path"])
+    # discrete.save_table(config["path"])
+    # discrete.save_order_cross(config["path"])
+    # discrete.save_table_cross(config["path"])
+    # tra_feature = discrete.transform(tra_input)
+    # tes_feature = discrete.transform(tes_input)
 
-    ft = FormatTabular(
-        tim_columns=tim_columns,
-        cat_columns=cat_columns,
-        num_columns=num_columns)
-    ft.fit(tra_input, tra_label)
-    tra_input = ft.transform(tra_input)
-    tes_input = ft.transform(tes_input)
+    tra = pd.read_csv(os.path.join(config["path"], "tra_woe.csv"))
+    tes = pd.read_csv(os.path.join(config["path"], "tes_woe.csv"))
 
-    discrete = DiscreteAuto(
-        tim_columns=tim_columns)
-    discrete.fit(tra_input, tra_label)
-    discrete.save_order(config["path"])
-    discrete.save_table(config["path"])
-    discrete.save_order_cross(config["path"])
-    discrete.save_table_cross(config["path"])
-    tra_feature = discrete.transform(tra_input)
-    tes_feature = discrete.transform(tes_input)
+    tra_feature, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
+    tes_feature, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
 
-    selectbin = SelectBin(
-        tim_columns=tim_columns)
-    selectbin.fit(tra_feature, tra_label)
-    tra_feature = selectbin.transform(tra_feature)
-    tes_feature = selectbin.transform(tes_feature)
-    tra_feature.to_csv(os.path.join(config["path"], "tra_feature.csv"), index=False)
-    tes_feature.to_csv(os.path.join(config["path"], "tes_feature.csv"), index=False)
+    tim_columns = ["apply_time"]
+
+    # selectbin = SelectBin(
+    #     tim_columns=tim_columns)
+    # selectbin.fit(tra_feature, tra_label)
+    # tra_feature = selectbin.transform(tra_feature)
+    # tes_feature = selectbin.transform(tes_feature)
 
     selectvif = SelectVif(
         tim_columns=tim_columns)
     selectvif.fit(tra_feature, tra_label)
     tra_feature = selectvif.transform(tra_feature)
     tes_feature = selectvif.transform(tes_feature)
+    pd.concat([tra_feature, tra_label.to_frame("target")], axis=1).to_csv(
+        os.path.join(config["path"], "tra_feature.csv"), index=False)
+    pd.concat([tes_feature, tes_label.to_frame("target")], axis=1).to_csv(
+        os.path.join(config["path"], "tes_feature.csv"), index=False)
 
     lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
     lmclassifier.fit(tra_feature, tra_label)

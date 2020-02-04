@@ -84,7 +84,7 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         del X
         gc.collect()
 
-        lrmodel_pvalues = 0.0000001
+        lrmodel_pvalues = 0.01
         self.feature_columns_ = set([col for col in x.columns if col not in self.tim_columns])
         self.feature_subsets_ = set()
 

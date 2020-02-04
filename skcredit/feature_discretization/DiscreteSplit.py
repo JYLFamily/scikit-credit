@@ -59,7 +59,7 @@ def dtree_split(X, col):
     gc.collect()
 
     clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=0.005, min_samples_leaf=0.05, random_state=7)
+        criterion="entropy", min_impurity_decrease=0.0005, min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col]], x["target"])
 
     return dleaf_rules(clf.tree_, [col])[col]
@@ -71,7 +71,7 @@ def dtree_split_cross(X, col_1, col_2):
     gc.collect()
 
     clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=0.005, min_samples_leaf=0.05, random_state=7)
+        criterion="entropy", min_impurity_decrease=0.0005, min_samples_leaf=0.05, random_state=7)
     clf.fit(x[[col_1, col_2]], x["target"])
 
     return dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]
