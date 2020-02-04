@@ -4,10 +4,13 @@ import os
 import gc
 import numpy as np
 import pandas as pd
+import multiprocessing as mp
+from multiprocessing import Pool
 from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
 from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, replace_num_woe
 from skcredit.feature_discretization.DiscreteImple import replace_cat_woe_cross, replace_num_woe_cross
+
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -48,37 +51,43 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
 
         # feature
         if self.cat_table_.keys():
-            for col in self.cat_table_.keys():
-                woe = self.cat_table_[col]["WoE"].tolist()
-                group_list = self.cat_table_[col][col].tolist()
-                z[col] = x[col].apply(lambda element: replace_cat_woe(element, group_list, woe))
+            with Pool(mp.cpu_count() - 2) as pool:
+                z[list(self.cat_table_.keys())] = pd.DataFrame(
+                    dict(zip(self.cat_table_.keys(), pool.starmap(
+                        replace_cat_woe,
+                        [(x[[col]], table[col], table["WoE"]) for col, table in self.cat_table_.items()]))))
 
         if self.num_table_.keys():
-            for col in self.num_table_.keys():
-                woe = self.num_table_[col]["WoE"].tolist()
-                break_list = self.num_table_[col][col].tolist()
-                z[col] = x[col].apply(lambda element: replace_num_woe(element, break_list, woe))
+            with Pool(mp.cpu_count() - 2) as pool:
+                z[list(self.num_table_.keys())] = pd.DataFrame(
+                    dict(zip(self.num_table_.keys(), pool.starmap(
+                        replace_num_woe,
+                        [(x[[col]], table[col], table["WoE"]) for col, table in self.num_table_.items()]))))
 
         # feature cross
         if self.cat_table_cross_.keys():
-            for col in self.cat_table_cross_.keys():
-                woe = self.cat_table_cross_[col]["WoE"].tolist()
-                col_1, col_2 = col.split(" @ ")
-                group_list_1 = self.cat_table_cross_[col][col_1].tolist()
-                group_list_2 = self.cat_table_cross_[col][col_2].tolist()
-
-                z[col] = x[[col_1, col_2]].apply(lambda element: replace_cat_woe_cross(
-                    element, col_1, col_2, group_list_1, group_list_2, woe), axis=1)
+            with Pool(mp.cpu_count() - 2) as pool:
+                z[list(self.cat_table_cross_.keys())] = pd.DataFrame(
+                    dict(zip(self.cat_table_cross_.keys(), pool.starmap(
+                        replace_cat_woe_cross,
+                        [(x[col.split(" @ ")],
+                          * col.split(" @ "),
+                          table[col.split(" @ ")[0]],
+                          table[col.split(" @ ")[1]],
+                          table["WoE"])
+                         for col, table in self.cat_table_cross_.items()]))))
 
         if self.num_table_cross_.keys():
-            for col in self.num_table_cross_.keys():
-                woe = self.num_table_cross_[col]["WoE"].tolist()
-                col_1, col_2 = col.split(" @ ")
-                break_list_1 = self.num_table_cross_[col][col_1].tolist()
-                break_list_2 = self.num_table_cross_[col][col_2].tolist()
-
-                z[col] = x[[col_1, col_2]].apply(lambda element: replace_num_woe_cross(
-                    element, col_1, col_2, break_list_1, break_list_2, woe), axis=1)
+            with Pool(mp.cpu_count() - 2) as pool:
+                z[list(self.num_table_cross_.keys())] = pd.DataFrame(
+                    dict(zip(self.num_table_cross_.keys(), pool.starmap(
+                        replace_cat_woe_cross,
+                        [(x[col.split(" @ ")],
+                          * col.split(" @ "),
+                          table[col.split(" @ ")[0]],
+                          table[col.split(" @ ")[1]],
+                          table["WoE"])
+                         for col, table in self.num_table_cross_.items()]))))
 
         return pd.concat([x[self.tim_columns], z.reindex(columns=f)], axis=1)
 
@@ -118,4 +127,3 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
         with pd.ExcelWriter(os.path.join(path, "table_cross.xlsx")) as writer:
             for feature, table in table.items():
                 table.to_excel(writer, sheet_name=feature[-30:], index=False)
-

@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/15795.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/example/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +79,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.example">
+  <component name="RunManager" selected="Python.example (1)">
     <configuration name="DiscreteMerge" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -91,28 +94,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization\DiscreteSplit.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Example" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/demo" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo/Example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,6 +146,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="example (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/example.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -189,11 +191,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.example (1)" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.Monitor (1)" />
         <item itemvalue="Python.Monitor" />
         <item itemvalue="Python.DiscreteMerge" />
-        <item itemvalue="Python.Example" />
       </list>
     </recent_temporary>
   </component>
@@ -296,13 +298,6 @@
       <workItem from="1580600212539" duration="24183000" />
       <workItem from="1580688993703" duration="16383000" />
       <workItem from="1580781155639" duration="1709000" />
-    </task>
-    <task id="LOCAL-00030" summary="code example">
-      <created>1573200560554</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1573200560554</updated>
     </task>
     <task id="LOCAL-00031" summary="TrAdaboost demo">
       <created>1573200702045</created>
@@ -640,7 +635,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580653686868</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="init commit">
+      <created>1580795135319</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1580795135320</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -721,17 +723,41 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="534" y="46" key="CommitChangelistDialog2" timestamp="1580795133523">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state x="534" y="46" key="CommitChangelistDialog2/0.0.1840.1080@0.0.1840.1080" timestamp="1580795133523" />
+    <state width="1820" height="758" key="GridCell.Tab.0.bottom" timestamp="1580816137047">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state width="1820" height="758" key="GridCell.Tab.0.bottom/0.0.1840.1080@0.0.1840.1080" timestamp="1580816137047" />
+    <state width="1820" height="758" key="GridCell.Tab.0.center" timestamp="1580816137047">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state width="1820" height="758" key="GridCell.Tab.0.center/0.0.1840.1080@0.0.1840.1080" timestamp="1580816137047" />
+    <state width="1820" height="758" key="GridCell.Tab.0.left" timestamp="1580816137046">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state width="1820" height="758" key="GridCell.Tab.0.left/0.0.1840.1080@0.0.1840.1080" timestamp="1580816137046" />
+    <state width="1820" height="758" key="GridCell.Tab.0.right" timestamp="1580816137047">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state width="1820" height="758" key="GridCell.Tab.0.right/0.0.1840.1080@0.0.1840.1080" timestamp="1580816137047" />
     <state x="639" y="201" key="SettingsEditor" timestamp="1580794971441">
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
     <state x="639" y="201" key="SettingsEditor/0.0.1840.1080@0.0.1840.1080" timestamp="1580794971441" />
-    <state x="512" y="273" key="Vcs.Push.Dialog.v2" timestamp="1580784662377">
+    <state x="512" y="273" key="Vcs.Push.Dialog.v2" timestamp="1580795136666">
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
-    <state x="512" y="273" key="Vcs.Push.Dialog.v2/0.0.1840.1080@0.0.1840.1080" timestamp="1580784662377" />
+    <state x="512" y="273" key="Vcs.Push.Dialog.v2/0.0.1840.1080@0.0.1840.1080" timestamp="1580795136666" />
     <state x="605" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1580794434325">
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
     <state x="605" y="364" key="com.intellij.ide.util.TipDialog/0.0.1840.1080@0.0.1840.1080" timestamp="1580794434325" />
+    <state x="583" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1580807168277">
+      <screen x="0" y="0" width="1840" height="1080" />
+    </state>
+    <state x="583" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1840.1080@0.0.1840.1080" timestamp="1580807168277" />
   </component>
 </project>

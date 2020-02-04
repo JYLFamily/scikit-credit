@@ -45,7 +45,7 @@ class SelectVif(BaseEstimator, TransformerMixin):
                     )
                     if rs >= 0.8:
                         self.feature_support_[j] = False
-                        logging.info(self.feature_columns_[j] + " remove !")
+                        logging.info("{} remove !".format(self.feature_columns_[j]))
 
         return self
 

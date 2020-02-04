@@ -38,7 +38,7 @@ class SelectBin(BaseEstimator, TransformerMixin):
                     abs(logit_res.params[col] - beta_1) > 1e-8 and
                     logit_res.pvalues[col] != 0.):
                 self.feature_support_[idx] = False
-                logging.info(col + " remove !")
+                logging.info("{} remove !".format(col))
 
         return self
 
