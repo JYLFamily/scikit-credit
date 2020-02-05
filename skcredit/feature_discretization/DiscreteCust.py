@@ -58,9 +58,9 @@ class DiscreteCust(BaseDiscrete):
                 self.cat_table_cross_ = dict(zip(list(self.group_dict_cross.keys()), pool.starmap(
                     force_cat_table_cross,
                     [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
-                        * col.split(" @ "),
-                        * self.group_dict_cross[col].values())
-                        for col in list(self.group_dict_cross.keys())])))
+                      * col.split(" @ "),
+                      * self.group_dict_cross[col].values())
+                     for col in list(self.group_dict_cross.keys())])))
         self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
         self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
 
@@ -69,9 +69,9 @@ class DiscreteCust(BaseDiscrete):
                 self.num_table_cross_ = dict(zip(list(self.break_dict_cross.keys()), pool.starmap(
                     force_num_table_cross,
                     [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
-                        * col.split(" @ "),
-                        * self.break_dict_cross[col].values())
-                        for col in list(self.break_dict_cross.keys())])))
+                      * col.split(" @ "),
+                      * self.break_dict_cross[col].values())
+                     for col in list(self.break_dict_cross.keys())])))
         self.num_value_cross_.update({col: val["IV"].sum() for col, val in self.num_table_cross_.items()})
         self.num_value_cross_ = OrderedDict(sorted(self.num_value_cross_.items(), key=lambda t: t[1], reverse=True))
 

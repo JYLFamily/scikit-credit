@@ -55,14 +55,21 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                 z[list(self.cat_table_.keys())] = pd.DataFrame(
                     dict(zip(self.cat_table_.keys(), pool.starmap(
                         replace_cat_woe,
-                        [(x[[col]], table[col], table["WoE"]) for col, table in self.cat_table_.items()]))))
+                        [(x[[col]],
+                          col,
+                          table[col].tolist(),
+                          table["WoE"].tolist())
+                         for col, table in self.cat_table_.items()]))))
 
         if self.num_table_.keys():
             with Pool(mp.cpu_count() - 2) as pool:
                 z[list(self.num_table_.keys())] = pd.DataFrame(
                     dict(zip(self.num_table_.keys(), pool.starmap(
                         replace_num_woe,
-                        [(x[[col]], table[col], table["WoE"]) for col, table in self.num_table_.items()]))))
+                        [(x[[col]],
+                          col,
+                          table[col].tolist(),
+                          table["WoE"].tolist()) for col, table in self.num_table_.items()]))))
 
         # feature cross
         if self.cat_table_cross_.keys():
@@ -72,9 +79,9 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                         replace_cat_woe_cross,
                         [(x[col.split(" @ ")],
                           * col.split(" @ "),
-                          table[col.split(" @ ")[0]],
-                          table[col.split(" @ ")[1]],
-                          table["WoE"])
+                          table[col.split(" @ ")[0]].tolist(),
+                          table[col.split(" @ ")[1]].tolist(),
+                          table["WoE"].tolist())
                          for col, table in self.cat_table_cross_.items()]))))
 
         if self.num_table_cross_.keys():
@@ -84,9 +91,9 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                         replace_cat_woe_cross,
                         [(x[col.split(" @ ")],
                           * col.split(" @ "),
-                          table[col.split(" @ ")[0]],
-                          table[col.split(" @ ")[1]],
-                          table["WoE"])
+                          table[col.split(" @ ")[0]].tolist(),
+                          table[col.split(" @ ")[1]].tolist(),
+                          table["WoE"].tolist())
                          for col, table in self.num_table_cross_.items()]))))
 
         return pd.concat([x[self.tim_columns], z.reindex(columns=f)], axis=1)

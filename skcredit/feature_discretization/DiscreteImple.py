@@ -4,6 +4,8 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
+from sympy import Interval
+from operator import le, contains
 from skcredit.feature_discretization.DiscreteSplit import dtree_split, dtree_split_cross
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -21,12 +23,16 @@ def calc_non_table(X, col, lst):
     x = X.copy(deep=True)
     del X
     gc.collect()
-
-    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(
-        lambda index: [idx for idx, val in lst.items() if x.iat[index, 0] in val][0]
+    a = 1 if 5 < 6 else 10
+    cnt_positive = x.loc[x["target"] == 1, col].groupby(
+        lambda index: [idx for idx, val in lst.items()
+                       if (le(x.at[index, col], val.right)
+                           if isinstance(val, Interval) else contains(val, x.at[index, col]))][0]
     ).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(
-        lambda index: [idx for idx, val in lst.items() if x.iat[index, 0] in val][0]
+    cnt_negative = x.loc[x["target"] == 0, col].groupby(
+        lambda index: [idx for idx, val in lst.items()
+                       if (le(x.at[index, col], val.right)
+                           if isinstance(val, Interval) else contains(val, x.at[index, col]))][0]
     ).size().to_frame("CntNegative")
     cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
@@ -54,8 +60,8 @@ def calc_mis_table(X, col):
     del X
     gc.collect()
 
-    cnt_positive = x.loc[x["target"] == 1, [col, "target"]].groupby(col).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col, "target"]].groupby(col).size().to_frame("CntNegative")
+    cnt_positive = x.loc[x["target"] == 1, [col]].groupby(col).size().to_frame("CntPositive")
+    cnt_negative = x.loc[x["target"] == 0, [col]].groupby(col).size().to_frame("CntNegative")
     cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
@@ -163,7 +169,7 @@ def merge_cat_table(X, col):
     # calc cat table
     table = calc_cat_table(x, col, group_list)
 
-    logging.info("{} complete !".format(col))
+    logging.info("{} split complete !".format(col))
 
     return table
 
@@ -188,7 +194,7 @@ def merge_num_table(X, col):
     # calc num table
     table = calc_num_table(x, col, break_list)
 
-    logging.info("{} complete !".format(col))
+    logging.info("{} split complete !".format(col))
 
     return table
 
@@ -229,9 +235,10 @@ def force_num_table(X, col, break_list):
     return table
 
 
-def replace_cat_woe(X, group_list, woe):
+def replace_cat_woe(X, col, group_list, woe):
     """
     :param X:
+    :param col:
     :param group_list:
     :param woe:
     :return:
@@ -248,12 +255,17 @@ def replace_cat_woe(X, group_list, woe):
                 if element in l:
                     return woe[i]
 
-    return x.squeeze().apply(lambda element: func(element))
+    x = np.vectorize(func)(x.to_numpy().reshape(-1, ))
+
+    logging.info("{} transform complete !".format(col))
+
+    return x
 
 
-def replace_num_woe(X, break_list, woe):
+def replace_num_woe(X, col, break_list, woe):
     """
     :param X:
+    :param col:
     :param break_list:
     :param woe:
     :return:
@@ -267,10 +279,14 @@ def replace_num_woe(X, break_list, woe):
             return woe[-1]
         else:
             for i, l in enumerate(break_list):
-                if element in l:
+                if element <= l.right:
                     return woe[i]
 
-    return x.squeeze().apply(lambda element: func(element))
+    x = np.vectorize(func)(x.to_numpy().reshape(-1, ))
+
+    logging.info("{} transform complete !".format(col))
+
+    return x
 
 
 def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
@@ -286,13 +302,27 @@ def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
     del X
     gc.collect()
 
-    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
+    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2]].groupby(
         lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                       if x.iat[index, 0] in val_1 and x.iat[index, 1] in val_2][0]
+                       if
+                       (
+                           le(x.at[index, col_1], val_1.right) and
+                           le(x.at[index, col_2], val_2.right)
+                       if isinstance(val_1, Interval) and isinstance(val_2, Interval)
+                       else
+                           x.at[index, col_1] in val_1 and
+                           x.at[index, col_2] in val_2)][0]
     ).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
+    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2]].groupby(
         lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                       if x.iat[index, 0] in val_1 and x.iat[index, 1] in val_2][0]
+                       if
+                       (
+                           le(x.at[index, col_1], val_1.right) and
+                           le(x.at[index, col_2], val_2.right)
+                           if isinstance(val_1, Interval) and isinstance(val_2, Interval)
+                           else
+                           x.at[index, col_1] in val_1 and
+                           x.at[index, col_2] in val_2)][0]
     ).size().to_frame("CntNegative")
     cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
@@ -321,9 +351,9 @@ def calc_mis_table_cross(X, col_1, col_2):
     del X
     gc.collect()
 
-    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target"]].groupby(
+    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2]].groupby(
         [col_1, col_2]).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target"]].groupby(
+    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2]].groupby(
         [col_1, col_2]).size().to_frame("CntNegative")
     cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
@@ -452,7 +482,7 @@ def merge_cat_table_cross(X, col_1, col_2):
     # calc cat table
     table = calc_cat_table_cross(x, col_1, col_2, group_list_1, group_list_2)
 
-    logging.info("{} @ {} complete !".format(col_1, col_2))
+    logging.info("{} @ {} split complete !".format(col_1, col_2))
 
     return table
 
@@ -478,7 +508,7 @@ def merge_num_table_cross(X, col_1, col_2):
     # calc num table
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
 
-    logging.info("{} @ {} complete !".format(col_1, col_2))
+    logging.info("{} @ {} split complete !".format(col_1, col_2))
 
     return table
 
@@ -538,14 +568,18 @@ def replace_cat_woe_cross(X, col_1, col_2, group_list_1, group_list_2, woe):
     gc.collect()
 
     def func(element):
-        if element[col_1] == "missing" or element[col_2] == "missing":
+        if element[0] == "missing" or element[1] == "missing":
             return woe[-1]
         else:
             for i, (l_1, l_2) in enumerate(zip(group_list_1, group_list_2)):
-                if element[col_1] in l_1 and element[col_2] in l_2:
+                if element[0] in l_1 and element[1] in l_2:
                     return woe[i]
 
-    return x.apply(lambda element: func(element), axis=1)
+    x = np.apply_along_axis(func, axis=1, arr=x.to_numpy())
+
+    logging.info("{} @ {} transform complete !".format(col_1, col_2))
+
+    return x
 
 
 def replace_num_woe_cross(X, col_1, col_2, break_list_1, break_list_2, woe):
@@ -563,11 +597,15 @@ def replace_num_woe_cross(X, col_1, col_2, break_list_1, break_list_2, woe):
     gc.collect()
 
     def func(element):
-        if element[col_1] == -9999.0 or element[col_2] == -9999.0:
+        if element[0] == -9999.0 or element[1] == -9999.0:
             return woe[-1]
         else:
             for i, (l_1, l_2) in enumerate(zip(break_list_1, break_list_2)):
-                if element[col_1] in l_1 and element[col_2] in l_2:
+                if element[0] <= l_1.right and element[1] <= l_2.right:
                     return woe[i]
 
-    return x.apply(lambda element: func(element), axis=1)
+    x = np.apply_along_axis(func, axis=1, arr=x.to_numpy())
+
+    logging.info("{} @ {} transform complete !".format(col_1, col_2))
+
+    return x

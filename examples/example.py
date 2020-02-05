@@ -26,8 +26,11 @@ if __name__ == "__main__":
     tra = pd.read_csv(os.path.join(config["path"], "tra.csv"))
     tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
 
-    tra_input, tra_label = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
-    tes_input, tes_label = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
+    tra_input, tra_target = tra.drop(["target"], axis=1).copy(deep=True), tra["target"].copy(deep=True)
+    tes_input, tes_target = tes.drop(["target"], axis=1).copy(deep=True), tes["target"].copy(deep=True)
+    del tra, tes
+    import gc
+    gc.collect()
 
     tim_columns = ["apply_time"]
     cat_columns = ["province", "is_midnight"]
@@ -37,50 +40,45 @@ if __name__ == "__main__":
         tim_columns=tim_columns,
         cat_columns=cat_columns,
         num_columns=num_columns)
-    ft.fit(tra_input, tra_label)
+    ft.fit(tra_input, tra_target)
     tra_input = ft.transform(tra_input)
     tes_input = ft.transform(tes_input)
 
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
-    discrete.fit(tra_input, tra_label)
+    discrete.fit(tra_input, tra_target)
     tra_feature = discrete.transform(tra_input)
     tes_feature = discrete.transform(tes_input)
 
-    selectbin = SelectBin(
-        tim_columns=tim_columns)
-    selectbin.fit(tra_feature, tra_label)
-    tra_feature = selectbin.transform(tra_feature)
-    tes_feature = selectbin.transform(tes_feature)
-
-    selectvif = SelectVif(
-        tim_columns=tim_columns)
-    selectvif.fit(tra_feature, tra_label)
-    tra_feature = selectvif.transform(tra_feature)
-    tes_feature = selectvif.transform(tes_feature)
-
-    pd.concat([tra_feature, tra_label.to_frame("target")], axis=1).to_csv(
-        os.path.join(config["path"], "tra_feature.csv"), index=False)
-    pd.concat([tes_feature, tes_label.to_frame("target")], axis=1).to_csv(
-        os.path.join(config["path"], "tes_feature.csv"), index=False)
-
-    lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
-    lmclassifier.fit(tra_feature, tra_label)
-    pprint("{:.5f}".format(lmclassifier.score(tra_feature, tra_label)))
-    pprint("{:.5f}".format(lmclassifier.score(tes_feature, tes_label)))
-    pprint(lmclassifier.model())
+    # selectbin = SelectBin(
+    #     tim_columns=tim_columns)
+    # selectbin.fit(tra_feature, tra_target)
+    # tra_feature = selectbin.transform(tra_feature)
+    # tes_feature = selectbin.transform(tes_feature)
+    #
+    # selectvif = SelectVif(
+    #     tim_columns=tim_columns)
+    # selectvif.fit(tra_feature, tra_target)
+    # tra_feature = selectvif.transform(tra_feature)
+    # tes_feature = selectvif.transform(tes_feature)
+    #
+    # lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
+    # lmclassifier.fit(tra_feature, tra_target)
+    # pprint("{:.5f}".format(lmclassifier.score(tra_feature, tra_target)))
+    # pprint("{:.5f}".format(lmclassifier.score(tes_feature, tes_target)))
+    # pprint(lmclassifier.model())
     #
     # lmcreditcard = LMCreditcard(discrete, lmclassifier)
     # pprint(lmcreditcard())
     # print("=" * 72)
-    # pprint(LMValidation.intercept_alignment(tra_label, tes_label))
+    # pprint(LMValidation.intercept_alignment(tra_target, tes_target))
     # print("=" * 72)
-    # pprint(LMValidation.attribute_alignment(discrete, lmclassifier, tra_feature, tra_label, tes_feature, tes_label))
+    # pprint(LMValidation.attribute_alignment(discrete, lmclassifier, tra_feature, tra_target, tes_feature, tes_target))
     # print("=" * 72)
     # pprint(FEndReport.psi_by_week(discrete, lmclassifier, tra_input, tes_input))
     # print("=" * 72)
     # pprint(FEndReport.csi_by_week(discrete, lmclassifier, tra_input, tes_input))
     # print("=" * 72)
-    # pprint(BEndReport.metric_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
+    # pprint(BEndReport.metric_by_week(discrete, lmclassifier, tra_input, tra_target, tes_input, tes_target))
     # print("=" * 72)
-    # pprint(BEndReport.report_by_week(discrete, lmclassifier, tra_input, tra_label, tes_input, tes_label))
+    # pprint(BEndReport.report_by_week(discrete, lmclassifier, tra_input, tra_target, tes_input, tes_target))

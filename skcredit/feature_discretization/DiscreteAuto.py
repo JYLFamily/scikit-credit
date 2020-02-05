@@ -36,7 +36,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_cat_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.cat_columns_])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0.1}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0}
         self.cat_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.cat_value_ = OrderedDict(sorted(self.cat_value_.items(), key=lambda t: t[1], reverse=True))
 
@@ -46,7 +46,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_num_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0.1}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0}
         self.num_value_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
         self.num_value_ = OrderedDict(sorted(self.num_value_.items(), key=lambda t: t[1], reverse=True))
 
@@ -66,9 +66,12 @@ class DiscreteAuto(BaseDiscrete):
                          for col_1, col_2 in combinations(self.cat_value_.keys(), 2)]
                     )
                 ))
+        # self.cat_table_cross_ = {
+        #     col: val for col, val in self.cat_table_cross_.items()
+        #     if val["IV"].sum() > self.cat_value_[col.split(" @ ")[0]] + self.cat_value_[col.split(" @ ")[1]]}
         self.cat_table_cross_ = {
             col: val for col, val in self.cat_table_cross_.items()
-            if val["IV"].sum() > 1.25 * self.cat_value_[col.split(" @ ")[0]]}
+            if val["IV"].sum() > 0}
         self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
         self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
 
@@ -82,9 +85,12 @@ class DiscreteAuto(BaseDiscrete):
                             for col_1, col_2 in combinations(self.num_value_.keys(), 2)]
                     )
                 ))
+        # self.num_table_cross_ = {
+        #     col: val for col, val in self.num_table_cross_.items()
+        #     if val["IV"].sum() > self.num_value_[col.split(" @ ")[0]] + self.num_value_[col.split(" @ ")[1]]}
         self.num_table_cross_ = {
             col: val for col, val in self.num_table_cross_.items()
-            if val["IV"].sum() > 1.25 * self.num_value_[col.split(" @ ")[0]]}
+            if val["IV"].sum() > 0}
         self.num_value_cross_.update({col: val["IV"].sum() for col, val in self.num_table_cross_.items()})
         self.num_value_cross_ = OrderedDict(sorted(self.num_value_cross_.items(), key=lambda t: t[1], reverse=True))
 
