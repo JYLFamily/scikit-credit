@@ -23,28 +23,30 @@ def calc_non_table(X, col, lst):
     x = X.copy(deep=True)
     del X
     gc.collect()
-    a = 1 if 5 < 6 else 10
-    cnt_positive = x.loc[x["target"] == 1, col].groupby(
-        lambda index: [idx for idx, val in lst.items()
-                       if (le(x.at[index, col], val.right)
-                           if isinstance(val, Interval) else contains(val, x.at[index, col]))][0]
-    ).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, col].groupby(
-        lambda index: [idx for idx, val in lst.items()
-                       if (le(x.at[index, col], val.right)
-                           if isinstance(val, Interval) else contains(val, x.at[index, col]))][0]
-    ).size().to_frame("CntNegative")
-    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
 
-    # x["levels"] = x.apply(lambda row: [idx for idx, val in lst.items()
-    #                                    if row[col] in val][0], axis=1)
-    # cnt_positive = x.loc[x["target"] == 1, [col, "target", "levels"]].groupby(
-    #     "levels").size().to_frame("CntPositive").reset_index(drop=True)
-    # cnt_negative = x.loc[x["target"] == 0, [col, "target", "levels"]].groupby(
-    #     "levels").size().to_frame("CntNegative").reset_index(drop=True)
-    # cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+    def func(element):
+        for idx, val in lst.items():
+            if element in val:
+                return idx
 
-    table = pd.concat([lst.to_frame(col), cnt_rec, cnt_positive, cnt_negative], axis=1)
+    cnt_positive = np.unique(
+        np.vectorize(func)(x.loc[x["target"] == 1, col].to_numpy()),
+        return_counts=True
+    )[1].reshape(-1, 1)
+    cnt_negative = np.unique(
+        np.vectorize(func)(x.loc[x["target"] == 0, col].to_numpy()),
+        return_counts=True
+    )[1].reshape(-1, 1)
+    cnt_rec = cnt_positive + cnt_negative
+
+    table = np.concatenate((cnt_rec, cnt_positive, cnt_negative), axis=1)
+    table = pd.concat(
+        [
+            lst.to_frame(col),
+            pd.DataFrame(table, columns=["CntRec", "CntPositive", "CntNegative"])
+        ],
+        axis=1
+    )
     table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
 
     return table
@@ -302,39 +304,30 @@ def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
     del X
     gc.collect()
 
-    cnt_positive = x.loc[x["target"] == 1, [col_1, col_2]].groupby(
-        lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                       if
-                       (
-                           le(x.at[index, col_1], val_1.right) and
-                           le(x.at[index, col_2], val_2.right)
-                       if isinstance(val_1, Interval) and isinstance(val_2, Interval)
-                       else
-                           x.at[index, col_1] in val_1 and
-                           x.at[index, col_2] in val_2)][0]
-    ).size().to_frame("CntPositive")
-    cnt_negative = x.loc[x["target"] == 0, [col_1, col_2]].groupby(
-        lambda index: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-                       if
-                       (
-                           le(x.at[index, col_1], val_1.right) and
-                           le(x.at[index, col_2], val_2.right)
-                           if isinstance(val_1, Interval) and isinstance(val_2, Interval)
-                           else
-                           x.at[index, col_1] in val_1 and
-                           x.at[index, col_2] in val_2)][0]
-    ).size().to_frame("CntNegative")
-    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+    def func(element):
+        for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2)):
+            if element[0] in val_1 and element[1] in val_2:
+                return idx
 
-    # x["levels"] = x.apply(lambda row: [idx for idx, (val_1, val_2) in enumerate(zip(lst_1, lst_2))
-    #                                    if row[col_1] in val_1 and row[col_2] in val_2][0], axis=1)
-    # cnt_positive = x.loc[x["target"] == 1, [col_1, col_2, "target", "levels"]].groupby(
-    #     "levels").size().to_frame("CntPositive").reset_index(drop=True)
-    # cnt_negative = x.loc[x["target"] == 0, [col_1, col_2, "target", "levels"]].groupby(
-    #     "levels").size().to_frame("CntNegative").reset_index(drop=True)
-    # cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+    cnt_positive = np.unique(
+        np.apply_along_axis(func, axis=1, arr=x.loc[x["target"] == 1, [col_1, col_2]].to_numpy()),
+        return_counts=True
+    )[1].reshape(-1, 1)
+    cnt_negative = np.unique(
+        np.apply_along_axis(func, axis=1, arr=x.loc[x["target"] == 0, [col_1, col_2]].to_numpy()),
+        return_counts=True
+    )[1].reshape(-1, 1)
+    cnt_rec = cnt_positive + cnt_negative
 
-    table = pd.concat([lst_1.to_frame(col_1), lst_2.to_frame(col_2), cnt_rec, cnt_positive, cnt_negative], axis=1)
+    table = np.concatenate((cnt_rec, cnt_positive, cnt_negative), axis=1)
+    table = pd.concat(
+        [
+            lst_1.to_frame(col_1),
+            lst_2.to_frame(col_2),
+            pd.DataFrame(table, columns=["CntRec", "CntPositive", "CntNegative"])
+        ],
+        axis=1
+    )
     table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
 
     return table

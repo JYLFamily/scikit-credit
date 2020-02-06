@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     tim_columns = ["apply_time"]
     cat_columns = ["province", "is_midnight"]
-    num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns][:5]
+    num_columns = [col for col in tra_input.columns if col not in tim_columns + cat_columns]
 
     ft = FormatTabular(
         tim_columns=tim_columns,
@@ -47,6 +47,11 @@ if __name__ == "__main__":
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
     discrete.fit(tra_input, tra_target)
+    discrete.save_order(config["path"])
+    discrete.save_table(config["path"])
+    discrete.save_order_cross(config["path"])
+    discrete.save_table_cross(config["path"])
+
     tra_feature = discrete.transform(tra_input)
     tes_feature = discrete.transform(tes_input)
 
