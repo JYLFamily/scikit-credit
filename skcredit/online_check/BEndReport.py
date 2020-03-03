@@ -16,16 +16,19 @@ def calc_table(X):
     del X
     gc.collect()
 
-    cnt_rec = x.groupby("scores")["target"].agg(len).to_frame("CntRec")
-    cnt_positive = x.loc[x["target"] == 1, :].groupby("scores")["target"].agg(len).to_frame("CntPositive").fillna(0.5)
-    cnt_negative = x.loc[x["target"] == 0, :].groupby("scores")["target"].agg(len).to_frame("CntNegative").fillna(0.5)
+    cnt_rec = x["scores"].value_counts(sort=False).to_frame("CntRec").replace({0: 0.5})
+    cnt_positive = x.loc[x["target"] == 1, "scores"].value_counts(sort=False).to_frame("CntPositive").replace(
+        {0: 0.5})
+    cnt_negative = x.loc[x["target"] == 0, "scores"].value_counts(sort=False).to_frame("CntNegative").replace(
+        {0: 0.5})
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
     table["LIFT"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["RATE"] = table["CntPositive"] / table["CntRec"]
     table["ODDS"] = table["CntPositive"] / table["CntNegative"]
     table["LN(ODDS)"] = np.log(table["ODDS"])
 
-    return table.reset_index()
+    return table.reset_index().rename(columns={"index": "scores"})
 
 
 class BEndReport(object):

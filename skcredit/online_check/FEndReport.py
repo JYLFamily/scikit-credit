@@ -29,9 +29,10 @@ class FEndReport(object):
         )
         bins = np.append(bins, np.array([999]))
 
+        # pd.cut() pd.Categorical
         table = pd.DataFrame({
-            "CntTra": pd.cut(tra_score, bins=bins).value_counts().fillna(0.5),
-            "CntTes": pd.cut(tes_score, bins=bins).value_counts().fillna(0.5)
+            "CntTra": pd.cut(tra_score, bins=bins).value_counts(sort=False).replace({0.: 0.5}),
+            "CntTes": pd.cut(tes_score, bins=bins).value_counts(sort=False).replace({0.: 0.5})
         })
         table = table.reset_index().rename(columns={"index": "scores"})
 
