@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/P1352.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/config.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessing/FormatTabular.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/FTabular.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessing/__init__.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +56,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="H:/scikit-credit" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
+    <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -300,6 +305,8 @@
       <workItem from="1581303150904" duration="6000" />
       <workItem from="1581577592546" duration="20000" />
       <workItem from="1581652474252" duration="69000" />
+      <workItem from="1583889947800" duration="99000" />
+      <workItem from="1583890234889" duration="938000" />
     </task>
     <task id="LOCAL-00034" summary="init commit">
       <created>1573200853094</created>
@@ -733,26 +740,31 @@
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
     <state x="700" y="296" key="FileChooserDialogImpl/0.0.1840.1080@0.0.1840.1080" timestamp="1582640792803" />
-    <state width="1803" height="638" key="GridCell.Tab.0.bottom" timestamp="1582191384192">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="511" key="GridCell.Tab.0.bottom" timestamp="1583910655036">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1803" height="638" key="GridCell.Tab.0.bottom/0.0.1840.1080@0.0.1840.1080" timestamp="1582191384192" />
-    <state width="1803" height="638" key="GridCell.Tab.0.center" timestamp="1582191384191">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="511" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1583910655036" />
+    <state width="1838" height="511" key="GridCell.Tab.0.center" timestamp="1583910655036">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1803" height="638" key="GridCell.Tab.0.center/0.0.1840.1080@0.0.1840.1080" timestamp="1582191384191" />
-    <state width="1803" height="638" key="GridCell.Tab.0.left" timestamp="1582191384191">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="511" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1583910655036" />
+    <state width="1838" height="511" key="GridCell.Tab.0.left" timestamp="1583910655030">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1803" height="638" key="GridCell.Tab.0.left/0.0.1840.1080@0.0.1840.1080" timestamp="1582191384191" />
-    <state width="1803" height="638" key="GridCell.Tab.0.right" timestamp="1582191384192">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="511" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1583910655029" />
+    <state width="1838" height="511" key="GridCell.Tab.0.right" timestamp="1583910655036">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1803" height="638" key="GridCell.Tab.0.right/0.0.1840.1080@0.0.1840.1080" timestamp="1582191384192" />
-    <state x="537" y="233" width="1161" height="711" key="SettingsEditor" timestamp="1582706179226">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="511" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1583910655036" />
+    <state x="542" y="233" width="1161" height="711" key="SettingsEditor" timestamp="1583891617878">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="537" y="233" width="1161" height="711" key="SettingsEditor/0.0.1840.1080@0.0.1840.1080" timestamp="1582706179226" />
+    <state x="542" y="233" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1583891617878" />
     <state x="512" y="273" key="Vcs.Push.Dialog.v2" timestamp="1580957368902">
       <screen x="0" y="0" width="1840" height="1080" />
     </state>

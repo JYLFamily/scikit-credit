@@ -9,7 +9,7 @@ pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-class FormatTabular(BaseEstimator, TransformerMixin):
+class FTabular(BaseEstimator, TransformerMixin):
     def __init__(self, tim_columns, cat_columns, num_columns):
         self.tim_columns = tim_columns
         self.cat_columns = cat_columns
@@ -47,7 +47,9 @@ class FormatTabular(BaseEstimator, TransformerMixin):
         gc.collect()
 
         x = x[self.tim_columns + list(self.cat_value_.keys()) + list(self.num_value_.keys())]
-        x[self.tim_columns[0]] = pd.to_datetime(x[self.tim_columns[0]])
+
+        if self.tim_columns:
+            x[self.tim_columns[0]] = pd.to_datetime(x[self.tim_columns[0]])
 
         if self.cat_value_.keys():
             x[list(self.cat_value_.keys())] = x[list(self.cat_value_.keys())].fillna("missing").astype(str)

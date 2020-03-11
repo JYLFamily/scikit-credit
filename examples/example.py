@@ -6,7 +6,7 @@ import warnings
 import numpy as np
 import pandas as pd
 from pprint import pprint
-from skcredit.feature_preprocessing import FormatTabular
+from skcredit.feature_preprocessings import FTabular
 from skcredit.feature_discretization import DiscreteAuto
 from skcredit.online_check import FEndReport, BEndReport
 from skcredit.feature_selection import SelectBin, SelectVif
@@ -20,36 +20,37 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    with open("config.yaml", encoding="UTF-8") as config_file:
+    with open("configs.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    trn = pd.read_csv(os.path.join(config["path"], "trn.csv"))
-    tes = pd.read_csv(os.path.join(config["path"], "tes.csv"))
+    tabular_1 = pd.read_csv(
+        os.path.join(config["path"], "period_1.csv"),
+        usecols=["score_m1", "score_zz", "score_zy", "target"]
+    )
+    tabular_3_6 = pd.read_csv(
+        os.path.join(config["path"], "period_3_6.csv"),
+        usecols=["score_m1", "score_zz", "score_zy", "target"]
+    )
 
-    trn = trn.drop(["nom_0", "bin_1", "bin_3", "bin_4"], axis=1)
-    tes = tes.drop(["nom_0", "bin_1", "bin_3", "bin_4"], axis=1)
+    tabular = pd.concat([tabular_1, tabular_3_6]).reset_index(drop=True)
 
-    trn_input, trn_target = trn.drop(["target"], axis=1).copy(deep=True), trn["target"].copy(deep=True)
-    tes_input = tes
-    del trn, tes
-    import gc
-    gc.collect()
+    tabular_input = tabular.drop(["target"], axis=1).copy(deep=True)
+    tabular_label = tabular["target"].copy(deep=True)
 
-    tim_columns = ["id"]
-    cat_columns = [col for col in trn_input.columns if col not in tim_columns]
-    num_columns = []
+    tim_columns = []
+    cat_columns = []
+    num_columns = ["score_m1", "score_zz", "score_zy"]
 
-    ft = FormatTabular(
+    ft = FTabular(
         tim_columns=tim_columns,
         cat_columns=cat_columns,
         num_columns=num_columns)
-    ft.fit(trn_input, trn_target)
-    trn_input = ft.transform(trn_input)
-    tes_input = ft.transform(tes_input)
+    ft.fit(tabular_input, tabular_label)
+    tabular_input = ft.transform(tabular_input)
 
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
-    discrete.fit(trn_input, trn_target)
+    discrete.fit(tabular_input, tabular_label)
     discrete.save_order(config["path"])
     discrete.save_table(config["path"])
     discrete.save_order_cross(config["path"])

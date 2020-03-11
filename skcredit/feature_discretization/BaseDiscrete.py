@@ -105,7 +105,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
 
     def save_order(self, path):
         order = pd.DataFrame.from_dict(self.information_value_, orient="index", columns=["IV"])
-        order = order.reset_index().rename(columns={"index": "feature"})
+        order = order.reset_index().rename(columns={"index": "Feature"})
 
         with pd.ExcelWriter(os.path.join(path, "order.xlsx")) as writer:
             order.to_excel(writer, index=False)
@@ -121,7 +121,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
 
     def save_order_cross(self, path):
         order = pd.DataFrame.from_dict(self.information_value_cross_, orient="index", columns=["IV"])
-        order = order.reset_index().rename(columns={"index": "feature"})
+        order = order.reset_index().rename(columns={"index": "Feature"})
 
         with pd.ExcelWriter(os.path.join(path, "order_cross.xlsx")) as writer:
             order.to_excel(writer, index=False)
