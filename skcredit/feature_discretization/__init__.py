@@ -7,5 +7,5 @@ from skcredit.feature_discretization.DiscreteCust import DiscreteCust
 __all__ = [
     "BaseDiscrete",
     "DiscreteAuto",
-    "DiscreteCust"
+    "DiscreteCust",
 ]

@@ -5,7 +5,7 @@ import yaml
 import warnings
 import numpy as np
 import pandas as pd
-from pprint import pprint
+from skcredit.feature_preprocessings import CTabular
 from skcredit.feature_preprocessings import FTabular
 from skcredit.feature_discretization import DiscreteAuto
 from skcredit.online_check import FEndReport, BEndReport
@@ -23,15 +23,20 @@ if __name__ == "__main__":
     with open("configs.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    tabular = pd.read_csv(os.path.join(config["path"], "period_3_6_tmp.csv"))
-    tabular = tabular.loc[tabular["fee_status"] == 1].reset_index(drop=True)
+    tabular = pd.read_csv(os.path.join(config["path"], "period_3_6_1.csv"))
+    # tabular_2 = pd.read_csv(os.path.join(config["path"], "period_3_6_2.csv"))
+    # tabular = pd.concat([tabular_1, tabular_2])
+    tabular_input, tabular_label = tabular.drop(["target"], axis=1).copy(deep=True),  tabular["target"].copy(deep=True)
 
-    tabular_input = tabular.drop(["NAME", "CID", "MOBILE", "fee_status", "target"], axis=1).copy(deep=True)
-    tabular_label = tabular["target"].copy(deep=True)
+    rule = config["rule"]
+
+    ct = CTabular(rule=rule)
+    ct.fit(tabular_input, tabular_label)
+    tabular_input = ct.transform(tabular_input)
 
     tim_columns = ["IDT"]
-    cat_columns = []
-    num_columns = [col for col in tabular_input.columns.tolist() if col not in tim_columns]
+    cat_columns = config["num_columns"]
+    num_columns = config["cat_columns"]
 
     ft = FTabular(
         tim_columns=tim_columns,

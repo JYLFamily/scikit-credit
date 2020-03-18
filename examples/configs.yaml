@@ -1,3 +1,170 @@
-path: C:\Users\P1352\Desktop
+path: C:\Users\15795\Desktop
+
+rule:
+  b_drcard_no_idx: [-2, -3]
+  b_crdt_card_no_idx: [-2, -3]
+  b_card_no_idx: [-2, -3]
+  b_cnsum_idx_a: [-2, -3]
+  dr_oth_inc_idx_h: [-2, -3]
+  grow_roe_idx: [-13]
+  b_dr_pay_freq_idx_a: [-2, -3]
+  b_dr_inc_freq_idx_a: [-2, -3]
+  b_dr_pay_freq_idx_r: [-2, -3]
+  b_dr_inc_freq_idx_r: [-2, -3]
+  b_dr_cnsum_freq_idx_a: [-2, -3]
+  avg_crdt_inc_cnt_idx_h: [-2, -3]
+  avg_crdt_out_cnt_idx_h: [-2, -3]
+  b_crdt_cnsum_freq_idx_a: [-2, -3]
+  b_crdt_cnsum_freq_idx_r: [-2, -3]
+  avg_dr_pay_freq_idx_h: [-2, -3]
+  avg_dr_inc_freq_idx_h: [-2, -3]
+  avg_dr_cnsum_freq_idx_h: [-2, -3]
+  avg_crdt_cnsum_freq_idx_h: [-2, -3]
+  b_total_dr_pay_idx_a: [-2, -3]
+  b_total_dr_inc_idx_a: [-2, -3]
+  b_total_dr_pay_idx_r: [-2, -3]
+  b_total_dr_inc_idx_r: [-2, -3]
+  b_dr_cnsum_amt_idx_a: [-2, -3]
+  b_dr_cnsum_amt_idx_h: [-2, -3]
+  b_total_dr_invet_idx_a: [-2, -3]
+  b_dr_bal_endmm_idx: [-2, -3]
+  dr_minbal_endmm_idx_h: [-2, -3]
+  dr_maxbal_endmm_idx_h: [-2, -3]
+  dr_maxinc_m_idx_h: [-2, -3]
+  crdt_inc_amt_idx_h: [-2, -3]
+  crdt_avg_out_idx_h: [-2, -3]
+  b_crdt_cnsum_amt_idx_a: [-2, -3]
+  crdt_avg_cash_idx_h: [-2, -3]
+  b_crdt_pay_amt_idx_a: [-2, -3]
+  max_sgl_inc_idx_h: [-2, -3]
+  b_crdt_card_lim_idx: [-2, -3]
+  avg_dr_pay_idx_h: [-2, -3]
+  avg_dr_inc_idx_h: [-2, -3]
+  avg_dr_cnsum_idx_h: [-2, -3]
+  avg_dr_invet_idx_h: [-2, -3]
+  avg_dr_bal_idx_h: [-2, -3]
+  crdt_avg_cnsum_idx_h: [-2, -3]
+  crdt_avg_pay_idx_h: [-2, -3]
+  career_avg_idx_a: [-2, -3]
+  life_ability_avg_idx_a: [-2, -3]
+  career_avg_idx_t: [-2, -3]
+  life_ability_avg_idx_t: [-2, -3]
+  income_vola_idx_a: [-2, -3]
+  drmaxbal_to_ms_idx_h: [-2, -3]
+  dr_bal_ms_idx_h: [-2, -3]
+  dr_bal_gt_ms_idx_h: [-2, -3]
+  dr_inc_ms_idx_h: [-2, -3]
+  dr_maxinc_to_ms_idx_h: [-2, -3]
+  dr_pay_ms_idx_h: [-2, -3]
+  debit_bill_age: [-2, -3]
+  crdt_inc_ms_idx_h: [-2, -3]
+  crmaxinc_to_ms_idx_h: [-2, -3]
+  crdt_cash_ms_idx_h: [-2, -3]
+  crdt_out_ms_idx_h: [-2, -3]
+  credit_bill_age: [-2, -3]
+  crdt_max_instl_idx_a: [-2, -3]
+  crdt_card_max_lvl: [-1]
+  loan_overdue_sts: [0]
+  crdt_inc_dev_idx: [0]
+
+num_columns: [
+  drbank_code_qty,
+  crdt_bank_code_qty,
+  debit_bill_age,
+  credit_bill_age,
+  crdt_card_max_lvl,
+  house_loan_code,
+  car_loan_code,
+  oth_loan_code,
+  long_his_code,
+  crdt_inc_dev_idx,
+]
+
+cat_columns: [
+  b_drcard_no_idx,
+  b_crdt_card_no_idx,
+  b_card_no_idx,
+  b_cnsum_idx_a,
+  dr_oth_inc_idx_h,
+  grow_roe_idx,
+  b_dr_pay_freq_idx_a,
+  b_dr_inc_freq_idx_a,
+  b_dr_pay_freq_idx_r,
+  b_dr_inc_freq_idx_r,
+  b_dr_cnsum_freq_idx_a,
+  avg_crdt_inc_cnt_idx_h,
+  avg_crdt_out_cnt_idx_h,
+  b_crdt_cnsum_freq_idx_a,
+  b_crdt_cnsum_freq_idx_r,
+  avg_dr_pay_freq_idx_h,
+  avg_dr_inc_freq_idx_h,
+  avg_dr_cnsum_freq_idx_h,
+  avg_crdt_cnsum_freq_idx_h,
+  b_total_dr_pay_idx_a,
+  b_total_dr_inc_idx_a,
+  b_total_dr_pay_idx_r,
+  dr_accmove_cnt_idx_a,
+  b_total_dr_inc_idx_r,
+  b_dr_cnsum_amt_idx_a,
+  b_dr_cnsum_amt_idx_h,
+  b_total_dr_invet_idx_a,
+  crdt_accmove_cnt_idx,
+  b_dr_bal_endmm_idx,
+  dr_minbal_endmm_idx_h,
+  dr_maxbal_endmm_idx_h,
+  drmaxbal_to_ms_idx_h,
+  dr_bal_ms_idx_h,
+  dr_bal_gt_ms_idx_h,
+  dr_inc_ms_idx_h,
+  dr_maxinc_to_ms_idx_h,
+  dr_pay_ms_idx_h,
+  crdt_inc_ms_idx_h,
+  crmaxinc_to_ms_idx_h,
+  crdt_cash_ms_idx_h,
+  crdt_out_ms_idx_h,
+  crdt_max_instl_idx_a,
+  dr_maxinc_m_idx_h,
+  loan_overdue_sts,
+  crdt_inc_amt_idx_h,
+  crdt_avg_out_idx_h,
+  b_crdt_cnsum_amt_idx_a,
+  crdt_avg_cash_idx_h,
+  b_crdt_pay_amt_idx_a,
+  max_sgl_inc_idx_h,
+  income_stab_idx_a,
+  b_crdt_card_lim_idx,
+  avg_dr_pay_idx_h,
+  avg_dr_inc_idx_h,
+  avg_dr_cnsum_idx_h,
+  avg_dr_invet_idx_h,
+  avg_dr_bal_idx_h,
+  crdt_avg_cnsum_idx_h,
+  crdt_avg_pay_idx_h,
+  career_avg_idx_a,
+  life_ability_avg_idx_a,
+  career_avg_idx_t,
+  life_ability_avg_idx_t,
+  income_vola_idx_a,
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -5,5 +5,5 @@ from skcredit.online_check.BEndReport import BEndReport
 
 __all__ = [
     "FEndReport",
-    "BEndReport"
+    "BEndReport",
 ]

@@ -5,5 +5,5 @@ from skcredit.feature_selection.SelectVif import SelectVif
 
 __all__ = [
     "SelectBin",
-    "SelectVif"
+    "SelectVif",
 ]

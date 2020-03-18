@@ -7,5 +7,5 @@ from skcredit.linear_model.LMValidation import LMValidation
 __all__ = [
     "LMClassifier",
     "LMCreditcard",
-    "LMValidation"
+    "LMValidation",
 ]
