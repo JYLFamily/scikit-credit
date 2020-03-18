@@ -72,29 +72,29 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                           table["WoE"].tolist()) for col, table in self.num_table_.items()]))))
 
         # feature cross
-        if self.cat_table_cross_.keys():
-            with Pool(mp.cpu_count() - 2) as pool:
-                z[list(self.cat_table_cross_.keys())] = pd.DataFrame(
-                    dict(zip(self.cat_table_cross_.keys(), pool.starmap(
-                        replace_cat_woe_cross,
-                        [(x[col.split(" @ ")],
-                          * col.split(" @ "),
-                          table[col.split(" @ ")[0]].tolist(),
-                          table[col.split(" @ ")[1]].tolist(),
-                          table["WoE"].tolist())
-                         for col, table in self.cat_table_cross_.items()]))))
-
-        if self.num_table_cross_.keys():
-            with Pool(mp.cpu_count() - 2) as pool:
-                z[list(self.num_table_cross_.keys())] = pd.DataFrame(
-                    dict(zip(self.num_table_cross_.keys(), pool.starmap(
-                        replace_cat_woe_cross,
-                        [(x[col.split(" @ ")],
-                          * col.split(" @ "),
-                          table[col.split(" @ ")[0]].tolist(),
-                          table[col.split(" @ ")[1]].tolist(),
-                          table["WoE"].tolist())
-                         for col, table in self.num_table_cross_.items()]))))
+        # if self.cat_table_cross_.keys():
+        #     with Pool(mp.cpu_count() - 2) as pool:
+        #         z[list(self.cat_table_cross_.keys())] = pd.DataFrame(
+        #             dict(zip(self.cat_table_cross_.keys(), pool.starmap(
+        #                 replace_cat_woe_cross,
+        #                 [(x[col.split(" @ ")],
+        #                   * col.split(" @ "),
+        #                   table[col.split(" @ ")[0]].tolist(),
+        #                   table[col.split(" @ ")[1]].tolist(),
+        #                   table["WoE"].tolist())
+        #                  for col, table in self.cat_table_cross_.items()]))))
+        #
+        # if self.num_table_cross_.keys():
+        #     with Pool(mp.cpu_count() - 2) as pool:
+        #         z[list(self.num_table_cross_.keys())] = pd.DataFrame(
+        #             dict(zip(self.num_table_cross_.keys(), pool.starmap(
+        #                 replace_cat_woe_cross,
+        #                 [(x[col.split(" @ ")],
+        #                   * col.split(" @ "),
+        #                   table[col.split(" @ ")[0]].tolist(),
+        #                   table[col.split(" @ ")[1]].tolist(),
+        #                   table["WoE"].tolist())
+        #                  for col, table in self.num_table_cross_.items()]))))
 
         return pd.concat([x[self.tim_columns], z.reindex(columns=f)], axis=1)
 

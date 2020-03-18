@@ -23,23 +23,15 @@ if __name__ == "__main__":
     with open("configs.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.BaseLoader)
 
-    tabular_1 = pd.read_csv(
-        os.path.join(config["path"], "period_1.csv"),
-        usecols=["score_m1", "score_zz", "score_zy", "target"]
-    )
-    tabular_3_6 = pd.read_csv(
-        os.path.join(config["path"], "period_3_6.csv"),
-        usecols=["score_m1", "score_zz", "score_zy", "target"]
-    )
+    tabular = pd.read_csv(os.path.join(config["path"], "period_3_6_tmp.csv"))
+    tabular = tabular.loc[tabular["fee_status"] == 1].reset_index(drop=True)
 
-    tabular = pd.concat([tabular_1, tabular_3_6]).reset_index(drop=True)
-
-    tabular_input = tabular.drop(["target"], axis=1).copy(deep=True)
+    tabular_input = tabular.drop(["NAME", "CID", "MOBILE", "fee_status", "target"], axis=1).copy(deep=True)
     tabular_label = tabular["target"].copy(deep=True)
 
-    tim_columns = []
+    tim_columns = ["IDT"]
     cat_columns = []
-    num_columns = ["score_m1", "score_zz", "score_zy"]
+    num_columns = [col for col in tabular_input.columns.tolist() if col not in tim_columns]
 
     ft = FTabular(
         tim_columns=tim_columns,
