@@ -9,6 +9,43 @@ pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
+class Tabular(BaseEstimator, TransformerMixin):
+    def __init__(self, tabular):
+        self.tabular = tabular
+
+    @property
+    def input(self):
+        return self.tabular.drop(["target"], axis=1).copy(deep=True)
+
+    @property
+    def label(self):
+        return self.tabular["target"].copy(deep=True)
+    
+
+class CTabular(BaseEstimator, TransformerMixin):
+    def __init__(self, rep_columns):
+        self.rep_columns = rep_columns
+
+    def fit(self, X, y=None):
+        pass
+
+    def transform(self, X):
+        x = X.copy(deep=True)
+        del X
+        gc.collect()
+
+        for k, v in self.rep_columns.items():
+            for i in v:
+                x[k] = x[k].replace({int(i): np.nan})
+
+        return x
+
+    def fit_transform(self, X, y=None, **fit_params):
+        self.fit(X, y)
+
+        return self.transform(X)
+
+
 class FTabular(BaseEstimator, TransformerMixin):
     def __init__(self, tim_columns, cat_columns, num_columns):
         self.tim_columns = tim_columns
@@ -70,3 +107,5 @@ class FTabular(BaseEstimator, TransformerMixin):
         self.fit(X, y)
 
         return self.transform(X)
+
+

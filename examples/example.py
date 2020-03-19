@@ -5,6 +5,7 @@ import yaml
 import warnings
 import numpy as np
 import pandas as pd
+from skcredit.feature_preprocessings import Tabular
 from skcredit.feature_preprocessings import CTabular
 from skcredit.feature_preprocessings import FTabular
 from skcredit.feature_discretization import DiscreteAuto
@@ -21,22 +22,43 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 if __name__ == "__main__":
     with open("configs.yaml", encoding="UTF-8") as config_file:
-        config = yaml.load(config_file, Loader=yaml.BaseLoader)
+        config = yaml.load(config_file, Loader=yaml.SafeLoader)
 
-    tabular = pd.read_csv(os.path.join(config["path"], "period_3_6_1.csv"))
-    # tabular_2 = pd.read_csv(os.path.join(config["path"], "period_3_6_2.csv"))
+    tabular_1 = pd.read_csv(os.path.join(config["path"], "1_period.csv"), na_values=[-1, -2, -3], encoding="GBK")
+    tabular_1 = tabular_1.select_dtypes(exclude="object")
+    tabular = tabular_1[[
+        "score_zy",
+        "pdls013",
+        "pdls033",
+        "pdls028",
+        "pdls038",
+        "pdls008",
+        "pdls001",
+        "pdls018",
+        "pdls002",
+        "pdls014",
+        "pdls034",
+        "pdls017",
+        "pdls037",
+        "pdls022",
+        "pdls021",
+        "pdls003",
+        "pdls004",
+        "pdls005",
+        "pdls006",
+        "pdls007",
+        "target"]]
+    # tabular_2 = pd.read_csv(os.path.join(config["path"], "3_6_2_period.csv"), na_values=[-1, -2, -3], encoding="GBK")
+    # tabular_2 = tabular_2.select_dtypes(exclude="object")
     # tabular = pd.concat([tabular_1, tabular_2])
-    tabular_input, tabular_label = tabular.drop(["target"], axis=1).copy(deep=True),  tabular["target"].copy(deep=True)
 
-    rule = config["rule"]
+    tabular = Tabular(tabular=tabular)
+    tabular_input = tabular.input
+    tabular_label = tabular.label
 
-    ct = CTabular(rule=rule)
-    ct.fit(tabular_input, tabular_label)
-    tabular_input = ct.transform(tabular_input)
-
-    tim_columns = ["IDT"]
-    cat_columns = config["num_columns"]
-    num_columns = config["cat_columns"]
+    tim_columns = []
+    cat_columns = []
+    num_columns = tabular_input.columns.tolist()
 
     ft = FTabular(
         tim_columns=tim_columns,
@@ -53,8 +75,8 @@ if __name__ == "__main__":
     discrete.save_order_cross(config["path"])
     discrete.save_table_cross(config["path"])
 
-    # trn_feature = discrete.transform(trn_input)
-    # tes_feature = discrete.transform(tes_input)
+    trn_feature = discrete.transform(trn_input)
+    tes_feature = discrete.transform(tes_input)
 
     # selectbin = SelectBin(
     #     tim_columns=tim_columns)

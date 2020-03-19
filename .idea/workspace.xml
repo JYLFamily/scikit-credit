@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/CTabular.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/FTabular.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/FTabular.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/CTabular.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/FTabular.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/Tabular.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -733,6 +729,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1584585056078">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1584585056078" />
     <state x="539" y="46" key="CommitChangelistDialog2" timestamp="1583912135653">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -742,26 +742,30 @@
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
     <state x="700" y="296" key="FileChooserDialogImpl/0.0.1840.1080@0.0.1840.1080" timestamp="1582640792803" />
-    <state width="1820" height="386" key="GridCell.Tab.0.bottom" timestamp="1584539249918">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1284" height="163" key="GridCell.Tab.0.bottom" timestamp="1584624154585">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
+    <state width="1284" height="163" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1584624154585" />
     <state width="1820" height="386" key="GridCell.Tab.0.bottom/0.0.1840.1080@0.0.1840.1080" timestamp="1584539249918" />
-    <state width="1838" height="590" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1584351716586" />
-    <state width="1820" height="386" key="GridCell.Tab.0.center" timestamp="1584539249918">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="163" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1584618158884" />
+    <state width="1284" height="163" key="GridCell.Tab.0.center" timestamp="1584624154584">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
+    <state width="1284" height="163" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1584624154584" />
     <state width="1820" height="386" key="GridCell.Tab.0.center/0.0.1840.1080@0.0.1840.1080" timestamp="1584539249918" />
-    <state width="1838" height="590" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1584351716586" />
-    <state width="1820" height="386" key="GridCell.Tab.0.left" timestamp="1584539249918">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="163" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1584618158884" />
+    <state width="1284" height="163" key="GridCell.Tab.0.left" timestamp="1584624154584">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
+    <state width="1284" height="163" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1584624154584" />
     <state width="1820" height="386" key="GridCell.Tab.0.left/0.0.1840.1080@0.0.1840.1080" timestamp="1584539249918" />
-    <state width="1838" height="590" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1584351716585" />
-    <state width="1820" height="386" key="GridCell.Tab.0.right" timestamp="1584539249918">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="163" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1584618158884" />
+    <state width="1284" height="163" key="GridCell.Tab.0.right" timestamp="1584624154585">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
+    <state width="1284" height="163" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1584624154585" />
     <state width="1820" height="386" key="GridCell.Tab.0.right/0.0.1840.1080@0.0.1840.1080" timestamp="1584539249918" />
-    <state width="1838" height="590" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1584351716586" />
+    <state width="1838" height="163" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1584618158884" />
     <state x="542" y="233" width="1161" height="711" key="SettingsEditor" timestamp="1583891617878">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -771,11 +775,16 @@
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
     <state x="512" y="273" key="Vcs.Push.Dialog.v2/0.0.1840.1080@0.0.1840.1080" timestamp="1580957368902" />
-    <state x="605" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1584517903516">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1584585264300">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1584585264300" />
+    <state x="611" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1584582056775">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="429" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1584499779847" />
     <state x="605" y="364" key="com.intellij.ide.util.TipDialog/0.0.1840.1080@0.0.1840.1080" timestamp="1584517903516" />
+    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1584582056775" />
     <state x="583" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1584524223262">
       <screen x="0" y="0" width="1840" height="1080" />
     </state>
