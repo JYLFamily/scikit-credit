@@ -3,6 +3,7 @@
 import gc
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -20,7 +21,19 @@ class Tabular(BaseEstimator, TransformerMixin):
     @property
     def label(self):
         return self.tabular["target"].copy(deep=True)
-    
+
+    @property
+    def trn_val_input(self):
+        trn_input, val_input = train_test_split(self.input, train_size=0.75, random_state=7, shuffle=True)
+
+        return trn_input.reset_index(drop=True), val_input.reset_index(drop=True)
+
+    @property
+    def trn_val_label(self):
+        trn_label, val_label = train_test_split(self.label, train_size=0.75, random_state=7, shuffle=True)
+
+        return trn_label.reset_index(drop=True), val_label.reset_index(drop=True)
+
 
 class CTabular(BaseEstimator, TransformerMixin):
     def __init__(self, rep_columns):
@@ -36,7 +49,7 @@ class CTabular(BaseEstimator, TransformerMixin):
 
         for k, v in self.rep_columns.items():
             for i in v:
-                x[k] = x[k].replace({int(i): np.nan})
+                x[k] = x[k].replace({i: np.nan})
 
         return x
 

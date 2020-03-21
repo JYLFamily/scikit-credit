@@ -7,6 +7,7 @@ import pandas as pd
 import statsmodels.api as sm
 from sklearn.metrics import r2_score
 from sklearn.base import BaseEstimator, TransformerMixin
+from statsmodels.tools.sm_exceptions import PerfectSeparationError
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -32,20 +33,25 @@ class SelectVif(BaseEstimator, TransformerMixin):
             from operator import add
             for j in range(add(i, 1), len(self.feature_columns_)):
                 if self.feature_support_[j]:
-                    ols_mod = sm.GLM(
-                        x[self.feature_columns_].iloc[:, j],
-                        sm.add_constant(x[self.feature_columns_].iloc[:, [i]]),
-                        family=sm.families.Gaussian()
-                    )
-                    ols_res = ols_mod.fit()
+                    try:
+                        ols_mod = sm.GLM(
+                            x[self.feature_columns_].iloc[:, j],
+                            sm.add_constant(x[self.feature_columns_].iloc[:, [i]]),
+                            family=sm.families.Gaussian()
+                        )
+                        ols_res = ols_mod.fit()
 
-                    rs = r2_score(
-                        x[self.feature_columns_].iloc[:, j],
-                        ols_res.predict(sm.add_constant(x[self.feature_columns_].iloc[:, [i]]))
-                    )
-                    if rs >= 0.8:
+                        rs = r2_score(
+                            x[self.feature_columns_].iloc[:, j],
+                            ols_res.predict(sm.add_constant(x[self.feature_columns_].iloc[:, [i]]))
+                        )
+
+                        if rs >= 0.8:
+                            self.feature_support_[j] = False
+                            logging.info("{:<10} remove !".format(self.feature_columns_[j]))
+                    except PerfectSeparationError:
                         self.feature_support_[j] = False
-                        logging.info("{} remove !".format(self.feature_columns_[j]))
+                        logging.info("{:<10} remove !".format(self.feature_columns_[j]))
 
         return self
 

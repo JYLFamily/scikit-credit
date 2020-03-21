@@ -31,14 +31,14 @@ class SelectBin(BaseEstimator, TransformerMixin):
         beta_1 = 1
 
         for idx, col in enumerate(self.feature_columns_):
-            logit_mod = sm.GLM(y, sm.add_constant(x[[col]]), family=sm.families.Binomial())
+            logit_mod = sm.GLM(y, sm.add_constant(x[[col]], has_constant="add"), family=sm.families.Binomial())
             logit_res = logit_mod.fit()
 
             if (abs(logit_res.params["const"] - beta_0) > 1e-8 and
                     abs(logit_res.params[col] - beta_1) > 1e-8 and
                     logit_res.pvalues[col] != 0.):
                 self.feature_support_[idx] = False
-                logging.info("{} remove !".format(col))
+                logging.info("{:<10} remove !".format(col))
 
         return self
 

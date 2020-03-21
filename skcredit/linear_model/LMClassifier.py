@@ -22,7 +22,8 @@ def inclusion(X, y, feature_columns, feature_subsets):
     feature_pvalues = dict()
 
     for col in feature_remains:
-        logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets | {col})]), family=sm.families.Binomial())
+        logit_mod = sm.GLM(
+            y, sm.add_constant(x[list(feature_subsets | {col})], has_constant="add"), family=sm.families.Binomial())
         logit_res = logit_mod.fit()
         feature_pvalues[col] = logit_res.pvalues[col]
 
@@ -34,7 +35,8 @@ def exclusion(X, y, feature_subsets):
     del X
     gc.collect()
 
-    logit_mod = sm.GLM(y, sm.add_constant(x[list(feature_subsets)]), family=sm.families.Binomial())
+    logit_mod = sm.GLM(
+        y, sm.add_constant(x[list(feature_subsets)], has_constant="add"), family=sm.families.Binomial())
     logit_res = logit_mod.fit()
 
     return logit_res.pvalues.drop("const").to_dict()

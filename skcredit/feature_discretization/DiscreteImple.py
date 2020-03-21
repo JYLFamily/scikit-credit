@@ -4,8 +4,7 @@ import gc
 import logging
 import numpy as np
 import pandas as pd
-from sympy import Interval
-from operator import le, contains
+from skcredit.feature_discretization.DiscreteOptsp import optsp_split
 from skcredit.feature_discretization.DiscreteSplit import dtree_split, dtree_split_cross
 np.random.seed(7)
 pd.set_option("max_rows", None)
@@ -32,18 +31,21 @@ def calc_non_table(X, col, lst):
     cnt_positive = np.unique(
         np.vectorize(func)(x.loc[x["target"] == 1, col].to_numpy()),
         return_counts=True
-    )[1].reshape(-1, 1)
+    )
     cnt_negative = np.unique(
         np.vectorize(func)(x.loc[x["target"] == 0, col].to_numpy()),
         return_counts=True
-    )[1].reshape(-1, 1)
-    cnt_rec = cnt_positive + cnt_negative
+    )
+    cnt_positive = pd.Series(cnt_positive[1], index=cnt_positive[0])
+    cnt_negative = pd.Series(cnt_negative[1], index=cnt_negative[0])
+    cnt_rec = cnt_positive.add(cnt_negative, fill_value=0)
 
-    table = np.concatenate((cnt_rec, cnt_positive, cnt_negative), axis=1)
     table = pd.concat(
         [
             lst.to_frame(col),
-            pd.DataFrame(table, columns=["CntRec", "CntPositive", "CntNegative"])
+            cnt_rec.to_frame("CntRec"),
+            cnt_positive.to_frame("CntPositive"),
+            cnt_negative.to_frame("CntNegative"),
         ],
         axis=1
     )
@@ -64,7 +66,7 @@ def calc_mis_table(X, col):
 
     cnt_positive = x.loc[x["target"] == 1, [col]].groupby(col).size().to_frame("CntPositive")
     cnt_negative = x.loc[x["target"] == 0, [col]].groupby(col).size().to_frame("CntNegative")
-    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+    cnt_rec = cnt_positive["CntPositive"].add(cnt_negative["CntNegative"], fill_value=0).to_frame("CntRec")
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
     table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
@@ -158,7 +160,9 @@ def merge_cat_table(X, col):
     x_non[col] = x_non[col].replace(mapping)
 
     # break list to group list
+    # break_list = optsp_split(x_non, col)
     break_list = dtree_split(x_non, col)
+
     group_list = [[] for _ in break_list]
 
     for k, v in mapping.items():
@@ -171,7 +175,7 @@ def merge_cat_table(X, col):
     # calc cat table
     table = calc_cat_table(x, col, group_list)
 
-    logging.info("{} split complete !".format(col))
+    logging.info("{:<10} split complete !".format(col))
 
     return table
 
@@ -191,12 +195,14 @@ def merge_num_table(X, col):
     x_non = x_non.reset_index(drop=True)
 
     # break list
+    # break_list = optsp_split(x_non, col)
     break_list = dtree_split(x_non, col)
+
 
     # calc num table
     table = calc_num_table(x, col, break_list)
 
-    logging.info("{} split complete !".format(col))
+    logging.info("{:<10} split complete !".format(col))
 
     return table
 
@@ -214,7 +220,7 @@ def force_cat_table(X, col, group_list):
 
     table = calc_cat_table(x, col, group_list)
 
-    logging.info("{} complete !".format(col))
+    logging.info("{:<10} complete !".format(col))
 
     return table
 
@@ -232,7 +238,7 @@ def force_num_table(X, col, break_list):
 
     table = calc_num_table(x, col, break_list)
 
-    logging.info("{} complete !".format(col))
+    logging.info("{:<10} complete !".format(col))
 
     return table
 
@@ -259,7 +265,7 @@ def replace_cat_woe(X, col, group_list, woe):
 
     x = np.vectorize(func)(x.to_numpy().reshape(-1, ))
 
-    logging.info("{} transform complete !".format(col))
+    logging.info("{:<10} transform complete !".format(col))
 
     return x
 
@@ -277,7 +283,7 @@ def replace_num_woe(X, col, break_list, woe):
     gc.collect()
 
     def func(element):
-        if element == "missing":
+        if element == -9999.0:
             return woe[-1]
         else:
             for i, l in enumerate(break_list):
@@ -286,7 +292,7 @@ def replace_num_woe(X, col, break_list, woe):
 
     x = np.vectorize(func)(x.to_numpy().reshape(-1, ))
 
-    logging.info("{} transform complete !".format(col))
+    logging.info("{:<10} transform complete !".format(col))
 
     return x
 
@@ -312,19 +318,22 @@ def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):
     cnt_positive = np.unique(
         np.apply_along_axis(func, axis=1, arr=x.loc[x["target"] == 1, [col_1, col_2]].to_numpy()),
         return_counts=True
-    )[1].reshape(-1, 1)
+    )
     cnt_negative = np.unique(
         np.apply_along_axis(func, axis=1, arr=x.loc[x["target"] == 0, [col_1, col_2]].to_numpy()),
         return_counts=True
-    )[1].reshape(-1, 1)
-    cnt_rec = cnt_positive + cnt_negative
+    )
+    cnt_positive = pd.Series(cnt_positive[1], index=cnt_positive[0])
+    cnt_negative = pd.Series(cnt_negative[1], index=cnt_negative[0])
+    cnt_rec = cnt_positive.add(cnt_negative, fill_value=0)
 
-    table = np.concatenate((cnt_rec, cnt_positive, cnt_negative), axis=1)
     table = pd.concat(
         [
             lst_1.to_frame(col_1),
             lst_2.to_frame(col_2),
-            pd.DataFrame(table, columns=["CntRec", "CntPositive", "CntNegative"])
+            cnt_rec.to_frame("CntRec"),
+            cnt_positive.to_frame("CntPositive"),
+            cnt_negative.to_frame("CntNegative"),
         ],
         axis=1
     )
@@ -348,7 +357,7 @@ def calc_mis_table_cross(X, col_1, col_2):
         [col_1, col_2]).size().to_frame("CntPositive")
     cnt_negative = x.loc[x["target"] == 0, [col_1, col_2]].groupby(
         [col_1, col_2]).size().to_frame("CntNegative")
-    cnt_rec = (cnt_positive["CntPositive"] + cnt_negative["CntNegative"]).to_frame("CntRec")
+    cnt_rec = cnt_positive["CntPositive"].add(cnt_negative["CntNegative"], fill_value=0).to_frame("CntRec")
 
     table = pd.concat([cnt_rec, cnt_positive, cnt_negative], axis=1)
     table = table.fillna({"CntPositive": 0.5, "CntNegative": 0.5})
@@ -475,7 +484,7 @@ def merge_cat_table_cross(X, col_1, col_2):
     # calc cat table
     table = calc_cat_table_cross(x, col_1, col_2, group_list_1, group_list_2)
 
-    logging.info("{} @ {} split complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} split complete !".format(col_1, col_2))
 
     return table
 
@@ -501,7 +510,7 @@ def merge_num_table_cross(X, col_1, col_2):
     # calc num table
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
 
-    logging.info("{} @ {} split complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} split complete !".format(col_1, col_2))
 
     return table
 
@@ -521,7 +530,7 @@ def force_cat_table_cross(X, col_1, col_2, group_list_1, group_list_2):
 
     table = calc_cat_table_cross(x, col_1, col_2, group_list_1, group_list_2)
 
-    logging.info("{} @ {} complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} complete !".format(col_1, col_2))
 
     return table
 
@@ -541,7 +550,7 @@ def force_num_table_cross(X, col_1, col_2, break_list_1, break_list_2):
 
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
 
-    logging.info("{} @ {} complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} complete !".format(col_1, col_2))
 
     return table
 
@@ -570,7 +579,7 @@ def replace_cat_woe_cross(X, col_1, col_2, group_list_1, group_list_2, woe):
 
     x = np.apply_along_axis(func, axis=1, arr=x.to_numpy())
 
-    logging.info("{} @ {} transform complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} transform complete !".format(col_1, col_2))
 
     return x
 
@@ -599,6 +608,6 @@ def replace_num_woe_cross(X, col_1, col_2, break_list_1, break_list_2, woe):
 
     x = np.apply_along_axis(func, axis=1, arr=x.to_numpy())
 
-    logging.info("{} @ {} transform complete !".format(col_1, col_2))
+    logging.info("{:<10} @ {:<10} transform complete !".format(col_1, col_2))
 
     return x
