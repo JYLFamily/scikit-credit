@@ -24,13 +24,43 @@ if __name__ == "__main__":
     with open("configs.yaml", encoding="UTF-8") as config_file:
         config = yaml.load(config_file, Loader=yaml.SafeLoader)
 
-    # tabular_1 = pd.read_csv(os.path.join(config["path"], "1_period.csv"), na_values=[-1, -2, -3], encoding="GBK")
-    # tabular_1 = tabular_1.select_dtypes(exclude="object")
-    tabular_2 = pd.read_csv(os.path.join(config["path"], "3_6_1_period.csv"), na_values=[-1, -2, -3], encoding="GBK")
-    tabular_2 = tabular_2.select_dtypes(exclude="object")
-    tabular_3 = pd.read_csv(os.path.join(config["path"], "3_6_2_period.csv"), na_values=[-1, -2, -3], encoding="GBK")
-    tabular_3 = tabular_3.select_dtypes(exclude="object")
-    tabular = pd.concat([tabular_2, tabular_3.reindex(columns=tabular_2.columns)]).drop(["score_zy"], axis=1)
+    # tabular_2_sua = pd.read_excel(
+    #     os.path.join(config["path"], "3_6_1_period_sua.xlsx"), na_values=[-1, -2, -3])
+    # tabular_3_sua = pd.read_excel(
+    #     os.path.join(config["path"], "3_6_2_period_sua.xlsx"), na_values=[-1, -2, -3])
+    # tabular_2_sua["IDT"] = pd.to_datetime(tabular_2_sua["IDT"])
+    # tabular_3_sua["IDT"] = pd.to_datetime(tabular_3_sua["IDT"])
+    #
+    # tabular_2_afu = pd.read_excel(os.path.join(config["path"], "3_6_1_period_afu.xlsx"))
+    # tabular_3_afu = pd.read_excel(os.path.join(config["path"], "3_6_2_period_afu.xlsx"))
+    # tabular_2_afu["IDT"] = pd.to_datetime(tabular_2_afu["IDT"])
+    # tabular_3_afu["IDT"] = pd.to_datetime(tabular_3_afu["IDT"])
+    #
+    # tabular_2 = tabular_2_sua.merge(
+    #     tabular_2_afu, on=["NAME", "CID", "MOBILE", "IDT"], how="left")
+    # tabular_3 = tabular_3_sua.merge(
+    #     tabular_3_afu, on=["NAME", "CID", "MOBILE", "IDT"], how="left")
+    #
+    # tabular_2 = tabular_2.select_dtypes(exclude="object")
+    # tabular_3 = tabular_3.select_dtypes(exclude="object")
+    #
+    # tabular = pd.concat([
+    #     tabular_2,
+    #     tabular_3.reindex(columns=tabular_2.columns)
+    # ]).drop(["score_zy", "IDT"], axis=1).sort_index()
+
+    # import missingno as msno
+    # import matplotlib.pyplot as plt
+    # msno.matrix(tabular[["xx31", "xx361", "xx372", "xx396", "score", "score_m1", "pdls013"]])
+    # plt.show()
+
+    tabular_1 = pd.read_excel(
+        os.path.join(config["path"], "3_6_1_period.xlsx"), na_values=[-1, -2, -3])
+    tabular_2 = pd.read_excel(
+        os.path.join(config["path"], "3_6_2_period.xlsx"), na_values=[-1, -2, -3])
+
+    tabular = pd.concat([tabular_1, tabular_2.reindex(columns=tabular_1.columns)])
+    tabular = tabular.select_dtypes(exclude="object").drop(["score", "score_zy"], axis=1)
 
     t = Tabular(tabular=tabular)
     trn_input, val_input = t.trn_val_input
@@ -53,6 +83,9 @@ if __name__ == "__main__":
     discrete.fit(trn_input, trn_label)
     trn_input = discrete.transform(trn_input)
     val_input = discrete.transform(val_input)
+
+    discrete.save_order(config["path"])
+    discrete.save_table(config["path"])
 
     selectbin = SelectBin(
         tim_columns=tim_columns)
