@@ -60,11 +60,11 @@ if __name__ == "__main__":
         os.path.join(config["path"], "3_6_2_period.xlsx"), na_values=[-1, -2, -3])
 
     tabular = pd.concat([tabular_1, tabular_2.reindex(columns=tabular_1.columns)])
-    tabular = tabular.select_dtypes(exclude="object").drop(["score", "score_zy"], axis=1)
+    tabular = tabular.select_dtypes(exclude="object").drop(["IDT", "score_zy", "afu_score"], axis=1)
 
     t = Tabular(tabular=tabular)
-    trn_input, val_input = t.trn_val_input
-    trn_label, val_label = t.trn_val_label
+    trn_input = t.input
+    trn_label = t.label
 
     tim_columns = []
     cat_columns = []
@@ -76,13 +76,11 @@ if __name__ == "__main__":
         num_columns=num_columns)
     ft.fit(trn_input, trn_label)
     trn_input = ft.transform(trn_input)
-    val_input = ft.transform(val_input)
 
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
     discrete.fit(trn_input, trn_label)
     trn_input = discrete.transform(trn_input)
-    val_input = discrete.transform(val_input)
 
     discrete.save_order(config["path"])
     discrete.save_table(config["path"])
@@ -91,18 +89,16 @@ if __name__ == "__main__":
         tim_columns=tim_columns)
     selectbin.fit(trn_input, trn_label)
     trn_input = selectbin.transform(trn_input)
-    val_input = selectbin.transform(val_input)
 
     selectvif = SelectVif(
         tim_columns=tim_columns)
     selectvif.fit(trn_input, trn_label)
     trn_input = selectvif.transform(trn_input)
-    val_input = selectvif.transform(val_input)
 
     lmclassifier = LMClassifier(tim_columns=tim_columns, PDO=20, BASE=600, ODDS=1)
     lmclassifier.fit(trn_input, trn_label)
     print("{:.5f}".format(lmclassifier.score(trn_input, trn_label)))
-    print("{:.5f}".format(lmclassifier.score(val_input, val_label)))
+    # print("{:.5f}".format(lmclassifier.score(val_input, val_label)))
     from pprint import pprint
     pprint(lmclassifier.model())
 

@@ -30,23 +30,23 @@ class DiscreteAuto(BaseDiscrete):
         self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.tim_columns]
 
         # feature
-        with Pool(mp.cpu_count() - 2) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if self.cat_columns_:
                 self.cat_table_ = dict(zip(self.cat_columns_, pool.starmap(
                     merge_cat_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.cat_columns_])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0.1}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0.0}
         self.cat_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.cat_value_ = OrderedDict(sorted(self.cat_value_.items(), key=lambda t: t[1], reverse=True))
 
-        with Pool(mp.cpu_count() - 2) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if self.num_columns_:
                 self.num_table_ = dict(zip(self.num_columns_, pool.starmap(
                     merge_num_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0.1}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0.0}
         self.num_value_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
         self.num_value_ = OrderedDict(sorted(self.num_value_.items(), key=lambda t: t[1], reverse=True))
 
@@ -56,7 +56,7 @@ class DiscreteAuto(BaseDiscrete):
             sorted(self.information_value_.items(), key=lambda t: t[1], reverse=True))
 
         # feature cross
-        # with Pool(mp.cpu_count() - 2) as pool:
+        # with Pool(mp.cpu_count() - 1) as pool:
         #     if len(self.cat_value_.keys()) >= 2:
         #         self.cat_table_cross_ = dict(zip(
         #             ["{} @ {}".format(col_1, col_2) for col_1, col_2 in combinations(self.cat_value_.keys(), 2)],
@@ -75,7 +75,7 @@ class DiscreteAuto(BaseDiscrete):
         # self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
         # self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
         #
-        # with Pool(mp.cpu_count() - 2) as pool:
+        # with Pool(mp.cpu_count() - 1) as pool:
         #     if len(self.num_value_.keys()) >= 2:
         #         self.num_table_cross_ = dict(zip(
         #             ["{} @ {}".format(col_1, col_2) for col_1, col_2 in combinations(self.num_value_.keys(), 2)],
