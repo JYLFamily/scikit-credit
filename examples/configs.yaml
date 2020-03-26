@@ -1,18 +1,11 @@
-path: C:\Users\P1352\Desktop
+path: C:\Users\15795\Desktop
 
 rep_columns:
-  jd_loan_cntGR_6m: [-1]
-  jd_loan_cntGR_3m: [-1]
-  jd_loan_amtGR_6m: [-1]
-  jd_loan_amtGR_3m: [-1]
-  jd_BTloan_cntGR_6m: [-1]
-  jd_BTloan_cntGR_3m: [-1]
-  jd_BTloan_amtGR_6m: [-1]
-  jd_BTloan_amtGR_3m: [-1]
-  jd_BillInstallment_cntGR_6m: [-1]
-  jd_BillInstallment_cntGR_3m: [-1]
-  jd_BillInstallment_amtGR_6m: [-1]
-  jd_BillInstallment_amtGR_3m: [-1]
+  jd_BT_limitAmt: [-1]
+  jd_JT_limitAmt: [-1]
+  jd_BT_timeDiff: [0.]
+  jd_JT_timeDiff: [0.]
+
 
 num_columns: [
   jd_if_houseRepay,

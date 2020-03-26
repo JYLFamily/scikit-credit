@@ -59,22 +59,10 @@ def dtree_split(X, col):
     del X
     gc.collect()
 
-    clf = None
-
-    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-        clf = DecisionTreeClassifier(
-            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
-        clf.fit(x[[col]], x["target"])
-
-        table = calc_num_table(
-            x,
-            col,
-            dleaf_rules(clf.tree_, [col])[col]
-        )
-
-        if ((table["WoE"].is_monotonic_increasing or table["WoE"].is_monotonic_decreasing) and
-                (table["EventRate"].is_monotonic_increasing or table["EventRate"].is_monotonic_decreasing)):
-            break
+    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
+    clf = DecisionTreeClassifier(
+        criterion="entropy", min_impurity_decrease=5e-4, min_samples_leaf=0.05, random_state=7)
+    clf.fit(x[[col]], x["target"])
 
     return dleaf_rules(clf.tree_, [col])[col]
 
@@ -84,21 +72,9 @@ def dtree_split_cross(X, col_1, col_2):
     del X
     gc.collect()
 
-    clf = None
-
-    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-        clf = DecisionTreeClassifier(
-            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
-        clf.fit(x[[col_1, col_2]], x["target"])
-
-        table = calc_num_table_cross(
-            x,
-            col_1, col_2,
-            dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]
-        )
-
-        if ((table["WoE"].is_monotonic_increasing or table["WoE"].is_monotonic_decreasing) and
-                (table["EventRate"].is_monotonic_increasing or table["EventRate"].is_monotonic_decreasing)):
-            break
+    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
+    clf = DecisionTreeClassifier(
+        criterion="entropy", min_impurity_decrease=5e-4, min_samples_leaf=0.05, random_state=7)
+    clf.fit(x[[col_1, col_2]], x["target"])
 
     return dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]

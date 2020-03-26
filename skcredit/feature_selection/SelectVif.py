@@ -36,14 +36,14 @@ class SelectVif(BaseEstimator, TransformerMixin):
                     try:
                         ols_mod = sm.GLM(
                             x[self.feature_columns_].iloc[:, j],
-                            sm.add_constant(x[self.feature_columns_].iloc[:, [i]]),
+                            x[self.feature_columns_].iloc[:, [i]],
                             family=sm.families.Gaussian()
                         )
                         ols_res = ols_mod.fit()
 
                         rs = r2_score(
                             x[self.feature_columns_].iloc[:, j],
-                            ols_res.predict(sm.add_constant(x[self.feature_columns_].iloc[:, [i]]))
+                            ols_res.predict(x[self.feature_columns_].iloc[:, [i]])
                         )
 
                         if rs >= 0.8:

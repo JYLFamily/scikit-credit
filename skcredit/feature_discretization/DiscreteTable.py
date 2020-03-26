@@ -96,13 +96,14 @@ def calc_cat_table(X, col, group_list):
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
 
-    table["EventRate"] = table["CntPositive"] / table["CntRec"]
+    table["PositiveRate"] = table["CntPositive"] / table["CntRec"]
+    table["NegativeRate"] = table["CntNegative"] / table["CntRec"]
 
-    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+    table["PositiveCumRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeCumRate"] = table["CntNegative"] / table["CntNegative"].sum()
 
-    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
-    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
+    table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
+    table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
     return table
 
@@ -130,13 +131,14 @@ def calc_num_table(X, col, break_list):
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
 
-    table["EventRate"] = table["CntPositive"] / table["CntRec"]
+    table["PositiveRate"] = table["CntPositive"] / table["CntRec"]
+    table["NegativeRate"] = table["CntNegative"] / table["CntRec"]
 
-    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+    table["PositiveCumRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeCumRate"] = table["CntNegative"] / table["CntNegative"].sum()
 
-    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
-    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
+    table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
+    table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
     return table
 
@@ -237,13 +239,14 @@ def calc_cat_table_cross(X, col_1, col_2, group_list_1, group_list_2):
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
 
-    table["EventRate"] = table["CntPositive"] / table["CntRec"]
+    table["PositiveRate"] = table["CntPositive"] / table["CntRec"]
+    table["NegativeRate"] = table["CntNegative"] / table["CntRec"]
 
-    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+    table["PositiveCumRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeCumRate"] = table["CntNegative"] / table["CntNegative"].sum()
 
-    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
-    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
+    table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
+    table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
     return table
 
@@ -275,12 +278,13 @@ def calc_num_table_cross(X, col_1, col_2, break_list_1, break_list_2):
 
         table = pd.concat([non_table, mis_table.reindex(columns=non_table.columns)])
 
-    table["EventRate"] = table["CntPositive"] / table["CntRec"]
+    table["PositiveRate"] = table["CntPositive"] / table["CntRec"]
+    table["NegativeRate"] = table["CntNegative"] / table["CntRec"]
 
-    table["PositiveRate"] = table["CntPositive"] / table["CntPositive"].sum()
-    table["NegativeRate"] = table["CntNegative"] / table["CntNegative"].sum()
+    table["PositiveCumRate"] = table["CntPositive"] / table["CntPositive"].sum()
+    table["NegativeCumRate"] = table["CntNegative"] / table["CntNegative"].sum()
 
-    table["WoE"] = np.log(table["PositiveRate"] / table["NegativeRate"])
-    table["IV"] = (table["PositiveRate"] - table["NegativeRate"]) * table["WoE"]
+    table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
+    table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
     return table

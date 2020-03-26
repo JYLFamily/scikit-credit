@@ -16,23 +16,25 @@ class Tabular(BaseEstimator, TransformerMixin):
 
     @property
     def input(self):
-        return self.tabular.drop(["target"], axis=1).copy(deep=True)
+        return self.tabular.drop(["target"], axis=1).reset_index(drop=True).copy(deep=True)
 
     @property
     def label(self):
-        return self.tabular["target"].copy(deep=True)
+        return self.tabular["target"].reset_index(drop=True).copy(deep=True)
 
     @property
     def trn_val_input(self):
         trn_input, val_input = train_test_split(self.input, train_size=0.75, random_state=7, shuffle=True)
 
-        return trn_input.reset_index(drop=True), val_input.reset_index(drop=True)
+        return (trn_input.reset_index(drop=True).copy(deep=True),
+                val_input.reset_index(drop=True).copy(deep=True))
 
     @property
     def trn_val_label(self):
         trn_label, val_label = train_test_split(self.label, train_size=0.75, random_state=7, shuffle=True)
 
-        return trn_label.reset_index(drop=True), val_label.reset_index(drop=True)
+        return (trn_label.reset_index(drop=True).copy(deep=True),
+                val_label.reset_index(drop=True).copy(deep=True))
 
 
 class CTabular(BaseEstimator, TransformerMixin):
