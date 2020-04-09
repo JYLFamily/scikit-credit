@@ -6,7 +6,6 @@ import pandas as pd
 from collections import namedtuple
 from sympy import Interval, Intersection
 from sklearn.tree import DecisionTreeClassifier
-from skcredit.feature_discretization.DiscreteTable import calc_num_table, calc_num_table_cross
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -29,8 +28,8 @@ def dleaf_rules(tree, feature_list):
                 else:
                     rule_dict[node][rule.feature] = Intersection(rule_dict[node][rule.feature], rule.interval)
         else:
-            rule_l = rule_tple(feature=feature_list[feature[node]], interval=Interval.Lopen(-np.inf, threshold[node]))
-            rule_r = rule_tple(feature=feature_list[feature[node]], interval=Interval.Ropen(threshold[node], +np.inf))
+            rule_l = rule_tple(feature=feature_list[feature[node]], interval=Interval.Lopen(-999999, threshold[node]))
+            rule_r = rule_tple(feature=feature_list[feature[node]], interval=Interval.open(threshold[node],  +999999))
 
             recursions(children_l[node], rull + [rule_l])
             recursions(children_r[node], rull + [rule_r])
@@ -39,7 +38,7 @@ def dleaf_rules(tree, feature_list):
         rule_dict[0] = dict()
 
         for feature in feature_list:
-            rule_dict[0][feature] = Interval.open(-np.inf, +np.inf)
+            rule_dict[0][feature] = Interval.open(-999999, +999999)
     else:
         recursions(node=0, rull=[])
 
@@ -47,8 +46,8 @@ def dleaf_rules(tree, feature_list):
 
     for feature in feature_list:
         if feature not in rule_dict.columns:
-            rule_dict[feature] = Interval.open(-np.inf,  +np.inf)
-    rule_dict = rule_dict.fillna(Interval.open(-np.inf, +np.inf))
+            rule_dict[feature] = Interval.open(-999999,  +999999)
+    rule_dict = rule_dict.fillna(Interval.open(-999999, +999999))
     rule_dict = rule_dict.reindex(columns=feature_list).reset_index(drop=True)
 
     return rule_dict
@@ -59,10 +58,14 @@ def dtree_split(X, col):
     del X
     gc.collect()
 
-    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-    clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=5e-4, min_samples_leaf=0.05, random_state=7)
-    clf.fit(x[[col]], x["target"])
+    clf = None
+
+    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
+        clf = DecisionTreeClassifier(
+            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
+        clf.fit(x[[col]], x["target"])
+        if x.groupby(clf.apply(x[[col]]))["target"].mean().is_monotonic:
+            break
 
     return dleaf_rules(clf.tree_, [col])[col]
 
@@ -72,9 +75,13 @@ def dtree_split_cross(X, col_1, col_2):
     del X
     gc.collect()
 
-    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-    clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=5e-4, min_samples_leaf=0.05, random_state=7)
-    clf.fit(x[[col_1, col_2]], x["target"])
+    clf = None
+
+    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
+        clf = DecisionTreeClassifier(
+            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
+        clf.fit(x[[col_1, col_2]], x["target"])
+        if x.groupby(clf.apply(x[[col_1, col_2]]))["target"].mean().is_monotonic:
+            break
 
     return dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]

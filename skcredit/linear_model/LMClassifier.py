@@ -113,7 +113,6 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         return self
 
     def model(self):
-
         return self.model_.summary()
 
     def score(self, X, y=None, sample_weight=None):
@@ -138,5 +137,5 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
 
         y = np.log(self.predict_proba(x)["proba_positive"] / (1 - self.predict_proba(x)["proba_positive"]))
 
-        return np.round(self.a_ + self.b_ * (- y))
+        return self.a_ + self.b_ * (- y)
 

@@ -36,7 +36,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_cat_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.cat_columns_])))
         self.cat_table_ = {
-            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0.0}
+            col: val for col, val in self.cat_table_.items() if val["IV"].sum() >= 0.02}
         self.cat_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.cat_value_ = OrderedDict(sorted(self.cat_value_.items(), key=lambda t: t[1], reverse=True))
 
@@ -46,7 +46,7 @@ class DiscreteAuto(BaseDiscrete):
                     merge_num_table,
                     [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_])))
         self.num_table_ = {
-            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0.0}
+            col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0.02}
         self.num_value_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})
         self.num_value_ = OrderedDict(sorted(self.num_value_.items(), key=lambda t: t[1], reverse=True))
 
