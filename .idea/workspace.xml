@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" afterDir="false" />
-    </list>
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,17 +59,17 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\data" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
   </component>
   <component name="RunManager" selected="Python.SelectViz">
@@ -303,13 +296,6 @@
       <workItem from="1583889947800" duration="99000" />
       <workItem from="1583890234889" duration="938000" />
       <workItem from="1590396103388" duration="909000" />
-    </task>
-    <task id="LOCAL-00037" summary="code example">
-      <created>1573633652319</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1573633652319</updated>
     </task>
     <task id="LOCAL-00038" summary="clean code">
       <created>1573633709532</created>
@@ -647,7 +633,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585228329064</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="init commit">
+      <created>1596693853406</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1596693853409</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -728,6 +721,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1596693846431">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1596693846431" />
     <state x="706" y="296" key="FileChooserDialogImpl" timestamp="1592202572808">
       <screen x="0" y="0" width="1857" height="1080" />
     </state>
@@ -768,6 +765,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="412" y="229" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1596076443666" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1596693857929">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1596693857929" />
     <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596618586100">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
