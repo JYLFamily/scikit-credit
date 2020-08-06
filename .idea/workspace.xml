@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteOptsp.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +53,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/StaticPool_Opt" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -80,7 +79,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.example (1)">
+  <component name="RunManager" selected="Python.SelectViz">
     <configuration name="DiscreteImple" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -103,7 +102,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Tabulars" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SelectViz" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -111,11 +110,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_preprocessings" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_selection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_preprocessings\Tabulars.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -146,28 +145,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/example" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/example/example.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="tmp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -180,7 +157,29 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/tmp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="varclushi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="D:/SoftWare/Anaconda3/Lib/site-packages/varclushi" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:/SoftWare/Anaconda3/Lib/site-packages/varclushi/varclushi.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -191,11 +190,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.SelectViz" />
+        <item itemvalue="Python.varclushi" />
         <item itemvalue="Python.example (1)" />
         <item itemvalue="Python.DiscreteImple" />
         <item itemvalue="Python.tmp" />
-        <item itemvalue="Python.Tabulars" />
-        <item itemvalue="Python.example" />
       </list>
     </recent_temporary>
   </component>
@@ -303,6 +302,7 @@
       <workItem from="1581652474252" duration="69000" />
       <workItem from="1583889947800" duration="99000" />
       <workItem from="1583890234889" duration="938000" />
+      <workItem from="1590396103388" duration="909000" />
     </task>
     <task id="LOCAL-00037" summary="code example">
       <created>1573633652319</created>
@@ -728,82 +728,58 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="653" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586403298916">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state x="706" y="296" key="FileChooserDialogImpl" timestamp="1592202572808">
+      <screen x="0" y="0" width="1857" height="1080" />
     </state>
-    <state x="653" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1840.1080@0.0.1840.1080" timestamp="1586403298916" />
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1584585056078" />
-    <state x="534" y="46" key="CommitChangelistDialog2" timestamp="1585228326241">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state x="534" y="46" key="CommitChangelistDialog2/0.0.1840.1080@0.0.1840.1080" timestamp="1585228326241" />
-    <state x="539" y="46" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1583912135653" />
-    <state x="700" y="296" key="FileChooserDialogImpl" timestamp="1586002073476">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state x="700" y="296" key="FileChooserDialogImpl/0.0.1840.1080@0.0.1840.1080" timestamp="1586002073476" />
-    <state width="1820" height="586" key="GridCell.Tab.0.bottom" timestamp="1586436472744">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1284" height="163" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1584624154585" />
-    <state width="1820" height="586" key="GridCell.Tab.0.bottom/0.0.1840.1080@0.0.1840.1080" timestamp="1586436472744" />
-    <state width="1838" height="734" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1585036171162" />
-    <state width="1820" height="586" key="GridCell.Tab.0.center" timestamp="1586436472743">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1284" height="163" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1584624154584" />
-    <state width="1820" height="586" key="GridCell.Tab.0.center/0.0.1840.1080@0.0.1840.1080" timestamp="1586436472743" />
-    <state width="1838" height="734" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1585036171162" />
-    <state width="1820" height="586" key="GridCell.Tab.0.left" timestamp="1586436472742">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1284" height="163" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1584624154584" />
-    <state width="1820" height="586" key="GridCell.Tab.0.left/0.0.1840.1080@0.0.1840.1080" timestamp="1586436472742" />
-    <state width="1838" height="734" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1585036171161" />
-    <state width="1820" height="586" key="GridCell.Tab.0.right" timestamp="1586436472743">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1284" height="163" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1584624154585" />
-    <state width="1820" height="586" key="GridCell.Tab.0.right/0.0.1840.1080@0.0.1840.1080" timestamp="1586436472743" />
-    <state width="1838" height="734" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1585036171162" />
-    <state width="1820" height="343" key="GridCell.Tab.1.bottom" timestamp="1585916933658">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1820" height="343" key="GridCell.Tab.1.bottom/0.0.1840.1080@0.0.1840.1080" timestamp="1585916933658" />
-    <state width="1820" height="343" key="GridCell.Tab.1.center" timestamp="1585916933658">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1820" height="343" key="GridCell.Tab.1.center/0.0.1840.1080@0.0.1840.1080" timestamp="1585916933658" />
-    <state width="1820" height="343" key="GridCell.Tab.1.left" timestamp="1585916933658">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1820" height="343" key="GridCell.Tab.1.left/0.0.1840.1080@0.0.1840.1080" timestamp="1585916933658" />
-    <state width="1820" height="343" key="GridCell.Tab.1.right" timestamp="1585916933658">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state width="1820" height="343" key="GridCell.Tab.1.right/0.0.1840.1080@0.0.1840.1080" timestamp="1585916933658" />
-    <state x="542" y="233" width="1161" height="711" key="SettingsEditor" timestamp="1583891617878">
+    <state x="706" y="296" key="FileChooserDialogImpl/0.0.1857.1080@0.0.1857.1080" timestamp="1592202572808" />
+    <state width="1838" height="832" key="GridCell.Tab.0.bottom" timestamp="1596693279807">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="537" y="233" width="1161" height="711" key="SettingsEditor/0.0.1840.1080@0.0.1840.1080" timestamp="1582706179226" />
-    <state x="542" y="233" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1583891617878" />
-    <state x="512" y="273" key="Vcs.Push.Dialog.v2" timestamp="1585228331833">
-      <screen x="0" y="0" width="1840" height="1080" />
-    </state>
-    <state x="512" y="273" key="Vcs.Push.Dialog.v2/0.0.1840.1080@0.0.1840.1080" timestamp="1585228331833" />
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1584585264300">
+    <state width="1838" height="832" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
+    <state width="1838" height="832" key="GridCell.Tab.0.center" timestamp="1596693279807">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1584585264300" />
-    <state x="609" y="424" key="com.intellij.ide.util.TipDialog" timestamp="1586399213433">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="832" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
+    <state width="1838" height="832" key="GridCell.Tab.0.left" timestamp="1596693279806">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="429" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1584499779847" />
-    <state x="609" y="424" key="com.intellij.ide.util.TipDialog/0.0.1840.1080@0.0.1840.1080" timestamp="1586399213433" />
-    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1585016385077" />
-    <state x="583" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1584685337217">
-      <screen x="0" y="0" width="1840" height="1080" />
+    <state width="1838" height="832" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279806" />
+    <state width="1838" height="832" key="GridCell.Tab.0.right" timestamp="1596693279807">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1840.1080@0.0.1840.1080" timestamp="1584685337217" />
+    <state width="1838" height="832" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
+    <state width="1838" height="364" key="GridCell.Tab.1.bottom" timestamp="1596620017280">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="364" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
+    <state width="1838" height="364" key="GridCell.Tab.1.center" timestamp="1596620017280">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="364" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
+    <state width="1838" height="364" key="GridCell.Tab.1.left" timestamp="1596620017280">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="364" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
+    <state width="1838" height="364" key="GridCell.Tab.1.right" timestamp="1596620017280">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="364" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
+    <state x="412" y="229" width="1161" height="711" key="SettingsEditor" timestamp="1596076443666">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="412" y="229" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1596076443666" />
+    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596618586100">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1596618586100" />
+    <state x="611" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1596592594648">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1857.1080@0.0.1857.1080" timestamp="1592202545711" />
+    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1596592594648" />
+    <state x="588" y="235" width="679" height="678" key="search.everywhere.popup" timestamp="1591066068759">
+      <screen x="0" y="0" width="1857" height="1080" />
+    </state>
+    <state x="588" y="235" width="679" height="678" key="search.everywhere.popup/0.0.1857.1080@0.0.1857.1080" timestamp="1591066068759" />
   </component>
 </project>

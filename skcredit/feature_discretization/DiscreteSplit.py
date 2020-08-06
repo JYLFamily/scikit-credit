@@ -60,12 +60,15 @@ def dtree_split(X, col):
 
     clf = None
 
-    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-        clf = DecisionTreeClassifier(
-            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
-        clf.fit(x[[col]], x["target"])
-        if x.groupby(clf.apply(x[[col]]))["target"].mean().is_monotonic:
-            break
+    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
+    #     clf = DecisionTreeClassifier(
+    #         criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
+    #     clf.fit(x[[col]], x["target"])
+    #     if x.groupby(clf.apply(x[[col]]))["target"].mean().is_monotonic:
+    #         break
+    clf = DecisionTreeClassifier(
+        criterion="entropy", min_impurity_decrease=0., min_samples_leaf=0.05, random_state=7)
+    clf.fit(x[[col]], x["target"])
 
     return dleaf_rules(clf.tree_, [col])[col]
 
