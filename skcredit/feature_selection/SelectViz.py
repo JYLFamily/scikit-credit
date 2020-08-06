@@ -190,12 +190,3 @@ class SelectViz(BaseEstimator, TransformerMixin):
 
     def fit_transform(self, X, y=None, **fit_params):
         pass
-
-
-if __name__ == "__main__":
-    demo1_df = pd.read_csv("C:\\Users\\P1352\\Desktop\\default of credit card clients.csv", sep=',')
-    demo1_df = (demo1_df - demo1_df.mean()) / demo1_df.std()
-    selet_viz = SelectViz(tim_columns=[])
-    selet_viz.fit(demo1_df)
-    print(selet_viz.var_table())
-    print(selet_viz.rsq_table(demo1_df))
