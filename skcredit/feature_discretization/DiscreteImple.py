@@ -2,9 +2,9 @@
 
 import gc
 import logging
-import numpy as np
+import numpy  as np
 import pandas as pd
-from skcredit.feature_discretization.DiscreteSplit import dtree_split, dtree_split_cross
+from skcredit.feature_discretization.DiscreteSplit import dtree_split
 from skcredit.feature_discretization.DiscreteTable import calc_cat_table, calc_num_table
 from skcredit.feature_discretization.DiscreteTable import calc_cat_table_cross, calc_num_table_cross
 np.random.seed(7)
@@ -13,65 +13,30 @@ pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-def merge_cat_table(X, col):
-    """
-    :param X:
-    :param col:
-    :return:
-    """
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
-
-    # cat to num
+def merge_cat_table(x, col):
+    # cat
     x_non = x.loc[x[col] != "missing"].copy(deep=True)
+    x_mis = x.loc[x[col] == "missing"].copy(deep=True)
     x_non = x_non.reset_index(drop=True)
-
-    weights = (1 / (1 + np.exp(-(x_non.groupby(col).size() - 1))))
-    mapping = (1 - weights) * x_non["target"].mean() + weights * x_non.groupby(col)["target"].mean()
-    mapping = mapping.to_dict()
-
-    x_non[col] = x_non[col].replace(mapping)
-
-    # break list to group list
-    break_list = dtree_split(x_non, col)
-
-    group_list = [[] for _ in break_list]
-
-    for k, v in mapping.items():
-        for idx, brk in break_list.items():
-            if v in brk:
-                group_list[idx].append(k)
-
-    group_list = pd.Series([", ".join(l) for l in group_list])
+    x_mis = x_mis.reset_index(drop=True)
 
     # calc cat table
-    table = calc_cat_table(x, col, group_list)
+    table = calc_cat_table(x_non, x_mis, col)
 
     logging.info("{:<10} split complete !".format(col))
 
     return table
 
 
-def merge_num_table(X, col):
-    """
-    :param X:
-    :param col:
-    :return:
-    """
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
-
+def merge_num_table(x, col):
     # num
     x_non = x.loc[x[col] != -9999].copy(deep=True)
+    x_mis = x.loc[x[col] == -9999].copy(deep=True)
     x_non = x_non.reset_index(drop=True)
-
-    # break list
-    break_list = dtree_split(x_non, col)
+    x_mis = x_mis.reset_index(drop=True)
 
     # calc num table
-    table = calc_num_table(x, col, break_list)
+    table = calc_num_table(x_non, x_mis, col)
 
     logging.info("{:<10} split complete !".format(col))
 
@@ -195,7 +160,7 @@ def merge_cat_table_cross(X, col_1, col_2):
     x_non[col_2] = x_non[col_2].replace(mapping_2)
 
     # break list to group list
-    break_list_1, break_list_2 = dtree_split_cross(x_non, col_1, col_2)
+    break_list_1, break_list_2, tree = dtree_split(x_non, col_1, col_2)
     group_list_1, group_list_2 = [[] for _ in break_list_1], [[] for _ in break_list_2]
 
     for k, v in mapping_1.items():
@@ -235,7 +200,7 @@ def merge_num_table_cross(X, col_1, col_2):
     x_non = x_non.reset_index(drop=True)
 
     # break list
-    break_list_1, break_list_2 = dtree_split_cross(x_non, col_1, col_2)
+    break_list_1, break_list_2, tree = dtree_split(x_non, col_1, col_2)
 
     # calc num table
     table = calc_num_table_cross(x, col_1, col_2, break_list_1, break_list_2)
@@ -341,3 +306,12 @@ def replace_num_woe_cross(X, col_1, col_2, break_list_1, break_list_2, woe):
     logging.info("{:<10} @ {:<10} transform complete !".format(col_1, col_2))
 
     return x
+
+
+if __name__ == "__main__":
+    df = pd.read_csv("C:\\Users\\P1352\\Desktop\\BankChurners.csv", usecols=["Attrition_Flag", "Education_Level"], na_values=["Unknown"])
+    df['Attrition_Flag'] = df['Attrition_Flag'].map({'Attrited Customer': 1, 'Existing Customer': 0})
+    df.rename(columns={"Attrition_Flag": "target"}, inplace=True)
+    df["Education_Level"] = df["Education_Level"].fillna("missing")
+
+    print(merge_cat_table(df[["Education_Level", "target"]], "Education_Level"))

@@ -1,6 +1,18 @@
-path: F:\\work\\QuDian\\
+path: C:\Users\P1352\Desktop
 
-
+feat:
+  - life_ability_idx_cty
+  - aset_idx_cty
+  - crdt_ovdruse_prp_idx_cty_r
+  - total_dr_inc_idx_cty
+  - repay_cnt_pref_idx_cty
+  - trnsfr_freq_pref_idx_cty_r
+  - crdt_midtrans_amt_idx_cty_a
+  - crdt_trans_amt_dev_r
+  - crdt_pay_amt_dev_h
+  - cnsum_cnt_dev_a
+  - crdt_max_instl_idx_a
+  - crdt_cash_ms_idx_t
 
 
 

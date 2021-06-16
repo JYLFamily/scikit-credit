@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/scikit-credit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scikit-credit.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,13 +44,31 @@
       </list>
     </option>
   </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1QOoHOHWMLXBjkL5duaDp8HDYsw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -46,8 +76,12 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/StaticPool_Opt" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/feature_discretization" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -59,6 +93,12 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
@@ -66,13 +106,30 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretize_weighted" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.SelectViz">
+  <component name="RunManager" selected="Python.DiscreteImple">
+    <configuration name="DiscreteAuto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="DiscreteImple" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,7 +152,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SelectViz" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="DiscreteSplit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -103,11 +160,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_selection" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -116,7 +174,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="example (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="DiscreteTable" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sadf" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -129,50 +209,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/example.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="tmp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/tmp.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="varclushi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/SoftWare/Anaconda3/Lib/site-packages/varclushi" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="D:/SoftWare/Anaconda3/Lib/site-packages/varclushi/varclushi.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/sadf.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,14 +220,15 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SelectViz" />
-        <item itemvalue="Python.varclushi" />
-        <item itemvalue="Python.example (1)" />
         <item itemvalue="Python.DiscreteImple" />
-        <item itemvalue="Python.tmp" />
+        <item itemvalue="Python.DiscreteTable" />
+        <item itemvalue="Python.DiscreteAuto" />
+        <item itemvalue="Python.DiscreteSplit" />
+        <item itemvalue="Python.sadf" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -296,6 +334,9 @@
       <workItem from="1583889947800" duration="99000" />
       <workItem from="1583890234889" duration="938000" />
       <workItem from="1590396103388" duration="909000" />
+      <workItem from="1623390718561" duration="1129000" />
+      <workItem from="1623392102144" duration="6631000" />
+      <workItem from="1623718127049" duration="45376000" />
     </task>
     <task id="LOCAL-00038" summary="clean code">
       <created>1573633709532</created>
@@ -644,7 +685,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="UpdateCopyrightCheckinHandler">
     <option name="UPDATE_COPYRIGHT" value="true" />
@@ -679,18 +720,12 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-    <option name="OPEN_TABS">
-      <set>
-        <option value="1" />
-      </set>
-    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
@@ -720,67 +755,12 @@
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1596693921698">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1596693921698" />
-    <state x="706" y="296" key="FileChooserDialogImpl" timestamp="1592202572808">
-      <screen x="0" y="0" width="1857" height="1080" />
-    </state>
-    <state x="706" y="296" key="FileChooserDialogImpl/0.0.1857.1080@0.0.1857.1080" timestamp="1592202572808" />
-    <state width="1838" height="832" key="GridCell.Tab.0.bottom" timestamp="1596693279807">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="832" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
-    <state width="1838" height="832" key="GridCell.Tab.0.center" timestamp="1596693279807">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="832" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
-    <state width="1838" height="832" key="GridCell.Tab.0.left" timestamp="1596693279806">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="832" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279806" />
-    <state width="1838" height="832" key="GridCell.Tab.0.right" timestamp="1596693279807">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="832" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1596693279807" />
-    <state width="1838" height="364" key="GridCell.Tab.1.bottom" timestamp="1596620017280">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="364" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
-    <state width="1838" height="364" key="GridCell.Tab.1.center" timestamp="1596620017280">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="364" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
-    <state width="1838" height="364" key="GridCell.Tab.1.left" timestamp="1596620017280">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="364" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
-    <state width="1838" height="364" key="GridCell.Tab.1.right" timestamp="1596620017280">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="364" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1596620017280" />
-    <state x="412" y="229" width="1161" height="711" key="SettingsEditor" timestamp="1596076443666">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="412" y="229" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1596076443666" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1596693933955">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1596693933955" />
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1596618586100">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1596618586100" />
-    <state x="611" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1596592594648">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1857.1080@0.0.1857.1080" timestamp="1592202545711" />
-    <state x="611" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1596592594648" />
-    <state x="588" y="235" width="679" height="678" key="search.everywhere.popup" timestamp="1591066068759">
-      <screen x="0" y="0" width="1857" height="1080" />
-    </state>
-    <state x="588" y="235" width="679" height="678" key="search.everywhere.popup/0.0.1857.1080@0.0.1857.1080" timestamp="1591066068759" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/scikit_credit$sadf.coverage" NAME="sadf Coverage Results" MODIFIED="1623398694482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteImple.coverage" NAME="DiscreteImple Coverage Results" MODIFIED="1623832927703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteTable.coverage" NAME="DiscreteTable Coverage Results" MODIFIED="1623822319955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
+    <SUITE FILE_PATH="coverage/scikit_credit$example__1_.coverage" NAME="example (1) Coverage Results" MODIFIED="1623394569462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteSplit.coverage" NAME="DiscreteSplit Coverage Results" MODIFIED="1623721111886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
+    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteAuto.coverage" NAME="DiscreteAuto Coverage Results" MODIFIED="1623812875329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
   </component>
 </project>

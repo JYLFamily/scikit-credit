@@ -1,90 +1,61 @@
 # coding:utf-8
 
-import gc
-import numpy as np
+import numpy  as np
 import pandas as pd
-from collections import namedtuple
-from sympy import Interval, Intersection
-from sklearn.tree import DecisionTreeClassifier
+import lightgbm as lgb
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-def dleaf_rules(tree, feature_list):
-    rule_tple = namedtuple("rule", ["feature", "interval"])
-    rule_dict = dict()
-
-    feature, threshold = tree.feature, tree.threshold
-    children_l, children_r = tree.children_left, tree.children_right
-
-    def recursions(node, rull):
-        if children_l[node] == children_r[node]:
-            rule_dict[node] = dict()
-
-            for rule in rull:
-                if rule.feature not in rule_dict[node].keys():
-                    rule_dict[node][rule.feature] = rule.interval
-                else:
-                    rule_dict[node][rule.feature] = Intersection(rule_dict[node][rule.feature], rule.interval)
-        else:
-            rule_l = rule_tple(feature=feature_list[feature[node]], interval=Interval.Lopen(-999999, threshold[node]))
-            rule_r = rule_tple(feature=feature_list[feature[node]], interval=Interval.open(threshold[node],  +999999))
-
-            recursions(children_l[node], rull + [rule_l])
-            recursions(children_r[node], rull + [rule_r])
-
-    if children_l[0] == children_r[0]:
-        rule_dict[0] = dict()
-
-        for feature in feature_list:
-            rule_dict[0][feature] = Interval.open(-999999, +999999)
-    else:
-        recursions(node=0, rull=[])
-
-    rule_dict = pd.DataFrame.from_dict(rule_dict,   orient="index")
-
-    for feature in feature_list:
-        if feature not in rule_dict.columns:
-            rule_dict[feature] = Interval.open(-999999,  +999999)
-    rule_dict = rule_dict.fillna(Interval.open(-999999, +999999))
-    rule_dict = rule_dict.reindex(columns=feature_list).reset_index(drop=True)
-
-    return rule_dict
+INF = 999999
 
 
-def dtree_split(X, col):
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
+def dtree_leafs(t, *columns):
+    from sympy import Interval, Intersection
+    from collections import defaultdict, OrderedDict
+    rule_dict = defaultdict(OrderedDict)
 
-    clf = None
+    t.set_index(t["node_index"],        inplace=True)
+    t.drop(["node_index"], axis="columns", inplace=True)
 
-    # for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-    #     clf = DecisionTreeClassifier(
-    #         criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
-    #     clf.fit(x[[col]], x["target"])
-    #     if x.groupby(clf.apply(x[[col]]))["target"].mean().is_monotonic:
-    #         break
-    clf = DecisionTreeClassifier(
-        criterion="entropy", min_impurity_decrease=0., min_samples_leaf=0.05, random_state=7)
-    clf.fit(x[[col]], x["target"])
+    def recursions(node, path):
+        if t["left_child"][node] == t["right_child"][node]:
+            for col in columns:
+                from functools import reduce
+                rule_dict[col][int(node[-1])] = reduce(
+                    Intersection, path[col],  Interval.Lopen(-INF, +INF))
+            return
 
-    return dleaf_rules(clf.tree_, [col])[col]
+        path[t["split_feature"][node]].append(Interval.Lopen(-INF, t["threshold"][node]))
+        recursions( t["left_child"][node], path)
+        path[t["split_feature"][node]].pop()
+
+        path[t["split_feature"][node]].append(Interval.Lopen(t["threshold"][node], +INF))
+        recursions(t["right_child"][node], path)
+        path[t["split_feature"][node]].pop()
+
+    recursions(node="0-S0", path=defaultdict(list))
+
+    rule_data = pd.DataFrame({col: pd.Series(rule_dict[col]) for col in columns})
+    rule_data = rule_data.reindex(columns=columns)
+
+    return rule_data
 
 
-def dtree_split_cross(X, col_1, col_2):
-    x = X.copy(deep=True)
-    del X
-    gc.collect()
+def dtree_split(x, *columns):
+    from scipy.stats import pearsonr
+    spliter = lgb.train(
+        params={
+            "seed": 7, "num_threads": 1,
+            "verbosity": -1,
+            "objective": "binary",   "num_leaves": 10,
+            "min_data_in_leaf": int(x.shape[0] // 20),
+            "monotone_constraints": [1 if pearsonr(x[col], x["target"])[0] > 0 else -1 for col in columns],
+        },
+        train_set=lgb.Dataset(x[list(columns)], label=x["target"]),
+        num_boost_round=1,
+    )
 
-    clf = None
+    return spliter, dtree_leafs(spliter.trees_to_dataframe(), *columns)
 
-    for min_impurity_decrease in np.arange(5e-4, 5e-2, 5e-3):
-        clf = DecisionTreeClassifier(
-            criterion="entropy", min_impurity_decrease=min_impurity_decrease, min_samples_leaf=0.05, random_state=7)
-        clf.fit(x[[col_1, col_2]], x["target"])
-        if x.groupby(clf.apply(x[[col_1, col_2]]))["target"].mean().is_monotonic:
-            break
-
-    return dleaf_rules(clf.tree_, [col_1, col_2])[col_1], dleaf_rules(clf.tree_, [col_1, col_2])[col_2]

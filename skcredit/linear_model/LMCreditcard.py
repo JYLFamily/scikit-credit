@@ -28,7 +28,7 @@ class LMCreditcard(object):
         tables.update(self.discrete.cat_table_)
         tables.update(self.discrete.num_table_)
 
-        with Pool(mp.cpu_count() - 2) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             result = dict(zip(self.lmclassifier.feature_subsets_, pool.starmap(
                 calc_table,
                 [(self.lmclassifier, tables, col) for col in self.lmclassifier.feature_subsets_])))
