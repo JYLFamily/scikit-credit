@@ -2,7 +2,7 @@
 
 import os
 import gc
-import numpy as np
+import numpy  as np
 import pandas as pd
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -51,7 +51,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
 
         # feature
         if self.cat_table_.keys():
-            with Pool(mp.cpu_count()) as pool:
+            with Pool(mp.cpu_count() - 1) as pool:
                 z[list(self.cat_table_.keys())] = pd.DataFrame(
                     dict(zip(self.cat_table_.keys(), pool.starmap(
                         replace_cat_woe,
@@ -62,7 +62,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                          for col, table in self.cat_table_.items()]))))
 
         if self.num_table_.keys():
-            with Pool(mp.cpu_count()) as pool:
+            with Pool(mp.cpu_count() - 1) as pool:
                 z[list(self.num_table_.keys())] = pd.DataFrame(
                     dict(zip(self.num_table_.keys(), pool.starmap(
                         replace_num_woe,

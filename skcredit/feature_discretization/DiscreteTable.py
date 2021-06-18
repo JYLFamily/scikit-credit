@@ -87,7 +87,8 @@ def calc_cat_table(x_non, x_mis, col):
     table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
     table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
-    return {"table": table, "encoder": encoder, "spliter": spliter}
+    # return {"table": table, "encoder": encoder, "spliter": spliter}
+    return table
 
 
 def calc_num_table(x_non, x_mis, col):
@@ -117,7 +118,8 @@ def calc_num_table(x_non, x_mis, col):
     table["WoE"] = np.log(table["PositiveCumRate"] / table["NegativeCumRate"])
     table["IV"] = (table["PositiveCumRate"] - table["NegativeCumRate"]) * table["WoE"]
 
-    return {"table": table, "spliter": spliter}
+    # return {"table": table, "spliter": spliter}
+    return table
 
 
 def calc_non_table_cross(X, col_1, col_2, lst_1, lst_2):

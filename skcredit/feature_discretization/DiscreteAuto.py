@@ -1,7 +1,7 @@
 # coding:utf-8
 
 import gc
-import numpy as np
+import numpy  as np
 import pandas as pd
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -30,7 +30,7 @@ class DiscreteAuto(BaseDiscrete):
         self.num_columns_ = [col for col in x.select_dtypes(exclude="object").columns if col not in self.tim_columns]
 
         # feature
-        with Pool(mp.cpu_count()) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if self.cat_columns_:
                 self.cat_table_ = dict(zip(self.cat_columns_, pool.starmap(
                     merge_cat_table,
@@ -40,12 +40,11 @@ class DiscreteAuto(BaseDiscrete):
         self.cat_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.cat_value_ = OrderedDict(sorted(self.cat_value_.items(), key=lambda t: t[1], reverse=True))
 
-        with Pool(mp.cpu_count()) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if self.num_columns_:
                 self.num_table_ = dict(zip(self.num_columns_, pool.starmap(
                     merge_num_table,
-                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_],
-                    len(self.num_columns_) // mp.cpu_count())))
+                    [(pd.concat([x[[col]], y.to_frame("target")], axis=1), col) for col in self.num_columns_])))
         self.num_table_ = {
             col: val for col, val in self.num_table_.items() if val["IV"].sum() >= 0}
         self.num_value_.update({col: val["IV"].sum() for col, val in self.num_table_.items()})

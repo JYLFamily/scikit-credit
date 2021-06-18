@@ -2,7 +2,7 @@
 
 import gc
 import logging
-import numpy as np
+import numpy  as np
 import pandas as pd
 from scipy.stats import pearsonr
 from itertools import filterfalse

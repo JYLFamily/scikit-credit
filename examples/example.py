@@ -4,7 +4,7 @@ import os
 import yaml
 import warnings
 import datetime
-import numpy as np
+import numpy  as np
 import pandas as pd
 from skcredit.feature_preprocessings import  Tabular
 from skcredit.feature_preprocessings import CTabular
@@ -20,27 +20,39 @@ pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-
+from optbinning import OptimalBinning
 if __name__ == "__main__":
-    trn = pd.read_csv("C:\\Users\\P1352\\Desktop\\creditcard.csv", nrows=5000)
-    trn_input, trn_label = (trn.drop(["Class"], axis="columns"),
-                            trn["Class"])
+    trn = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv",
+                      usecols=["AMT_INCOME_TOTAL", "NAME_CONTRACT_TYPE", "AMT_CREDIT",
+                               "ORGANIZATION_TYPE", "AMT_ANNUITY", "AMT_GOODS_PRICE",
+                               "NAME_HOUSING_TYPE", "REGION_POPULATION_RELATIVE",
+                               "DAYS_BIRTH", "OWN_CAR_AGE", "OCCUPATION_TYPE", "APARTMENTS_AVG",
+                               "BASEMENTAREA_AVG", "YEARS_BUILD_AVG", "EXT_SOURCE_2", "EXT_SOURCE_3",
+                               "TARGET"])
+
+    trn.rename(columns={"TARGET": "target"}, inplace=True)
+    trn_input, trn_label = (trn.drop(["target"], axis="columns"),
+                            trn["target"])
 
     tim_columns = []
+    # cat_columns = ["NAME_CONTRACT_TYPE", "ORGANIZATION_TYPE", "NAME_HOUSING_TYPE", "OCCUPATION_TYPE"]
+    # num_columns = ["AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "AMT_GOODS_PRICE", "REGION_POPULATION_RELATIVE",
+    #                "DAYS_BIRTH", "OWN_CAR_AGE", "APARTMENTS_AVG", "BASEMENTAREA_AVG", "YEARS_BUILD_AVG", "EXT_SOURCE_2",
+    #                "EXT_SOURCE_3"]
     cat_columns = []
-    num_columns = trn_input.columns.tolist()
+    num_columns = ["AMT_CREDIT", "AMT_GOODS_PRICE"]
 
     ft = FTabular(
         tim_columns=tim_columns,
         cat_columns=cat_columns,
         num_columns=num_columns)
-    ft.fit(trn_input, trn_label)
-    trn_input = ft.transform(trn_input)
+    trn_input = ft.fit_transform(trn_input)
 
     discrete = DiscreteAuto(
         tim_columns=tim_columns)
     discrete.fit(trn_input, trn_label)
     trn_input = discrete.transform(trn_input)
+    print(trn_input.head())
 
     # selectbin = SelectBin(
     #     tim_columns=tim_columns)

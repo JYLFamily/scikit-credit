@@ -2,7 +2,7 @@
 
 import gc
 import logging
-import numpy as np
+import numpy  as np
 import pandas as pd
 import statsmodels.api as sm
 from sklearn.base import BaseEstimator, TransformerMixin

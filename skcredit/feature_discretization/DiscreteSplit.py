@@ -8,7 +8,8 @@ pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 
 
-INF = 999999
+MAX_INF = np.finfo(np.float64).max
+MIN_INF = np.finfo(np.float64).min
 
 
 def dtree_leafs(t, *columns):
@@ -16,22 +17,23 @@ def dtree_leafs(t, *columns):
     from collections import defaultdict, OrderedDict
     rule_dict = defaultdict(OrderedDict)
 
-    t.set_index(t["node_index"],        inplace=True)
-    t.drop(["node_index"], axis="columns", inplace=True)
+    t.set_index(t["node_index"],   inplace=True)
+    t.drop(["node_index"], axis=1, inplace=True)
 
     def recursions(node, path):
         if t["left_child"][node] == t["right_child"][node]:
             for col in columns:
+                import re
                 from functools import reduce
-                rule_dict[col][int(node[-1])] = reduce(
-                    Intersection, path[col],  Interval.Lopen(-INF, +INF))
+                rule_dict[col][int(re.match(r"\d-L(\d+)", node).groups()[0])] = reduce(
+                    Intersection, path[col],  Interval.Lopen(MIN_INF, MAX_INF))
             return
 
-        path[t["split_feature"][node]].append(Interval.Lopen(-INF, t["threshold"][node]))
+        path[t["split_feature"][node]].append(Interval.Lopen(MIN_INF, t["threshold"][node]))
         recursions( t["left_child"][node], path)
         path[t["split_feature"][node]].pop()
 
-        path[t["split_feature"][node]].append(Interval.Lopen(t["threshold"][node], +INF))
+        path[t["split_feature"][node]].append(Interval.Lopen(t["threshold"][node], MAX_INF))
         recursions(t["right_child"][node], path)
         path[t["split_feature"][node]].pop()
 
@@ -49,7 +51,7 @@ def dtree_split(x, *columns):
         params={
             "seed": 7, "num_threads": 1,
             "verbosity": -1,
-            "objective": "binary",   "num_leaves": 10,
+            "objective": "binary",   "num_leaves": 20,
             "min_data_in_leaf": int(x.shape[0] // 20),
             "monotone_constraints": [1 if pearsonr(x[col], x["target"])[0] > 0 else -1 for col in columns],
         },

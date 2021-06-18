@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import copy
-import numpy as np
+import numpy  as np
 import pandas as pd
 from collections import OrderedDict
 np.random.seed(7)

@@ -306,12 +306,3 @@ def replace_num_woe_cross(X, col_1, col_2, break_list_1, break_list_2, woe):
     logging.info("{:<10} @ {:<10} transform complete !".format(col_1, col_2))
 
     return x
-
-
-if __name__ == "__main__":
-    df = pd.read_csv("C:\\Users\\P1352\\Desktop\\BankChurners.csv", usecols=["Attrition_Flag", "Education_Level"], na_values=["Unknown"])
-    df['Attrition_Flag'] = df['Attrition_Flag'].map({'Attrited Customer': 1, 'Existing Customer': 0})
-    df.rename(columns={"Attrition_Flag": "target"}, inplace=True)
-    df["Education_Level"] = df["Education_Level"].fillna("missing")
-
-    print(merge_cat_table(df[["Education_Level", "target"]], "Education_Level"))

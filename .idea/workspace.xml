@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scikit-credit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scikit-credit.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/configs.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +103,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.DiscreteImple">
+  <component name="RunManager" selected="Python.example">
     <configuration name="DiscreteAuto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -196,7 +192,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="sadf" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -209,7 +205,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/sadf.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -220,11 +216,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.example" />
+        <item itemvalue="Python.DiscreteAuto" />
         <item itemvalue="Python.DiscreteImple" />
         <item itemvalue="Python.DiscreteTable" />
-        <item itemvalue="Python.DiscreteAuto" />
         <item itemvalue="Python.DiscreteSplit" />
-        <item itemvalue="Python.sadf" />
       </list>
     </recent_temporary>
   </component>
@@ -336,14 +332,7 @@
       <workItem from="1590396103388" duration="909000" />
       <workItem from="1623390718561" duration="1129000" />
       <workItem from="1623392102144" duration="6631000" />
-      <workItem from="1623718127049" duration="45376000" />
-    </task>
-    <task id="LOCAL-00038" summary="clean code">
-      <created>1573633709532</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1573633709532</updated>
+      <workItem from="1623718127049" duration="59654000" />
     </task>
     <task id="LOCAL-00039" summary="update LRClassifier">
       <created>1573633806672</created>
@@ -681,7 +670,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596693853409</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="init commit">
+      <created>1623833695178</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1623833695181</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -720,12 +716,13 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
@@ -755,12 +752,26 @@
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/scikit_credit$sadf.coverage" NAME="sadf Coverage Results" MODIFIED="1623398694482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteImple.coverage" NAME="DiscreteImple Coverage Results" MODIFIED="1623832927703" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
-    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteTable.coverage" NAME="DiscreteTable Coverage Results" MODIFIED="1623822319955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
-    <SUITE FILE_PATH="coverage/scikit_credit$example__1_.coverage" NAME="example (1) Coverage Results" MODIFIED="1623394569462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteSplit.coverage" NAME="DiscreteSplit Coverage Results" MODIFIED="1623721111886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
-    <SUITE FILE_PATH="coverage/scikit_credit$DiscreteAuto.coverage" NAME="DiscreteAuto Coverage Results" MODIFIED="1623812875329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
+  <component name="WindowStateProjectService">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1624005329411">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1624005329411" />
+    <state width="1838" height="759" key="GridCell.Tab.0.bottom" timestamp="1623925237084">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="759" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
+    <state width="1838" height="759" key="GridCell.Tab.0.center" timestamp="1623925237084">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="759" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
+    <state width="1838" height="759" key="GridCell.Tab.0.left" timestamp="1623925237083">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="759" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237083" />
+    <state width="1838" height="759" key="GridCell.Tab.0.right" timestamp="1623925237084">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1838" height="759" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
   </component>
 </project>
