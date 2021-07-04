@@ -70,11 +70,7 @@ class SelectViz(BaseEstimator, TransformerMixin):
         self.cluster_heapque_ = list()
         self.cluster_sorteds_ = list()
 
-    def fit(self, X, y=None):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
+    def fit(self, x, y=None):
         self.cluster_heapque_ = list()
         heappush(
             self.cluster_heapque_,
@@ -163,11 +159,7 @@ class SelectViz(BaseEstimator, TransformerMixin):
 
         return var_table
 
-    def rsq_table(self, X):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
+    def rsq_table(self, x):
         rsq_table = pd.DataFrame(columns=["Cluster", "Feature", "RS_Own", "RS_Ncl", "RS_Ratio"])
 
         for clu_idx, bunch_own in enumerate(self.cluster_sorteds_):
@@ -185,8 +177,8 @@ class SelectViz(BaseEstimator, TransformerMixin):
 
         return rsq_table.sort_values(["Cluster", "RS_Ratio"], ascending=[True, True])
 
-    def transform(self, X):
+    def transform(self, x):
         pass
 
-    def fit_transform(self, X, y=None, **fit_params):
+    def fit_transform(self, x, y=None, **fit_params):
         pass

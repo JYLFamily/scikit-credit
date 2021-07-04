@@ -12,7 +12,7 @@ pd.set_option("max_columns", None)
 
 def calc_table(lmclassifier, tables, col):
     table = copy.deepcopy(tables[col][[col, "WoE"]])
-    table["Coefficients"] = lmclassifier.coeff_[col]
+    table["Coefficients"] =   lmclassifier.coeff_[col]
     table["PartialScore"] = - lmclassifier.coeff_[col] * lmclassifier.b_ * table["WoE"]
 
     return table

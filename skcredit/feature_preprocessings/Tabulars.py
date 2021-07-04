@@ -84,12 +84,12 @@ class FTabular(BaseEstimator, TransformerMixin):
                     self.cat_value_[col] = stats.to_dict()
 
         if self.num_columns:
-            x[self.num_columns] = x[self.num_columns].fillna(- 9999.00)
+            x[self.num_columns] = x[self.num_columns].fillna(-999999.0)
 
             for col in self.num_columns:
                 stats = x[col].value_counts(normalize=True)
                 if 1 - stats.max() >= 0.05:
-                    self.num_value_[col] = -9999.
+                    self.num_value_[col] = -999999.0
 
         return self
 

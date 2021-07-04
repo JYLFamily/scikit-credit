@@ -1,6 +1,5 @@
 # coding:utf-8
 
-import gc
 import logging
 import numpy  as np
 import pandas as pd
@@ -21,11 +20,7 @@ class SelectVif(BaseEstimator, TransformerMixin):
         self.feature_columns_ = None
         self.feature_support_ = None
 
-    def fit(self, X, y=None):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
+    def fit(self, x, y=None):
         self.feature_columns_ = np.array([col for col in x.columns if col not in self.tim_columns])
         self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
 
@@ -35,7 +30,7 @@ class SelectVif(BaseEstimator, TransformerMixin):
                 if self.feature_support_[j]:
                     try:
                         ols_mod = sm.GLM(
-                            x[self.feature_columns_].iloc[:, j],
+                            x[self.feature_columns_].iloc[:,   j],
                             x[self.feature_columns_].iloc[:, [i]],
                             family=sm.families.Gaussian()
                         )
@@ -55,14 +50,10 @@ class SelectVif(BaseEstimator, TransformerMixin):
 
         return self
 
-    def transform(self, X):
-        x = X.copy(deep=True)
-        del X
-        gc.collect()
-
+    def transform(self, x):
         return x[self.tim_columns + self.feature_columns_[self.feature_support_].tolist()]
 
-    def fit_transform(self, X, y=None, **fit_params):
-        self.fit(X, y)
+    def fit_transform(self, x, y=None, **fit_params):
+        self.fit(x, y)
 
-        return self.transform(X)
+        return self.transform(x)

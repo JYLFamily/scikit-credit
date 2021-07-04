@@ -9,8 +9,6 @@ from multiprocessing import Pool
 from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
 from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, replace_num_woe
-from skcredit.feature_discretization.DiscreteImple import replace_cat_woe_cross, replace_num_woe_cross
-
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -55,7 +53,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                 z[list(self.cat_table_.keys())] = pd.DataFrame(
                     dict(zip(self.cat_table_.keys(), pool.starmap(
                         replace_cat_woe,
-                        [(x[[col]],
+                        [(x[col].to_numpy(),
                           col,
                           table[col].tolist(),
                           table["WoE"].tolist())
@@ -66,7 +64,7 @@ class BaseDiscrete(BaseEstimator, TransformerMixin):
                 z[list(self.num_table_.keys())] = pd.DataFrame(
                     dict(zip(self.num_table_.keys(), pool.starmap(
                         replace_num_woe,
-                        [(x[[col]],
+                        [(x[col].to_numpy(),
                           col,
                           table[col].tolist(),
                           table["WoE"].tolist()) for col, table in self.num_table_.items()]))))

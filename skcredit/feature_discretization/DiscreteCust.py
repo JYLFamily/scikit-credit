@@ -8,7 +8,6 @@ from multiprocessing import Pool
 from collections import OrderedDict
 from skcredit.feature_discretization import BaseDiscrete
 from skcredit.feature_discretization.DiscreteImple import force_cat_table, force_num_table
-from skcredit.feature_discretization.DiscreteImple import force_cat_table_cross, force_num_table_cross
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
@@ -29,7 +28,7 @@ class DiscreteCust(BaseDiscrete):
         gc.collect()
 
         # feature
-        with Pool(mp.cpu_count() - 2) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if list(self.group_dict.keys()):
                 self.cat_table_ = dict(zip(list(self.group_dict.keys()), pool.starmap(
                     force_cat_table,
@@ -38,7 +37,7 @@ class DiscreteCust(BaseDiscrete):
         self.cat_value_.update({col: val["IV"].sum() for col, val in self.cat_table_.items()})
         self.cat_value_ = OrderedDict(sorted(self.cat_value_.items(), key=lambda t: t[1], reverse=True))
 
-        with Pool(mp.cpu_count() - 2) as pool:
+        with Pool(mp.cpu_count() - 1) as pool:
             if list(self.break_dict.keys()):
                 self.num_table_ = dict(zip(list(self.break_dict.keys()), pool.starmap(
                     force_num_table,
@@ -53,31 +52,31 @@ class DiscreteCust(BaseDiscrete):
             sorted(self.information_value_.items(), key=lambda t: t[1], reverse=True))
 
         # feature cross
-        with Pool(mp.cpu_count() - 2) as pool:
-            if list(self.group_dict_cross.keys()):
-                self.cat_table_cross_ = dict(zip(list(self.group_dict_cross.keys()), pool.starmap(
-                    force_cat_table_cross,
-                    [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
-                      * col.split(" @ "),
-                      * self.group_dict_cross[col].values())
-                     for col in list(self.group_dict_cross.keys())])))
-        self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
-        self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
-
-        with Pool(mp.cpu_count() - 2) as pool:
-            if list(self.break_dict_cross.keys()):
-                self.num_table_cross_ = dict(zip(list(self.break_dict_cross.keys()), pool.starmap(
-                    force_num_table_cross,
-                    [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
-                      * col.split(" @ "),
-                      * self.break_dict_cross[col].values())
-                     for col in list(self.break_dict_cross.keys())])))
-        self.num_value_cross_.update({col: val["IV"].sum() for col, val in self.num_table_cross_.items()})
-        self.num_value_cross_ = OrderedDict(sorted(self.num_value_cross_.items(), key=lambda t: t[1], reverse=True))
-
-        self.information_value_cross_.update(self.cat_value_cross_)
-        self.information_value_cross_.update(self.num_value_cross_)
-        self.information_value_cross_ = OrderedDict(
-            sorted(self.information_value_cross_.items(), key=lambda t: t[1], reverse=True))
+        # with Pool(mp.cpu_count() - 2) as pool:
+        #     if list(self.group_dict_cross.keys()):
+        #         self.cat_table_cross_ = dict(zip(list(self.group_dict_cross.keys()), pool.starmap(
+        #             force_cat_table_cross,
+        #             [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
+        #               * col.split(" @ "),
+        #               * self.group_dict_cross[col].values())
+        #              for col in list(self.group_dict_cross.keys())])))
+        # self.cat_value_cross_.update({col: val["IV"].sum() for col, val in self.cat_table_cross_.items()})
+        # self.cat_value_cross_ = OrderedDict(sorted(self.cat_value_cross_.items(), key=lambda t: t[1], reverse=True))
+        #
+        # with Pool(mp.cpu_count() - 2) as pool:
+        #     if list(self.break_dict_cross.keys()):
+        #         self.num_table_cross_ = dict(zip(list(self.break_dict_cross.keys()), pool.starmap(
+        #             force_num_table_cross,
+        #             [(pd.concat([x[col.split(" @ ")], y.to_frame("target")], axis=1),
+        #               * col.split(" @ "),
+        #               * self.break_dict_cross[col].values())
+        #              for col in list(self.break_dict_cross.keys())])))
+        # self.num_value_cross_.update({col: val["IV"].sum() for col, val in self.num_table_cross_.items()})
+        # self.num_value_cross_ = OrderedDict(sorted(self.num_value_cross_.items(), key=lambda t: t[1], reverse=True))
+        #
+        # self.information_value_cross_.update(self.cat_value_cross_)
+        # self.information_value_cross_.update(self.num_value_cross_)
+        # self.information_value_cross_ = OrderedDict(
+        #     sorted(self.information_value_cross_.items(), key=lambda t: t[1], reverse=True))
 
         return self

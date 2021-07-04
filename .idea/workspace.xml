@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
-    </list>
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -333,6 +325,7 @@
       <workItem from="1623390718561" duration="1129000" />
       <workItem from="1623392102144" duration="6631000" />
       <workItem from="1623718127049" duration="59654000" />
+      <workItem from="1625383298155" duration="384000" />
     </task>
     <task id="LOCAL-00039" summary="update LRClassifier">
       <created>1573633806672</created>
@@ -716,13 +709,12 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
