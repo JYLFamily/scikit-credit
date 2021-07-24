@@ -22,11 +22,13 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    csv = pd.read_csv("D:\\WorkSpace\\20210628ICBC\\AFeatureExtract\\支付标签-183867条-020000条.csv")
+    tra = pd.read_csv("H:\\其他\\工作\\QuDian\\tra.csv")
+    tes = pd.read_csv("H:\\其他\\工作\\QuDian\\tes.csv")
 
-    tabular = Tabular(csv)
-    trn_input, val_input = tabular.trn_val_input
-    trn_label, val_label = tabular.trn_val_label
+    tabular = Tabular(tra)
+    trn_input, trn_label = tabular.input, tabular.label
+    tabular = Tabular(tes)
+    val_input, val_label = tabular.input, tabular.label
 
     tim_columns = [trn_input.columns.tolist()[0]]
     cat_columns = []

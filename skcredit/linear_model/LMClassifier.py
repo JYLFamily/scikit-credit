@@ -14,7 +14,7 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 def train(x, y):
-    logit_mod = sm.GLM(y, sm.add_constant(x, has_constant="add"), family=sm.families.Binomial())
+    logit_mod = sm.GLM(y, sm.add_constant(x), family=sm.families.Binomial())
     logit_res = logit_mod.fit()
 
     return logit_res
@@ -28,10 +28,9 @@ def inclusion(x, y, eval_x, eval_y, feature_subsets, feature_remains):
 
         if not (logit_res.params.drop("const") < 0).any() and \
                 not (logit_res.pvalues.drop("const") >= 0.05).any():
-            fpr, tpr, _ = roc_curve(eval_y,
-                                    logit_res.predict(sm.add_constant(eval_x[list(feature_subsets | {feature})])))
-            ks = max(tpr - fpr)
-            heappush(feature_metrics, (1 - ks, feature))
+            fpr, tpr, _ = roc_curve(
+                eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets | {feature})])))
+            heappush(feature_metrics, (1 - max(tpr - fpr), feature))
 
     return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
 
@@ -44,10 +43,9 @@ def exclusion(x, y, eval_x, eval_y, feature_subsets):
 
         if not (logit_res.params.drop("const") < 0).any() and \
                 not (logit_res.pvalues.drop("const") >= 0.05).any():
-            fpr, tpr, _ = roc_curve(eval_y,
-                                    logit_res.predict(sm.add_constant(eval_x[list(feature_subsets - {feature})])))
-            ks = max(tpr - fpr)
-            heappush(feature_metrics, (1 - ks, feature))
+            fpr, tpr, _ = roc_curve(
+                eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets - {feature})])))
+            heappush(feature_metrics, (1 - max(tpr - fpr), feature))
 
     return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
 
@@ -86,15 +84,12 @@ def stepwises(x, y, eval_x, eval_y, feature_columns, feature_subsets):
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, tim_columns, PDO, BASE, ODDS):
+    def __init__(self, tim_columns):
         self.tim_columns = tim_columns
 
         self.feature_subsets_ = None
         self.model_ = None
         self.coeff_ = None
-
-        self.b_ = PDO / np.log(2)
-        self.a_ = BASE - self.b_ * np.log(ODDS)
 
     def fit(self, x, y, eval_x, eval_y):
         self.model_ = stepwises(
@@ -121,9 +116,4 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         proba_negative = (1 - proba_positive.squeeze()).to_frame("proba_negative")
 
         return pd.concat([proba_negative, proba_positive], axis=1)
-
-    def predict_score(self, x):
-        y = np.log(self.predict_proba(x)["proba_positive"] / (1 - self.predict_proba(x)["proba_positive"]))
-
-        return self.a_ + self.b_ * (- y)
 

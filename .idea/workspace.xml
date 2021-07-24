@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,11 +93,11 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\linear_model" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\data" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo\Script" />
     </key>
   </component>
   <component name="RunManager" selected="Python.example">
@@ -325,14 +330,8 @@
       <workItem from="1623390718561" duration="1129000" />
       <workItem from="1623392102144" duration="6631000" />
       <workItem from="1623718127049" duration="59654000" />
-      <workItem from="1625383298155" duration="384000" />
-    </task>
-    <task id="LOCAL-00039" summary="update LRClassifier">
-      <created>1573633806672</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1573633806672</updated>
+      <workItem from="1625383298155" duration="3692000" />
+      <workItem from="1627111333358" duration="7779000" />
     </task>
     <task id="LOCAL-00040" summary="init commit">
       <created>1573633835796</created>
@@ -670,7 +669,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623833695181</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="init commit">
+      <created>1625383764029</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1625383764029</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -744,26 +750,7 @@
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1624005329411">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1624005329411" />
-    <state width="1838" height="759" key="GridCell.Tab.0.bottom" timestamp="1623925237084">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="759" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
-    <state width="1838" height="759" key="GridCell.Tab.0.center" timestamp="1623925237084">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="759" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
-    <state width="1838" height="759" key="GridCell.Tab.0.left" timestamp="1623925237083">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="759" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237083" />
-    <state width="1838" height="759" key="GridCell.Tab.0.right" timestamp="1623925237084">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1838" height="759" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1623925237084" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1625385091927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
 </project>
