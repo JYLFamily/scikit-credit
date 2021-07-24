@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +73,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -331,14 +330,7 @@
       <workItem from="1623392102144" duration="6631000" />
       <workItem from="1623718127049" duration="59654000" />
       <workItem from="1625383298155" duration="3692000" />
-      <workItem from="1627111333358" duration="7779000" />
-    </task>
-    <task id="LOCAL-00040" summary="init commit">
-      <created>1573633835796</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1573633835796</updated>
+      <workItem from="1627111333358" duration="8460000" />
     </task>
     <task id="LOCAL-00041" summary="code example">
       <created>1573718548171</created>
@@ -676,7 +668,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625383764029</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="init commit">
+      <created>1627126451264</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1627126451264</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

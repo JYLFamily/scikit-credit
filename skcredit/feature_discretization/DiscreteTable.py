@@ -53,7 +53,7 @@ def calc_mis_table(x_mis, col, special):
 
 def calc_cat_table(x_non, x_mis, col):
     # cat to num
-    encoder = WOEEncoder(cols=[col],     random_state=7)
+    encoder = WOEEncoder(cols=[col],      random_state=7)
     x_non = encoder.fit_transform(x_non, x_non["target"])
 
     spliter, break_list = dtree_split(x_non, col)

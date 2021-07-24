@@ -36,10 +36,8 @@ class LMCreditcard(object):
         result = x[self.tim_columns].copy(deep=True)
 
         for col in self.lmclassifier.feature_subsets_:
-            result[col] = x[col].replace(
-                self.scorecard_dict[col]["WoE"         ].tolist(),
-                self.scorecard_dict[col]["PartialScore"].tolist()
-            )
+            result[col] = x[col].replace(self.scorecard_dict[col]["WoE"].tolist(),
+                                self.scorecard_dict[col]["PartialScore"].tolist())
 
         return result
 
