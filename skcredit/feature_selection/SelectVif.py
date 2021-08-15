@@ -1,59 +1,36 @@
 # coding:utf-8
 
+import gc
 import logging
 import numpy  as np
 import pandas as pd
 import statsmodels.api as sm
-from sklearn.metrics import r2_score
-from sklearn.base import BaseEstimator, TransformerMixin
-from statsmodels.tools.sm_exceptions import PerfectSeparationError
+from skcredit.feature_selection.BaseSelect import BaseSelect
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 np.random.seed(7)
-pd.set_option("max_rows", None)
+pd.set_option("max_rows",    None)
 pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
 
 
-class SelectVif(BaseEstimator, TransformerMixin):
-    def __init__(self, tim_columns):
-        self.tim_columns = tim_columns
+class SelectVif(BaseSelect):
+    def __init__(self,   keep_columns, time_columns):
+        super().__init__(keep_columns, time_columns)
 
-        self.feature_columns_ = None
-        self.feature_support_ = None
+    def fit(self, X,  y=None):
+        x = X.copy(deep=True)
+        del X
+        gc.collect()
 
-    def fit(self, x, y=None):
-        self.feature_columns_ = np.array([col for col in x.columns if col not in self.tim_columns])
-        self.feature_support_ = np.ones(len(self.feature_columns_), dtype=bool)
+        self.feature_columns_ = np.array([col for col in x.columns
+                                          if col not in self.keep_columns and col not in self.time_columns])
+        self.feature_support_ = np.zeros(len(self.feature_columns_), dtype=bool)
 
-        for i in range(len(self.feature_columns_)):
-            from operator import add
-            for j in range(add(i, 1), len(self.feature_columns_)):
-                if self.feature_support_[j]:
-                    try:
-                        ols_mod = sm.GLM(
-                            x[self.feature_columns_].iloc[:,   j],
-                            x[self.feature_columns_].iloc[:, [i]],
-                            family=sm.families.Gaussian()
-                        )
-                        ols_res = ols_mod.fit()
+        sm.GLM(y, sm.add_constant(x[[col]], has_constant="add"), family=sm.families.Binomial()).fit()
 
-                        rs = r2_score(
-                            x[self.feature_columns_].iloc[:, j],
-                            ols_res.predict(x[self.feature_columns_].iloc[:, [i]])
-                        )
+        for i in min(25, len(self.feature_columns_)):
+            for col in self.feature_columns_[self.feature_support_]:
+                variance_inflation_factor(self.feature_columns_[self.feature_support_], col)
 
-                        if rs >= 0.8:
-                            self.feature_support_[j] = False
-                            logging.info("{:<10} remove !".format(self.feature_columns_[j]))
-                    except PerfectSeparationError:
-                        self.feature_support_[j] = False
-                        logging.info("{:<10} remove !".format(self.feature_columns_[j]))
 
         return self
-
-    def transform(self, x):
-        return x[self.tim_columns + self.feature_columns_[self.feature_support_].tolist()]
-
-    def fit_transform(self, x, y=None, **fit_params):
-        self.fit(x, y)
-
-        return self.transform(x)

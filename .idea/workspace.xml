@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/BaseSelect.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,14 +334,10 @@
       <workItem from="1623392102144" duration="6631000" />
       <workItem from="1623718127049" duration="59654000" />
       <workItem from="1625383298155" duration="3692000" />
-      <workItem from="1627111333358" duration="8460000" />
-    </task>
-    <task id="LOCAL-00041" summary="code example">
-      <created>1573718548171</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1573718548171</updated>
+      <workItem from="1627111333358" duration="8522000" />
+      <workItem from="1628750384786" duration="1588000" />
+      <workItem from="1628953830467" duration="612000" />
+      <workItem from="1628990647319" duration="11823000" />
     </task>
     <task id="LOCAL-00042" summary="update merge_cat_table function">
       <created>1573718699154</created>
@@ -675,7 +675,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627126451264</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="init commit">
+      <created>1627127139062</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1627127139062</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

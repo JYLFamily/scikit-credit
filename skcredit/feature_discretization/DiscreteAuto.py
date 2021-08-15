@@ -9,7 +9,7 @@ from collections import OrderedDict
 from skcredit.feature_discretization.BaseDiscrete  import BaseDiscrete
 from skcredit.feature_discretization.DiscreteImple import merge_cat_table, merge_num_table
 np.random.seed(7)
-pd.set_option("max_rows", None)
+pd.set_option("max_rows",    None)
 pd.set_option("max_columns", None)
 
 

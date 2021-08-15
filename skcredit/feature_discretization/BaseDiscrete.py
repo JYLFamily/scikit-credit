@@ -10,7 +10,7 @@ from collections import OrderedDict
 from sklearn.base import BaseEstimator, TransformerMixin
 from skcredit.feature_discretization.DiscreteImple import replace_cat_woe, replace_num_woe
 np.random.seed(7)
-pd.set_option("max_rows", None)
+pd.set_option("max_rows",    None)
 pd.set_option("max_columns", None)
 
 
