@@ -13,8 +13,8 @@ logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(mess
 
 
 class SelectBin(BaseSelect):
-    def __init__(self,   keep_columns, time_columns):
-        super().__init__(keep_columns, time_columns)
+    def __init__(self,   keep_columns, date_columns):
+        super().__init__(keep_columns, date_columns)
 
     def fit(self, X,  y=None):
         x = X.copy(deep=True)
@@ -22,7 +22,7 @@ class SelectBin(BaseSelect):
         gc.collect()
 
         self.feature_columns_ = np.array([col for col in x.columns
-                                          if col not in self.keep_columns and col not in self.time_columns])
+                                          if col not in self.keep_columns and col not in self.date_columns])
         self.feature_support_ = np.zeros(len(self.feature_columns_), dtype=bool)
 
         beta_0 = np.log(y.sum() / (y.shape[0] - y.sum()))

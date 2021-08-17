@@ -11,9 +11,9 @@ pd.set_option("max_columns", None)
 
 
 class BaseSelect(BaseEstimator, TransformerMixin):
-    def __init__(self, keep_columns, time_columns):
+    def __init__(self, keep_columns, date_columns):
         self.keep_columns = keep_columns
-        self.time_columns = time_columns
+        self.date_columns = date_columns
 
         self.feature_columns_ = None
         self.feature_support_ = None
@@ -27,7 +27,7 @@ class BaseSelect(BaseEstimator, TransformerMixin):
         gc.collect()
 
         return x[self.keep_columns +
-                 self.time_columns +
+                 self.date_columns +
                  self.feature_columns_[self.feature_support_].tolist()]
 
     def fit_transform(self, X, y=None, **fit_params):

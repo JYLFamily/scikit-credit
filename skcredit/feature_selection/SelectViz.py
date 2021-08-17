@@ -94,7 +94,7 @@ class SelectViz(BaseEstimator, TransformerMixin):
             heappop(self.cluster_heapque_)
 
             # heappush
-            if len(split_feature_1) >= 2:
+            if   len(split_feature_1) >= 2:
                 heappush(
                     self.cluster_heapque_,
                     get_bunch(x[split_feature_1])
@@ -115,7 +115,7 @@ class SelectViz(BaseEstimator, TransformerMixin):
             elif len(split_feature_1) == 0:
                 pass
 
-            if len(split_feature_2) >= 2:
+            if   len(split_feature_2) >= 2:
                 heappush(
                     self.cluster_heapque_,
                     get_bunch(x[split_feature_2])

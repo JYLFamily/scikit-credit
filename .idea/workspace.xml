@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/BaseSelect.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/snacks/snacks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/BaseSelect.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/BaseSelect.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,11 +97,11 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\linear_model" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\data" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
     </key>
   </component>
   <component name="RunManager" selected="Python.example">
@@ -337,14 +338,9 @@
       <workItem from="1627111333358" duration="8522000" />
       <workItem from="1628750384786" duration="1588000" />
       <workItem from="1628953830467" duration="612000" />
-      <workItem from="1628990647319" duration="11823000" />
-    </task>
-    <task id="LOCAL-00042" summary="update merge_cat_table function">
-      <created>1573718699154</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1573718699154</updated>
+      <workItem from="1628990647319" duration="11971000" />
+      <workItem from="1629119764072" duration="1398000" />
+      <workItem from="1629166187159" duration="22114000" />
     </task>
     <task id="LOCAL-00043" summary="update merge_cat_table function (keep old version)">
       <created>1573718808218</created>
@@ -682,7 +678,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627127139062</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="init commit">
+      <created>1629036839754</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1629036839754</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -757,6 +760,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1625385091927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1629207862346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
 </project>
