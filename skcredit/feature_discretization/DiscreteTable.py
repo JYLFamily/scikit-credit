@@ -10,7 +10,7 @@ np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)
 logging.basicConfig(format="[%(asctime)s]-[%(filename)s]-[%(levelname)s]-[%(message)s]", level=logging.INFO)
-from mlxtend.evaluate import bias_variance_decomp
+
 
 def calc_non_table(x_non, col, section, spliter):
     cnt_positive = pd.Series(spliter.predict(x_non.loc[x_non["target"] == 1, [col]],

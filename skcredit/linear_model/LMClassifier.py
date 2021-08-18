@@ -26,13 +26,17 @@ def inclusion(x, y, eval_x, eval_y, feature_subsets, feature_remains):
     for feature in feature_remains:
         logit_res = train(x[list(feature_subsets | {feature})], y)
 
-        if not (logit_res.params.drop("const") < 0).any() and \
-                not (logit_res.pvalues.drop("const") >= 0.05).any():
-            fpr, tpr, _ = roc_curve(
-                eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets | {feature})])))
-            heappush(feature_metrics, (1 - max(tpr - fpr), feature))
+        # if not (logit_res.params.drop("const") < 0).any() and \
+        #         not (logit_res.pvalues.drop("const") >= 0.05).any():
+        #     fpr, tpr, _ = roc_curve(
+        #         eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets | {feature})])))
+        #     heappush(feature_metrics, (1 - max(tpr - fpr), feature))
+        fpr, tpr, _ = roc_curve(
+            eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets | {feature})])))
+        heappush(feature_metrics, (1 - max(tpr - fpr), feature))
+    # return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
 
-    return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
+    return feature_metrics[0][1], 1 - feature_metrics[0][0]
 
 
 def exclusion(x, y, eval_x, eval_y, feature_subsets):
@@ -41,13 +45,17 @@ def exclusion(x, y, eval_x, eval_y, feature_subsets):
     for feature in feature_subsets:
         logit_res = train(x[list(feature_subsets - {feature})], y)
 
-        if not (logit_res.params.drop("const") < 0).any() and \
-                not (logit_res.pvalues.drop("const") >= 0.05).any():
-            fpr, tpr, _ = roc_curve(
-                eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets - {feature})])))
-            heappush(feature_metrics, (1 - max(tpr - fpr), feature))
+        # if not (logit_res.params.drop("const") < 0).any() and \
+        #         not (logit_res.pvalues.drop("const") >= 0.05).any():
+        #     fpr, tpr, _ = roc_curve(
+        #         eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets - {feature})])))
+        #     heappush(feature_metrics, (1 - max(tpr - fpr), feature))
+        fpr, tpr, _ = roc_curve(
+            eval_y, logit_res.predict(sm.add_constant(eval_x[list(feature_subsets - {feature})])))
+        heappush(feature_metrics, (1 - max(tpr - fpr), feature))
 
-    return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
+    # return (feature_metrics[0][1], 1 - feature_metrics[0][0]) if feature_metrics else (None, None)
+    return feature_metrics[0][1], 1 - feature_metrics[0][0]
 
 
 def stepwises(x, y, eval_x, eval_y, feature_columns, feature_subsets):
@@ -66,7 +74,7 @@ def stepwises(x, y, eval_x, eval_y, feature_columns, feature_subsets):
         else:
             best_ks = curr_ks
             feature_subsets = feature_subsets | {include_feature}
-
+        print(feature_subsets)
         stop_exclude_flag = False
 
         while not stop_exclude_flag:
@@ -79,6 +87,7 @@ def stepwises(x, y, eval_x, eval_y, feature_columns, feature_subsets):
             else:
                 best_ks = curr_ks
                 feature_subsets = feature_subsets - {exclude_feature}
+        print(feature_subsets)
 
     return train(x[list(feature_subsets)], y)
 
