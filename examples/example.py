@@ -1,18 +1,14 @@
 # encoding: utf-8
 
-import os
-import yaml
 import warnings
-import datetime
 import numpy  as np
 import pandas as pd
 from skcredit.feature_preprocessings import  Tabular
-from skcredit.feature_preprocessings import CTabular
 from skcredit.feature_preprocessings import FTabular
 from skcredit.feature_discretization import DiscreteAuto
-from skcredit.check import FEndReport, BEndReport
-from skcredit.feature_selection import SelectBin,  SelectMRMR, SelectCIFE
-from skcredit.linear_model import LMClassifier, LMCreditcard, LMValidation
+from skcredit.feature_selection import SelectMRMR
+from skcredit.linear_model import LMClassifier
+
 np.random.seed(7)
 pd.set_option("max_rows", None)
 pd.set_option("max_columns", None)

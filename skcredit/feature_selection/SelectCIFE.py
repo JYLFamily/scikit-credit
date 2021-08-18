@@ -25,7 +25,7 @@ class SelectCIFE(BaseSelect):
 
         self.feature_columns_ = np.array([col for col in x.columns
                                           if col not in self.keep_columns and col not in self.date_columns])
-        self.feature_support_ = np.zeros(len(self.feature_columns_), dtype=bool)
+        self.feature_support_ = np.zeros(self.feature_columns_.shape[0], dtype=bool)
 
         f_t_mi = pd.Series([mi(x[column], y) for column in self.feature_columns_],
                         index=self.feature_columns_)
@@ -45,16 +45,14 @@ class SelectCIFE(BaseSelect):
 
         self.feature_support_[f_t_mi.argmax()] = True
 
-        for i in range(10):
+        for i in range(25):
             score = ((
                 f_t_mi.loc[self.feature_columns_[~self.feature_support_]] +
                 f_f_ci.loc[self.feature_columns_[~self.feature_support_],
-                           self.feature_columns_[self.feature_support_]].mean(axis=1)) /
+                           self.feature_columns_[self.feature_support_]].mean(axis=1) ) /
                 f_f_mi.loc[self.feature_columns_[~self.feature_support_],
-                           self.feature_columns_[self.feature_support_]].mean(axis=1))
+                           self.feature_columns_[self.feature_support_]].mean(axis=1) )
 
-            self.feature_support_[score.argmax()] = True
-
-        print(self.feature_columns_[self.feature_support_])
+            self.feature_support_[np.where(self.feature_columns_ == score.idxmax())[0]] = True
 
         return self

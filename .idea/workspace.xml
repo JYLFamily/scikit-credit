@@ -2,23 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_visualizations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/tools/display_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/online_check/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectVif.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectViz.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_visualizations/SelectViz.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/check/BEndReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/check/FEndReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/check/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/snacks/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/snacks/snacks.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/entorpy_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/check/BEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/check/FEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/check/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +65,11 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/skcredit/linear_model/LMValidation.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/examples/example.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/skcredit/linear_model/LMValidation.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/skcredit/feature_preprocessings/Tabulars.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/examples/example.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1QOoHOHWMLXBjkL5duaDp8HDYsw" />
   <component name="ProjectViewState">
@@ -113,11 +105,11 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_select" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\online_check" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_visualizations" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\linear_model" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\demo" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\experimental" />
     </key>
   </component>
   <component name="RunManager" selected="Python.example">
@@ -776,8 +768,8 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1629278763147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/scikit_credit$BaseSelect.coverage" NAME="BaseSelect Coverage Results" MODIFIED="1629094357580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_selection" />
     <SUITE FILE_PATH="coverage/scikit_credit$temp.coverage" NAME="temp Coverage Results" MODIFIED="1629099961617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/online_check" />
+    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1629207862346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
 </project>
