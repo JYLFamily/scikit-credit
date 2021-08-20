@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/online_check/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/check/BEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/check/FEndReport.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/check/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectMRMR.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -349,13 +345,7 @@
       <workItem from="1628990647319" duration="11971000" />
       <workItem from="1629119764072" duration="1398000" />
       <workItem from="1629166187159" duration="22114000" />
-    </task>
-    <task id="LOCAL-00043" summary="update merge_cat_table function (keep old version)">
-      <created>1573718808218</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1573718808218</updated>
+      <workItem from="1629424434890" duration="4332000" />
     </task>
     <task id="LOCAL-00044" summary="transfer learning data set">
       <created>1573718837401</created>
@@ -693,7 +683,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629036839754</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="init commit">
+      <created>1629294304079</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1629294304079</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -770,6 +767,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$BaseSelect.coverage" NAME="BaseSelect Coverage Results" MODIFIED="1629094357580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_selection" />
     <SUITE FILE_PATH="coverage/scikit_credit$temp.coverage" NAME="temp Coverage Results" MODIFIED="1629099961617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/online_check" />
-    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1629207862346" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/scikit_credit$example.coverage" NAME="example Coverage Results" MODIFIED="1629428752171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
 </project>

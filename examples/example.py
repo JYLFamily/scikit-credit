@@ -6,7 +6,7 @@ import pandas as pd
 from skcredit.feature_preprocessings import  Tabular
 from skcredit.feature_preprocessings import FTabular
 from skcredit.feature_discretization import DiscreteAuto
-from skcredit.feature_selection import SelectMRMR
+from skcredit.feature_selection import SelectCMIM
 from skcredit.linear_model import LMClassifier
 
 np.random.seed(7)
@@ -18,8 +18,8 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 if __name__ == "__main__":
-    tra = pd.read_csv("E:\\其他\\工作\\QuDian\\tra.csv").drop(["province"], axis=1)
-    tes = pd.read_csv("E:\\其他\\工作\\QuDian\\tes.csv").drop(["province"], axis=1)
+    tra = pd.read_csv("H:\\其他\\工作\\QuDian\\tra.csv").drop(["province"], axis=1)
+    tes = pd.read_csv("H:\\其他\\工作\\QuDian\\tes.csv").drop(["province"], axis=1)
 
     tabular = Tabular(tra)
     trn_input, trn_label = tabular.input, tabular.label
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # trn_input = selectbin.transform(trn_input)
     # val_input = selectbin.transform(val_input)
 
-    selectvif = SelectMRMR(keep_columns=[], date_columns=tim_columns)
+    selectvif = SelectCMIM(keep_columns=[], date_columns=tim_columns)
     selectvif.fit(trn_input, trn_label)
     trn_input = selectvif.transform(trn_input)
     val_input = selectvif.transform(val_input)
