@@ -5,43 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="init commit">
-      <change afterPath="$PROJECT_DIR$/UCI_Credit_Card.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Discrete.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scikit-credit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scikit-credit.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/configs.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/BaseDiscrete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteImple.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteSplit.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteTable.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/Tabulars.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_preprocessings/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/BaseSelect.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/Select.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_visualizations/SelectViz.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_visualizations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMValidation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/BEndReport.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/FEndReport.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/online_check/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/display_functions.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,13 +342,6 @@
       <workItem from="1629119764072" duration="1398000" />
       <workItem from="1629166187159" duration="22114000" />
       <workItem from="1629424434890" duration="4332000" />
-    </task>
-    <task id="LOCAL-00046" summary="clean code">
-      <created>1573799279734</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1573799279734</updated>
     </task>
     <task id="LOCAL-00047" summary="clean code">
       <created>1573799322966</created>
@@ -720,7 +679,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631884058300</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="init commit">
+      <created>1632232382326</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1632232382326</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
