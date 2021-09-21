@@ -1,11 +1,13 @@
 # coding: utf-8
 
-from skcredit.feature_discretization.BaseDiscrete import BaseDiscrete
-from skcredit.feature_discretization.DiscreteAuto import DiscreteAuto
-from skcredit.feature_discretization.DiscreteCust import DiscreteCust
+from skcredit.feature_discretization.Split import Split
+from skcredit.feature_discretization.SplitNum import SplitNum
+from skcredit.feature_discretization.SplitCat import SplitCat
+from skcredit.feature_discretization.Discrete import Discrete
 
 __all__ = [
-    "BaseDiscrete",
-    "DiscreteAuto",
-    "DiscreteCust",
+    "Split",
+    "SplitNum",
+    "SplitCat",
+    "Discrete",
 ]
