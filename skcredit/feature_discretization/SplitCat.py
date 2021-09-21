@@ -152,7 +152,7 @@ class SplitCat(Split):
 
 
 def binning_cat(x, y, column, target):
-    sc = SplitCat(column, target)
+    sc = SplitCat(column, target, "increasing")
     sc.fit(x, y)
     return sc
 
