@@ -9,5 +9,5 @@ scikit-credit 是用于信贷风控评分卡建模的自动化工具。如下是
 * 信贷风控模型分析师
 
 # 示例
-
+examply.ipnb
 
