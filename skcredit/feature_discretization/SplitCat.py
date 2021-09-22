@@ -80,15 +80,15 @@ class SplitCat(Split):
         cnt_negative.append(self.all_cnt_negative_mis)
         cnt_positive.append(self.all_cnt_positive_mis)
 
-        if self.all_cnt_negative_mis == 0 and self.all_cnt_positive_non == 0:
+        if self.all_cnt_negative_mis == 0 and self.all_cnt_positive_mis == 0:
             woe.append(0)
             ivs.append(0)
         elif self.all_cnt_negative_mis == 0:
-            woe.append(self._stats(0.5, self.all_cnt_positive_non)[0])
-            ivs.append(self._stats(0.5, self.all_cnt_positive_non)[1])
+            woe.append(self._stats(0.5, self.all_cnt_positive_mis)[0])
+            ivs.append(self._stats(0.5, self.all_cnt_positive_mis)[1])
         elif self.all_cnt_positive_mis == 0:
-            woe.append(self._stats(self.all_cnt_positive_mis, 0.5)[0])
-            ivs.append(self._stats(self.all_cnt_positive_mis, 0.5)[1])
+            woe.append(self._stats(self.all_cnt_negative_mis, 0.5)[0])
+            ivs.append(self._stats(self.all_cnt_negative_mis, 0.5)[1])
 
         self.table = pd.concat([
             pd.Series(column).to_frame("Column"),

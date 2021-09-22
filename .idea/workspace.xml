@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="init commit">
-      <change afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/FormatTabular.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_preprocessings/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,11 +111,11 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\examples" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
-      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\online_check" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_visualizations" />
-      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit" />
     </key>
   </component>
   <component name="RunManager" selected="Python.example">
@@ -124,6 +131,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -145,6 +153,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -166,6 +175,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -187,6 +197,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -208,6 +219,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/example.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -220,8 +232,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.example" />
-        <item itemvalue="Python.LMClassifier" />
         <item itemvalue="Python.SplitNum" />
+        <item itemvalue="Python.LMClassifier" />
         <item itemvalue="Python.SplitCat (1)" />
         <item itemvalue="Python.SelectCIFE" />
       </list>
@@ -344,6 +356,10 @@
       <workItem from="1629119764072" duration="1398000" />
       <workItem from="1629166187159" duration="22114000" />
       <workItem from="1629424434890" duration="4332000" />
+      <workItem from="1632269499523" duration="4715000" />
+      <workItem from="1632276298456" duration="381000" />
+      <workItem from="1632277029725" duration="250000" />
+      <workItem from="1632277635480" duration="4609000" />
     </task>
     <task id="LOCAL-00049" summary="experimental">
       <created>1573799524056</created>

@@ -116,7 +116,7 @@ class Split(BaseEstimator, TransformerMixin):
         negative_rate = sub_cnt_negative / (self.all_cnt_negative_non + self.all_cnt_negative_mis)
         positive_rate = sub_cnt_positive / (self.all_cnt_positive_non + self.all_cnt_positive_mis)
 
-        woe = np.log(positive_rate / negative_rate)
-        ivs = (positive_rate - negative_rate) * woe
+        woe = - np.log(negative_rate / positive_rate)
+        ivs = (positive_rate - negative_rate)  *  woe
 
         return woe, ivs

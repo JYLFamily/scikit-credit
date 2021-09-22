@@ -78,12 +78,12 @@ class SplitNum(Split):
         cnt_negative.append(self.all_cnt_negative_mis)
         cnt_positive.append(self.all_cnt_positive_mis)
 
-        if self.all_cnt_negative_mis == 0 and self.all_cnt_positive_non == 0:
+        if self.all_cnt_negative_mis == 0 and self.all_cnt_positive_mis == 0:
             woe.append(0)
             ivs.append(0)
         elif self.all_cnt_negative_mis == 0:
-            woe.append(self._stats(0.5, self.all_cnt_positive_non)[0])
-            ivs.append(self._stats(0.5, self.all_cnt_positive_non)[1])
+            woe.append(self._stats(0.5, self.all_cnt_positive_mis)[0])
+            ivs.append(self._stats(0.5, self.all_cnt_positive_mis)[1])
         elif self.all_cnt_positive_mis == 0:
             woe.append(self._stats(self.all_cnt_negative_mis, 0.5)[0])
             ivs.append(self._stats(self.all_cnt_negative_mis, 0.5)[1])
@@ -129,6 +129,21 @@ class SplitNum(Split):
                 min_value, midd)
 
         return node
+
+    def transform(self, x):
+        x_transformed = x.apply(lambda element: self._transform(element))
+
+        return x_transformed
+
+    def _transform(self, x):
+        for bucket, woe in zip(self.table["Bucket"],  self.table["WoE"]):
+            if x in bucket:
+                return woe
+
+    def fit_transform(self, x, y=None, **fit_params):
+        self.fit(x, y)
+
+        return self.transform(x)
 
 
 def binning_num(x,  y, column, target):

@@ -13,15 +13,20 @@ if __name__ == "__main__":
     cat_columns = ["SEX", "EDUCATION", "MARRIAGE"]
     num_columns = ["LIMIT_BAL", "AGE",
                    "PAY_0",     "PAY_2",     "PAY_3",     "PAY_4",     "PAY_5",     "PAY_6",
-                   "BILL_AMT1", "BILL_AMT2", "BILL_AMT3", "BILL_AMT4", "BILL_AMT5", "BILL_AMT6",
-                   "PAY_AMT1" , "PAY_AMT2" , "PAY_AMT3" , "PAY_AMT4" , "PAY_AMT5" , "PAY_AMT6" ]
+                   "PAY_AMT1", "PAY_AMT2", "PAY_AMT3", "PAY_AMT4", "PAY_AMT5", "PAY_AMT6",
+                   "BILL_AMT1", "BILL_AMT2", "BILL_AMT3", "BILL_AMT4", "BILL_AMT5", "BILL_AMT6"]
+
     target = "default.payment.next.month"
-    # 分类变量 missing 填充 数值变量 -999999.0 填充
-    dataset[cat_columns] = dataset[cat_columns].fillna("missing").astype(str)
-    dataset[num_columns] = dataset[num_columns].fillna(-999999.0)
 
     train_x, test_x, train_y, test_y = train_test_split(
-        dataset.drop(["ID", target], axis=1), dataset[target], train_size=0.75, shuffle=True, random_state=7)
+        dataset.drop([target], axis=1), dataset[target], train_size=0.75, shuffle=True, random_state=7)
+
+    # 类别特征使用 missing 填充缺失值 连续变量使用 -999999.0 填充缺失值
+    from skcredit.feature_preprocessings import FormatTabular
+    ft = FormatTabular(keep_columns=["ID"], date_columns=[], cat_columns=cat_columns, num_columns=num_columns)
+    ft.fit(train_x, train_y)
+    train_x = ft.transform(train_x)
+    test_x  = ft.transform(test_x )
 
     # 模型训练
     from skcredit.feature_discretization import Discrete
@@ -43,10 +48,13 @@ if __name__ == "__main__":
     test_x =  s.transform(test_x )
 
     from skcredit.linear_model import LMClassifier
-    lm = LMClassifier(keep_columns=["ID"], date_columns=[])
-    lm.fit(train_x, train_y)
-    print(lm.score(train_x, train_y))
-    print(lm.score(test_x,  test_y ))
+    lmclassifier = LMClassifier(keep_columns=["ID"], date_columns=[])
+    lmclassifier.fit(train_x, train_y)
+    print(lmclassifier.score(train_x, train_y))
+    print(lmclassifier.score(test_x,  test_y ))
 
-
+    from skcredit.linear_model import LMCreditcard
+    lmcreditcard = LMCreditcard(
+        keep_columns=["ID"], date_columns=[], discrete=discrete, lmclassifier=lmclassifier, BASE=500,  PDO=20,  ODDS=1)
+    print(lmcreditcard.show_scorecard())
 
