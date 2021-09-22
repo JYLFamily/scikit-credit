@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -346,21 +351,7 @@
       <workItem from="1632269499523" duration="4715000" />
       <workItem from="1632276298456" duration="381000" />
       <workItem from="1632277029725" duration="250000" />
-      <workItem from="1632277635480" duration="5556000" />
-    </task>
-    <task id="LOCAL-00051" summary="clean code">
-      <created>1573799646054</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1573799646054</updated>
-    </task>
-    <task id="LOCAL-00052" summary="add cv">
-      <created>1573799707200</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1573799707200</updated>
+      <workItem from="1632277635480" duration="8731000" />
     </task>
     <task id="LOCAL-00053" summary="clean code">
       <created>1573806480578</created>
@@ -691,7 +682,21 @@
       <option name="project" value="LOCAL" />
       <updated>1632282732292</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="init commit">
+      <created>1632284279926</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1632284279926</updated>
+    </task>
+    <task id="LOCAL-00101" summary="init commit">
+      <created>1632284372212</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1632284372212</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
