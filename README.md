@@ -10,7 +10,7 @@ scikit-credit 是用于信贷风控评分卡建模的自动化工具。如下是
 
 # 示例
 
-## 完整代码请参见 examples/example.ipynb
+## 完整代码请参见 [example.ipynb](https://github.com/JYLFamily/scikit-credit/blob/master/examples/example.ipynb)
 
 ## 单特征分箱
 
