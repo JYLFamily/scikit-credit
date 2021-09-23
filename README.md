@@ -30,7 +30,7 @@ sc = binning_cat(
 )
 sc.table
 ```
-| Column    | Bucket                    |   CntNegative |   Cntpositive |       WoE |        IVS |
+| Column    | Bucket                    |   CntNegative |   CntPositive |       WoE |        IVS |
 |:----------|:--------------------------|--------------:|--------------:|----------:|-----------:|
 | EDUCATION | {'6', '1', '0', '5', '4'} |          8984 |          2069 | -0.209693 | 0.0152528  |
 | EDUCATION | {'2', '3'}                |         14380 |          4567 |  0.111705 | 0.00812532 |
@@ -47,7 +47,7 @@ sn = binning_num(
 )
 sn.table()
 ```
-| Column    | Bucket             |   CntNegative |   Cntpositive |       WoE |       IVS |
+| Column    | Bucket             |   CntNegative |   CntPositive |       WoE |       IVS |
 |:----------|:-------------------|--------------:|--------------:|----------:|----------:|
 | LIMIT_BAL | (-inf,40000.0]     |          2756 |          1555 |  0.686382 | 0.0798734 |
 | LIMIT_BAL | (40000.0,140000.0] |          8212 |          2767 |  0.170854 | 0.0111888 |
@@ -84,7 +84,7 @@ discrete.information_value_score.head()
 ```
 discrete.information_value_table.head()
 ```
-| Column   | Bucket    |   CntNegative |   Cntpositive |       WoE |       IVS |
+| Column   | Bucket    |   CntNegative |   CntPositive |       WoE |       IVS |
 |:---------|:----------|--------------:|--------------:|----------:|----------:|
 | PAY_0    | (-inf,0]  |         14987 |          2391 | -0.578847 | 0.217663  |
 | PAY_0    | (0,1]     |          1821 |           959 |  0.615374 | 0.0544047 |
