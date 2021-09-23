@@ -94,7 +94,7 @@ class SplitCat(Split):
             pd.Series(column).to_frame("Column"),
             pd.Series(bucket).to_frame("Bucket"),
             pd.Series(cnt_negative).to_frame("CntNegative"),
-            pd.Series(cnt_positive).to_frame("Cntpositive"),
+            pd.Series(cnt_positive).to_frame("CntPositive"),
             pd.Series(woe).to_frame("WoE"),
             pd.Series(ivs).to_frame("IVS"),
         ], axis=1)
