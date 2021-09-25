@@ -32,24 +32,22 @@ class Node:
 
 
 class SplitNum(Split):
-    def __init__(self,   column, target, monotone_constraints, min_bin_cnt_negative=75, min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
-        super().__init__(column, target, monotone_constraints, min_bin_cnt_negative,    min_bin_cnt_positive,
-                 min_information_value_split_gain)
+    def __init__(self,   min_bin_cnt_negative=75, min_bin_cnt_positive=75, min_information_value_split_gain=0.015):
+        super().__init__(min_bin_cnt_negative,    min_bin_cnt_positive,    min_information_value_split_gain)
 
-    def fit( self, x, y):
+    def fit(self,   x, y):
+        super().fit(x, y)
+
         xy = pd.concat([x.to_frame(self.column), y.to_frame(self.target)], axis=1)
-        xy_non = xy.loc[xy[self.column] != -999999, :].reset_index(drop=True)
-        xy_mis = xy.loc[xy[self.column] == -999999, :].reset_index(drop=True)
+        xy_non = xy.loc[xy[self.column] != -999999.0, :].reset_index(drop=True)
+        xy_mis = xy.loc[xy[self.column] == -999999.0, :].reset_index(drop=True)
 
+        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
+                                     "decreasing")
         self.all_cnt_negative_non = xy_non[self.target].tolist().count(0)
         self.all_cnt_positive_non = xy_non[self.target].tolist().count(1)
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
-
-        self.dtree = self._fit(xy_non, oo(-inf, inf),
-            self.all_cnt_negative_non, self.all_cnt_positive_non, 0., 0.,
-            float('-inf'), float('inf'))
 
         column = list()
         bucket = list()
@@ -57,6 +55,10 @@ class SplitNum(Split):
         cnt_positive = list()
         woe = list()
         ivs = list()
+
+        self.dtree = self._fit(xy_non, oo(-inf, inf),
+            self.all_cnt_negative_non, self.all_cnt_positive_non, 0., 0.,
+            float('-inf'), float('inf'))
 
         def leaf_rule(node):
             if node.l_child == node.r_child:
@@ -78,23 +80,13 @@ class SplitNum(Split):
         cnt_negative.append(self.all_cnt_negative_mis)
         cnt_positive.append(self.all_cnt_positive_mis)
 
-        if self.all_cnt_negative_mis == 0 and self.all_cnt_positive_mis == 0:
-            woe.append(0)
-            ivs.append(0)
-        elif self.all_cnt_negative_mis == 0:
-            woe.append(self._stats(0.5, self.all_cnt_positive_mis)[0])
-            ivs.append(self._stats(0.5, self.all_cnt_positive_mis)[1])
-        elif self.all_cnt_positive_mis == 0:
-            woe.append(self._stats(self.all_cnt_negative_mis, 0.5)[0])
-            ivs.append(self._stats(self.all_cnt_negative_mis, 0.5)[1])
-
         self.table = pd.concat([
             pd.Series(column).to_frame("Column"),
             pd.Series(bucket).to_frame("Bucket"),
             pd.Series(cnt_negative).to_frame("CntNegative"),
             pd.Series(cnt_positive).to_frame("CntPositive"),
             pd.Series(woe).to_frame("WoE"),
-            pd.Series(ivs).to_frame("IVS"),
+            pd.Series(ivs).to_frame("IvS"),
         ], axis=1)
 
         return self
@@ -146,9 +138,8 @@ class SplitNum(Split):
         return self.transform(x)
 
 
-def binning_num(x,  y, column, target):
-    sn = SplitNum(column, target,
-                  "increasing" if spearmanr(x, y, nan_policy='omit')[0] > 0 else "decreasing")
+def binning_num(x,  y):
+    sn = SplitNum()
     sn.fit(x, y)
     return sn
 

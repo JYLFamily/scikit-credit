@@ -2,6 +2,7 @@
 
 import numpy  as np
 import pandas as pd
+from collections import ChainMap
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, TransformerMixin
 from skcredit.feature_discretization.SplitCat import binning_cat, replace_cat
@@ -35,23 +36,24 @@ class Discrete(BaseEstimator, TransformerMixin):
             self.cat_spliter_ = (dict(zip(
                 self.cat_columns_,
                 Parallel(n_jobs=-1, verbose=20)(
-                    [delayed(binning_cat)(x[column], y, column, y.name) for column in self.cat_columns_]))
+                    [delayed(binning_cat)(x[column], y) for column in self.cat_columns_]))
             ))
 
         if self.num_columns_:
             self.num_spliter_ = (dict(zip(
                 self.num_columns_,
                 Parallel(n_jobs=-1, verbose=20)(
-                    [delayed(binning_num)(x[column], y, column, y.name) for column in self.num_columns_]))
+                    [delayed(binning_num)(x[column], y) for column in self.num_columns_]))
             ))
 
-        temp = dict()
-        temp.update({column: spliter.table for column, spliter in self.cat_spliter_.items()})
-        temp.update({column: spliter.table for column, spliter in self.num_spliter_.items()})
-        temp = dict(sorted(temp.items(), key=lambda item: item[1]["IVS"].sum(), reverse=True))
+        temp = ChainMap(
+            {column: spliter.table for column, spliter in self.cat_spliter_.items()},
+            {column: spliter.table for column, spliter in self.num_spliter_.items()}
+        )
+        temp = dict(sorted(temp.items(), key=lambda item: item[1]["IvS"].sum(), reverse=True))
 
         self.information_value_score = pd.DataFrame.from_dict(
-            {column: table["IVS"].sum() for column, table in temp.items()}, orient="index", columns=["IVS"])
+            {column: table["IvS"].sum() for column, table in temp.items()}, orient="index", columns=["IvS"])
         self.information_value_table = pd.concat(temp.values())
 
         return self

@@ -26,10 +26,8 @@ class Node:
 
 
 class SplitCat(Split):
-    def __init__(self,   column, target, monotone_constraints, min_bin_cnt_negative=75, min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
-        super().__init__(column, target, monotone_constraints, min_bin_cnt_negative,    min_bin_cnt_positive,
-                 min_information_value_split_gain)
+    def __init__(self,   min_bin_cnt_negative=75, min_bin_cnt_positive=75, min_information_value_split_gain=0.015):
+        super().__init__(min_bin_cnt_negative,    min_bin_cnt_positive,    min_information_value_split_gain)
 
     def fit( self, x, y):
         xy = pd.concat([x.to_frame(self.column), y.to_frame(self.target)], axis=1)
@@ -41,11 +39,8 @@ class SplitCat(Split):
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        pivot_table = xy_non.pivot_table(index=self.column, columns=self.target, aggfunc="size", fill_value=0)
-        sub_cnt_negative = pivot_table[0].where(pivot_table[0] != 0, 0.5)
-        sub_cnt_positive = pivot_table[1].where(pivot_table[1] != 0, 0.5)
-        bucket = - np.log((sub_cnt_negative / (self.all_cnt_negative_non + self.all_cnt_negative_mis)) /
-                          (sub_cnt_positive / (self.all_cnt_positive_non + self.all_cnt_positive_mis)))
+
+        bucket = dict()
 
         xy_non[self.column].replace(bucket.to_dict(), inplace=True)
 
@@ -96,7 +91,7 @@ class SplitCat(Split):
             pd.Series(cnt_negative).to_frame("CntNegative"),
             pd.Series(cnt_positive).to_frame("CntPositive"),
             pd.Series(woe).to_frame("WoE"),
-            pd.Series(ivs).to_frame("IVS"),
+            pd.Series(ivs).to_frame("IvS"),
         ], axis=1)
 
         return self
@@ -151,8 +146,8 @@ class SplitCat(Split):
         return self.transform(x)
 
 
-def binning_cat(x, y, column, target):
-    sc = SplitCat(column, target, "increasing")
+def binning_cat(x,  y):
+    sc = SplitCat()
     sc.fit(x, y)
     return sc
 

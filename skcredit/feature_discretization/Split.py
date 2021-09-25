@@ -15,7 +15,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 @dataclass
 class Info:
-    split_point: float
+    split: float
     xy_l_non: pd.DataFrame
     xy_r_non: pd.DataFrame
     xy_l_cnt_negative_non: float
@@ -29,15 +29,15 @@ class Info:
 
 
 class Split(BaseEstimator, TransformerMixin):
-    def __init__(self, column, target, monotone_constraints, min_bin_cnt_negative=75, min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
-        self.column = column
-        self.target = target
-
-        self.monotone_constraints = monotone_constraints
+    def __init__(self, min_bin_cnt_negative=75, min_bin_cnt_positive=75, min_information_value_split_gain=0.015):
         self.min_bin_cnt_negative = min_bin_cnt_negative
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
+
+        self.column = None
+        self.target = None
+
+        self.monotone_constraints = None
 
         self.all_cnt_negative_non = None
         self.all_cnt_positive_non = None
@@ -47,13 +47,16 @@ class Split(BaseEstimator, TransformerMixin):
         self.dtree = None
         self.table = None
 
-    def fit(self,  x,   y):
-        pass
+    def fit(self, x, y):
+        self.column = x.name
+        self.target = y.name
+
+        return self
 
     def _split(self, xy_non, ivs, min_value, max_value):
         largest_ivs_gain = 0.0
 
-        best_split_point = None
+        best_split = None
         best_xy_l_non = None
         best_xy_r_non = None
         best_xy_l_cnt_negative_non = None
@@ -65,9 +68,12 @@ class Split(BaseEstimator, TransformerMixin):
         best_xy_l_ivs_non = None
         best_xy_r_ivs_non = None
 
-        for temp_split_point in np.unique(xy_non[self.column]):
-            temp_xy_l_non = xy_non.loc[xy_non[self.column] <= temp_split_point, :]
-            temp_xy_r_non = xy_non.loc[xy_non[self.column] >  temp_split_point, :]
+        splits = np.unique(xy_non[self.column]) if xy_non[self.column].nunique() > 100 else ''
+
+
+        for temp_split in splits:
+            temp_xy_l_non = xy_non.loc[xy_non[self.column] <= temp_split, :]
+            temp_xy_r_non = xy_non.loc[xy_non[self.column] >  temp_split, :]
 
             temp_xy_l_cnt_negative_non = temp_xy_l_non[self.target].tolist().count(0)
             temp_xy_l_cnt_positive_non = temp_xy_l_non[self.target].tolist().count(1)
@@ -94,7 +100,7 @@ class Split(BaseEstimator, TransformerMixin):
 
                         largest_ivs_gain = temp_xy_l_ivs_non + temp_xy_r_ivs_non - ivs
 
-                        best_split_point = temp_split_point
+                        best_split = temp_split
                         best_xy_l_non = temp_xy_l_non
                         best_xy_r_non = temp_xy_r_non
                         best_xy_l_cnt_negative_non = temp_xy_l_cnt_negative_non
@@ -106,7 +112,7 @@ class Split(BaseEstimator, TransformerMixin):
                         best_xy_l_ivs_non = temp_xy_l_ivs_non
                         best_xy_r_ivs_non = temp_xy_r_ivs_non
 
-        return Info(best_split_point, best_xy_l_non, best_xy_r_non,
+        return Info(best_split, best_xy_l_non, best_xy_r_non,
                     best_xy_l_cnt_negative_non, best_xy_l_cnt_positive_non,
                     best_xy_r_cnt_negative_non, best_xy_r_cnt_positive_non,
                     best_xy_l_woe_non, best_xy_r_woe_non,
