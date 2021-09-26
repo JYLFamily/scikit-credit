@@ -2,10 +2,10 @@
 
 import numpy  as np
 import pandas as pd
-from skcredit.tools import mi
+from skcredit.tools import mis
+from skcredit.tools import cmi
 from joblib import Parallel, delayed
 from itertools   import combinations
-from skcredit.tools import cmi as ci
 from skcredit.feature_selection import Select
 np.random.seed(7)
 pd.set_option("max_rows",    None)
@@ -22,7 +22,7 @@ class SelectCMIM(Select):
                                           if col not in self.keep_columns and col not in self.date_columns])
         self.feature_support_ = np.zeros(self.feature_columns_.shape[0], dtype=bool)
 
-        f_t_mi = pd.Series([mi(x[column], y) for column in self.feature_columns_],
+        f_t_mi = pd.Series([mis(x[column], y) for column in self.feature_columns_],
                         index=self.feature_columns_)
         f_f_mi = pd.DataFrame(np.zeros((self.feature_columns_.shape[0], self.feature_columns_.shape[0])),
                         columns=self.feature_columns_, index=self.feature_columns_)
@@ -30,10 +30,10 @@ class SelectCMIM(Select):
                         columns=self.feature_columns_, index=self.feature_columns_)
 
         mi_temp = Parallel(n_jobs=-1, verbose=20)(
-            [delayed(mi)(x[col_i],  x[col_j]   ) for col_i, col_j in combinations(self.feature_columns_, 2)])
+            [delayed(mis)(x[col_i],  x[col_j]   ) for col_i, col_j in combinations(self.feature_columns_, 2)])
 
         ci_temp = Parallel(n_jobs=-1, verbose=20)(
-            [delayed(ci)(x[col_i],  x[col_j], y) for col_i, col_j in combinations(self.feature_columns_, 2)])
+            [delayed(cmi)(x[col_i],  x[col_j], y) for col_i, col_j in combinations(self.feature_columns_, 2)])
 
         for idx, (col_i, col_j) in enumerate(combinations(self.feature_columns_, 2)):
             f_f_mi.loc[col_i, col_j] = mi_temp[idx]

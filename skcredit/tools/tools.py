@@ -8,7 +8,7 @@ def entropy(*args):
     return scipy_entropy(pd.concat(args, axis=1).value_counts(normalize=True), base=2)
 
 
-def mi(x, y):
+def mis(x, y):
     # mutual information / information gain
     # I(x;y)   = H(x)  +  H(y)   - H(x,y)
 
@@ -25,5 +25,4 @@ def cmi(x, y, z):
            entropy(y.to_frame(y.name), z.to_frame(z.name)) - \
            entropy(x.to_frame(x.name), y.to_frame(y.name), z.to_frame(z.name)) - \
            entropy(z.to_frame(z.name))
-
 

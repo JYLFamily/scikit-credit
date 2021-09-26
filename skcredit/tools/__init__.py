@@ -1,9 +1,10 @@
 # coding: utf-8
 
-from skcredit.tools.entorpy_functions import entropy, mi, cmi
+from skcredit.tools.tools import entropy, mis, cmi
 
 
 __all__ = [
-    "entropy"  ,
-    "mi", "cmi",
+    "entropy",
+    "mis",
+    "cmi",
 ]

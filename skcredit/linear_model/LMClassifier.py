@@ -46,34 +46,25 @@ def exclusion(x, y, feature_subsets):
 
 
 def stepwises(x, y, feature_columns, feature_subsets):
-    best_ks = np.finfo(np.float64).min
+    best_ks = float('-inf')
 
-    stop_include_flag = False
-
-    while not stop_include_flag:
-        include_feature, curr_ks = inclusion(
-            x, y,
-            feature_subsets,
-            feature_columns - feature_subsets)
-
+    while True:
+        include_feature, curr_ks = inclusion(x, y,
+            feature_subsets, feature_columns - feature_subsets)
         if include_feature is None or curr_ks <= best_ks:
-            stop_include_flag = True
+            break
         else:
             best_ks = curr_ks
             feature_subsets = feature_subsets | {include_feature}
 
-        stop_exclude_flag = False
-
-        while not stop_exclude_flag:
-            exclude_feature, curr_ks = exclusion(
-                x, y,
-                feature_subsets)
-
-            if stop_exclude_flag is None or curr_ks <= best_ks:
-                stop_exclude_flag = True
+        while True:
+            exclude_feature, curr_ks = exclusion(x, y,
+            feature_subsets)
+            if exclude_feature is None or curr_ks <= best_ks:
+                break
             else:
                 best_ks = curr_ks
-                feature_subsets = feature_subsets - {exclude_feature}
+                feature_subsets = feature_subsets - {include_feature}
 
     return sm.GLM(
             y, sm.add_constant(x[feature_subsets], has_constant='add'),

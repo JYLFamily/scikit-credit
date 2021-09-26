@@ -10,6 +10,7 @@ from portion import closed as cc
 from scipy.stats import spearmanr
 from dataclasses import dataclass
 from portion import openclosed as oc
+from astropy.stats import bayesian_blocks
 from skcredit.feature_discretization import Split
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -42,32 +43,37 @@ class SplitNum(Split):
         xy_non = xy.loc[xy[self.column] != -999999.0, :].reset_index(drop=True)
         xy_mis = xy.loc[xy[self.column] == -999999.0, :].reset_index(drop=True)
 
-        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
-                                     "decreasing")
+        self.monotone_constraints = "increasing" if spearmanr(xy_non[self.column], xy_non[self.target]) > 0 else "decreasing"
+
         self.all_cnt_negative_non = xy_non[self.target].tolist().count(0)
         self.all_cnt_positive_non = xy_non[self.target].tolist().count(1)
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        column = list()
-        bucket = list()
-        cnt_negative = list()
-        cnt_positive = list()
-        woe = list()
-        ivs = list()
+        bucket = oo(-inf, inf)
+        xy_non[self.column] = (xy_non[self.column] if xy_non[self.column].nunique() < 100
+                               else bayesian_blocks(xy_non[self.column]))
 
-        self.dtree = self._fit(xy_non, oo(-inf, inf),
-            self.all_cnt_negative_non, self.all_cnt_positive_non, 0., 0.,
+        self.dtree = self._fit(xy_non, bucket,
+            self.all_cnt_negative_non, self.all_cnt_positive_non,
+            *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
             float('-inf'), float('inf'))
+
+        column_list = list()
+        bucket_list = list()
+        cnt_negative_list = list()
+        cnt_positive_list = list()
+        woe_list = list()
+        ivs_list = list()
 
         def leaf_rule(node):
             if node.l_child == node.r_child:
-                column.append(node.column)
-                bucket.append(node.bucket)
-                cnt_negative.append(node.cnt_negative)
-                cnt_positive.append(node.cnt_positive)
-                woe.append(node.woe)
-                ivs.append(node.ivs)
+                column_list.append(node.column)
+                bucket_list.append(node.bucket)
+                cnt_negative_list.append(node.cnt_negative)
+                cnt_positive_list.append(node.cnt_positive)
+                woe_list.append(node.woe)
+                ivs_list.append(node.ivs)
                 return
 
             leaf_rule(node.l_child)
@@ -75,18 +81,20 @@ class SplitNum(Split):
 
         leaf_rule(self.dtree)
 
-        column.append(self.column)
-        bucket.append(cc(-999999, -999999))
-        cnt_negative.append(self.all_cnt_negative_mis)
-        cnt_positive.append(self.all_cnt_positive_mis)
+        column_list.append(self.column)
+        bucket_list.append(cc(-999999, -999999))
+        cnt_negative_list.append(self.all_cnt_negative_mis)
+        cnt_positive_list.append(self.all_cnt_positive_mis)
+        woe_list.append(self._stats(self.all_cnt_negative_mis, self.all_cnt_positive_mis)[0])
+        ivs_list.append(self._stats(self.all_cnt_negative_mis, self.all_cnt_positive_mis)[1])
 
         self.table = pd.concat([
-            pd.Series(column).to_frame("Column"),
-            pd.Series(bucket).to_frame("Bucket"),
-            pd.Series(cnt_negative).to_frame("CntNegative"),
-            pd.Series(cnt_positive).to_frame("CntPositive"),
-            pd.Series(woe).to_frame("WoE"),
-            pd.Series(ivs).to_frame("IvS"),
+            pd.Series(column_list).to_frame("Column"),
+            pd.Series(bucket_list).to_frame("Bucket"),
+            pd.Series(cnt_negative_list).to_frame("CntNegative"),
+            pd.Series(cnt_positive_list).to_frame("CntPositive"),
+            pd.Series(woe_list).to_frame("WoE"),
+            pd.Series(ivs_list).to_frame("IvS"),
         ], axis=1)
 
         return self
@@ -95,7 +103,7 @@ class SplitNum(Split):
         node = Node(self.column, bucket, cnt_negative, cnt_positive, woe, ivs)
         info = self._split(xy_non,  ivs,    min_value,    max_value)
 
-        if info.split_point is None:
+        if info.split is None:
             return node
 
         midd = (info.xy_l_woe_non + info.xy_r_woe_non) / 2

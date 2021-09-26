@@ -68,10 +68,7 @@ class Split(BaseEstimator, TransformerMixin):
         best_xy_l_ivs_non = None
         best_xy_r_ivs_non = None
 
-        splits = np.unique(xy_non[self.column]) if xy_non[self.column].nunique() > 100 else ''
-
-
-        for temp_split in splits:
+        for temp_split in np.unique(xy_non[self.column]):
             temp_xy_l_non = xy_non.loc[xy_non[self.column] <= temp_split, :]
             temp_xy_r_non = xy_non.loc[xy_non[self.column] >  temp_split, :]
 
@@ -118,11 +115,17 @@ class Split(BaseEstimator, TransformerMixin):
                     best_xy_l_woe_non, best_xy_r_woe_non,
                     best_xy_l_ivs_non, best_xy_r_ivs_non)
 
-    def _stats(self, sub_cnt_negative, sub_cnt_positive):
+    def _stats(self, sub_cnt_negative,  sub_cnt_positive):
+        if not sub_cnt_negative and not sub_cnt_positive:
+            return 0, 0
+
+        sub_cnt_negative = 0.5 if not sub_cnt_negative else sub_cnt_negative
+        sub_cnt_positive = 0.5 if not sub_cnt_positive else sub_cnt_positive
+
         negative_rate = sub_cnt_negative / (self.all_cnt_negative_non + self.all_cnt_negative_mis)
         positive_rate = sub_cnt_positive / (self.all_cnt_positive_non + self.all_cnt_positive_mis)
 
-        woe = - np.log(negative_rate / positive_rate)
+        woe = np.log(positive_rate  /  negative_rate)
         ivs = (positive_rate - negative_rate)  *  woe
 
         return woe, ivs
