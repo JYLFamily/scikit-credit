@@ -8,7 +8,6 @@ from portion.const import  inf
 from portion import open   as oo
 from portion import closed as cc
 from scipy.stats import spearmanr
-from dataclasses import dataclass
 from portion import openclosed as oc
 from skcredit.feature_discretization import Split
 np.random.seed(7)
@@ -17,18 +16,6 @@ pd.set_option("max_columns", None)
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
-
-
-@dataclass
-class Node:
-    column: str
-    bucket: Interval
-    cnt_negative: float
-    cnt_positive: float
-    woe: float
-    ivs: float
-    l_child: dataclass = None
-    r_child: dataclass = None
 
 
 class SplitNum(Split):
@@ -42,87 +29,78 @@ class SplitNum(Split):
         xy_non = xy.loc[xy[self.column] != -999999.0, :].reset_index(drop=True)
         xy_mis = xy.loc[xy[self.column] == -999999.0, :].reset_index(drop=True)
 
-        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
-                                     "decreasing")
         self.all_cnt_negative_non = xy_non[self.target].tolist().count(0)
         self.all_cnt_positive_non = xy_non[self.target].tolist().count(1)
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        column = list()
-        bucket = list()
-        cnt_negative = list()
-        cnt_positive = list()
-        woe = list()
-        ivs = list()
+        if not xy_non.empty:
+            self._calc_table_non(xy_non,  self.column, oo(-inf, inf),
+                self.all_cnt_negative_non, self.all_cnt_positive_non,
+                *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non), float('-inf'), float('+inf'))
+        else:
+            self._calc_table_mis(self.column, cc(-999999, -999999.0),
+                self.all_cnt_negative_mis, self.all_cnt_negative_mis,
+                *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
-        self.dtree = self._fit(xy_non, oo(-inf, inf),
-            self.all_cnt_negative_non, self.all_cnt_positive_non, 0., 0.,
-            float('-inf'), float('inf'))
-
-        def leaf_rule(node):
-            if node.l_child == node.r_child:
-                column.append(node.column)
-                bucket.append(node.bucket)
-                cnt_negative.append(node.cnt_negative)
-                cnt_positive.append(node.cnt_positive)
-                woe.append(node.woe)
-                ivs.append(node.ivs)
-                return
-
-            leaf_rule(node.l_child)
-            leaf_rule(node.r_child)
-
-        leaf_rule(self.dtree)
-
-        column.append(self.column)
-        bucket.append(cc(-999999, -999999))
-        cnt_negative.append(self.all_cnt_negative_mis)
-        cnt_positive.append(self.all_cnt_positive_mis)
-
-        self.table = pd.concat([
-            pd.Series(column).to_frame("Column"),
-            pd.Series(bucket).to_frame("Bucket"),
-            pd.Series(cnt_negative).to_frame("CntNegative"),
-            pd.Series(cnt_positive).to_frame("CntPositive"),
-            pd.Series(woe).to_frame("WoE"),
-            pd.Series(ivs).to_frame("IvS"),
-        ], axis=1)
+        if not xy_mis.empty:
+            self._calc_table_mis(self.column, cc(-999999, -999999.0),
+                self.all_cnt_negative_mis, self.all_cnt_negative_mis,
+                *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
+        else:
+            self._calc_table_mis(self.column, cc(-999999, -999999.0),
+                0, 0,
+                0, 0)
 
         return self
 
-    def _fit(self,       xy_non, bucket, cnt_negative, cnt_positive, woe, ivs, min_value, max_value):
-        node = Node(self.column, bucket, cnt_negative, cnt_positive, woe, ivs)
-        info = self._split(xy_non,  ivs,    min_value,    max_value)
+    def _calc_table_non(self, xy_non, column, bucket, cnt_negative, cnt_positive, woe, ivs, min_value, max_value):
+        info = self._split(xy_non, ivs, min_value, max_value)
 
-        if info.split_point is None:
-            return node
+        if info.split is None:
+            self.table_non = self.table_non.append(pd.DataFrame.from_dict({
+                "Column": column,
+                "Bucket": bucket,
+                "CntPositive": cnt_positive,
+                "CntNegative": cnt_negative,
+                "WoE": woe,
+                "IvS": ivs
+            }, orient="index"))
+            return
 
         midd = (info.xy_l_woe_non + info.xy_r_woe_non) / 2
 
         if self.monotone_constraints == "increasing":
-            node.l_child = self._fit(
-                info.xy_l_non, bucket & oc(-inf, info.split_point),
+            self._calc_table_non(
+                info.xy_l_non, column, bucket & oc(-inf, info.split),
                 info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
                 min_value, midd)
-            node.r_child = self._fit(
-                info.xy_r_non, bucket & oo(info.split_point,  inf),
+            self._calc_table_non(
+                info.xy_r_non, column, bucket & oo(info.split,  inf),
                 info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
                 midd, max_value)
 
         if self.monotone_constraints == "decreasing":
-            node.l_child = self._fit(
-                info.xy_l_non, bucket & oc(-inf, info.split_point),
+            self._calc_table_non(
+                info.xy_l_non, column, bucket & oc(-inf, info.split),
                 info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
                 midd, max_value)
-            node.r_child = self._fit(
-                info.xy_r_non, bucket & oo(info.split_point,  inf),
+            self._calc_table_non(
+                info.xy_r_non, column, bucket & oo(info.split,  inf),
                 info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
                 min_value, midd)
 
-        return node
+    def _calc_table_mis(self, column, bucket, cnt_negative, cnt_positive, woe, ivs):
+        self.table_mis = self.table_mis.append(pd.DataFrame.from_dict({
+                "Column": column,
+                "Bucket": bucket,
+                "CntPositive": cnt_positive,
+                "CntNegative": cnt_negative,
+                "WoE": woe,
+                "IvS": ivs
+            }, orient="index"))
 
-    def transform(self, x):
+    def transform( self, x):
         x_transformed = x.apply(lambda element: self._transform(element))
 
         return x_transformed

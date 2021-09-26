@@ -44,7 +44,8 @@ class Split(BaseEstimator, TransformerMixin):
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
-        self.dtree = None
+        self.table_non = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
+        self.table_mis = None
         self.table = None
 
     def fit(self, x, y):
@@ -68,10 +69,7 @@ class Split(BaseEstimator, TransformerMixin):
         best_xy_l_ivs_non = None
         best_xy_r_ivs_non = None
 
-        splits = np.unique(xy_non[self.column]) if xy_non[self.column].nunique() > 100 else ''
-
-
-        for temp_split in splits:
+        for temp_split in np.unique(xy_non[self.column]):
             temp_xy_l_non = xy_non.loc[xy_non[self.column] <= temp_split, :]
             temp_xy_r_non = xy_non.loc[xy_non[self.column] >  temp_split, :]
 
