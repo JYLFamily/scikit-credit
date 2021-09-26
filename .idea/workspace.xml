@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
-    </list>
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -353,13 +348,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
     </task>
-    <task id="LOCAL-00057" summary="init commit">
-      <created>1573807121056</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1573807121057</updated>
-    </task>
     <task id="LOCAL-00058" summary="add cv support">
       <created>1575529849603</created>
       <option name="number" value="00058" />
@@ -696,7 +684,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632639688294</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="init commit">
+      <created>1632640994980</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1632640994981</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -772,18 +767,18 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632639683755">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632640986359">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632639683755" />
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632640986359" />
     <state x="460" y="183" key="SettingsEditor" timestamp="1632639773830">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632639773830" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632639690706">
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632641000234">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632639690706" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632641000234" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632621815713">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
