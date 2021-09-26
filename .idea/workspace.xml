@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="init commit">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/entorpy_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +83,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -238,7 +231,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -359,13 +352,6 @@
       <workItem from="1632276298456" duration="381000" />
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
-    </task>
-    <task id="LOCAL-00056" summary="compatible pipeline">
-      <created>1573807089914</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1573807089914</updated>
     </task>
     <task id="LOCAL-00057" summary="init commit">
       <created>1573807121056</created>
@@ -703,7 +689,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632358067898</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="init commit">
+      <created>1632639688293</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1632639688294</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -779,9 +772,25 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632639683755">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632639683755" />
+    <state x="460" y="183" key="SettingsEditor" timestamp="1632639773830">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632639773830" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632639690706">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632639690706" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632621815713">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632621815713" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1632640406238">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1632640406238" />
   </component>
 </project>

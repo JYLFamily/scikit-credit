@@ -103,21 +103,21 @@ class SplitCat(Split):
 
         if self.monotone_constraints == "increasing":
             node.l_child = self._fit(
-                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split_point},
+                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split},
                 info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
                 min_value, midd)
             node.r_child = self._fit(
-                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split_point},
+                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split},
                 info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
                 midd, max_value)
 
         if self.monotone_constraints == "decreasing":
             node.l_child = self._fit(
-                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split_point},
+                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split},
                 info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
                 midd, max_value)
             node.r_child = self._fit(
-                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split_point},
+                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split},
                 info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
                 min_value, midd)
 
