@@ -44,7 +44,8 @@ class Split(BaseEstimator, TransformerMixin):
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
-        self.dtree = None
+        self.table_non = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
+        self.table_mis = None
         self.table = None
 
     def fit(self, x, y):

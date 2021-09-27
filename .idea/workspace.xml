@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="">
+    <list default="true" id="68748b2d-fb74-4c1d-a580-4ec5bd2ddde8" name="Default Changelist" comment="init commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +83,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.21780467" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -228,7 +231,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -349,6 +352,20 @@
       <workItem from="1632276298456" duration="381000" />
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
+    </task>
+    <task id="LOCAL-00057" summary="init commit">
+      <created>1573807121056</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1573807121057</updated>
+    </task>
+    <task id="LOCAL-00058" summary="add cv support">
+      <created>1575529849603</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1575529849604</updated>
     </task>
     <task id="LOCAL-00059" summary="add cv support">
       <created>1575529943120</created>
@@ -673,27 +690,13 @@
       <updated>1632358067898</updated>
     </task>
     <task id="LOCAL-00105" summary="init commit">
-      <created>1632639688293</created>
+      <created>1632580209422</created>
       <option name="number" value="00105" />
       <option name="presentableId" value="LOCAL-00105" />
       <option name="project" value="LOCAL" />
-      <updated>1632639688294</updated>
+      <updated>1632580209422</updated>
     </task>
-    <task id="LOCAL-00106" summary="init commit">
-      <created>1632640994980</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1632640994981</updated>
-    </task>
-    <task id="LOCAL-00107" summary="init commit">
-      <created>1632641104148</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1632641104148</updated>
-    </task>
-    <option name="localTasksCounter" value="108" />
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,13 +735,12 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
@@ -767,27 +769,5 @@
     <MESSAGE value="add example" />
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632641102406">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632641102406" />
-    <state x="460" y="183" key="SettingsEditor" timestamp="1632639773830">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632639773830" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632641109717">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632641109717" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632621815713">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632621815713" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1632640406238">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1632640406238" />
   </component>
 </project>
