@@ -29,7 +29,13 @@ class Info:
 
 
 class Split(BaseEstimator, TransformerMixin):
-    def __init__(self, min_bin_cnt_negative=75, min_bin_cnt_positive=75, min_information_value_split_gain=0.015):
+    def __init__(self,
+                 monotone_constraints,
+                 min_bin_cnt_negative=75,
+                 min_bin_cnt_positive=75,
+                 min_information_value_split_gain=0.015):
+
+        self.monotone_constraints = monotone_constraints
         self.min_bin_cnt_negative = min_bin_cnt_negative
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
@@ -37,15 +43,13 @@ class Split(BaseEstimator, TransformerMixin):
         self.column = None
         self.target = None
 
-        self.monotone_constraints = None
-
         self.all_cnt_negative_non = None
         self.all_cnt_positive_non = None
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
         self.table_non = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
-        self.table_mis = None
+        self.table_mis = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
         self.table = None
 
     def fit(self, x, y):
