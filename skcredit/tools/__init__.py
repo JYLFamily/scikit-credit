@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from skcredit.tools.tools import entropy, mis, cmi
+from skcredit.tools.entropy_tools import entropy, mis, cmi
 
 
 __all__ = [

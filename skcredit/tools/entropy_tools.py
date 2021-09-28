@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import pandas as pd
+
 from scipy.stats import entropy as scipy_entropy
 
 
@@ -25,4 +26,3 @@ def cmi(x, y, z):
            entropy(y.to_frame(y.name), z.to_frame(z.name)) - \
            entropy(x.to_frame(x.name), y.to_frame(y.name), z.to_frame(z.name)) - \
            entropy(z.to_frame(z.name))
-

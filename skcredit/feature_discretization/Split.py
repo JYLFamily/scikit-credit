@@ -3,7 +3,8 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from dataclasses  import dataclass
+from dataclasses   import dataclass
+
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -48,9 +49,7 @@ class Split(BaseEstimator, TransformerMixin):
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
-        self.table_non = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
-        self.table_mis = pd.DataFrame(columns=["Column", "Bucket", "CntPositive", "CntNegative", "WoE", "IvS"])
-        self.table = None
+        self.table = list()
 
     def fit(self, x, y):
         self.column = x.name

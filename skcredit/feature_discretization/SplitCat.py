@@ -24,31 +24,40 @@ class SplitCat(Split):
             min_bin_cnt_positive,
             min_information_value_split_gain)
 
-    def fit( self, x, y):
+    def fit( self,  x, y):
+        super().fit(x, y)
+
         xy = pd.concat([x.to_frame(self.column), y.to_frame(self.target)], axis=1)
-        xy_non = xy.loc[xy[self.column] != "missing", :].reset_index(drop=True)
-        xy_mis = xy.loc[xy[self.column] == "missing", :].reset_index(drop=True)
+        xy_non = xy.loc[~xy[self.column].isna(), :].reset_index(drop=True)
+        xy_mis = xy.loc[ xy[self.column].isna(), :].reset_index(drop=True)
 
         self.all_cnt_negative_non = xy_non[self.target].tolist().count(0)
         self.all_cnt_positive_non = xy_non[self.target].tolist().count(1)
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        bucket = xy_non.groupby(self.column)[self.target].agg(lambda group: self._stats(group.eq(0), group.eq(1)))
+        bucket = xy_non.groupby(self.column)[self.target].agg(
+            lambda group: self._stats(group.eq(0).sum(), group.eq(1).sum())[0])
         xy_non[self.column] = xy_non[self.column].map(bucket)
 
         # non missing
-        self._calc_table_non(xy_non, bucket.to_dict(),
-            self.all_cnt_negative_non, self.all_cnt_positive_non,
-            *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non), float('-inf'), float('+inf'))
+        self._calc_table_non(
+            xy_non,
+            bucket.to_dict(),
+            self.all_cnt_negative_non,
+            self.all_cnt_positive_non,
+            *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
+            float('-inf'), float('+inf'))
 
         # missing
-        self._calc_table_mis({"missing"},
-            self.all_cnt_negative_mis, self.all_cnt_negative_mis,
+        self._calc_table_mis(
+            {np.nan},
+            self.all_cnt_negative_mis,
+            self.all_cnt_negative_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
         # non missing & missing
-        self.table = pd.concat([self.table_non, self.table_mis])
+        self.table = pd.DataFrame.from_records(self.table)
 
         return self
 
@@ -56,14 +65,14 @@ class SplitCat(Split):
         info = self._split(   xy_non, ivs, min_value, max_value)
 
         if info.split is None:
-            self.table_non = self.table_non.append(pd.DataFrame.from_dict({
+            self.table.append({
                 "Column": self.column,
                 "Bucket": set(bucket.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
                 "IvS": ivs
-            }, orient="index"))
+            })
             return
 
         midd = (info.xy_l_woe_non + info.xy_r_woe_non) / 2
@@ -89,14 +98,14 @@ class SplitCat(Split):
                 min_value, midd)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
-        self.table_mis = self.table_mis.append(pd.DataFrame.from_dict({
+        self.table.append({
                 "Column": self.column,
                 "Bucket": bucket,
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
                 "IvS": ivs
-            }, orient="index"))
+            })
 
     def transform( self, x):
         x_transformed = x.apply(lambda element: self._transform(element))
@@ -125,3 +134,10 @@ def binning_cat(x,  y):
 
 def replace_cat(x, sc):
     return sc.transform(x)
+
+
+if __name__ == "__main__":
+    sc = SplitCat(monotone_constraints="increasing")
+    tra = pd.read_csv("C:\\Users\\P1352\\Desktop\\tra.csv")
+    sc.fit(tra["province"], tra["target"])
+    print(sc.table)
