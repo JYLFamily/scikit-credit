@@ -5,10 +5,12 @@ import numpy  as np
 import pandas as pd
 from portion import open   as oo
 from portion import closed as cc
+from scipy.stats import spearmanr
 from portion import openclosed as   oc
 from portion.const import   _Singleton
 from portion.const import _NInf, _PInf
 from skcredit.feature_discretization import Split
+from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -51,12 +53,10 @@ NaN = _NaN()
 
 class SplitNum(Split):
     def __init__(self,
-                 monotone_constraints,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.015):
         super().__init__(
-            monotone_constraints,
             min_bin_cnt_negative,
             min_bin_cnt_positive,
             min_information_value_split_gain)
@@ -74,7 +74,9 @@ class SplitNum(Split):
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
         xy_non[self.column] = pd.qcut(xy_non[self.column], q=256, precision=0, duplicates="drop")
-        xy_non[self.column] = xy_non[self.column].map(lambda element: element.right)
+        xy_non[self.column] = xy_non[self.column].map(lambda bucket: bucket.right)
+        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
+                                     "decreasing")
 
         # non missing
         self._calc_table_non(

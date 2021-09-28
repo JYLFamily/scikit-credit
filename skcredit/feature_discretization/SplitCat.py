@@ -3,7 +3,9 @@
 import warnings
 import numpy  as np
 import pandas as pd
+from scipy.stats import spearmanr
 from skcredit.feature_discretization import Split
+from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -14,12 +16,10 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 class SplitCat(Split):
     def __init__(self,
-                 monotone_constraints,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.015):
         super().__init__(
-            monotone_constraints,
             min_bin_cnt_negative,
             min_bin_cnt_positive,
             min_information_value_split_gain)
@@ -36,9 +36,11 @@ class SplitCat(Split):
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        bucket = xy_non.groupby(self.column)[self.target].agg(
-            lambda group: self._stats(group.eq(0).sum(), group.eq(1).sum())[0])
+        bucket = xy_non.groupby(self.column)[self.target].agg(lambda group:
+                                                              self._stats(group.eq(0).sum(),  group.eq(1).sum())[0])
         xy_non[self.column] = xy_non[self.column].map(bucket)
+        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
+                                     "decreasing")
 
         # non missing
         self._calc_table_non(
@@ -134,10 +136,3 @@ def binning_cat(x,  y):
 
 def replace_cat(x, sc):
     return sc.transform(x)
-
-
-if __name__ == "__main__":
-    sc = SplitCat(monotone_constraints="increasing")
-    tra = pd.read_csv("C:\\Users\\P1352\\Desktop\\tra.csv")
-    sc.fit(tra["province"], tra["target"])
-    print(sc.table)

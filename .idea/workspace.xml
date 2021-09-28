@@ -9,9 +9,6 @@
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,13 +353,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
     </task>
-    <task id="LOCAL-00058" summary="add cv support">
-      <created>1575529849603</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1575529849604</updated>
-    </task>
     <task id="LOCAL-00059" summary="add cv support">
       <created>1575529943120</created>
       <option name="number" value="00059" />
@@ -699,7 +689,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632796902639</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="init commit">
+      <created>1632818327008</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1632818327009</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,6 +772,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/scikit_credit$SplitNum.coverage" NAME="SplitNum Coverage Results" MODIFIED="1632817463240" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
-    <SUITE FILE_PATH="coverage/scikit_credit$SplitCat__1_.coverage" NAME="SplitCat (1) Coverage Results" MODIFIED="1632818222401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
+    <SUITE FILE_PATH="coverage/scikit_credit$SplitCat__1_.coverage" NAME="SplitCat (1) Coverage Results" MODIFIED="1632818916466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/skcredit/feature_discretization" />
   </component>
 </project>
