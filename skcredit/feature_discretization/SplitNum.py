@@ -51,6 +51,21 @@ class _NaN(_Singleton):
 NaN = _NaN()
 
 
+class NumToNum(BaseEstimator, TransformerMixin):
+    def __init__(self, sample_size, n_quantiles=256):
+        self.sample_size = sample_size
+        self.n_quantiles = n_quantiles
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self,   x):
+        return x
+
+    def fit_transform(self, x, y=None, **fit_params):
+        pass
+
+
 class SplitNum(Split):
     def __init__(self,
                  min_bin_cnt_negative=75,
@@ -73,8 +88,12 @@ class SplitNum(Split):
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        xy_non[self.column] = pd.qcut(xy_non[self.column], q=256, precision=0, duplicates="drop")
-        xy_non[self.column] = xy_non[self.column].map(lambda bucket: bucket.right)
+        # xy_non[self.column] = pd.qcut(xy_non[self.column], q=256, precision=0, duplicates="drop")
+        # xy_non[self.column] = xy_non[self.column].map(lambda bucket: bucket.right)
+
+        prebin = NumToNum(sample_size=100000).fit(xy_non[self.column])
+        xy_non[self.column] = prebin.transform(   xy_non[self.column])
+
         self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
                                      "decreasing")
 

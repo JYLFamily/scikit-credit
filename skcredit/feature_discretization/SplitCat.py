@@ -14,6 +14,20 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
+class CatToNum(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        pass
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self,   x):
+        return x
+
+    def fit_transform(self, x, y=None, **fit_params):
+        pass
+
+
 class SplitCat(Split):
     def __init__(self,
                  min_bin_cnt_negative=75,
@@ -36,16 +50,20 @@ class SplitCat(Split):
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        bucket = xy_non.groupby(self.column)[self.target].agg(lambda group:
-                                                              self._stats(group.eq(0).sum(),  group.eq(1).sum())[0])
-        xy_non[self.column] = xy_non[self.column].map(bucket)
+        # bucket = xy_non.groupby(self.column)[self.target].agg(lambda group:
+        #                                                       self._stats(group.eq(0).sum(),  group.eq(1).sum())[0])
+        # xy_non[self.column] = xy_non[self.column].map(bucket)
+
+        prebin = CatToNum().fit(xy_non[self.column], xy_non[self.target])
+        xy_non[self.column] = prebin.transform(      xy_non[self.column])
+
         self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
                                      "decreasing")
 
         # non missing
         self._calc_table_non(
             xy_non,
-            bucket.to_dict(),
+            prebin.lookup,
             self.all_cnt_negative_non,
             self.all_cnt_positive_non,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
