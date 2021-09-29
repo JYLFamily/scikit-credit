@@ -769,4 +769,10 @@
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
+  <component name="WindowStateProjectService">
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632897017455">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632897017455" />
+  </component>
 </project>

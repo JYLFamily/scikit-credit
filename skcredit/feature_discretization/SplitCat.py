@@ -3,9 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from scipy.stats import spearmanr
-from skcredit.feature_discretization import Split
-from sklearn.base import BaseEstimator, TransformerMixin
+from skcredit.feature_discretization import Split, Info
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -14,18 +12,12 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class CatToNum(BaseEstimator, TransformerMixin):
-    def __init__(self):
-        pass
+def get_cat_prebin(x, y):
+    if (x.empty and y.empty) or np.all(x ==  x[0]) or np.all(y == y[0]):
+        return {key: None for key in np.unique(x)}
 
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self,   x):
-        return x
-
-    def fit_transform(self, x, y=None, **fit_params):
-        pass
+    return y.groupby(x).agg(lambda group: round(np.log((group.eq(1).sum() + 0.5) /
+                                                       (group.eq(0).sum() + 0.5)), 5)).to_dict()
 
 
 class SplitCat(Split):
@@ -50,20 +42,13 @@ class SplitCat(Split):
         self.all_cnt_negative_mis = xy_mis[self.target].tolist().count(0)
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
-        # bucket = xy_non.groupby(self.column)[self.target].agg(lambda group:
-        #                                                       self._stats(group.eq(0).sum(),  group.eq(1).sum())[0])
-        # xy_non[self.column] = xy_non[self.column].map(bucket)
-
-        prebin = CatToNum().fit(xy_non[self.column], xy_non[self.target])
-        xy_non[self.column] = prebin.transform(      xy_non[self.column])
-
-        self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
-                                     "decreasing")
+        prebin = get_cat_prebin(xy_non[self.column], xy_non[self.target])
+        self.monotone_constraints = "increasing"
 
         # non missing
         self._calc_table_non(
             xy_non,
-            prebin.lookup,
+            prebin,
             self.all_cnt_negative_non,
             self.all_cnt_positive_non,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
@@ -71,7 +56,7 @@ class SplitCat(Split):
 
         # missing
         self._calc_table_mis(
-            {np.nan},
+            {np.nan: None},
             self.all_cnt_negative_mis,
             self.all_cnt_negative_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
@@ -81,13 +66,13 @@ class SplitCat(Split):
 
         return self
 
-    def _calc_table_non(self, xy_non, bucket, cnt_negative, cnt_positive, woe, ivs, min_value, max_value):
-        info = self._split(   xy_non, ivs, min_value, max_value)
+    def _calc_table_non(self, xy_non, prebin, cnt_negative, cnt_positive, woe, ivs, min_value, max_value):
+        info = self._split(   xy_non, prebin, ivs, min_value, max_value)
 
         if info.split is None:
             self.table.append({
                 "Column": self.column,
-                "Bucket": set(bucket.keys()),
+                "Bucket": set(prebin.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
@@ -99,33 +84,88 @@ class SplitCat(Split):
 
         if self.monotone_constraints == "increasing":
             self._calc_table_non(
-                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split},
+                info.xy_l_non,
+                {key: val for key, val in prebin.items() if val <= info.split},
                 info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
                 min_value, midd)
             self._calc_table_non(
-                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split},
+                info.xy_r_non,
+                {key: val for key, val in prebin.items() if val >  info.split},
                 info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
                 midd, max_value)
-
-        if self.monotone_constraints == "decreasing":
-            self._calc_table_non(
-                info.xy_l_non, {key: val for key, val in bucket.items() if val <= info.split},
-                info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
-                midd, max_value)
-            self._calc_table_non(
-                info.xy_r_non, {key: val for key, val in bucket.items() if val >  info.split},
-                info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
-                min_value, midd)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
         self.table.append({
                 "Column": self.column,
-                "Bucket": bucket,
+                "Bucket": set(bucket.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
                 "IvS": ivs
             })
+
+    def _split(self, xy_non, prebin, ivs, min_value, max_value):
+        largest_ivs_gain = 0.0
+
+        best_split = None
+        best_xy_l_non = None
+        best_xy_r_non = None
+        best_xy_l_cnt_negative_non = None
+        best_xy_l_cnt_positive_non = None
+        best_xy_r_cnt_negative_non = None
+        best_xy_r_cnt_positive_non = None
+        best_xy_l_woe_non = None
+        best_xy_r_woe_non = None
+        best_xy_l_ivs_non = None
+        best_xy_r_ivs_non = None
+
+        for temp_split in prebin.values():
+            temp_xy_l_non = xy_non.loc[
+                            xy_non[self.column].isin({key for key, val in prebin.items() if val <= temp_split}), :]
+            temp_xy_r_non = xy_non.loc[
+                            xy_non[self.column].isin({key for key, val in prebin.items() if val >  temp_split}), :]
+
+            temp_xy_l_cnt_negative_non = temp_xy_l_non[self.target].tolist().count(0)
+            temp_xy_l_cnt_positive_non = temp_xy_l_non[self.target].tolist().count(1)
+            temp_xy_r_cnt_negative_non = temp_xy_r_non[self.target].tolist().count(0)
+            temp_xy_r_cnt_positive_non = temp_xy_r_non[self.target].tolist().count(1)
+
+            if (temp_xy_l_cnt_negative_non >= self.min_bin_cnt_positive and
+                    temp_xy_l_cnt_positive_non >= self.min_bin_cnt_negative and
+                    temp_xy_r_cnt_negative_non >= self.min_bin_cnt_positive and
+                    temp_xy_r_cnt_positive_non >= self.min_bin_cnt_negative):
+
+                temp_xy_l_woe_non, temp_xy_l_ivs_non = self._stats(
+                    temp_xy_l_cnt_negative_non, temp_xy_l_cnt_positive_non)
+                temp_xy_r_woe_non, temp_xy_r_ivs_non = self._stats(
+                    temp_xy_r_cnt_negative_non, temp_xy_r_cnt_positive_non)
+
+                if temp_xy_l_ivs_non + temp_xy_r_ivs_non - ivs > max(
+                        self.min_information_value_split_gain, largest_ivs_gain):
+
+                    if (min_value <= temp_xy_l_woe_non <= max_value and
+                            min_value <= temp_xy_r_woe_non <= max_value and
+                            (self.monotone_constraints == "increasing" and temp_xy_l_woe_non <= temp_xy_r_woe_non)):
+
+                        largest_ivs_gain = temp_xy_l_ivs_non + temp_xy_r_ivs_non - ivs
+
+                        best_split = temp_split
+                        best_xy_l_non = temp_xy_l_non
+                        best_xy_r_non = temp_xy_r_non
+                        best_xy_l_cnt_negative_non = temp_xy_l_cnt_negative_non
+                        best_xy_l_cnt_positive_non = temp_xy_l_cnt_positive_non
+                        best_xy_r_cnt_negative_non = temp_xy_r_cnt_negative_non
+                        best_xy_r_cnt_positive_non = temp_xy_r_cnt_positive_non
+                        best_xy_l_woe_non = temp_xy_l_woe_non
+                        best_xy_r_woe_non = temp_xy_r_woe_non
+                        best_xy_l_ivs_non = temp_xy_l_ivs_non
+                        best_xy_r_ivs_non = temp_xy_r_ivs_non
+
+        return Info(best_split, best_xy_l_non, best_xy_r_non,
+                    best_xy_l_cnt_negative_non, best_xy_l_cnt_positive_non,
+                    best_xy_r_cnt_negative_non, best_xy_r_cnt_positive_non,
+                    best_xy_l_woe_non, best_xy_r_woe_non,
+                    best_xy_l_ivs_non, best_xy_r_ivs_non)
 
     def transform( self, x):
         x_transformed = x.apply(lambda element: self._transform(element))
