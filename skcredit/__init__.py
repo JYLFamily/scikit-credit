@@ -1,27 +1,35 @@
 # coding:utf-8
 
-from skcredit.feature_discretization.Split import Split
-from skcredit.feature_discretization.SplitNum import SplitNum
-from skcredit.feature_discretization.SplitCat import SplitCat
-from skcredit.feature_discretization.Discrete import Discrete
+from skcredit.feature_discretization import Split
+from skcredit.feature_discretization import SplitNum
+from skcredit.feature_discretization import SplitCat
 
-from skcredit.feature_selection.Select import Select
-from skcredit.feature_selection.SelectBins import SelectBins
-from skcredit.feature_selection.SelectCMIM import SelectCMIM
-from skcredit.feature_selection.SelectCIFE import SelectCIFE
+from skcredit.feature_discretization import Discrete
+from skcredit.feature_discretization import DiscreteAuto
+from skcredit.feature_discretization import DiscreteCust
 
-from skcredit.linear_model.LMClassifier import LMClassifier
-from skcredit.linear_model.LMCreditcard import LMCreditcard
+from skcredit.feature_selection import Select
+from skcredit.feature_selection import SelectBins
+from skcredit.feature_selection import SelectCMIM
+from skcredit.feature_selection import SelectCIFE
+
+from skcredit.linear_model import LMClassifier
+from skcredit.linear_model import LMCreditcard
 
 __all__ = [
     "Split",
     "SplitNum",
     "SplitCat",
+
     "Discrete",
+    "DiscreteAuto",
+    "DiscreteCust",
+
     "Select",
     "SelectBins",
     "SelectCMIM",
     "SelectCIFE",
+
     "LMClassifier",
     "LMCreditcard",
 ]

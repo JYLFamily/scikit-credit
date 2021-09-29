@@ -21,8 +21,8 @@ class LMCreditcard(object):
 
     def show_scorecard(self):
         tables = dict()
-        tables.update({column: spliter.table for column, spliter in self.discrete.cat_spliter_.items()})
-        tables.update({column: spliter.table for column, spliter in self.discrete.num_spliter_.items()})
+        tables.update({column: spliter.table for column, spliter in self.discrete.cat_spliter.items()})
+        tables.update({column: spliter.table for column, spliter in self.discrete.num_spliter.items()})
 
         for column in self.lmclassifier.feature_subsets_:
             table = tables[column][["Column", "Bucket", "WoE"]].copy(deep=True)

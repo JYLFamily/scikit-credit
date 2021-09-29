@@ -48,7 +48,7 @@ class Split(BaseEstimator, TransformerMixin):
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
-        self.table = None
+        self.table = list()
 
     def fit(self, x, y):
         self.column = x.name
