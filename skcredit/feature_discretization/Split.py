@@ -38,8 +38,6 @@ class Split(BaseEstimator, TransformerMixin):
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
 
-        self.monotone_constraints = None
-
         self.column = None
         self.target = None
 

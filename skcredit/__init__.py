@@ -10,7 +10,6 @@ from skcredit.feature_discretization import DiscreteCust
 
 from skcredit.feature_selection import Select
 from skcredit.feature_selection import SelectBins
-from skcredit.feature_selection import SelectCMIM
 from skcredit.feature_selection import SelectCIFE
 
 from skcredit.linear_model import LMClassifier
@@ -27,7 +26,6 @@ __all__ = [
 
     "Select",
     "SelectBins",
-    "SelectCMIM",
     "SelectCIFE",
 
     "LMClassifier",

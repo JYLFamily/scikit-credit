@@ -1,5 +1,6 @@
 # coding:utf-8
 
+import warnings
 import numpy  as np
 import pandas as pd
 from heapq import heappush
@@ -7,8 +8,11 @@ import statsmodels.api as sm
 from sklearn.metrics import roc_curve
 from sklearn.base import BaseEstimator, ClassifierMixin
 np.random.seed(7)
-pd.set_option("max_rows",    None)
+pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
+pd.set_option("display.unicode.east_asian_width" , True)
+pd.set_option("display.unicode.ambiguous_as_wide", True)
+warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 def inclusion(x, y, feature_subsets, feature_remains):
@@ -16,7 +20,7 @@ def inclusion(x, y, feature_subsets, feature_remains):
 
     for feature in feature_remains:
         logit_res = sm.GLM(
-            y, sm.add_constant(x[feature_subsets | {feature}], has_constant='add'),
+            y, sm.add_constant(x[feature_subsets | {feature}], has_constant="add"),
             family=sm.families.Binomial()).fit()
 
         if not (logit_res.params.drop("const") < 0).any() and \
@@ -33,7 +37,7 @@ def exclusion(x, y, feature_subsets):
 
     for feature in feature_subsets:
         logit_res = sm.GLM(
-            y, sm.add_constant(x[feature_subsets - {feature}], has_constant='add'),
+            y, sm.add_constant(x[feature_subsets - {feature}], has_constant="add"),
             family=sm.families.Binomial()).fit()
 
         if not (logit_res.params.drop("const") < 0).any() and \
@@ -49,8 +53,7 @@ def stepwises(x, y, feature_columns, feature_subsets):
     best_ks = float('-inf')
 
     while True:
-        include_feature, curr_ks = inclusion(x, y,
-            feature_subsets, feature_columns - feature_subsets)
+        include_feature, curr_ks = inclusion(x, y, feature_subsets, feature_columns - feature_subsets)
         if include_feature is None or curr_ks <= best_ks:
             break
         else:
@@ -58,8 +61,7 @@ def stepwises(x, y, feature_columns, feature_subsets):
             feature_subsets = feature_subsets | {include_feature}
 
         while True:
-            exclude_feature, curr_ks = exclusion(x, y,
-            feature_subsets)
+            exclude_feature, curr_ks = exclusion(x, y, feature_subsets)
             if exclude_feature is None or curr_ks <= best_ks:
                 break
             else:
@@ -76,25 +78,29 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         self.keep_columns = keep_columns
         self.date_columns = date_columns
 
-        self.model_ = None
-        self.coeff_ = None
+        self.model = None
+        self.coeff = None
 
-        self.feature_subsets_ = None
+        self.feature_columns = None
+        self.feature_subsets = None
 
     def fit(self, x, y):
-        self.model_ = stepwises(
+        self.feature_columns = np.array(
+            [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
+
+        self.model = stepwises(
             x, y,
-            set([column for column in x.columns if column not in self.keep_columns and column not in self.date_columns]),
+            set(self.feature_columns),
             set(),
         )
 
-        self.coeff_ = self.model_.params
-        self.feature_subsets_ = self.coeff_.drop("const").index.tolist()
+        self.coeff = self.model.params
+        self.feature_subsets = np.array(self.coeff.drop("const").index.tolist())
 
         return self
 
     def model(self):
-        return self.model_.summary()
+        return self.model.summary()
 
     def score(self, x, y=None, sample_weight=None):
         fpr, tpr, _ = roc_curve(y, self.predict_proba(x)["proba_positive"], sample_weight=sample_weight)
@@ -102,7 +108,7 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         return round(max(tpr - fpr), 5)
 
     def predict_proba(self, x):
-        proba_positive = self.model_.predict(sm.add_constant(x[self.feature_subsets_])).to_frame("proba_positive")
+        proba_positive = self.model.predict(sm.add_constant(x[self.feature_subsets])).to_frame("proba_positive")
         proba_negative = (1 - proba_positive.squeeze()).to_frame("proba_negative")
 
         return pd.concat([proba_negative, proba_positive], axis=1)

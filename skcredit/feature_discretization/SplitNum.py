@@ -62,8 +62,16 @@ def get_num_prebin(x, y):
 
 
 class SplitNum(Split):
-    def __init__(self,   min_bin_cnt_negative=75, min_bin_cnt_positive=75, min_information_value_split_gain=0.015):
-        super().__init__(min_bin_cnt_negative,    min_bin_cnt_positive,    min_information_value_split_gain)
+    def __init__(self,
+                 min_bin_cnt_negative=75,
+                 min_bin_cnt_positive=75,
+                 min_information_value_split_gain=0.015):
+        super().__init__(
+            min_bin_cnt_negative,
+            min_bin_cnt_positive,
+            min_information_value_split_gain)
+
+        self.monotone_constraints = None
 
     def fit(self,   x, y):
         super().fit(x, y)

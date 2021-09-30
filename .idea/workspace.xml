@@ -6,11 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Discrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/Select.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/Select.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCMIM.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -774,21 +782,25 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632899298538">
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1632963379428">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632899298538" />
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632963379428" />
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632903614416">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632903614416" />
     <state x="460" y="183" key="SettingsEditor" timestamp="1632898275923">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632898275923" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632899312810">
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1632903663397">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632899312810" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632897017455">
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632903663397" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632962141292">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632897017455" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632962141292" />
   </component>
 </project>

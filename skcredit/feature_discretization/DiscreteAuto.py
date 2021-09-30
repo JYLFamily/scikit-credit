@@ -9,8 +9,10 @@ from skcredit.feature_discretization import Discrete
 from skcredit.feature_discretization.SplitCat import binning_cat
 from skcredit.feature_discretization.SplitNum import binning_num
 np.random.seed(7)
-pd.set_option("max_rows",    None)
+pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
+pd.set_option("display.unicode.east_asian_width" , True)
+pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 

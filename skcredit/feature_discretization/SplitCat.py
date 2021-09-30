@@ -43,7 +43,6 @@ class SplitCat(Split):
         self.all_cnt_positive_mis = xy_mis[self.target].tolist().count(1)
 
         prebin = get_cat_prebin(xy_non[self.column], xy_non[self.target])
-        self.monotone_constraints = "increasing"
 
         # non missing
         self._calc_table_non(
@@ -71,7 +70,7 @@ class SplitCat(Split):
 
         if info.split is None:
             self.table.append({
-                "Column": self.column,
+                "Column":        self.column,
                 "Bucket": set(prebin.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
@@ -82,21 +81,21 @@ class SplitCat(Split):
 
         midd = (info.xy_l_woe_non + info.xy_r_woe_non) / 2
 
-        if self.monotone_constraints == "increasing":
-            self._calc_table_non(
-                info.xy_l_non,
-                {key: val for key, val in prebin.items() if val <= info.split},
-                info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
-                min_value, midd)
-            self._calc_table_non(
-                info.xy_r_non,
-                {key: val for key, val in prebin.items() if val >  info.split},
-                info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
-                midd, max_value)
+        # 默认 increasing 因为进行了 WoE 转换
+        self._calc_table_non(
+            info.xy_l_non,
+            {key: val for key, val in prebin.items() if val <= info.split},
+            info.xy_l_cnt_negative_non, info.xy_l_cnt_positive_non, info.xy_l_woe_non, info.xy_l_ivs_non,
+            min_value, midd)
+        self._calc_table_non(
+            info.xy_r_non,
+            {key: val for key, val in prebin.items() if val >  info.split},
+            info.xy_r_cnt_negative_non, info.xy_r_cnt_positive_non, info.xy_r_woe_non, info.xy_r_ivs_non,
+            midd, max_value)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
         self.table.append({
-                "Column": self.column,
+                "Column":        self.column,
                 "Bucket": set(bucket.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
@@ -145,7 +144,7 @@ class SplitCat(Split):
 
                     if (min_value <= temp_xy_l_woe_non <= max_value and
                             min_value <= temp_xy_r_woe_non <= max_value and
-                            (self.monotone_constraints == "increasing" and temp_xy_l_woe_non <= temp_xy_r_woe_non)):
+                            temp_xy_l_woe_non <= temp_xy_r_woe_non):
 
                         largest_ivs_gain = temp_xy_l_ivs_non + temp_xy_r_ivs_non - ivs
 

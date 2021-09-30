@@ -13,10 +13,10 @@ class LMCreditcard(object):
         self.date_columns = date_columns
         self.discrete, self.lmclassifier = discrete, lmclassifier
 
-        self.B_ = PDO / np.log(2)
-        self.A_ = BASE + self.B_ * np.log(ODDS)
+        self.B = PDO / np.log(2)
+        self.A = BASE + self.B * np.log(ODDS)
 
-        self.offset_scores = self.A_ - self.B_ * self.lmclassifier.coeff_["const"]
+        self.offset_scores = self.A - self.B * self.lmclassifier.coeff_["const"]
         self.credit_scores = dict()
 
     def show_scorecard(self):
@@ -27,7 +27,7 @@ class LMCreditcard(object):
         for column in self.lmclassifier.feature_subsets_:
             table = tables[column][["Column", "Bucket", "WoE"]].copy(deep=True)
             table["Coefficients"] =   self.lmclassifier.coeff_[column]
-            table["PartialScore"] = - self.lmclassifier.coeff_[column] * self.B_ * table["WoE"]
+            table["PartialScore"] = - self.lmclassifier.coeff_[column] * self.B * table["WoE"]
             table["OffsetScores"] = self.offset_scores
             self.credit_scores[column] = table
 
