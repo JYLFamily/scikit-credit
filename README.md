@@ -145,6 +145,7 @@ print(auto.information_value_score.head().to_markdown())
 | PAY_5 | 0.330149 |
 
 ```
+# cust.information_value_table.head()
 print(auto.information_value_table.head().to_markdown())
 ```
 |    | Column   | Bucket    |   CntPositive |   CntNegative |       WoE |       IvS |

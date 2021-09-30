@@ -7,7 +7,6 @@
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,20 +351,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
     </task>
-    <task id="LOCAL-00065" summary="init commit">
-      <created>1576661261095</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1576661261095</updated>
-    </task>
-    <task id="LOCAL-00066" summary="init commit">
-      <created>1577623013390</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1577623013390</updated>
-    </task>
     <task id="LOCAL-00067" summary="init commit">
       <created>1577715832702</created>
       <option name="number" value="00067" />
@@ -695,7 +680,21 @@
       <option name="project" value="LOCAL" />
       <updated>1632967527305</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="init commit">
+      <created>1632969573742</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1632969573743</updated>
+    </task>
+    <task id="LOCAL-00115" summary="init commit">
+      <created>1632969642537</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1632969642537</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,18 +774,18 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632963379428" />
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632969571636">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1632969640572">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632969571636" />
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632969640572" />
     <state x="460" y="183" key="SettingsEditor" timestamp="1632898275923">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632898275923" />
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1632969629191">
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1632970040422">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632969629191" />
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632970040422" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1632962141292">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
