@@ -99,9 +99,6 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
 
         return self
 
-    def model(self):
-        return self.model.summary()
-
     def score(self, x, y=None, sample_weight=None):
         fpr, tpr, _ = roc_curve(y, self.predict_proba(x)["proba_positive"], sample_weight=sample_weight)
 

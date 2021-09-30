@@ -58,7 +58,7 @@ def get_num_prebin(x, y):
         return Prebin(oo(NINF, PINF), [])
 
     return Prebin(oo(NINF, PINF),
-                  np.unique(np.quantile(x, q=np.linspace(0, 1, 257), interpolation="higher")).tolist())
+                  np.unique(np.quantile(x, q=np.linspace(0, 1, 129), interpolation="higher")).tolist())
 
 
 class SplitNum(Split):
@@ -102,7 +102,7 @@ class SplitNum(Split):
         self._calc_table_mis(
             cc(NaN, NaN),
             self.all_cnt_negative_mis,
-            self.all_cnt_negative_mis,
+            self.all_cnt_positive_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
         # non missing & missing

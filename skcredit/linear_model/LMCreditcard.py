@@ -20,7 +20,7 @@ class LMCreditcard(object):
         self.B = PDO / np.log(2)
         self.A = BASE + self.B * np.log(ODDS)
 
-        self.offset_scores = self.A - self.B * self.lmclassifier.coeff_["const"]
+        self.offset_scores = self.A - self.B * self.lmclassifier.coeff["const"]
         self.credit_scores = dict()
 
     def show_scorecard(self):
@@ -28,10 +28,10 @@ class LMCreditcard(object):
         tables.update({column: spliter.table for column, spliter in self.discrete.cat_spliter.items()})
         tables.update({column: spliter.table for column, spliter in self.discrete.num_spliter.items()})
 
-        for column in self.lmclassifier.feature_subsets_:
+        for column in self.lmclassifier.feature_subsets:
             table = tables[column][["Column", "Bucket", "WoE"]].copy(deep=True)
-            table["Coefficients"] =   self.lmclassifier.coeff_[column]
-            table["PartialScore"] = - self.lmclassifier.coeff_[column] * self.B * table["WoE"]
+            table["Coefficients"] =   self.lmclassifier.coeff[column]
+            table["PartialScore"] = - self.lmclassifier.coeff[column] * self.B * table["WoE"]
             table["OffsetScores"] = self.offset_scores
             self.credit_scores[column] = table
 

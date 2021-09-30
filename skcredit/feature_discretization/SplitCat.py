@@ -57,7 +57,7 @@ class SplitCat(Split):
         self._calc_table_mis(
             {np.nan: None},
             self.all_cnt_negative_mis,
-            self.all_cnt_negative_mis,
+            self.all_cnt_positive_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
         # non missing & missing
