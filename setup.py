@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.0.1",
     author="JYLFamily",
     author_email="jiangyilanf@gmail.com",
-    description="信贷风控评分卡建模的自动化工具",
+    description="scorecard",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/JYLFamily/scikit-credit",

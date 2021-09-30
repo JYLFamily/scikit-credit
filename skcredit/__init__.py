@@ -32,3 +32,5 @@ __all__ = [
     "LMCreditcard",
 ]
 
+__author__  = "JYLFamily"
+__version__ = "0.0.1"
