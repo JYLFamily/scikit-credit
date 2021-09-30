@@ -122,11 +122,7 @@ sn.fit(train_x["LIMIT_BAL"], train_y)
 
 cust = DiscreteCust(keep_columns=["ID"], date_columns=[], cat_spliter={"EDUCATION": sc}, num_spliter={"LIMIT_BAL":sn})
 cust.fit(train_x, train_y)
-
-cust = DiscreteCust(keep_columns=["ID"], date_columns=[], cat_spliter={"EDUCATION": sc}, num_spliter={"LIMIT_BAL":sn})
-cust.fit(train_x, train_y)
 ```
-
 
 ### 自动分箱
 
@@ -138,6 +134,7 @@ test_x  = auto.transform(test_x )
 ```
 
 ### 查看分箱后信息
+
 ```
 # cust.information_value_score.head() 
 print(auto.information_value_score.head().to_markdown())
