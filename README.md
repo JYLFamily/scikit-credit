@@ -49,7 +49,7 @@ print(sc.table.to_markdown())
 #### 调整参数
 
 ```
-from skcredit.feature_discretization import SplitNum
+from skcredit.feature_discretization import SplitCat
 
 sc = SplitCat(min_information_value_split_gain=0.0001)
 sc.fit(dataset["EDUCATION"], dataset["default.payment.next.month"])
