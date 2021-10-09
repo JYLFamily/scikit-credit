@@ -122,6 +122,8 @@ sn.fit(train_x["LIMIT_BAL"], train_y)
 
 cust = DiscreteCust(keep_columns=["ID"], date_columns=[], cat_spliter={"EDUCATION": sc}, num_spliter={"LIMIT_BAL":sn})
 cust.fit(train_x, train_y)
+train_x = cust.transform(train_x)
+test_x  = cust.transform(test_x )
 ```
 
 ### 自动分箱
@@ -182,7 +184,7 @@ print("train ks {}".format(lmclassifier.score(train_x, train_y)))
 print("test  ks {}".format(lmclassifier.score(test_x,  test_y )))
 ```
 train ks 0.41442 \
-test  ks 0.3914
+test  ks 0.39140
 
 ## 评分卡生成
 ```
