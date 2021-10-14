@@ -1,7 +1,6 @@
 # coding:utf-8
 
 import pandas as pd
-
 from scipy.stats import entropy as scipy_entropy
 
 

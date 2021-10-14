@@ -5,12 +5,12 @@ import numpy  as np
 import pandas as pd
 from portion import open   as oo
 from portion import closed as cc
+import plotly.graph_objects  as go
 from scipy.stats import  spearmanr
 from collections import namedtuple
-from portion import openclosed as   oc
-from portion.const import   _Singleton
-from portion.const import _NInf, _PInf
-from skcredit.feature_discretization import Split, Info
+from portion import openclosed as oc
+from plotly.subplots import make_subplots
+from skcredit.feature_discretization import  Split,  Info
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -20,37 +20,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 Prebin = namedtuple("Prebin", ["bucket", "splits"])
 
-NINF = _NInf()
-PINF = _PInf()
 
-
-class _NaN(_Singleton):
-    def __neg__(self):
-        return _NaN()
-
-    def __lt__(self, o):
-        return False
-
-    def __le__(self, o):
-        return False
-
-    def __gt__(self, o):
-        return False
-
-    def __ge__(self, o):
-        return False
-
-    def __eq__(self, o):
-        return pd.isna(o) or pd.isnull(o)
-
-    def __repr__(self):
-        return "nan"
-
-    def __hash__(self):
-        return hash(float("nan"))
-
-
-NaN  =  _NaN()
 
 
 def get_num_prebin(x, y):
@@ -98,15 +68,29 @@ class SplitNum(Split):
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
             float('-inf'), float('+inf'))
 
-        # missing
+        #     missing
         self._calc_table_mis(
             cc(NaN, NaN),
             self.all_cnt_negative_mis,
             self.all_cnt_positive_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
-        # non missing & missing
-        self.table = pd.DataFrame.from_records(self.table)
+        # table
+        self.transform_table = pd.DataFrame.from_records(self.rows)
+        self.formatter_table = self.transform_table.copy(deep=True)
+
+        # self.formatter_table["Bucket"] = self.formatter_table["Bucket"].apply(
+        #     lambda element: repr(element)
+        # )
+        #
+        # self.formatter_table["CntPositive"] = self.formatter_table["CntPositive"].apply(
+        #     lambda element: f"{element:+.6f}")
+        # self.formatter_table["CntNegative"] = self.formatter_table["CntNegative"].apply(
+        #     lambda element: f"{element:+.6f}")
+        # self.formatter_table["WoE"] = self.formatter_table["WoE"].apply(
+        #     lambda element: f"{element:+.6f}")
+        # self.formatter_table["IvS"] = self.formatter_table["IvS"].apply(
+        #     lambda element: f"{element:+.6f}")
 
         return self
 
@@ -114,7 +98,7 @@ class SplitNum(Split):
         info = self._split(   xy_non, prebin, ivs, min_value, max_value)
 
         if info.split is None:
-            self.table.append({
+            self.rows.append({
                 "Column":   self.column,
                 "Bucket": prebin.bucket,
                 "CntPositive": cnt_positive,
@@ -151,7 +135,7 @@ class SplitNum(Split):
                 min_value, midd)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
-        self.table.append({
+        self.rows.append({
                 "Column": self.column,
                 "Bucket": bucket,
                 "CntPositive": cnt_positive,
@@ -228,7 +212,7 @@ class SplitNum(Split):
         return x_transformed
 
     def _transform(self, x):
-        for bucket, woe in zip(self.table["Bucket"],  self.table["WoE"]):
+        for bucket, woe in zip(self.transform_table["Bucket"],  self.transform_table["WoE"]):
             if x in bucket:
                 return woe
 
@@ -236,6 +220,49 @@ class SplitNum(Split):
         self.fit(x, y)
 
         return self.transform(x)
+
+    # def show_table(self):
+    #     table = self.formatter_table
+    #     fig = go.Figure(
+    #         go.Table(
+    #             header=dict(
+    #                 values=["<b>{}</b>".format(col) for col in table.columns],
+    #                 font=dict(family="Courier New", size=16),
+    #                 align="center",
+    #                 height=32,
+    #             ),
+    #             cells=dict(
+    #                 values=[table[col].tolist() for col in table.columns],
+    #                 font=dict(family="Courier New", size=14),
+    #                 align=["left", "right"],
+    #                 height=28,
+    #             ),
+    #         ),
+    #     )
+    #
+    #     return fig
+
+    # def show_plots(self):
+    #     fig = make_subplots(rows=3, cols=1)
+    #
+    #     fig.add_trace(go.Figure(data=[
+    #         go.Bar(x=self.table["Bucket"], y=self.table["CntPositive"]),
+    #         go.Bar(x=self.table["Bucket"], y=self.table["CntNegative"])
+    #         ]),
+    #         row=1, col=1
+    #     )
+    #
+    #     fig.add_trace(go.Bar(
+    #         x=self.table["Bucket"],
+    #         y=self.table["WoE"]
+    #     ))
+    #
+    #     fig.add_trace(go.Waterfall(
+    #         x=self.table["Bucket"],
+    #         y=self.table["IvS"]
+    #     ))
+    #
+    #     return fig
 
 
 def binning_num(x,  y):
@@ -246,3 +273,11 @@ def binning_num(x,  y):
 
 def replace_num(x, sn):
     return sn.transform(x)
+
+
+if __name__ == "__main__":
+    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv")
+    sn = SplitNum()
+    sn.fit(application_train["EXT_SOURCE_3"], application_train["TARGET"])
+    print(sn.transform_table)
+    print(sn.transform(application_train["EXT_SOURCE_3"].head()))

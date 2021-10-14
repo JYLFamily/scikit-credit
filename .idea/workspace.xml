@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/tools/portion_tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +113,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SplitCat (1)">
+  <component name="RunManager" selected="Python.SplitNum">
     <configuration name="LMClassifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -221,15 +226,15 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SplitCat (1)" />
         <item itemvalue="Python.SplitNum" />
+        <item itemvalue="Python.SplitCat (1)" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.LMClassifier" />
         <item itemvalue="Python.SelectCIFE" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -350,13 +355,7 @@
       <workItem from="1632276298456" duration="381000" />
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
-    </task>
-    <task id="LOCAL-00073" summary="init commit">
-      <created>1578887397406</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1578887397406</updated>
+      <workItem from="1633930702802" duration="548000" />
     </task>
     <task id="LOCAL-00074" summary="init commit">
       <created>1578987846574</created>
@@ -694,7 +693,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632985937436</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="init commit">
+      <created>1633770087068</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1633770087069</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -774,22 +780,42 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632963379428" />
-    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2" timestamp="1632985935666">
+    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2" timestamp="1633770084479">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1632985935666" />
+    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1633770084479" />
+    <state width="1838" height="590" key="GridCell.Tab.0.bottom" timestamp="1634030018158">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1284" height="70" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1633942844380" />
+    <state width="1838" height="590" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
+    <state width="1838" height="590" key="GridCell.Tab.0.center" timestamp="1634030018158">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1284" height="70" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
+    <state width="1838" height="590" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
+    <state width="1838" height="590" key="GridCell.Tab.0.left" timestamp="1634030018157">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1284" height="70" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
+    <state width="1838" height="590" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018157" />
+    <state width="1838" height="590" key="GridCell.Tab.0.right" timestamp="1634030018158">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state width="1284" height="70" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
+    <state width="1838" height="590" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
     <state x="460" y="183" key="SettingsEditor" timestamp="1632898275923">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632898275923" />
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1632986000632">
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1633770092082">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1632986000632" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1633658124211">
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1633770092082" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1634086528724">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1633658124211" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1634086528724" />
     <state x="585" y="332" key="git4idea.merge.GitPullDialog" timestamp="1633769824965">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>

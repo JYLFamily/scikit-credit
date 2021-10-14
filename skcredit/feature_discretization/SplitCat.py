@@ -69,7 +69,7 @@ class SplitCat(Split):
         info = self._split(   xy_non, prebin, ivs, min_value, max_value)
 
         if info.split is None:
-            self.table.append({
+            self.rows.append({
                 "Column":        self.column,
                 "Bucket": set(prebin.keys()),
                 "CntPositive": cnt_positive,
@@ -94,9 +94,9 @@ class SplitCat(Split):
             midd, max_value)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
-        self.table.append({
+        self.rows.append({
                 "Column":        self.column,
-                "Bucket": set(bucket.keys()),
+                "Bucket": set(bucket.keys()),  # BUG
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
