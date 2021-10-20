@@ -194,3 +194,10 @@ def binning_cat(x,  y):
 
 def replace_cat(x, sc):
     return sc.transform(x)
+
+
+if __name__ == "__main__":
+    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv")
+    sc = SplitCat()
+    sc.fit(application_train["OCCUPATION_TYPE"], application_train["TARGET"])
+    print(sc.table)
