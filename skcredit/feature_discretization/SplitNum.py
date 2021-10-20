@@ -3,14 +3,13 @@
 import warnings
 import numpy  as np
 import pandas as pd
+from portion import singleton
 from portion import open   as oo
-from portion import closed as cc
-import plotly.graph_objects  as go
+from portion import closed as oc
 from scipy.stats import  spearmanr
 from collections import namedtuple
-from portion import openclosed as oc
-from plotly.subplots import make_subplots
-from skcredit.feature_discretization import  Split,  Info
+from skcredit.tools import NINF,  PINF,  NAN
+from skcredit.feature_discretization import Split,  Info
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -19,8 +18,6 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 Prebin = namedtuple("Prebin", ["bucket", "splits"])
-
-
 
 
 def get_num_prebin(x, y):
@@ -35,7 +32,7 @@ class SplitNum(Split):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
+                 min_information_value_split_gain=0.0001):
         super().__init__(
             min_bin_cnt_negative,
             min_bin_cnt_positive,
@@ -59,7 +56,7 @@ class SplitNum(Split):
         if prebin.splits:
             self.monotone_constraints = ("increasing" if spearmanr(xy_non[self.column], xy_non[self.target])[0] > 0 else
                                          "decreasing")
-        # non missing
+        # non-missing
         self._calc_table_non(
             xy_non,
             prebin,
@@ -70,27 +67,13 @@ class SplitNum(Split):
 
         #     missing
         self._calc_table_mis(
-            cc(NaN, NaN),
+            singleton(NAN),
             self.all_cnt_negative_mis,
             self.all_cnt_positive_mis,
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
         # table
-        self.transform_table = pd.DataFrame.from_records(self.rows)
-        self.formatter_table = self.transform_table.copy(deep=True)
-
-        # self.formatter_table["Bucket"] = self.formatter_table["Bucket"].apply(
-        #     lambda element: repr(element)
-        # )
-        #
-        # self.formatter_table["CntPositive"] = self.formatter_table["CntPositive"].apply(
-        #     lambda element: f"{element:+.6f}")
-        # self.formatter_table["CntNegative"] = self.formatter_table["CntNegative"].apply(
-        #     lambda element: f"{element:+.6f}")
-        # self.formatter_table["WoE"] = self.formatter_table["WoE"].apply(
-        #     lambda element: f"{element:+.6f}")
-        # self.formatter_table["IvS"] = self.formatter_table["IvS"].apply(
-        #     lambda element: f"{element:+.6f}")
+        self.table = pd.DataFrame.from_records(self.datas)
 
         return self
 
@@ -98,7 +81,7 @@ class SplitNum(Split):
         info = self._split(   xy_non, prebin, ivs, min_value, max_value)
 
         if info.split is None:
-            self.rows.append({
+            self.datas.append({
                 "Column":   self.column,
                 "Bucket": prebin.bucket,
                 "CntPositive": cnt_positive,
@@ -135,7 +118,7 @@ class SplitNum(Split):
                 min_value, midd)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
-        self.rows.append({
+        self.datas.append({
                 "Column": self.column,
                 "Bucket": bucket,
                 "CntPositive": cnt_positive,
@@ -146,7 +129,6 @@ class SplitNum(Split):
 
     def _split(self, xy_non, prebin, ivs, min_value, max_value):
         largest_ivs_gain = 0.0
-
         best_split = None
         best_xy_l_non = None
         best_xy_r_non = None
@@ -212,7 +194,7 @@ class SplitNum(Split):
         return x_transformed
 
     def _transform(self, x):
-        for bucket, woe in zip(self.transform_table["Bucket"],  self.transform_table["WoE"]):
+        for bucket, woe in zip(self.table["Bucket"],  self.table["WoE"]):
             if x in bucket:
                 return woe
 
@@ -220,49 +202,6 @@ class SplitNum(Split):
         self.fit(x, y)
 
         return self.transform(x)
-
-    # def show_table(self):
-    #     table = self.formatter_table
-    #     fig = go.Figure(
-    #         go.Table(
-    #             header=dict(
-    #                 values=["<b>{}</b>".format(col) for col in table.columns],
-    #                 font=dict(family="Courier New", size=16),
-    #                 align="center",
-    #                 height=32,
-    #             ),
-    #             cells=dict(
-    #                 values=[table[col].tolist() for col in table.columns],
-    #                 font=dict(family="Courier New", size=14),
-    #                 align=["left", "right"],
-    #                 height=28,
-    #             ),
-    #         ),
-    #     )
-    #
-    #     return fig
-
-    # def show_plots(self):
-    #     fig = make_subplots(rows=3, cols=1)
-    #
-    #     fig.add_trace(go.Figure(data=[
-    #         go.Bar(x=self.table["Bucket"], y=self.table["CntPositive"]),
-    #         go.Bar(x=self.table["Bucket"], y=self.table["CntNegative"])
-    #         ]),
-    #         row=1, col=1
-    #     )
-    #
-    #     fig.add_trace(go.Bar(
-    #         x=self.table["Bucket"],
-    #         y=self.table["WoE"]
-    #     ))
-    #
-    #     fig.add_trace(go.Waterfall(
-    #         x=self.table["Bucket"],
-    #         y=self.table["IvS"]
-    #     ))
-    #
-    #     return fig
 
 
 def binning_num(x,  y):
@@ -279,5 +218,4 @@ if __name__ == "__main__":
     application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv")
     sn = SplitNum()
     sn.fit(application_train["EXT_SOURCE_3"], application_train["TARGET"])
-    print(sn.transform_table)
-    print(sn.transform(application_train["EXT_SOURCE_3"].head()))
+    print(sn.table["Bucket"][0].upper)

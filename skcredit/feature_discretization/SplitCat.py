@@ -16,15 +16,16 @@ def get_cat_prebin(x, y):
     if (x.empty and y.empty) or np.all(x ==  x[0]) or np.all(y == y[0]):
         return {key: None for key in np.unique(x)}
 
-    return y.groupby(x).agg(lambda group: round(np.log((group.eq(1).sum() + 0.5) /
-                                                       (group.eq(0).sum() + 0.5)), 5)).to_dict()
+    return y.groupby(x).agg(lambda group: round(np.log((0.0005 if (temp := group.eq(1).sum()) == 0 else temp) /
+                                                       (0.0005 if (temp := group.eq(0).sum()) == 0 else temp)),
+                                                5)).to_dict()
 
 
 class SplitCat(Split):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
+                 min_information_value_split_gain=0.0001):
         super().__init__(
             min_bin_cnt_negative,
             min_bin_cnt_positive,
@@ -44,7 +45,7 @@ class SplitCat(Split):
 
         prebin = get_cat_prebin(xy_non[self.column], xy_non[self.target])
 
-        # non missing
+        # non-missing
         self._calc_table_non(
             xy_non,
             prebin,
@@ -53,7 +54,7 @@ class SplitCat(Split):
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non),
             float('-inf'), float('+inf'))
 
-        # missing
+        #     missing
         self._calc_table_mis(
             {np.nan: None},
             self.all_cnt_negative_mis,
@@ -61,7 +62,7 @@ class SplitCat(Split):
             *self._stats(self.all_cnt_negative_non, self.all_cnt_positive_non))
 
         # non missing & missing
-        self.table = pd.DataFrame.from_records(self.table)
+        self.table = pd.DataFrame.from_records(self.datas)
 
         return self
 
@@ -69,7 +70,7 @@ class SplitCat(Split):
         info = self._split(   xy_non, prebin, ivs, min_value, max_value)
 
         if info.split is None:
-            self.rows.append({
+            self.datas.append({
                 "Column":        self.column,
                 "Bucket": set(prebin.keys()),
                 "CntPositive": cnt_positive,
@@ -94,9 +95,9 @@ class SplitCat(Split):
             midd, max_value)
 
     def _calc_table_mis(self, bucket, cnt_negative, cnt_positive, woe, ivs):
-        self.rows.append({
+        self.datas.append({
                 "Column":        self.column,
-                "Bucket": set(bucket.keys()),  # BUG
+                "Bucket": set(bucket.keys()),
                 "CntPositive": cnt_positive,
                 "CntNegative": cnt_negative,
                 "WoE": woe,
@@ -193,3 +194,12 @@ def binning_cat(x,  y):
 
 def replace_cat(x, sc):
     return sc.transform(x)
+
+
+if __name__ == "__main__":
+    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv")
+    sn = SplitCat()
+    sn.fit(application_train["OCCUPATION_TYPE"], application_train["TARGET"])
+    print(sn.table)
+    print(sn.transform(application_train["OCCUPATION_TYPE"].tail()))
+    print(application_train["OCCUPATION_TYPE"].tail())

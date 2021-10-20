@@ -46,9 +46,8 @@ class Split(BaseEstimator, TransformerMixin):
         self.all_cnt_negative_mis = None
         self.all_cnt_positive_mis = None
 
-        self.rows = list()
-        self.transform_table = pd.DataFrame
-        self.formatter_table = None
+        self.datas = list()
+        self.table = None
 
     def fit(self, x, y):
         self.column = x.name
@@ -57,11 +56,12 @@ class Split(BaseEstimator, TransformerMixin):
         return self
 
     def _stats(self, sub_cnt_negative,  sub_cnt_positive):
+        # missing
         if not sub_cnt_negative and not sub_cnt_positive:
             return 0, 0
 
-        sub_cnt_negative = 0.5 if not sub_cnt_negative else sub_cnt_negative
-        sub_cnt_positive = 0.5 if not sub_cnt_positive else sub_cnt_positive
+        sub_cnt_negative = 0.0005 if not sub_cnt_negative else sub_cnt_negative
+        sub_cnt_positive = 0.0005 if not sub_cnt_positive else sub_cnt_positive
 
         negative_rate = sub_cnt_negative / (self.all_cnt_negative_non + self.all_cnt_negative_mis)
         positive_rate = sub_cnt_positive / (self.all_cnt_positive_non + self.all_cnt_positive_mis)

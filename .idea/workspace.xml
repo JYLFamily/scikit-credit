@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/tools/portion_tools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/portion_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/portion_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +112,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SplitNum">
+  <component name="RunManager" selected="Python.SplitCat (1)">
     <configuration name="LMClassifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,28 +127,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SelectCIFE" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_selection" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -224,17 +201,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="portion_tools" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/tools/portion_tools.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SplitNum" />
         <item itemvalue="Python.SplitCat (1)" />
+        <item itemvalue="Python.SplitNum" />
+        <item itemvalue="Python.portion_tools" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.LMClassifier" />
-        <item itemvalue="Python.SelectCIFE" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -356,13 +354,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00074" summary="init commit">
-      <created>1578987846574</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1578987846574</updated>
     </task>
     <task id="LOCAL-00075" summary="init commit">
       <created>1579230733319</created>
@@ -700,7 +691,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633770087069</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="init commit">
+      <created>1634203609614</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1634203609615</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -780,45 +778,50 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632963379428" />
-    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2" timestamp="1633770084479">
+    <state x="524" y="1" width="765" height="956" key="CommitChangelistDialog2" timestamp="1634715243723">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="124" width="765" height="956" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1633770084479" />
-    <state width="1838" height="590" key="GridCell.Tab.0.bottom" timestamp="1634030018158">
+    <state x="524" y="1" width="765" height="956" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1634715243723" />
+    <state width="1838" height="311" key="GridCell.Tab.0.bottom" timestamp="1634715188046">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1284" height="70" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1633942844380" />
-    <state width="1838" height="590" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
-    <state width="1838" height="590" key="GridCell.Tab.0.center" timestamp="1634030018158">
+    <state width="1838" height="311" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1634715188046" />
+    <state width="1838" height="311" key="GridCell.Tab.0.center" timestamp="1634715188045">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1284" height="70" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="590" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
-    <state width="1838" height="590" key="GridCell.Tab.0.left" timestamp="1634030018157">
+    <state width="1838" height="311" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1634715188045" />
+    <state width="1838" height="311" key="GridCell.Tab.0.left" timestamp="1634715188044">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1284" height="70" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="590" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018157" />
-    <state width="1838" height="590" key="GridCell.Tab.0.right" timestamp="1634030018158">
+    <state width="1838" height="311" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1634715188044" />
+    <state width="1838" height="311" key="GridCell.Tab.0.right" timestamp="1634715188046">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1284" height="70" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="590" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1634030018158" />
+    <state width="1838" height="311" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1634715188046" />
     <state x="460" y="183" key="SettingsEditor" timestamp="1632898275923">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632898275923" />
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1633770092082">
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1634203786895">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1633770092082" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1634086528724">
+    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1634203786895" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1634694498229">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1634086528724" />
+    <state x="409" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1634513401120" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1634694498229" />
     <state x="585" y="332" key="git4idea.merge.GitPullDialog" timestamp="1633769824965">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="585" y="332" key="git4idea.merge.GitPullDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1633769824965" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1634702463767">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1634702463767" />
   </component>
 </project>

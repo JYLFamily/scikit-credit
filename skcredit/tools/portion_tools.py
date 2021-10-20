@@ -1,8 +1,7 @@
 # coding:utf-8
 
 import pandas as pd
-from portion import Interval as BaseInterval
-from portion.const import Bound,  _Singleton, _NInf, _PInf
+from portion.const import _Singleton,  _NInf,  _PInf
 
 
 class _NaN(_Singleton):
@@ -31,20 +30,6 @@ class _NaN(_Singleton):
         return hash(float("nan"))
 
 
-NInf = _NInf()
-PInf = _PInf()
-NaN  =  _NaN()
-
-
-def singleton():
-    return
-
-
-class CustInterval(BaseInterval):
-    def __repr__(self):
-        pass
-
-
-
-
-
+NINF = _NInf()
+PINF = _PInf()
+NAN  =  _NaN()
