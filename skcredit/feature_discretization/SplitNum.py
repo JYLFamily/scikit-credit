@@ -17,6 +17,7 @@ pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
+
 Prebin = namedtuple("Prebin", ["bucket", "splits"])
 
 
@@ -213,9 +214,3 @@ def binning_num(x,  y):
 def replace_num(x, sn):
     return sn.transform(x)
 
-
-if __name__ == "__main__":
-    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv")
-    sn = SplitNum()
-    sn.fit(application_train["EXT_SOURCE_3"], application_train["TARGET"])
-    print(sn.table["Bucket"][0].upper)

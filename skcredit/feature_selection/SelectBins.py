@@ -26,14 +26,14 @@ class SelectBins(Select):
         coefficient = 1
 
         def _fit(x_in, y_in):
-            logit_mod = sm.GLM(y_in, sm.add_constant(x_in,  has_constant="add"),   family=sm.families.Binomial())
+            logit_mod = sm.GLM(y_in, sm.add_constant(x_in,  has_constant="add"), family=sm.families.Binomial())
             logit_res = logit_mod.fit()
 
             return (abs(logit_res.params["const"  ] -   intercept) <= 1e-2 and
                     abs(logit_res.params[x_in.name] - coefficient) <= 1e-2)
 
         self.feature_support = np.array(
-            Parallel(n_jobs=-1,  verbose=20)([delayed(_fit)(x[column],  y) for column in self.feature_columns]))
+            Parallel(n_jobs=-1,  verbose=20)([delayed(_fit)(x[column], y) for column in self.feature_columns]))
 
         return self
 
