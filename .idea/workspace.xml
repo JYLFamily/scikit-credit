@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
+    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +78,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ToolWindowRun.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/feature_discretization" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -98,6 +95,13 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit" />
+      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\examples" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
+      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit" />
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit" />
@@ -105,37 +109,8 @@
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit" />
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\15795\PycharmProjects\scikit-credit" />
-      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\examples" />
-      <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
-      <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.SplitCat (1)">
-    <configuration name="LMClassifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/linear_model" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.SplitNumND">
     <configuration name="SplitCat (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,6 +147,27 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SplitNumND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -225,15 +221,15 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.SplitNumND" />
         <item itemvalue="Python.SplitCat (1)" />
         <item itemvalue="Python.SplitNum" />
         <item itemvalue="Python.portion_tools" />
         <item itemvalue="Python.example" />
-        <item itemvalue="Python.LMClassifier" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -738,13 +734,12 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
@@ -773,56 +768,5 @@
     <MESSAGE value="add example" />
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1632963379428">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1632963379428" />
-    <state x="524" y="1" width="765" height="956" key="CommitChangelistDialog2" timestamp="1634798229523">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="524" y="1" width="765" height="956" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1634798229523" />
-    <state width="1838" height="487" key="GridCell.Tab.0.bottom" timestamp="1634719924512">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="70" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1633942844380" />
-    <state width="1838" height="487" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1634719924512" />
-    <state width="1838" height="487" key="GridCell.Tab.0.center" timestamp="1634719924511">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="70" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="487" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1634719924511" />
-    <state width="1838" height="487" key="GridCell.Tab.0.left" timestamp="1634719924511">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="70" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="487" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1634719924511" />
-    <state width="1838" height="487" key="GridCell.Tab.0.right" timestamp="1634719924512">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="70" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1633942844379" />
-    <state width="1838" height="487" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1634719924512" />
-    <state x="460" y="183" key="SettingsEditor" timestamp="1632898275923">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="460" y="183" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1632898275923" />
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2" timestamp="1634719977242">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="189" y="304" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1634719977242" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1634694498229">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="409" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1634513401120" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1634694498229" />
-    <state x="585" y="332" key="git4idea.merge.GitPullDialog" timestamp="1633769824965">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="585" y="332" key="git4idea.merge.GitPullDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1633769824965" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1634702463767">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1634702463767" />
   </component>
 </project>
