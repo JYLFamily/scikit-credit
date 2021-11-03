@@ -36,7 +36,7 @@ class SplitND(BaseEstimator, TransformerMixin):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.001):
+                 min_information_value_split_gain=0.0015):
 
         self.min_bin_cnt_negative = min_bin_cnt_negative
         self.min_bin_cnt_positive = min_bin_cnt_positive
@@ -48,9 +48,10 @@ class SplitND(BaseEstimator, TransformerMixin):
         self.all_cnt_negative = None
         self.all_cnt_positive = None
 
-        self.roots = list()
-        self.datas = list()
-        self.table = None
+        self._roots = list()
+        self._datas = list()
+        self._table = None
+        self._image = None
 
     def fit(self, x, y):
         self.column = x.columns.tolist()
@@ -61,7 +62,13 @@ class SplitND(BaseEstimator, TransformerMixin):
 
         return self
 
-    def _stats(self, sub_cnt_negative,  sub_cnt_positive):
+    def build_table(self):
+        pass
+
+    def build_image(self):
+        pass
+
+    def stats(self, sub_cnt_negative,   sub_cnt_positive):
         if not sub_cnt_negative and not sub_cnt_positive:
             return 0, 0
 
@@ -75,3 +82,11 @@ class SplitND(BaseEstimator, TransformerMixin):
         ivs = (positive_rate - negative_rate)  *  woe
 
         return woe, ivs
+
+    def transform(    self, x):
+        pass
+
+    def fit_transform(self, x, y=None, **fit_params):
+        self.fit(x, y)
+
+        return self.transform(x)

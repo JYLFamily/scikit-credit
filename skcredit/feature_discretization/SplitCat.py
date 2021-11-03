@@ -3,7 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.feature_discretization import Split, Info
+from skcredit.feature_discretization.Split import Split, Node
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)

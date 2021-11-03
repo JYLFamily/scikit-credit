@@ -9,7 +9,7 @@ from portion import singleton
 from portion import open    as oo
 from portion import closed  as oc
 from scipy.stats import spearmanr
-from skcredit.tools import NINF,  PINF,  NAN
+from skcredit.tools import NINF, PINF, NAN, l_bound_op, r_bound_op
 from skcredit.feature_discretization.SplitND import SplitND, Node
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -20,27 +20,27 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 def get_bucket(x, y):
-    if (x.empty and y.empty) or np.all(x == x[0]) or np.all(y == y[0]) or pd.isna(x).all() or pd.isna(y).all():
+    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or (x.isna().all() or y.isna().all()):
         return singleton(NAN)
 
     return oo(NINF, PINF)
 
 
 def get_splits(x, y):
-    if (x.empty and y.empty) or np.all(x == x[0]) or np.all(y == y[0]) or pd.isna(x).all() or pd.isna(y).all():
+    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or (x.isna().all() or y.isna().all()):
         return []
 
-    return np.unique(np.quantile(x, q=np.linspace(0, 1, 129), interpolation="higher")).tolist()
+    return (temp if len(temp := x.unique()) <= 128 else np.histogram_bin_edges(x,bins=128)).tolist()
 
 
 def get_direct(x, y):
-    if (x.empty and y.empty) or np.all(x == x[0]) or np.all(y == y[0]) or pd.isna(x).all() or pd.isna(y).all():
+    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or (x.isna().all() or y.isna().all()):
         return "increasing"
 
     return "increasing" if spearmanr(x, y)[0] > 0 else "decreasing"
 
 
-class SplitNum(SplitND):
+class SplitNumND(SplitND):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
@@ -56,12 +56,10 @@ class SplitNum(SplitND):
         xy = pd.concat([x, y.to_frame(self.target)], axis=1)
 
         for masks in product(* [[pd.notna(xy[column]), pd.isna(xy[column])] for column in self.column]):
-            masks = np.logical_and(* masks)  # reduce
-
-            sub_xy = xy.loc[masks, :].reset_index(drop=True)
+            sub_xy = xy.loc[reduce(lambda l, r: np.logical_and(l, r), masks), :].reset_index(drop=True)
             sub_cnt_negative = sub_xy[self.target].tolist().count(0)
             sub_cnt_positive = sub_xy[self.target].tolist().count(1)
-            sub_woe, sub_ivs = self._stats(sub_cnt_negative, sub_cnt_positive)
+            sub_woe, sub_ivs = self.stats(sub_cnt_negative, sub_cnt_positive)
 
             node = Node(
                 isleaf=True,
@@ -70,16 +68,17 @@ class SplitNum(SplitND):
                 splits={column: get_splits(sub_xy[column], sub_xy[self.target]) for column in self.column},
                 sub_xy=sub_xy,
                 sub_xy_cnt_negative=sub_cnt_negative,
-                sub_xy_cnt_positive=sub_cnt_negative,
+                sub_xy_cnt_positive=sub_cnt_positive,
                 sub_xy_woe=sub_woe,
                 sub_xy_ivs=sub_ivs,
                 direct={column: get_direct(sub_xy[column], sub_xy[self.target]) for column in self.column},
             )
-            self.roots.append(node)
-            self._calc_table( node)
+
+            self._roots.append(node)
+            self._calc_table(  node)
 
         # table
-        self.table = pd.DataFrame.from_records(self.datas)
+        self._table = pd.DataFrame.from_records(self._datas)
 
         return self
 
@@ -87,7 +86,7 @@ class SplitNum(SplitND):
         node = self._split(node)
 
         if node.isleaf:
-            self.datas.append({
+            self._datas.append({
                 "Column": f"INTERACT({node.column})",
                 "Bucket": list(node.bucket.values()),
                 "CntPositive":  node.sub_xy_cnt_positive,
@@ -118,9 +117,9 @@ class SplitNum(SplitND):
                     temp_sub_xy_r_cnt_negative >= self.min_bin_cnt_negative and
                     temp_sub_xy_r_cnt_positive >= self.min_bin_cnt_positive):
 
-                    temp_sub_xy_l_woe, temp_sub_xy_l_ivs = self._stats(
+                    temp_sub_xy_l_woe, temp_sub_xy_l_ivs = self.stats(
                         temp_sub_xy_l_cnt_negative, temp_sub_xy_l_cnt_positive)
-                    temp_sub_xy_r_woe, temp_sub_xy_r_ivs = self._stats(
+                    temp_sub_xy_r_woe, temp_sub_xy_r_ivs = self.stats(
                         temp_sub_xy_r_cnt_negative, temp_sub_xy_r_cnt_positive)
 
                     if temp_sub_xy_l_ivs + temp_sub_xy_r_ivs - node.sub_xy_ivs > max(
@@ -174,34 +173,23 @@ class SplitNum(SplitND):
 
         return node
 
-    # def transform( self, x):
-    #     x_transformed = x.apply(lambda element: self._transform(element))
-    #
-    #     return x_transformed
-    #
-    # def _transform(self, x):
-    #     for bucket, woe in zip(self.table["Bucket"],  self.table["WoE"]):
-    #         if x in bucket:
-    #             return woe
-    #
-    # def fit_transform(self, x, y=None, **fit_params):
-    #     self.fit(x, y)
-    #
-    #     return self.transform(x)
+    def transform(self, x):
+        x_transformed  =  pd.DataFrame(index=x.index, columns=f"INTERACT({self.column})")
+
+        for buckets, woe in zip(self._table["Bucket"], self._table["WoE"]):
+            masks = [l_bound_op[bucket.left ](x[column], bucket.lower) &
+                     r_bound_op[bucket.right](x[column], bucket.upper) for column, bucket in zip(self.column, buckets)]
+            x_transformed.loc[reduce(lambda l, r: np.logical_and(l, r), masks),  :] = woe
+
+        return x_transformed
 
 
-def binning_num(x,  y):
-    sn = SplitNum()
-    sn.fit(x, y)
-    return sn
+def binning_num(x,    y):
+    snnd = SplitNumND()
+    snnd.fit(x, y)
+    return snnd
 
 
-def replace_num(x, sn):
-    return sn.transform(x)
+def replace_num(x, snnd):
+    return snnd.transform(x)
 
-
-if __name__ == "__main__":
-    application_train = pd.read_csv("C:\\Users\\15795\\Desktop\\application_train.csv", usecols=["EXT_SOURCE_1", "EXT_SOURCE_3", "TARGET"])
-    sn = SplitNum()
-    sn.fit(application_train[["EXT_SOURCE_1", "EXT_SOURCE_3"]], application_train["TARGET"])
-    print(sn.table.to_markdown())

@@ -3,6 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
+from numbers import Real
 from dataclasses   import dataclass
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
@@ -14,18 +15,21 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 @dataclass
-class Info:
-    split: float
-    xy_l_non: pd.DataFrame
-    xy_r_non: pd.DataFrame
-    xy_l_cnt_negative_non: float
-    xy_l_cnt_positive_non: float
-    xy_r_cnt_negative_non: float
-    xy_r_cnt_positive_non: float
-    xy_l_woe_non: float
-    xy_r_woe_non: float
-    xy_l_ivs_non: float
-    xy_r_ivs_non: float
+class Node:
+    isleaf: bool
+    column: list
+    bucket: dict
+    splits: dict
+    sub_xy: pd.DataFrame
+    sub_xy_cnt_negative: Real
+    sub_xy_cnt_positive: Real
+    sub_xy_woe: Real
+    sub_xy_ivs: Real
+    direct: dict = None
+    direct_min_value: Real = float('-inf')
+    direct_max_value: Real = float('+inf')
+    l_child: object = None
+    r_child: object = None
 
 
 class Split(BaseEstimator, TransformerMixin):
