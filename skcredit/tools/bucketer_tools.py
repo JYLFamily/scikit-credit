@@ -49,28 +49,21 @@ PINF = _PInf()
 NAN  =  _NaN()
 
 
-def get_bucket(x, y):
-    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or  (x.isna().all() or y.isna().all()):
-        return singleton(NAN)
-
-    return oo(NINF, PINF)
-
-
 def get_splits(x, y):
-    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or  (x.isna().all() or y.isna().all()):
+    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1):
         return []
 
     return (temp if len(temp := x.unique()) <= 128 else np.histogram_bin_edges(x, bins=128)).tolist()
 
 
 def get_direct(x, y):
-    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1) or  (x.isna().all() or y.isna().all()):
+    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1):
         return "increasing"
 
     return "increasing" if spearmanr(x, y)[0] > 0 else "decreasing"
 
 
-def calc_woe_ivs(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_positive):
+def calc_stats(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_positive):
     if not sub_cnt_negative and not sub_cnt_positive:
         return 0, 0
 

@@ -44,13 +44,8 @@ def replace_num(x, snnd):
 
 if __name__ == "__main__":
     application_train = pd.read_csv(
-        "C:\\Users\\P1352\\Desktop\\application_train.csv",
+        "C:\\Users\\15795\\Desktop\\application_train.csv",
         usecols=["EXT_SOURCE_1", "EXT_SOURCE_2", "TARGET"])
     snnd = SplitNumND()
-    application_train["EXT_SOURCE_1"] = np.nan
-    snnd.fit(application_train[["EXT_SOURCE_1"]], application_train["TARGET"])
-    for i, element in enumerate(snnd._datas):
-        print(i)
-        print(pd.DataFrame.from_records(element))
+    snnd.fit(application_train[["EXT_SOURCE_1", "EXT_SOURCE_2"]], application_train["TARGET"])
     print(snnd._table)
-

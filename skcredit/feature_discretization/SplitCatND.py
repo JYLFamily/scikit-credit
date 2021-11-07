@@ -28,7 +28,6 @@ class SplitCatND(SplitND):
     def fit(self,   x,  y):
         super().fit(x,  y)
 
-        x = x.fillna("missing")
         self.woe_encoder  =  WoEEncoder()
         self.woe_encoder.fit(x, y)
         x = self.woe_encoder.transform(x)

@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" afterDir="false" />
+    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Split.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNum.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/entropy_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/selector_tools.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/portion_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +230,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -741,13 +735,12 @@
         </entry>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new tree split py" />
@@ -776,43 +769,5 @@
     <MESSAGE value="add example" />
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1636008074598">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636008074598" />
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1635925531303">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1635925531303" />
-    <state width="1838" height="469" key="GridCell.Tab.0.bottom" timestamp="1636098992384">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="346" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1635757895717" />
-    <state width="1838" height="469" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1636098992384" />
-    <state width="1838" height="469" key="GridCell.Tab.0.center" timestamp="1636098992383">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="346" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1635757895716" />
-    <state width="1838" height="469" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1636098992383" />
-    <state width="1838" height="469" key="GridCell.Tab.0.left" timestamp="1636098992383">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="346" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1635757895715" />
-    <state width="1838" height="469" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1636098992383" />
-    <state width="1838" height="469" key="GridCell.Tab.0.right" timestamp="1636098992383">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1284" height="346" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1635757895716" />
-    <state width="1838" height="469" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636098992383" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1635925752964">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1635925752964" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1635986231151">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1635986231151" />
   </component>
 </project>
