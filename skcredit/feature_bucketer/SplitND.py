@@ -40,6 +40,8 @@ class Node:
 
 class SplitND(BaseEstimator, TransformerMixin):
     def __init__(self,
+                 column,
+                 target,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.0015):
@@ -48,8 +50,8 @@ class SplitND(BaseEstimator, TransformerMixin):
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
 
-        self.column = None
-        self.target = None
+        self.column = column
+        self.target = target
 
         self.all_cnt_negative = None
         self.all_cnt_positive = None
@@ -58,9 +60,6 @@ class SplitND(BaseEstimator, TransformerMixin):
         self._table = None
 
     def fit( self, x, y):
-        self.column  =  x.columns.tolist()
-        self.target  =  y.name
-
         self.all_cnt_negative = y.tolist().count(0)
         self.all_cnt_positive = y.tolist().count(1)
 
@@ -83,7 +82,7 @@ class SplitND(BaseEstimator, TransformerMixin):
                 self.all_cnt_positive
             )
 
-            node = Node(
+            root_node = Node(
                 isleaf=True,
                 column=self.column,
                 bucket=bucket,
@@ -97,7 +96,7 @@ class SplitND(BaseEstimator, TransformerMixin):
             )
 
             self._datas.append([])
-            self._build(node)
+            self._build(root_node)
 
         # table
         self._table = pd.DataFrame.from_records(chain.from_iterable(self._datas))

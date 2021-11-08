@@ -5,7 +5,7 @@ import numpy  as np
 import pandas as pd
 import statsmodels.api as sm
 from joblib import Parallel, delayed
-from skcredit.feature_selection.Select import Select
+from skcredit.feature_selector.Select import Select
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)

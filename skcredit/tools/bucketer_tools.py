@@ -2,9 +2,8 @@
 
 import pandas as pd
 import numpy  as np
-from portion import singleton
-from portion import  open   as   oo
 from scipy.stats  import  spearmanr
+from collections import defaultdict
 from operator import lt, le, gt, ge
 from portion.const import Bound, _Singleton, _NInf, _PInf
 from sklearn.base  import BaseEstimator, TransformerMixin
@@ -77,3 +76,31 @@ def calc_stats(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_po
     ivs = (positive_rate - negative_rate)  *  woe
 
     return woe, ivs
+
+
+class CatEncoder(BaseEstimator, TransformerMixin):
+    def __init__(self, column, target):
+        self.column = column
+        self.target = target
+        self.lookup = defaultdict(dict)
+
+    def fit(self,    x, y):
+        for column in self.column:
+            self.lookup[column] = y.groupby(x[column]).agg(lambda group:
+                    round(np.log((0.0005 if (temp := group.eq(1).sum()) == 0 else temp) /
+                                 (0.0005 if (temp := group.eq(0).sum()) == 0 else temp)), 5)).to_dict()
+
+        return self
+
+    def transform(self, x):
+        x_transformed = x.copy(deep=True)
+
+        for column in self.column:
+            x_transformed[column] = x[column].map(self.lookup[column])
+
+        return x_transformed
+
+    def fit_transform(self, x, y=None, **fit_params):
+        self.fit(x, y)
+
+        return self.transform(x)

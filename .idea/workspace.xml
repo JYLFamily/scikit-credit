@@ -5,10 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteAuto.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteAuto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/DiscreteCust.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteCust.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discretization/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/Select.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/Select.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selection/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
@@ -223,8 +234,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.SplitNumND" />
-        <item itemvalue="Python.SplitND" />
         <item itemvalue="Python.SplitCatND" />
+        <item itemvalue="Python.SplitND" />
         <item itemvalue="Python.SplitCat (1)" />
         <item itemvalue="Python.SplitNum" />
       </list>
@@ -352,13 +363,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00080" summary="init commit">
-      <created>1580823027649</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1580823027649</updated>
     </task>
     <task id="LOCAL-00081" summary="init commit">
       <created>1580906749625</created>
@@ -696,7 +700,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635925534595</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="init commit">
+      <created>1636293726048</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1636293726048</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

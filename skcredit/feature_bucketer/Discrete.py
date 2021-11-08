@@ -5,8 +5,8 @@ import numpy  as np
 import pandas as pd
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, TransformerMixin
-from skcredit.feature_discretization.SplitCat import replace_cat
-from skcredit.feature_discretization.SplitNum import replace_num
+from skcredit.feature_bucketer.SplitCat import replace_cat
+from skcredit.feature_bucketer.SplitNum import replace_num
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)

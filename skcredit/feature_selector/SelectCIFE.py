@@ -7,7 +7,7 @@ from skcredit.tools import mis
 from skcredit.tools import cmi
 from joblib import Parallel, delayed
 from itertools   import combinations
-from skcredit.feature_selection import Select
+from skcredit.feature_selector import Select
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)

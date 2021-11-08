@@ -3,7 +3,8 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.feature_discretization.SplitND import SplitND
+from skcredit.tools import CatEncoder
+from skcredit.feature_bucketer.SplitND import SplitND
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -12,40 +13,45 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class SplitNumND(SplitND):
+class SplitCatND(SplitND):
     def __init__(self,
+                 column,
+                 target,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.015):
         super().__init__(
+            column,
+            target,
             min_bin_cnt_negative,
             min_bin_cnt_positive,
             min_information_value_split_gain)
 
+        self.cat_encoder = None
+
     def fit(self,   x,  y):
         super().fit(x,  y)
+
+        self.cat_encoder =  CatEncoder(column=self.column, target=self.target)
+        self.cat_encoder.fit(x, y)
+        x = self.cat_encoder.transform(x)
+
         self._fit(  x,  y)
 
         return self
 
     def transform(self, x):
+        x = self.cat_encoder.transform(x)
+
         return self._transform(x)
 
 
-def binning_num(x,    y):
-    snnd = SplitNumND( )
+def binning_cat(x, y, column, target):
+    snnd = SplitCatND(column, target)
     snnd.fit(x, y)
     return snnd
 
 
-def replace_num(x, snnd):
-    return snnd.transform(x)
+def replace_cat(x, scnd):
+    return scnd.transform(x)
 
-
-if __name__ == "__main__":
-    application_train = pd.read_csv(
-        "C:\\Users\\15795\\Desktop\\application_train.csv",
-        usecols=["EXT_SOURCE_1", "EXT_SOURCE_2", "TARGET"])
-    snnd = SplitNumND()
-    snnd.fit(application_train[["EXT_SOURCE_1", "EXT_SOURCE_2"]], application_train["TARGET"])
-    print(snnd._table)

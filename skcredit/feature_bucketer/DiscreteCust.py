@@ -4,10 +4,7 @@ import warnings
 import numpy  as np
 import pandas as pd
 from collections import ChainMap
-from joblib import Parallel, delayed
-from skcredit.feature_discretization import Discrete
-from skcredit.feature_discretization.SplitCat import binning_cat
-from skcredit.feature_discretization.SplitNum import binning_num
+from skcredit.feature_bucketer import Discrete
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -16,27 +13,14 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class DiscreteAuto(Discrete):
-    def __init__(self,   keep_columns, date_columns, cat_columns, num_columns):
+class DiscreteCust(Discrete):
+    def __init__(self,   keep_columns, date_columns, cat_spliter, num_spliter):
         super().__init__(keep_columns, date_columns)
-        self.cat_columns = cat_columns
-        self.num_columns = num_columns
+
+        self.cat_spliter = cat_spliter
+        self.num_spliter = num_spliter
 
     def fit(self, x,  y=None):
-        if  self.cat_columns:
-            self.cat_spliter = (dict(zip(
-                self.cat_columns,
-                Parallel(n_jobs=-1, verbose=20)(
-                    [delayed(binning_cat)(x[column], y) for column in self.cat_columns]))
-            ))
-
-        if  self.num_columns:
-            self.num_spliter = (dict(zip(
-                self.num_columns,
-                Parallel(n_jobs=-1, verbose=20)(
-                    [delayed(binning_num)(x[column], y) for column in self.num_columns]))
-            ))
-
         temp = ChainMap(
             {column: spliter.table for column, spliter in self.cat_spliter.items()},
             {column: spliter.table for column, spliter in self.num_spliter.items()}
