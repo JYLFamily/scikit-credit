@@ -3,7 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.tools import CatEncoder
+from skcredit.tools import  CatEncoder
 from skcredit.feature_bucketer.SplitND import SplitND
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -47,11 +47,14 @@ class SplitCatND(SplitND):
 
 
 def binning_cat(x, y, column, target):
-    snnd = SplitCatND(column, target)
-    snnd.fit(x, y)
-    return snnd
+    scnd = SplitCatND(column, target)
+    scnd.fit(x, y)
+
+    return scnd
 
 
 def replace_cat(x, scnd):
+
     return scnd.transform(x)
+
 

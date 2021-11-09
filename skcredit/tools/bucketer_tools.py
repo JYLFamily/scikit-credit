@@ -59,7 +59,7 @@ def get_direct(x, y):
     if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1):
         return "increasing"
 
-    return "increasing" if spearmanr(x, y)[0] > 0 else "decreasing"
+    return "increasing" if spearmanr(x, y)[0] > 0  else "decreasing"
 
 
 def calc_stats(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_positive):
@@ -93,6 +93,7 @@ class CatEncoder(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, x):
+        # return all dataframe
         x_transformed = x.copy(deep=True)
 
         for column in self.column:

@@ -39,9 +39,10 @@ class SplitNumND(SplitND):
 def binning_num(x, y, column, target):
     snnd = SplitNumND(column, target)
     snnd.fit(x, y)
+
     return snnd
 
 
 def replace_num(x, snnd):
-    return snnd.transform(x)
 
+    return snnd.transform(x)

@@ -13,7 +13,7 @@ pd.set_option("max_columns", None)
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
-
+from sklearn.model_selection import GridSearchCV
 
 class Discrete(BaseEstimator, TransformerMixin):
     def __init__(self, keep_columns, date_columns):

@@ -8,10 +8,10 @@ from portion import singleton
 from portion import open    as  oo
 from portion import closed  as  oc
 from dataclasses  import dataclass
+from itertools import product, chain
 from skcredit.tools import NAN, NINF, PINF
-from itertools import product, repeat, chain
 from sklearn.base   import BaseEstimator   , TransformerMixin
-from skcredit.tools import l_bound_operator, r_bound_operator, calc_stats, get_splits, get_direct
+from skcredit.tools import l_bound_operator, r_bound_operator, get_splits, get_direct, calc_stats
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -58,6 +58,7 @@ class SplitND(BaseEstimator, TransformerMixin):
 
         self._datas = list()
         self._table = None
+        self._image = None
 
     def fit( self, x, y):
         self.all_cnt_negative = y.tolist().count(0)
@@ -91,8 +92,8 @@ class SplitND(BaseEstimator, TransformerMixin):
                 sub_xy_cnt_positive=sub_cnt_positive,
                 sub_xy_woe=sub_woe,
                 sub_xy_ivs=sub_ivs,
-                splits={column: get_splits(sub_xy[column], sub_xy[self.target]) for column  in  self.column},
-                direct={column: get_direct(sub_xy[column], sub_xy[self.target]) for column  in  self.column},
+                splits={column: get_splits(sub_xy[column],   sub_xy[self.target]) for column in self.column},
+                direct={column: get_direct(sub_xy[column],   sub_xy[self.target]) for column in self.column},
             )
 
             self._datas.append([])
@@ -107,7 +108,7 @@ class SplitND(BaseEstimator, TransformerMixin):
         pass
 
     def _transform(self, x):
-        x_transformed = pd.DataFrame(index=x.index, columns=f"FEATURE({self.column})")
+        x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({self.column})"])
 
         for buckets, woe in zip(self._table["Bucket"],   self._table["WoE"]):
             masks = [l_bound_operator[bucket.left ](x[column], bucket.lower) &
@@ -127,11 +128,13 @@ class SplitND(BaseEstimator, TransformerMixin):
         node = self._split(node)
 
         if node.isleaf:
-            self._datas[-1].append({
+            self._datas[- 1].append({
                 "Column": node.column,
                 "Bucket": node.bucket.values(),
-                "CntPositive":  node.sub_xy_cnt_positive,
-                "CntNegative":  node.sub_xy_cnt_negative,
+                "CntPositive":    node.sub_xy_cnt_positive,
+                "CntNegative":    node.sub_xy_cnt_negative,
+                "CntPositive(%)": node.sub_xy_cnt_positive / self.all_cnt_positive,
+                "CntNegative(%)": node.sub_xy_cnt_negative / self.all_cnt_negative,
                 "WoE": node.sub_xy_woe,
                 "IvS": node.sub_xy_ivs
             })
@@ -220,4 +223,10 @@ class SplitND(BaseEstimator, TransformerMixin):
                             )
 
         return node
+
+    def build_table(self):
+        pass
+
+    def build_image(self):
+        pass
 
