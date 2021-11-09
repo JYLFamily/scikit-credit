@@ -3,8 +3,8 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.tools import  CatEncoder
 from skcredit.feature_bucketer.SplitND import SplitND
+from skcredit.tools import cat_bucket_to_string, num_bucket_to_string, CatEncoder
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -31,29 +31,42 @@ class SplitMixND(SplitND):
         self.column = cat_column + num_column
         self.target = target
 
-        self.cat_column = cat_column
-        self.num_column = num_column
-        self.cat_lookup = None
+        self.cat_column  = cat_column
+        self.num_column  = num_column
+
+        self.cat_encoder = None
 
     def fit(self,   x,  y):
         super().fit(x,  y)
 
-        self.cat_lookup =  CatEncoder(column=self.cat_column, target=self.target)
-        self.cat_lookup.fit(x, y)
-        x = self.cat_lookup.transform(x)
+        self.cat_encoder =  CatEncoder(column=self.cat_column, target=self.target)
+        self.cat_encoder.fit(x, y)
+        x = self.cat_encoder.transform(x)
 
         self._fit(  x,  y)
 
         return self
 
     def transform(self, x):
-        x = self.cat_lookup.transform(x)
+        x = self.cat_encoder.transform(x)
 
         return self._transform(x)
 
+    def build_table(self ):
+        table = self._table.copy(deep=True)
 
-def binning_mix(x, y, column, target):
-    smnd = SplitMixND(column, target)
+        table["Column"] = table["Column"].apply(lambda columns: f"FEATURE({', '.join(columns)})")
+        table["Bucket"] = table["Bucket"].apply(
+            lambda buckets: ', '.join([
+                num_bucket_to_string(bucket) if column in self.num_column else
+                cat_bucket_to_string(bucket, self.cat_encoder.lookup[column ])
+                for column, bucket in zip(self.column, buckets)]))
+
+        return table
+
+
+def binning_mix(x, y, cat_column, num_column, target):
+    smnd = SplitMixND(cat_column, num_column, target)
     smnd.fit(x, y)
 
     return smnd
@@ -62,4 +75,6 @@ def binning_mix(x, y, column, target):
 def replace_mix(x, smnd):
 
     return smnd.transform(x)
+
+
 

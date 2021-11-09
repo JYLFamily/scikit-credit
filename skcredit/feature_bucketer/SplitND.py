@@ -67,7 +67,8 @@ class SplitND(BaseEstimator, TransformerMixin):
         return self
 
     def _fit(self, x, y):
-        xy = pd.concat([x, y.to_frame(self.target)],  axis=1)
+        # x 2D
+        xy = pd.concat([x.reindex(columns=self.column), y.to_frame(self.target)], axis=1)
 
         for masks in product(* [[0, 1] for _ in self.column]):
             bucket = dict(zip(self.column, [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
@@ -110,10 +111,10 @@ class SplitND(BaseEstimator, TransformerMixin):
     def _transform(self, x):
         x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({self.column})"])
 
-        for buckets, woe in zip(self._table["Bucket"],   self._table["WoE"]):
+        for columns, buckets, woe in zip(self._table["Column"], self._table["Bucket"], self._table["WoE"]):
             masks = [l_bound_operator[bucket.left ](x[column], bucket.lower) &
                      r_bound_operator[bucket.right](x[column], bucket.upper)
-                     for column, bucket in zip(self.column, buckets)]
+                     for column, bucket in zip(columns, buckets)]
 
             x_transformed.loc[np.logical_and.reduce(masks, axis=0), :] = woe
 

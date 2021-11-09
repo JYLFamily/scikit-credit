@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -222,14 +223,14 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.SplitMixND" />
-        <item itemvalue="Python.SplitCatND (1)" />
         <item itemvalue="Python.SplitNumND (1)" />
+        <item itemvalue="Python.SplitCatND (1)" />
         <item itemvalue="Python.SplitNumND" />
         <item itemvalue="Python.SplitCatND" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -351,13 +352,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00081" summary="init commit">
-      <created>1580906749625</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1580906749626</updated>
     </task>
     <task id="LOCAL-00082" summary="init commit">
       <created>1580957364797</created>
@@ -695,7 +689,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636293726048</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="init commit">
+      <created>1636427906090</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1636427906091</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,25 +776,33 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1636427897448" />
-    <state width="1838" height="509" key="GridCell.Tab.0.bottom" timestamp="1636427598205">
+    <state width="1838" height="553" key="GridCell.Tab.0.bottom" timestamp="1636445582090">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="509" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1636427598205" />
-    <state width="1838" height="509" key="GridCell.Tab.0.center" timestamp="1636427598205">
+    <state width="1838" height="553" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
+    <state width="1838" height="553" key="GridCell.Tab.0.center" timestamp="1636445582090">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="509" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1636427598205" />
-    <state width="1838" height="509" key="GridCell.Tab.0.left" timestamp="1636427598205">
+    <state width="1838" height="553" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
+    <state width="1838" height="553" key="GridCell.Tab.0.left" timestamp="1636445582089">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="509" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1636427598205" />
-    <state width="1838" height="509" key="GridCell.Tab.0.right" timestamp="1636427598205">
+    <state width="1838" height="553" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582089" />
+    <state width="1838" height="553" key="GridCell.Tab.0.right" timestamp="1636445582090">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="509" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636427598205" />
+    <state width="1838" height="553" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1636427911683">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1636427911683" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1636420978918">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636420978918" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1636441047034">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1636441047034" />
   </component>
 </project>

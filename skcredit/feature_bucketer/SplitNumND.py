@@ -3,6 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
+from skcredit.tools import num_bucket_to_string
 from skcredit.feature_bucketer.SplitND import SplitND
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -35,6 +36,18 @@ class SplitNumND(SplitND):
     def transform(self, x):
         return self._transform(x)
 
+    def build_table(self ):
+        table = self._table.copy(deep=True)
+
+        table["Column"] = table["Column"].apply(lambda columns: f"FEATURE({', '.join(columns)})")
+        table["Bucket"] = table["Bucket"].apply(
+            lambda buckets: ', '.join([num_bucket_to_string(bucket)  for  bucket  in   buckets]))
+
+        return table
+
+    def build_image(self):
+        pass
+
 
 def binning_num(x, y, column, target):
     snnd = SplitNumND(column, target)
@@ -46,3 +59,4 @@ def binning_num(x, y, column, target):
 def replace_num(x, snnd):
 
     return snnd.transform(x)
+

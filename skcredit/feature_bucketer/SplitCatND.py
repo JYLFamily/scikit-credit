@@ -3,8 +3,8 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.tools import  CatEncoder
 from skcredit.feature_bucketer.SplitND import SplitND
+from skcredit.tools import cat_bucket_to_string, CatEncoder
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -45,6 +45,16 @@ class SplitCatND(SplitND):
 
         return self._transform(x)
 
+    def build_table(self ):
+        table = self._table.copy(deep=True)
+
+        table["Column"] = table["Column"].apply(lambda  columns:   f"FEATURE({', '.join(columns)})")
+        table["Bucket"] = table["Bucket"].apply(
+            lambda buckets: ', '.join([cat_bucket_to_string(bucket, self.cat_encoder.lookup[column])
+                 for column, bucket in zip(self.column, buckets)]))
+
+        return table
+
 
 def binning_cat(x, y, column, target):
     scnd = SplitCatND(column, target)
@@ -56,5 +66,6 @@ def binning_cat(x, y, column, target):
 def replace_cat(x, scnd):
 
     return scnd.transform(x)
+
 
 

@@ -2,11 +2,12 @@
 
 import pandas as pd
 import numpy  as np
+from portion import to_string
 from scipy.stats  import  spearmanr
-from collections import defaultdict
 from operator import lt, le, gt, ge
 from portion.const import Bound, _Singleton, _NInf, _PInf
 from sklearn.base  import BaseEstimator, TransformerMixin
+from pandas.io.formats.format import _trim_zeros_single_float
 np.random.seed(7)
 
 
@@ -82,7 +83,7 @@ class CatEncoder(BaseEstimator, TransformerMixin):
     def __init__(self, column, target):
         self.column = column
         self.target = target
-        self.lookup = defaultdict(dict)
+        self.lookup = dict()
 
     def fit(self,    x, y):
         for column in self.column:
@@ -105,3 +106,14 @@ class CatEncoder(BaseEstimator, TransformerMixin):
         self.fit(x, y)
 
         return self.transform(x)
+
+
+def cat_bucket_to_string(bucket, lookup):
+
+    return str({cat if val  in bucket else  "MISSING"  for  cat, val in lookup.items()})
+
+
+def num_bucket_to_string(bucket):
+
+    return to_string(bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
+    else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")
