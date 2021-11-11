@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Bucketer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteAuto.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteCust.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,8 +116,8 @@
       <recent name="C:\Users\15795\PycharmProjects\scikit-credit\skcredit\feature_discretization" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SplitMixND">
-    <configuration name="SplitCatND (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.Bucketer">
+    <configuration name="Bucketer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -127,7 +129,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/Bucketer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -136,28 +138,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SplitCatND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitCatND.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SplitMixND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SplitND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -169,7 +150,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -199,7 +180,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SplitNumND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="_column_transformer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -207,11 +188,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discretization" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/anaconda3/Lib/site-packages/sklearn/compose" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discretization/SplitNumND.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/anaconda3/Lib/site-packages/sklearn/compose/_column_transformer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="base_compostion" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/anaconda3/Lib/site-packages/mlxtend/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/anaconda3/Lib/site-packages/mlxtend/utils/base_compostion.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,11 +224,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SplitMixND" />
+        <item itemvalue="Python.Bucketer" />
         <item itemvalue="Python.SplitNumND (1)" />
-        <item itemvalue="Python.SplitCatND (1)" />
-        <item itemvalue="Python.SplitNumND" />
-        <item itemvalue="Python.SplitCatND" />
+        <item itemvalue="Python._column_transformer" />
+        <item itemvalue="Python.SplitND" />
+        <item itemvalue="Python.base_compostion" />
       </list>
     </recent_temporary>
   </component>
@@ -352,13 +354,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00082" summary="init commit">
-      <created>1580957364797</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1580957364798</updated>
     </task>
     <task id="LOCAL-00083" summary="init commit">
       <created>1583912141418</created>
@@ -696,7 +691,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636427906091</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="init commit">
+      <created>1636448646416</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1636448646416</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -772,37 +774,45 @@
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1636427897448">
+    <state x="651" y="159" key="#SplitNumND_(1)" timestamp="1636527908987">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1636427897448" />
-    <state width="1838" height="553" key="GridCell.Tab.0.bottom" timestamp="1636445582090">
+    <state x="651" y="159" key="#SplitNumND_(1)/0.0.1858.1080@0.0.1858.1080" timestamp="1636527908987" />
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1636617749224">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="553" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
-    <state width="1838" height="553" key="GridCell.Tab.0.center" timestamp="1636445582090">
+    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636617749224" />
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1636624014637">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="553" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
-    <state width="1838" height="553" key="GridCell.Tab.0.left" timestamp="1636445582089">
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1636624014637" />
+    <state width="1838" height="377" key="GridCell.Tab.0.bottom" timestamp="1636616775471">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="553" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582089" />
-    <state width="1838" height="553" key="GridCell.Tab.0.right" timestamp="1636445582090">
+    <state width="1838" height="377" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1636616775471" />
+    <state width="1838" height="377" key="GridCell.Tab.0.center" timestamp="1636616775471">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="553" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636445582090" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1636427911683">
+    <state width="1838" height="377" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1636616775471" />
+    <state width="1838" height="377" key="GridCell.Tab.0.left" timestamp="1636616775471">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1636427911683" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1636420978918">
+    <state width="1838" height="377" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1636616775471" />
+    <state width="1838" height="377" key="GridCell.Tab.0.right" timestamp="1636616775471">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636420978918" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1636441047034">
+    <state width="1838" height="377" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636616775471" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1636449944574">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1636441047034" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1636449944574" />
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1636592088301">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636592088301" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1636602887542">
+      <screen x="0" y="0" width="1858" height="1080" />
+    </state>
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1636602887542" />
   </component>
 </project>

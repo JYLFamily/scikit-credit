@@ -63,7 +63,7 @@ def get_direct(x, y):
     return "increasing" if spearmanr(x, y)[0] > 0  else "decreasing"
 
 
-def calc_stats(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_positive):
+def calc_stats(sub_cnt_negative, sub_cnt_positive, all_cnt_negative, all_cnt_positive):
     if not sub_cnt_negative and not sub_cnt_positive:
         return 0, 0
 
@@ -77,6 +77,17 @@ def calc_stats(sub_cnt_negative,  sub_cnt_positive, all_cnt_negative, all_cnt_po
     ivs = (positive_rate - negative_rate)  *  woe
 
     return woe, ivs
+
+
+def cat_bucket_to_string(bucket, lookup):
+
+    return str({cat if val  in bucket else  "MISSING"  for  cat, val in lookup.items()})
+
+
+def num_bucket_to_string(bucket):
+
+    return to_string(bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
+    else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")
 
 
 class CatEncoder(BaseEstimator, TransformerMixin):
@@ -106,14 +117,3 @@ class CatEncoder(BaseEstimator, TransformerMixin):
         self.fit(x, y)
 
         return self.transform(x)
-
-
-def cat_bucket_to_string(bucket, lookup):
-
-    return str({cat if val  in bucket else  "MISSING"  for  cat, val in lookup.items()})
-
-
-def num_bucket_to_string(bucket):
-
-    return to_string(bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
-    else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")

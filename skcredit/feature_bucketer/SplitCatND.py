@@ -15,14 +15,10 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 class SplitCatND(SplitND):
     def __init__(self,
-                 column,
-                 target,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.015):
         super().__init__(
-            column,
-            target,
             min_bin_cnt_negative,
             min_bin_cnt_positive,
             min_information_value_split_gain)
@@ -55,17 +51,10 @@ class SplitCatND(SplitND):
 
         return table
 
-
-def binning_cat(x, y, column, target):
-    scnd = SplitCatND(column, target)
-    scnd.fit(x, y)
-
-    return scnd
+    def build_image(self ):
+        pass
 
 
-def replace_cat(x, scnd):
-
-    return scnd.transform(x)
 
 
 

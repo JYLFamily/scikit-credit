@@ -40,8 +40,6 @@ class Node:
 
 class SplitND(BaseEstimator, TransformerMixin):
     def __init__(self,
-                 column,
-                 target,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
                  min_information_value_split_gain=0.0015):
@@ -50,8 +48,8 @@ class SplitND(BaseEstimator, TransformerMixin):
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
 
-        self.column = column
-        self.target = target
+        self.column = None
+        self.target = None
 
         self.all_cnt_negative = None
         self.all_cnt_positive = None
@@ -61,6 +59,9 @@ class SplitND(BaseEstimator, TransformerMixin):
         self._image = None
 
     def fit( self, x, y):
+        self.column = x.columns
+        self.target = y.name
+
         self.all_cnt_negative = y.tolist().count(0)
         self.all_cnt_positive = y.tolist().count(1)
 
@@ -130,8 +131,8 @@ class SplitND(BaseEstimator, TransformerMixin):
 
         if node.isleaf:
             self._datas[- 1].append({
-                "Column": node.column,
-                "Bucket": node.bucket.values(),
+                "Column": node.column.tolist(),
+                "Bucket": list(node.bucket.values()),
                 "CntPositive":    node.sub_xy_cnt_positive,
                 "CntNegative":    node.sub_xy_cnt_negative,
                 "CntPositive(%)": node.sub_xy_cnt_positive / self.all_cnt_positive,
