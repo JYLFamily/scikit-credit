@@ -6,9 +6,9 @@ import pandas as pd
 from itertools import chain
 from joblib import Parallel, delayed
 from sklearn.base import clone, TransformerMixin
-from sklearn.preprocessing   import   FunctionTransformer
+from sklearn.pipeline import _fit_one, _transform_one
+from sklearn.preprocessing import FunctionTransformer
 from sklearn.utils.metaestimators import _BaseComposition
-from sklearn.pipeline import _fit_transform_one, _transform_one
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -30,7 +30,7 @@ class Bucketer(_BaseComposition, TransformerMixin):
         return [(name, buckter) for name, buckter, _ in self.bucketers]
 
     @_bucketers.setter
-    def _bucketers(self,  value):
+    def _bucketers(self, value):
         self.bucketers = [
             (name, buckter, col)
             for ((name, buckter), (_, _, col)) in zip(value, self.bucketers)
@@ -45,47 +45,43 @@ class Bucketer(_BaseComposition, TransformerMixin):
         self._set_params("_bucketers", **kwargs)
         return self
 
-    def fit(self,    x, y=None):
-        self.fit_transform(x, y=y)
+    def fit(self,    X, y):
+        buckters = \
+            Parallel(n_jobs=self.nthread, verbose=self.verbose)(
+                delayed(_fit_one)(
+                    transformer=clone(buckter),
+                    X=X[column],
+                    y=y,
+                    weight=None)
+                for name, buckter, column  in self._iter(False))
+
+        self._update_fitted_bucketers(buckters)
 
         return self
 
-    def transform(self, x):
-        xs = self._fit_transform(x, None, _transform_one, fitted=True)
-
-        return pd.concat((list(xs)), axis=1)
-
-    def fit_transform( self, x, y=None,  **fit_params):
-        self._validate_remainder(x)
-
-        xs, bucketers = zip(*self._fit_transform(x, y, _fit_transform_one))
-
-        self._update_fitted_bucketers(bucketers)
-
-        return pd.concat((list(xs)), axis=1)
-
-    def _fit_transform(self, x, y, func, fitted=False):
-        return Parallel(n_jobs=self.nthread,     verbose=self.verbose)(
-                delayed(func)(
-                    transformer=clone(buckter) if not fitted else buckter,
-                    X=x[column],
-                    y=y,
+    def transform(self, X):
+        xs = \
+            Parallel(n_jobs=self.nthread, verbose=self.verbose)(
+                delayed(_transform_one)(
+                    transformer=buckter,
+                    X=X[column],
+                    y=None,
                     weight=None)
-                for name, buckter, column in self._iter(fitted=fitted))
+                for name, buckter, column   in self._iter(True))
 
-    def _validate_remainder(self, x):
-        remaining_column = set(x.columns.tolist()) - set(list(chain.from_iterable([column for _, _, column in self.buckters])))
+        return pd.concat((list(xs)), axis=1)
 
-        self._remainder = ('remainder', self.remainder, list(remaining_column))
+    def fit_transform(self, X, y=None, **fit_params):
+        self.fit(X, y)
 
-    def _iter(self, fitted=False):
+        return self.transform(X)
+
+    def _iter(self, fitted):
         if fitted:
             bucketers = self.bucketers_
         else:
             bucketers = self.bucketers
-
-            if self._remainder[2] is not None:
-                bucketers = chain(bucketers, [self._remainder])
+            bucketers.extend(self.remainder)
 
         for name, buckter, column in bucketers:
             if  buckter  == "keep":
@@ -102,12 +98,12 @@ class Bucketer(_BaseComposition, TransformerMixin):
         fitted_bucketers =  iter(bucketers)
         bucketers_ = []
 
-        for name, old, column in self._iter():
-            if   old == "drop":
-                buckter = "drop"
-            elif old == "keep":
+        for name, old, column in self._iter(False):
+            if   old == "keep":
                 next(fitted_bucketers)
                 buckter = "keep"
+            elif old == "drop":
+                buckter = "drop"
             else:
                 buckter = next(fitted_bucketers)
             bucketers_.append((name, buckter, column))
@@ -130,3 +126,4 @@ if __name__ == "__main__":
     # print(buckter.fit_transform(application_train[["EXT_SOURCE_1", "EXT_SOURCE_2", "EXT_SOURCE_3"]],
     #                       application_train["TARGET"]).head())
     pass
+    from sklearn.preprocessing import Normalizer

@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Bucketer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/Discrete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteAuto.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/DiscreteCust.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitNumND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/Bucketer.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/Bucketer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -355,13 +347,6 @@
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
     </task>
-    <task id="LOCAL-00083" summary="init commit">
-      <created>1583912141418</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1583912141420</updated>
-    </task>
     <task id="LOCAL-00084" summary="init commit">
       <created>1584782457640</created>
       <option name="number" value="00084" />
@@ -698,7 +683,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636448646416</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="init commit">
+      <created>1636624034890</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1636624034893</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -782,10 +774,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636617749224" />
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1636624014637">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1636624030805">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1636624014637" />
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1636624030805" />
     <state width="1838" height="377" key="GridCell.Tab.0.bottom" timestamp="1636616775471">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -802,10 +794,10 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="1838" height="377" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1636616775471" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1636449944574">
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1636624087927">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1636449944574" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1636624087927" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1636592088301">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
