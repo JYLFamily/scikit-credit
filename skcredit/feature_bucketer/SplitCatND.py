@@ -29,7 +29,7 @@ class SplitCatND(BaseSplitND):
         super().fit(x,  y)
 
         from skcredit.feature_bucketer import WoEEncoder
-        self.woe_encoder  = WoEEncoder(column=self.columns, target=self.target)
+        self.woe_encoder  = WoEEncoder(columns=self.columns, target=self.target)
         self.woe_encoder.fit(x, y)
         x = self.woe_encoder.transform(x)
 

@@ -10,6 +10,7 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
     def __init__(self, columns, target):
         self.columns = columns
         self.target  = target
+
         self.lookup = dict()
 
     def fit(self,    x, y):

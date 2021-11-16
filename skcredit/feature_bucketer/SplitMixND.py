@@ -53,9 +53,9 @@ class SplitMixND(BaseSplitND):
 
         table["Bucket"] = table["Bucket"].apply(
             lambda buckets: ', '.join([
-                num_bucket_to_string(bucket) if column in self.num_columns else
-                cat_bucket_to_string(bucket, self.woe_encoder.lookup[column]  )
-                for column, bucket in zip(self.columns, buckets)]))
+                num_bucket_to_string(bucket) if column in self.num_columns   else
+                cat_bucket_to_string(bucket, self.woe_encoder.lookup[column]) for
+                column, bucket in zip(self.columns, buckets)]))
 
         return table
 
