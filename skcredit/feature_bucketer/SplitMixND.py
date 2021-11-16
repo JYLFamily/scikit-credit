@@ -34,7 +34,7 @@ class SplitMixND(BaseSplitND):
         self.cat_columns = x.select_dtypes(include=object).columns.tolist()
         self.num_columns = x.select_dtypes(exclude=object).columns.tolist()
 
-        from skcredit.feature_bucketer import WoEEncoder
+        from skcredit.feature_bucketer.WoEEncoder import WoEEncoder
         self.woe_encoder  =  WoEEncoder(columns=self.cat_columns, target=self.target)
         self.woe_encoder.fit(x, y)
         x =  self.woe_encoder.transform(x)
