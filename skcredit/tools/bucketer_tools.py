@@ -6,7 +6,6 @@ from portion import to_string
 from scipy.stats  import  spearmanr
 from operator import lt, le, gt, ge
 from portion.const import Bound, _Singleton, _NInf, _PInf
-from sklearn.base  import BaseEstimator, TransformerMixin
 from pandas.io.formats.format import _trim_zeros_single_float
 np.random.seed(7)
 
@@ -80,40 +79,10 @@ def calc_stats(sub_cnt_negative, sub_cnt_positive, all_cnt_negative, all_cnt_pos
 
 
 def cat_bucket_to_string(bucket, lookup):
-
-    return str({cat if val  in bucket else  "MISSING"  for  cat, val in lookup.items()})
+    return ("{MISSING}" if bucket.lower == bucket.upper == NAN else
+            f"{{{', '.join([cat for cat, woe in lookup.items() if woe in bucket])}}}")
 
 
 def num_bucket_to_string(bucket):
-
-    return to_string(bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
-    else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")
-
-
-class CatEncoder(BaseEstimator, TransformerMixin):
-    def __init__(self, column, target):
-        self.column = column
-        self.target = target
-        self.lookup = dict()
-
-    def fit(self,    x, y):
-        for column in self.column:
-            self.lookup[column] = y.groupby(x[column]).agg(lambda group:
-                    round(np.log((0.0005 if (temp := group.eq(1).sum()) == 0 else temp) /
-                                 (0.0005 if (temp := group.eq(0).sum()) == 0 else temp)), 5)).to_dict()
-
-        return self
-
-    def transform(self, x):
-        # return all dataframe
-        x_transformed = x.copy(deep=True)
-
-        for column in self.column:
-            x_transformed[column] = x[column].map(self.lookup[column])
-
-        return x_transformed
-
-    def fit_transform(self, x, y=None, **fit_params):
-        self.fit(x, y)
-
-        return self.transform(x)
+    return to_string(interval=bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
+        else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")

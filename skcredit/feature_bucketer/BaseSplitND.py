@@ -10,7 +10,7 @@ from portion import closed  as  oc
 from dataclasses  import dataclass
 from itertools import product, chain
 from skcredit.tools import NAN, NINF, PINF
-from sklearn.base   import BaseEstimator   , TransformerMixin
+from sklearn.base   import BaseEstimator,    TransformerMixin
 from skcredit.tools import l_bound_operator, r_bound_operator, get_splits, get_direct, calc_stats
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
@@ -38,7 +38,7 @@ class Node:
     r_child: object = None
 
 
-class SplitND(BaseEstimator, TransformerMixin):
+class BaseSplitND(BaseEstimator, TransformerMixin):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
@@ -48,8 +48,8 @@ class SplitND(BaseEstimator, TransformerMixin):
         self.min_bin_cnt_positive = min_bin_cnt_positive
         self.min_information_value_split_gain = min_information_value_split_gain
 
-        self.column = None
-        self.target = None
+        self.columns = None
+        self.target  = None
 
         self.all_cnt_negative = None
         self.all_cnt_positive = None
@@ -59,8 +59,8 @@ class SplitND(BaseEstimator, TransformerMixin):
         self._image = None
 
     def fit( self, x, y):
-        self.column = x.columns
-        self.target = y.name
+        self.columns = x.columns
+        self.target  = y.name
 
         self.all_cnt_negative = y.tolist().count(0)
         self.all_cnt_positive = y.tolist().count(1)
@@ -69,12 +69,12 @@ class SplitND(BaseEstimator, TransformerMixin):
 
     def _fit(self, x, y):
         # x 2D
-        xy = pd.concat([x.reindex(columns=self.column), y.to_frame(self.target)], axis=1)
+        xy = pd.concat([x.reindex(columns=self.columns), y.to_frame(self.target)], axis=1)
 
-        for masks in product(* [[0, 1] for _ in self.column]):
-            bucket = dict(zip(self.column, [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
-            sub_xy = xy.loc[np.logical_and.reduce([xy[column].isna() if mask else xy[column].notna()
-                    for column, mask in zip(self.column, masks)], axis=0), :].reset_index(drop=True)
+        for masks in product(* [[0, 1] for _ in self.columns]):
+            bucket = dict(zip(self.columns, [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
+            sub_xy = xy[np.logical_and.reduce([xy[column].isna() if mask else xy[column].notna()
+                  for column, mask in zip(self.columns, masks)], axis=0)].reset_index(drop=True)
 
             sub_cnt_negative = sub_xy[self.target].tolist().count(0)
             sub_cnt_positive = sub_xy[self.target].tolist().count(1)
@@ -87,15 +87,15 @@ class SplitND(BaseEstimator, TransformerMixin):
 
             root_node = Node(
                 isleaf=True,
-                column=self.column,
+                column=self.columns,
                 bucket=bucket,
                 sub_xy=sub_xy,
                 sub_xy_cnt_negative=sub_cnt_negative,
                 sub_xy_cnt_positive=sub_cnt_positive,
                 sub_xy_woe=sub_woe,
                 sub_xy_ivs=sub_ivs,
-                splits={column: get_splits(sub_xy[column],   sub_xy[self.target]) for column in self.column},
-                direct={column: get_direct(sub_xy[column],   sub_xy[self.target]) for column in self.column},
+                splits={column: get_splits(sub_xy[column], sub_xy[self.target]) for column in self.columns},
+                direct={column: get_direct(sub_xy[column], sub_xy[self.target]) for column in self.columns},
             )
 
             self._datas.append([])
@@ -110,14 +110,14 @@ class SplitND(BaseEstimator, TransformerMixin):
         pass
 
     def _transform(self, x):
-        x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({self.column})"])
+        x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({', '.join(self.columns)})"])
 
         for columns, buckets, woe in zip(self._table["Column"], self._table["Bucket"], self._table["WoE"]):
             masks = [l_bound_operator[bucket.left ](x[column], bucket.lower) &
                      r_bound_operator[bucket.right](x[column], bucket.upper)
                      for column, bucket in zip(columns, buckets)]
 
-            x_transformed.loc[np.logical_and.reduce(masks, axis=0), :] = woe
+            x_transformed[np.logical_and.reduce(masks, axis=0)] = woe
 
         return x_transformed
 
@@ -130,11 +130,11 @@ class SplitND(BaseEstimator, TransformerMixin):
         node = self._split(node)
 
         if node.isleaf:
-            self._datas[- 1].append({
-                "Column": node.column.tolist(),
-                "Bucket": list(node.bucket.values()),
-                "CntPositive":    node.sub_xy_cnt_positive,
-                "CntNegative":    node.sub_xy_cnt_negative,
+            self._datas[-1].append({
+                "Column": f"FEATURE({', '.join(self.columns)})",
+                "Bucket": list(node.bucket.values()   ),
+                "CntPositive": node.sub_xy_cnt_positive,
+                "CntNegative": node.sub_xy_cnt_negative,
                 "CntPositive(%)": node.sub_xy_cnt_positive / self.all_cnt_positive,
                 "CntNegative(%)": node.sub_xy_cnt_negative / self.all_cnt_negative,
                 "WoE": node.sub_xy_woe,
@@ -191,7 +191,7 @@ class SplitND(BaseEstimator, TransformerMixin):
                                 isleaf=True,
                                 column=node.column,
                                 bucket={column: node.bucket[column] & oc(NINF, temp_split)
-                                    if column == temp_column else node.bucket[column] for column in self.column},
+                                    if column == temp_column else node.bucket[column] for column in self.columns},
                                 sub_xy=temp_sub_xy_l,
                                 sub_xy_cnt_negative=temp_sub_xy_l_cnt_negative,
                                 sub_xy_cnt_positive=temp_sub_xy_l_cnt_positive,
@@ -199,7 +199,7 @@ class SplitND(BaseEstimator, TransformerMixin):
                                 sub_xy_ivs=temp_sub_xy_l_ivs,
                                 direct=node.direct,
                                 splits={column: [split for split in node.splits[column] if split <= temp_split]
-                                    if column == temp_column else node.splits[column] for column in self.column},
+                                    if column == temp_column else node.splits[column] for column in self.columns},
                                 direct_min_value=(
                                     node.direct_min_value if node.direct[temp_column] == "increasing" else midd),
                                 direct_max_value=(
@@ -209,14 +209,14 @@ class SplitND(BaseEstimator, TransformerMixin):
                                 isleaf=True,
                                 column=node.column,
                                 bucket={column: node.bucket[column] & oo(temp_split, PINF)
-                                    if column == temp_column else node.bucket[column] for column in self.column},
+                                    if column == temp_column else node.bucket[column] for column in self.columns},
                                 sub_xy=temp_sub_xy_r,
                                 sub_xy_cnt_negative=temp_sub_xy_r_cnt_negative,
                                 sub_xy_cnt_positive=temp_sub_xy_r_cnt_positive,
                                 sub_xy_woe=temp_sub_xy_r_woe,
                                 sub_xy_ivs=temp_sub_xy_r_ivs,
                                 splits={column: [split for split in node.splits[column] if split >  temp_split]
-                                    if column == temp_column else node.splits[column] for column in self.column},
+                                    if column == temp_column else node.splits[column] for column in self.columns},
                                 direct=node.direct,
                                 direct_min_value=(
                                     midd if node.direct[temp_column] == "increasing" else node.direct_min_value),
