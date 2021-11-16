@@ -112,7 +112,10 @@ class BaseSplitND(BaseEstimator, TransformerMixin):
     def _transform(self, x):
         x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({', '.join(self.columns)})"])
 
-        for columns, buckets, woe in zip(self._table["Column"],  self._table["Bucket"],  self._table["WoE"]):
+        for columns, buckets, woe in zip(self._table["Column"],
+                                         self._table["Bucket"],
+                                         self._table["WoE"]):
+
             masks = [l_bound_operator[bucket.left ](x[column], bucket.lower) &
                      r_bound_operator[bucket.right](x[column], bucket.upper)
                      for column, bucket in zip(columns, buckets)]
