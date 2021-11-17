@@ -4,7 +4,6 @@ import warnings
 import numpy   as np
 import pandas  as pd
 from numbers  import Real
-from copy import deepcopy
 from portion import singleton
 from portion import open   as  oo
 from dataclasses import dataclass
