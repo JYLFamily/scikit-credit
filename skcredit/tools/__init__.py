@@ -2,7 +2,7 @@
 
 from .selector_tools import entropy, mis, cmi
 from .bucketer_tools import NINF, PINF, NAN, l_bound_operator, r_bound_operator,     \
-    get_splits, get_direct, calc_stats, cat_bucket_to_string, num_bucket_to_string
+    get_splits, get_direct, calc_stats, format_table_columns
 
 
 __all__ = [
@@ -13,6 +13,5 @@ __all__ = [
     "get_splits",
     "get_direct",
     "calc_stats",
-    "cat_bucket_to_string",
-    "num_bucket_to_string",
+    "format_table_columns",
 ]

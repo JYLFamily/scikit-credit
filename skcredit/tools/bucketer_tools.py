@@ -49,17 +49,20 @@ NAN  =  _NaN()
 
 
 def get_splits(x, y):
-    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1):
+    if (x.empty or y.empty) or  y.nunique() <= 1:
         return []
 
-    return (temp if len(temp := x.unique()) <= 128 else np.histogram_bin_edges(x, bins=128)).tolist()
+    if x.nunique() <= 128:
+        return x.unique( )
+
+    return np.histogram_bin_edges(x,   bins=128)
 
 
 def get_direct(x, y):
-    if (x.empty or y.empty) or (x.nunique() <= 1 or y.nunique() <= 1):
+    if (x.empty or y.empty) or  y.nunique() <= 1:
         return "increasing"
 
-    return "increasing" if spearmanr(x, y)[0] > 0  else "decreasing"
+    return "increasing" if spearmanr(x, y)[0] > 0 else "decreasing"
 
 
 def calc_stats(sub_cnt_negative, sub_cnt_positive, all_cnt_negative, all_cnt_positive):
@@ -86,3 +89,18 @@ def cat_bucket_to_string(bucket, lookup):
 def num_bucket_to_string(bucket):
     return to_string(interval=bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
         else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")
+
+
+def format_table_columns(table, cat_columns, cat_encoder):
+    table["Bucket"] = table["Bucket"].apply(lambda buckets: ', '.join([
+        f"{column}->{cat_bucket_to_string(bucket, cat_encoder.column_woe_lookup[column])}" if column in cat_columns else
+        f"{column}->{num_bucket_to_string(bucket)}"
+        for column, bucket in buckets.items()]))
+
+    table["CntPositive(%)"] = table["CntPositive(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    table["CntNegative(%)"] = table["CntPositive(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+
+    table["WoE"] = table["WoE"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    table["IvS"] = table["WoE"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+
+    return table

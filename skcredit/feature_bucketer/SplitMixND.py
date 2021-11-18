@@ -3,17 +3,17 @@
 import warnings
 import numpy   as np
 import pandas  as pd
-from numbers  import Real
+from numbers import Real
+from skcredit.tools import  *
 from portion import singleton
+from itertools import product
+import plotly.graph_objects as go
 from portion import open   as  oo
 from dataclasses import dataclass
-from itertools import product, chain
 from portion import openclosed as oc
-from skcredit.tools import NAN, NINF, PINF
+from plotly.subplots  import make_subplots
 from sklearn.base   import BaseEstimator,  TransformerMixin
 from skcredit.feature_bucketer.WoEEncoder import WoEEncoder
-from skcredit.tools import cat_bucket_to_string, num_bucket_to_string
-from skcredit.tools import l_bound_operator, r_bound_operator, get_splits, get_direct, calc_stats
 np.random.seed(7)
 pd.set_option("max_rows"   , None)
 pd.set_option("max_columns", None)
@@ -60,7 +60,9 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         self.all_cnt_positive = None
 
         self._datas = list()
+
         self._table = None
+        self._image = None
 
     def fit( self, x, y):
         self.cat_columns = x.select_dtypes(include="category").columns.tolist()
@@ -110,8 +112,6 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             self._datas.append([])
             self._build(root_node)
 
-        self._table = pd.DataFrame.from_records(chain.from_iterable(self._datas))
-
         return self
 
     def transform( self, x):
@@ -119,9 +119,9 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         return self._transform(self.cat_encoder.transform(x))
 
     def _transform(self, x):
-        x_transformed = pd.DataFrame(index=x.index, columns=[f"FEATURE({', '.join(self.all_columns)})"])
+        x_transformed = pd.DataFrame(index=x.index, columns=[f"WOE({', '.join(self.all_columns)})"])
 
-        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),   self._datas):
+        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),  self._datas):
             sub_x = x[np.logical_and.reduce(
                 [x[column].isna() if  mask else
                 ~x[column].isna() for column, mask in zip(self.all_columns, masks)], axis=0)]
@@ -129,7 +129,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                 x_transformed.loc[sub_x[np.logical_and.reduce(
                     [l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
                     r_bound_operator[bucket.right](sub_x[column], bucket.upper)
-                    for column, bucket in zip(data["Column"], data["Bucket"])], axis=0)].index, :] = data["WoE"]
+                    for column, bucket in data["Bucket"].items()], axis=0)].index,  :] = data["WoE"]
 
         return x_transformed
 
@@ -142,11 +142,8 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         node = self._split(node)
 
         if node.isleaf:
-            column, bucket = zip(* node.bucket.items())  # [(), (), ()]
-
-            self._datas[-1].append({
-                "Column": column,
-                "Bucket": bucket,
+            self._datas[ -1].append({
+                "Bucket": node.bucket,
                 "CntPositive":    node.sub_xy_cnt_positive,
                 "CntNegative":    node.sub_xy_cnt_negative,
                 "CntPositive(%)": node.sub_xy_cnt_positive / self.all_cnt_positive,
@@ -238,15 +235,37 @@ class SplitMixND(BaseEstimator, TransformerMixin):
 
         return node
 
-    def build_table(self):
-        table = pd.DataFrame.from_records(chain.from_iterable(self._datas))
+    def build_table(self ):
+        # if self._table not None:
+        #     return self._table
 
-        table["Column"] = table["Column"].apply(lambda columns: f"FEATURE({', '.join(columns)})"    )
-        table["Bucket"] = table["Bucket"].apply(lambda buckets: ', '.join([
-            cat_bucket_to_string(bucket, self.cat_encoder[column]) if column in self.cat_columns else
-            num_bucket_to_string(bucket)
-            for column, bucket in zip(self.all_columns, buckets)]))
+        self._table = make_subplots(
+            rows=len(self._datas), cols=1, specs=[[{"type": "table"}] for _ in self._datas],
+            subplot_titles=[]
+        )
 
-        return table
+        for index, datas in enumerate(self._datas, 1):
+            table = pd.DataFrame.from_records(datas )
+            table = format_table_columns(table, self.cat_columns, self.cat_encoder)
+
+            self._table.add_trace(
+                go.Table(
+                    header=dict(
+                        values=[f"<b>{column}</b>" for column in table.columns]
+                    ),
+                    cells =dict(
+                        values=[column.tolist() for _, column in table.items()]
+                    ),
+                ),
+                row=index,
+                col=1
+            )
+
+        return self._table
+
+    def build_image(self ):
+        if not self._image:
+            return self._image
+
 
 
