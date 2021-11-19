@@ -98,9 +98,9 @@ def format_table_columns(table, cat_columns, cat_encoder):
         for column, bucket in buckets.items()]))
 
     table["CntPositive(%)"] = table["CntPositive(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
-    table["CntNegative(%)"] = table["CntPositive(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    table["CntNegative(%)"] = table["CntNegative(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
 
     table["WoE"] = table["WoE"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
-    table["IvS"] = table["WoE"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    table["IvS"] = table["IvS"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
 
     return table

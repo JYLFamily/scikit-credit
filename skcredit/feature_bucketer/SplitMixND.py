@@ -236,12 +236,15 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         return node
 
     def build_table(self ):
-        # if self._table not None:
-        #     return self._table
+        if self._table is not None:
+            return self._table
 
         self._table = make_subplots(
             rows=len(self._datas), cols=1, specs=[[{"type": "table"}] for _ in self._datas],
-            subplot_titles=[]
+            subplot_titles=[
+                '@'.join([f"{mask}({column})"
+                         for mask, column in zip(masks, self.all_columns)])
+                for masks in product(* [["NOTMISS", "MISSING"] for _ in self.all_columns])]
         )
 
         for index, datas in enumerate(self._datas, 1):
@@ -251,21 +254,58 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             self._table.add_trace(
                 go.Table(
                     header=dict(
-                        values=[f"<b>{column}</b>" for column in table.columns]
+                        values=[f"<b>{column}</b>" for column in table.columns],
+                        fill_color="rgb(192, 192, 192)",
+                        line_color="rgb(192, 192, 192)",
+                        font=dict(family="Courier New", color="white", size=12),
                     ),
                     cells =dict(
-                        values=[column.tolist() for _, column in table.items()]
+                        values=[column.tolist() for _, column in table.items()],
+                        fill_color="rgb(255, 255, 255)",
+                        line_color="rgb(192, 192, 192)",
+                        font=dict(family="Courier New", color="black", size=10),
                     ),
                 ),
                 row=index,
                 col=1
             )
 
+        self._table.update_layout(
+            title_font=dict(family="Courier New", color="black", size=16),
+            title_text=f"TABLE({'@'.join(self.all_columns)})")
+        self._table.update_annotations(font=dict(family="Courier New", color="black", size=16))
+
         return self._table
 
     def build_image(self ):
-        if not self._image:
+        if self._image is not None:
             return self._image
 
+        self._image = make_subplots(
+            rows=len(self._datas), cols=1, specs=[[{"type": "bar"  }] for _ in self._datas],
+            subplot_titles=[]
+        )
+
+        for index, datas in enumerate(self._datas, 1):
+            table = pd.DataFrame.from_records(datas )
+            table = format_table_columns(table, self.cat_columns, self.cat_encoder)
+
+            self._image.add_trace(
+                go.Bar(
+                    x=table["Bucket"], y=table["WoE"],
+
+                ),
+                row=index,
+                col=1
+            )
+
+        return self._image
 
 
+if __name__ == "__main__":
+    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv",
+                                    usecols=["EXT_SOURCE_1", "EXT_SOURCE_2",  "TARGET"])
+
+    split = SplitMixND()
+    split.fit(application_train[["EXT_SOURCE_1", "EXT_SOURCE_2"]], application_train["TARGET"])
+    split.build_table().show()
