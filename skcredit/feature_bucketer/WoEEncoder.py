@@ -18,6 +18,7 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.cat_columns = None
         self.num_columns = None
+        self.all_columns = None
 
         # cat
         self.column_cat_lookup = dict()
@@ -26,6 +27,7 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
     def fit(self,    x, y):
         self.cat_columns = x.select_dtypes(include="category").columns.tolist()
         self.num_columns = x.select_dtypes(exclude="category").columns.tolist()
+        self.all_columns = x.columns.tolist()
 
         for column in self.cat_columns:
             self.column_cat_lookup[column] = CategoricalDtype(categories=np.unique(x[column]).tolist())
@@ -37,12 +39,17 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, x):
-        x_transformed = deepcopy(x)
+        x_transformed  =  pd.DataFrame()
 
-        for column in self.cat_columns:
-            # not in train replace nan
-            x_transformed[column] = x_transformed[column].astype(self.column_cat_lookup[column])
-            x_transformed[column] = x_transformed[column].apply( self.column_woe_lookup[column])
+        for    column in self.all_columns:
+            if column in self.cat_columns:
+                # not in train replace nan
+                x_transformed[column] = x[column].astype(self.column_cat_lookup[column])
+                x_transformed[column] = x[column].map(   self.column_woe_lookup[column])
+                x_transformed[column] = x_transformed[column].astype(np.float64)
+
+            if column in self.num_columns:
+                x_transformed[column] = x[column]
 
         return x_transformed
 

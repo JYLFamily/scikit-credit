@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +113,7 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SplitMixND (1)">
+  <component name="RunManager" selected="Python.SplitMixND">
     <configuration name="CXBucketer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,27 +127,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="CXBucketer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_bucketer\CXBucketer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -257,13 +240,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="bucketer_tools" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/tools" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.SplitMixND" />
+        <item itemvalue="Python.bucketer_tools" />
         <item itemvalue="Python.SplitMixND (1)" />
         <item itemvalue="Python.CXBucketer (1)" />
         <item itemvalue="Python.SplitMixND" />
-        <item itemvalue="Python.SplitMixND" />
-        <item itemvalue="Python.SplitCatND" />
       </list>
     </recent_temporary>
   </component>
@@ -389,13 +393,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00093" summary="init commit">
-      <created>1631801246279</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1631801246280</updated>
     </task>
     <task id="LOCAL-00094" summary="init commit">
       <created>1631884058300</created>
@@ -733,7 +730,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637227861999</updated>
     </task>
-    <option name="localTasksCounter" value="142" />
+    <task id="LOCAL-00142" summary="init commit">
+      <created>1637313613950</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1637313613951</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -817,45 +821,50 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637114217672" />
-    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1637227859769">
+    <state x="546" y="131" key="CommitChangelistDialog2" timestamp="1637313612019">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1637227859769" />
+    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1637313612019" />
     <state x="92" y="92" width="1674" height="896" key="DiffContextDialog" timestamp="1637300137964">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="92" y="92" width="1674" height="896" key="DiffContextDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637300137964" />
-    <state width="1838" height="92" key="GridCell.Tab.0.bottom" timestamp="1637304905933">
+    <state width="1838" height="218" key="GridCell.Tab.0.bottom" timestamp="1637659113977">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="92" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1637304905933" />
-    <state width="1838" height="92" key="GridCell.Tab.0.center" timestamp="1637304905933">
+    <state width="1284" height="240" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1637572626482" />
+    <state width="1838" height="218" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1637659113977" />
+    <state width="1838" height="218" key="GridCell.Tab.0.center" timestamp="1637659113977">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="92" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1637304905933" />
-    <state width="1838" height="92" key="GridCell.Tab.0.left" timestamp="1637304905933">
+    <state width="1284" height="240" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1637572626481" />
+    <state width="1838" height="218" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1637659113977" />
+    <state width="1838" height="218" key="GridCell.Tab.0.left" timestamp="1637659113976">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="92" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1637304905933" />
-    <state width="1838" height="92" key="GridCell.Tab.0.right" timestamp="1637304905933">
+    <state width="1284" height="240" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1637572626481" />
+    <state width="1838" height="218" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1637659113976" />
+    <state width="1838" height="218" key="GridCell.Tab.0.right" timestamp="1637659113977">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1838" height="92" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1637304905933" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1637227865112">
+    <state width="1284" height="240" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1637572626482" />
+    <state width="1838" height="218" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1637659113977" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2" timestamp="1637313650627">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1637227865112" />
+    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1637313650627" />
     <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1637300137964">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637300137964" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1636592088301">
-      <screen x="0" y="0" width="1858" height="1080" />
+    <state x="409" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1637649711432">
+      <screen x="0" y="0" width="1304" height="768" />
     </state>
+    <state x="409" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1637649711432" />
     <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636592088301" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1636602887542">
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1637657037927">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1636602887542" />
+    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1637657037927" />
   </component>
 </project>

@@ -2,10 +2,11 @@
 
 import pandas as pd
 import numpy  as np
+from itertools  import  chain
 from portion import to_string
 from scipy.stats  import  spearmanr
 from operator import lt, le, gt, ge
-from portion.const import Bound, _Singleton, _NInf, _PInf
+from portion.const  import Bound,  _Singleton,  _NInf,  _PInf
 from pandas.io.formats.format import _trim_zeros_single_float
 np.random.seed(7)
 
@@ -82,25 +83,63 @@ def calc_stats(sub_cnt_negative, sub_cnt_positive, all_cnt_negative, all_cnt_pos
 
 
 def cat_bucket_to_string(bucket, lookup):
-    return ("{MISSING}" if bucket.lower == bucket.upper == NAN else
-            f"{{{', '.join([cat for cat, woe in lookup.items() if woe in bucket])}}}")
+    return ("[MISSING]" if bucket.lower == bucket.upper ==  NAN
+        else f"[{', '.join([cat for cat, woe in lookup.items() if woe in bucket])}]")
 
 
 def num_bucket_to_string(bucket):
     return to_string(interval=bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
-        else _trim_zeros_single_float(f"{element:.6f}"), sep=", ")
+        else _trim_zeros_single_float(f"{element:.6f}"), sep=', ')
 
 
-def format_table_columns(table, cat_columns, cat_encoder):
-    table["Bucket"] = table["Bucket"].apply(lambda buckets: ', '.join([
-        f"{column}->{cat_bucket_to_string(bucket, cat_encoder.column_woe_lookup[column])}" if column in cat_columns else
-        f"{column}->{num_bucket_to_string(bucket)}"
-        for column, bucket in buckets.items()]))
+def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
+    columns = list(chain(["Idx"], all_columns, ["CntP", "CntN", "PctP", "PctN", "WoE", "IvS"]))
 
-    table["CntPositive(%)"] = table["CntPositive(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
-    table["CntNegative(%)"] = table["CntNegative(%)"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    table = pd.DataFrame(columns=columns)
+    total = pd.DataFrame(
+        data=[["TOTAL", *["-" for _ in all_columns], 0., 0., 0., 0., 0., 0.]], columns=columns)
 
-    table["WoE"] = table["WoE"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
-    table["IvS"] = table["IvS"].apply(lambda element: _trim_zeros_single_float(f"{element:.6f}"))
+    for idx, data in enumerate(chain.from_iterable(datas), 1):
+        row = pd.DataFrame(columns=columns)
+
+        row.at[0, "Idx"]  = str(idx)
+
+        for    column in data["Bucket"].keys():
+            if column in cat_columns:
+                row.at[0, column]  =  cat_bucket_to_string(data["Bucket"][column],
+                                      cat_encoder.column_woe_lookup[column])
+            if column in num_columns:
+                row.at[0, column]  =  num_bucket_to_string(data["Bucket"][column])
+
+        row.at[0, "CntP"] = _trim_zeros_single_float(f"{data['CntPositive']:.3f}")
+        row.at[0, "CntN"] = _trim_zeros_single_float(f"{data['CntNegative']:.3f}")
+
+        row.at[0, "PctP"] = _trim_zeros_single_float(f"{data['PctPositive']:.3f}")
+        row.at[0, "PctN"] = _trim_zeros_single_float(f"{data['PctNegative']:.3f}")
+
+        row.at[0, "WoE"] = _trim_zeros_single_float(f"{data['WoE']:.3f}")
+        row.at[0, "IvS"] = _trim_zeros_single_float(f"{data['IvS']:.3f}")
+
+        table = table.append(row)
+
+        total.at[0, "CntP"] += data['CntPositive']
+        total.at[0, "CntN"] += data['CntNegative']
+        total.at[0, "PctP"] += data['PctPositive']
+        total.at[0, "PctN"] += data['PctNegative']
+        total.at[0, "WoE" ] += data['WoE']
+        total.at[0, "IvS" ] += data['IvS']
+
+    total.at[0, "CntP"] = _trim_zeros_single_float(f"{total.at[0, 'CntP']:.6f}")
+    total.at[0, "CntN"] = _trim_zeros_single_float(f"{total.at[0, 'CntN']:.6f}")
+    total.at[0, "PctP"] = _trim_zeros_single_float(f"{total.at[0, 'PctP']:.6f}")
+    total.at[0, "PctN"] = _trim_zeros_single_float(f"{total.at[0, 'PctN']:.6f}")
+    total.at[0, "WoE" ] = _trim_zeros_single_float(f"{total.at[0, 'WoE' ]:.6f}")
+    total.at[0, "IvS" ] = _trim_zeros_single_float(f"{total.at[0, 'IvS' ]:.6f}")
+
+    table = table.append(total)
 
     return table
+
+
+def prepare_image(datas, cat_columns, num_columns, all_columns, cat_encoder):
+    pass

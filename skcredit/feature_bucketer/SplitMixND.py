@@ -11,7 +11,6 @@ import plotly.graph_objects as go
 from portion import open   as  oo
 from dataclasses import dataclass
 from portion import openclosed as oc
-from plotly.subplots  import make_subplots
 from sklearn.base   import BaseEstimator,  TransformerMixin
 from skcredit.feature_bucketer.WoEEncoder import WoEEncoder
 np.random.seed(7)
@@ -129,7 +128,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                 x_transformed.loc[sub_x[np.logical_and.reduce(
                     [l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
                     r_bound_operator[bucket.right](sub_x[column], bucket.upper)
-                    for column, bucket in data["Bucket"].items()], axis=0)].index,  :] = data["WoE"]
+                    for column, bucket in zip(data["Column"], data["Bucket"])], axis=0)].index, :] = data["WoE"]
 
         return x_transformed
 
@@ -144,10 +143,10 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         if node.isleaf:
             self._datas[ -1].append({
                 "Bucket": node.bucket,
-                "CntPositive":    node.sub_xy_cnt_positive,
-                "CntNegative":    node.sub_xy_cnt_negative,
-                "CntPositive(%)": node.sub_xy_cnt_positive / self.all_cnt_positive,
-                "CntNegative(%)": node.sub_xy_cnt_negative / self.all_cnt_negative,
+                "CntPositive": node.sub_xy_cnt_positive,
+                "CntNegative": node.sub_xy_cnt_negative,
+                "PctPositive": node.sub_xy_cnt_positive / self.all_cnt_positive,
+                "PctNegative": node.sub_xy_cnt_negative / self.all_cnt_negative,
                 "WoE": node.sub_xy_woe,
                 "IvS": node.sub_xy_ivs
             })
@@ -239,41 +238,48 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         if self._table is not None:
             return self._table
 
-        self._table = make_subplots(
-            rows=len(self._datas), cols=1, specs=[[{"type": "table"}] for _ in self._datas],
-            subplot_titles=[
-                '@'.join([f"{mask}({column})"
-                         for mask, column in zip(masks, self.all_columns)])
-                for masks in product(* [["NOTMISS", "MISSING"] for _ in self.all_columns])]
+        table = prepare_table(
+            self._datas,
+            self.cat_columns,
+            self.num_columns,
+            self.all_columns,
+            self.cat_encoder,
         )
 
-        for index, datas in enumerate(self._datas, 1):
-            table = pd.DataFrame.from_records(datas )
-            table = format_table_columns(table, self.cat_columns, self.cat_encoder)
-
-            self._table.add_trace(
-                go.Table(
-                    header=dict(
-                        values=[f"<b>{column}</b>" for column in table.columns],
-                        fill_color="rgb(192, 192, 192)",
-                        line_color="rgb(192, 192, 192)",
-                        font=dict(family="Courier New", color="white", size=12),
-                    ),
-                    cells =dict(
-                        values=[column.tolist() for _, column in table.items()],
-                        fill_color="rgb(255, 255, 255)",
-                        line_color="rgb(192, 192, 192)",
-                        font=dict(family="Courier New", color="black", size=10),
-                    ),
+        self._table = go.Figure(
+            go.Table(
+                header=dict(
+                    values=[f"<b>{column}</b>" for column in table.columns],
+                    fill_color="rgb(128, 128, 128)",
+                    line_color="rgb(128, 128, 128)",
+                    font=dict(family="Courier New", color="white", size=14),
                 ),
-                row=index,
-                col=1
-            )
+                cells=dict(
+                    values=[column.tolist() for _, column in table.items()],
+                    fill_color="rgb(255, 255, 255)",
+                    line_color="rgb(128, 128, 128)",
+                    font=dict(family="Courier New", color="black", size=12),
+                ),
+            ),
+        )
 
         self._table.update_layout(
-            title_font=dict(family="Courier New", color="black", size=16),
-            title_text=f"TABLE({'@'.join(self.all_columns)})")
-        self._table.update_annotations(font=dict(family="Courier New", color="black", size=16))
+            title={
+                "text": f"<b>TABLE({' CROSS '.join(self.all_columns)})</b>",
+                "x": 0.500,
+                "y": 0.975,
+                "font": {
+                    "family": "Courier New",  "color": "rgb(128, 128, 128)",
+                    "size": 16,
+                },
+            },
+            margin={
+                "t": 60,
+                "b": 20,
+                "l": 20,
+                "r": 20,
+            }
+        )
 
         return self._table
 
@@ -281,23 +287,37 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         if self._image is not None:
             return self._image
 
-        self._image = make_subplots(
-            rows=len(self._datas), cols=1, specs=[[{"type": "bar"  }] for _ in self._datas],
-            subplot_titles=[]
+        image = prepare_image(
+            self._datas,
+            self.cat_columns,
+            self.num_columns,
+            self.all_columns,
+            self.cat_encoder,
         )
 
-        for index, datas in enumerate(self._datas, 1):
-            table = pd.DataFrame.from_records(datas )
-            table = format_table_columns(table, self.cat_columns, self.cat_encoder)
+        self._image = go.Figure(
+            go.Bar(
 
-            self._image.add_trace(
-                go.Bar(
-                    x=table["Bucket"], y=table["WoE"],
-
-                ),
-                row=index,
-                col=1
             )
+        )
+
+        self._image.update_layout(
+            title={
+                "text": f"<b>Bar Plot({' CROSS '.join(self.all_columns)})</b>",
+                "x": 0.500,
+                "y": 0.975,
+                "font": {
+                    "family":   "Courier New",   "color": "rgb(128, 128, 128)",
+                    "size": 16,
+                },
+            },
+            margin={
+                "t": 60,
+                "b": 20,
+                "l": 20,
+                "r": 20,
+            }
+        )
 
         return self._image
 
