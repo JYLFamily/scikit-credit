@@ -89,56 +89,60 @@ def cat_bucket_to_string(bucket, lookup):
 
 def num_bucket_to_string(bucket):
     return to_string(interval=bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
-        else _trim_zeros_single_float(f"{element:.6f}"), sep=', ')
+        else _trim_zeros_single_float(f"{element:.3f}"), sep=', ')
 
 
 def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
     columns = list(chain(["Idx"], all_columns, ["CntP", "CntN", "PctP", "PctN", "WoE", "IvS"]))
-
-    table = pd.DataFrame(columns=columns)
     total = pd.DataFrame(
         data=[["TOTAL", *["-" for _ in all_columns], 0., 0., 0., 0., 0., 0.]], columns=columns)
 
-    for idx, data in enumerate(chain.from_iterable(datas), 1):
-        row = pd.DataFrame(columns=columns)
+    table_list = list()
 
-        row.at[0, "Idx"]  = str(idx)
+    for datas in datas:
+        table = pd.DataFrame(columns=columns)
 
-        for    column in data["Bucket"].keys():
-            if column in cat_columns:
-                row.at[0, column]  =  cat_bucket_to_string(data["Bucket"][column],
-                                      cat_encoder.column_woe_lookup[column])
-            if column in num_columns:
-                row.at[0, column]  =  num_bucket_to_string(data["Bucket"][column])
+        for idx, data in enumerate(datas, 1):
+            row = pd.DataFrame(columns=columns )
 
-        row.at[0, "CntP"] = _trim_zeros_single_float(f"{data['CntPositive']:.3f}")
-        row.at[0, "CntN"] = _trim_zeros_single_float(f"{data['CntNegative']:.3f}")
+            row.at[0, "Idx"]  = str(idx)
 
-        row.at[0, "PctP"] = _trim_zeros_single_float(f"{data['PctPositive']:.3f}")
-        row.at[0, "PctN"] = _trim_zeros_single_float(f"{data['PctNegative']:.3f}")
+            for column in data["Bucket"].keys():
+                if column in cat_columns:
+                    row.at[0, column]  =  cat_bucket_to_string(data["Bucket"][column],
+                                          cat_encoder.column_woe_lookup[column])
+                if column in num_columns:
+                    row.at[0, column]  =  num_bucket_to_string(data["Bucket"][column])
 
-        row.at[0, "WoE"] = _trim_zeros_single_float(f"{data['WoE']:.3f}")
-        row.at[0, "IvS"] = _trim_zeros_single_float(f"{data['IvS']:.3f}")
+            row.at[0, "CntP"] = _trim_zeros_single_float(f"{data['CntPositive']:.3f}")
+            row.at[0, "CntN"] = _trim_zeros_single_float(f"{data['CntNegative']:.3f}")
 
-        table = table.append(row)
+            row.at[0, "PctP"] = _trim_zeros_single_float(f"{data['PctPositive']:.3f}")
+            row.at[0, "PctN"] = _trim_zeros_single_float(f"{data['PctNegative']:.3f}")
 
-        total.at[0, "CntP"] += data['CntPositive']
-        total.at[0, "CntN"] += data['CntNegative']
-        total.at[0, "PctP"] += data['PctPositive']
-        total.at[0, "PctN"] += data['PctNegative']
-        total.at[0, "WoE" ] += data['WoE']
-        total.at[0, "IvS" ] += data['IvS']
+            row.at[0, "WoE"] = _trim_zeros_single_float(f"{data['WoE']:.3f}")
+            row.at[0, "IvS"] = _trim_zeros_single_float(f"{data['IvS']:.3f}")
 
-    total.at[0, "CntP"] = _trim_zeros_single_float(f"{total.at[0, 'CntP']:.6f}")
-    total.at[0, "CntN"] = _trim_zeros_single_float(f"{total.at[0, 'CntN']:.6f}")
-    total.at[0, "PctP"] = _trim_zeros_single_float(f"{total.at[0, 'PctP']:.6f}")
-    total.at[0, "PctN"] = _trim_zeros_single_float(f"{total.at[0, 'PctN']:.6f}")
-    total.at[0, "WoE" ] = _trim_zeros_single_float(f"{total.at[0, 'WoE' ]:.6f}")
-    total.at[0, "IvS" ] = _trim_zeros_single_float(f"{total.at[0, 'IvS' ]:.6f}")
+            table = table.append(row)
 
-    table = table.append(total)
+            total.at[0, "CntP"] += data['CntPositive']
+            total.at[0, "CntN"] += data['CntNegative']
+            total.at[0, "PctP"] += data['PctPositive']
+            total.at[0, "PctN"] += data['PctNegative']
+            total.at[0, "WoE" ] += data['WoE']
+            total.at[0, "IvS" ] += data['IvS']
 
-    return table
+        table_list.append(table)
+
+    total.at[0, "CntP"] = _trim_zeros_single_float(f"{total.at[0, 'CntP']:.3f}")
+    total.at[0, "CntN"] = _trim_zeros_single_float(f"{total.at[0, 'CntN']:.3f}")
+    total.at[0, "PctP"] = _trim_zeros_single_float(f"{total.at[0, 'PctP']:.3f}")
+    total.at[0, "PctN"] = _trim_zeros_single_float(f"{total.at[0, 'PctN']:.3f}")
+    total.at[0, "WoE" ] = _trim_zeros_single_float(f"{total.at[0, 'WoE' ]:.3f}")
+    total.at[0, "IvS" ] = _trim_zeros_single_float(f"{total.at[0, 'IvS' ]:.3f}")
+
+    table_list = [pd.concat(table_list).reset_index(drop=True).append(total)] + table_list
+    return table_list
 
 
 def prepare_image(datas, cat_columns, num_columns, all_columns, cat_encoder):

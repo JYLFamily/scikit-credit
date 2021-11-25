@@ -82,7 +82,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         xy = pd.concat([x.reindex(columns=self.all_columns), y.to_frame(self.target)], axis=1)
 
         for masks in product(* [[0, 1] for _ in self.all_columns]):
-            bucket = dict(zip(self.all_columns, [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
+            bucket = dict(zip(self.all_columns,  [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
             sub_xy = xy[np.logical_and.reduce(
                 [xy[column].isna() if  mask else
                 ~xy[column].isna() for column, mask in zip(self.all_columns, masks)], axis=0)]
@@ -238,7 +238,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         if self._table is not None:
             return self._table
 
-        table = prepare_table(
+        table_list = prepare_table(
             self._datas,
             self.cat_columns,
             self.num_columns,
@@ -246,30 +246,42 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             self.cat_encoder,
         )
 
-        self._table = go.Figure(
-            go.Table(
-                header=dict(
-                    values=[f"<b>{column}</b>" for column in table.columns],
-                    fill_color="rgb(128, 128, 128)",
-                    line_color="rgb(128, 128, 128)",
-                    font=dict(family="Courier New", color="white", size=14),
+        self._table = go.Figure()
+
+        dropdown_buttons = [
+            {'label': "0", 'method': "update", 'args': [{"visible": [True,  False, False, False, False]}]},
+            {'label': "1", 'method': "update", 'args': [{"visible": [False,  True, False, False, False]}]},
+            {'label': "2", 'method': "update", 'args': [{"visible": [False, False,  True, False, False]}]},
+            {'label': "3", 'method': "update", 'args': [{"visible": [False, False, False,  True, False]}]},
+            {'label': "4", 'method': "update", 'args': [{"visible": [False, False, False, False,  True]}]},
+        ]
+
+        for idx, table in enumerate(table_list):
+            self._table.add_trace(
+                go.Table(
+                    header=dict(
+                        values=[f"<b>{column}</b>" for column in table.columns],
+                        fill_color="rgb(128, 128, 128)",
+                        line_color="rgb(128, 128, 128)",
+                        font=dict(family="Courier New", color="white", size=14),
+                    ),
+                    cells=dict(
+                        values=[column.tolist() for _, column in table.items()],
+                        fill_color="rgb(255, 255, 255)",
+                        line_color="rgb(128, 128, 128)",
+                        font=dict(family="Courier New", color="black", size=12),
+                    ),
+                    name=str(idx),
                 ),
-                cells=dict(
-                    values=[column.tolist() for _, column in table.items()],
-                    fill_color="rgb(255, 255, 255)",
-                    line_color="rgb(128, 128, 128)",
-                    font=dict(family="Courier New", color="black", size=12),
-                ),
-            ),
-        )
+            )
 
         self._table.update_layout(
             title={
-                "text": f"<b>TABLE({' CROSS '.join(self.all_columns)})</b>",
+                "text":    f"<b>TABLE({' @ '.join(self.all_columns)})</b>",
                 "x": 0.500,
                 "y": 0.975,
                 "font": {
-                    "family": "Courier New",  "color": "rgb(128, 128, 128)",
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
                     "size": 16,
                 },
             },
@@ -278,48 +290,51 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                 "b": 20,
                 "l": 20,
                 "r": 20,
-            }
+            },
+            updatemenus=[{
+                'buttons': dropdown_buttons
+            }]
         )
 
         return self._table
 
-    def build_image(self ):
-        if self._image is not None:
-            return self._image
-
-        image = prepare_image(
-            self._datas,
-            self.cat_columns,
-            self.num_columns,
-            self.all_columns,
-            self.cat_encoder,
-        )
-
-        self._image = go.Figure(
-            go.Bar(
-
-            )
-        )
-
-        self._image.update_layout(
-            title={
-                "text": f"<b>Bar Plot({' CROSS '.join(self.all_columns)})</b>",
-                "x": 0.500,
-                "y": 0.975,
-                "font": {
-                    "family":   "Courier New",   "color": "rgb(128, 128, 128)",
-                    "size": 16,
-                },
-            },
-            margin={
-                "t": 60,
-                "b": 20,
-                "l": 20,
-                "r": 20,
-            }
-        )
-
-        return self._image
+    # def build_image(self ):
+    #     if self._image is not None:
+    #         return self._image
+    #
+    #     image = prepare_image(
+    #         self._datas,
+    #         self.cat_columns,
+    #         self.num_columns,
+    #         self.all_columns,
+    #         self.cat_encoder,
+    #     )
+    #
+    #     self._image = go.Figure(
+    #         go.Bar(
+    #
+    #         )
+    #     )
+    #
+    #     self._image.update_layout(
+    #         title={
+    #             "text": f"<b>Bar Plot({' CROSS '.join(self.all_columns)})</b>",
+    #             "x": 0.500,
+    #             "y": 0.975,
+    #             "font": {
+    #                 "family":   "Courier New",   "color": "rgb(128, 128, 128)",
+    #                 "size": 16,
+    #             },
+    #         },
+    #         margin={
+    #             "t": 60,
+    #             "b": 20,
+    #             "l": 20,
+    #             "r": 20,
+    #         }
+    #     )
+    #
+    #     return self._image
 
 
 if __name__ == "__main__":
