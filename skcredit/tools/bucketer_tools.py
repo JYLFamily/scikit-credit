@@ -2,10 +2,10 @@
 
 import pandas as pd
 import numpy  as np
-from itertools  import  chain
 from portion import to_string
-from scipy.stats  import  spearmanr
-from operator import lt, le, gt, ge
+from scipy.stats   import   spearmanr
+from operator  import  lt, le, gt, ge
+from itertools  import product, chain
 from portion.const  import Bound,  _Singleton,  _NInf,  _PInf
 from pandas.io.formats.format import _trim_zeros_single_float
 np.random.seed(7)
@@ -92,18 +92,20 @@ def num_bucket_to_string(bucket):
         else _trim_zeros_single_float(f"{element:.3f}"), sep=', ')
 
 
-def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
+def prepare_table( datas, cat_columns, all_columns, cat_encoder):
     columns = list(chain(["Idx"], all_columns, ["CntP", "CntN", "PctP", "PctN", "WoE", "IvS"]))
     total = pd.DataFrame(
         data=[["TOTAL", *["-" for _ in all_columns], 0., 0., 0., 0., 0., 0.]], columns=columns)
 
-    table_list = list()
+    table_dict = dict()
 
-    for datas in datas:
-        table = pd.DataFrame(columns=columns)
+    for masks, datas in zip(product(* [[0, 1] for _ in all_columns]), datas):
+        table   = pd.DataFrame(columns=columns)
+        label   = ' @ '.join([f"{'MISSING' if mask else 'NOTMISS'}({column})"
+            for mask, column in zip(masks, all_columns)])
 
         for idx, data in enumerate(datas, 1):
-            row = pd.DataFrame(columns=columns )
+            row = pd.DataFrame(columns=columns)
 
             row.at[0, "Idx"]  = str(idx)
 
@@ -111,7 +113,7 @@ def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
                 if column in cat_columns:
                     row.at[0, column]  =  cat_bucket_to_string(data["Bucket"][column],
                                           cat_encoder.column_woe_lookup[column])
-                if column in num_columns:
+                else:
                     row.at[0, column]  =  num_bucket_to_string(data["Bucket"][column])
 
             row.at[0, "CntP"] = _trim_zeros_single_float(f"{data['CntPositive']:.3f}")
@@ -132,7 +134,7 @@ def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
             total.at[0, "WoE" ] += data['WoE']
             total.at[0, "IvS" ] += data['IvS']
 
-        table_list.append(table)
+        table_dict[label] = table
 
     total.at[0, "CntP"] = _trim_zeros_single_float(f"{total.at[0, 'CntP']:.3f}")
     total.at[0, "CntN"] = _trim_zeros_single_float(f"{total.at[0, 'CntN']:.3f}")
@@ -141,9 +143,35 @@ def prepare_table( datas, cat_columns, num_columns, all_columns, cat_encoder):
     total.at[0, "WoE" ] = _trim_zeros_single_float(f"{total.at[0, 'WoE' ]:.3f}")
     total.at[0, "IvS" ] = _trim_zeros_single_float(f"{total.at[0, 'IvS' ]:.3f}")
 
-    table_list = [pd.concat(table_list).reset_index(drop=True).append(total)] + table_list
-    return table_list
+    table_dict["TOTAL"] = pd.concat(table_dict.values()).reset_index(drop=True).append(total)
+
+    return table_dict
 
 
-def prepare_image(datas, cat_columns, num_columns, all_columns, cat_encoder):
-    pass
+def prepare_image(datas, cat_columns, all_columns, cat_encoder):
+    columns = ["Bucket", "WoE"]
+
+    image_dict = dict()
+
+    for masks, datas in zip(product(* [[0, 1] for _ in all_columns]),  datas):
+        table   = pd.DataFrame(columns=columns)
+        label   = ' @ '.join( [f"{'MISSING' if mask else 'NOTMISS'}({column})"
+            for mask, column in zip(masks, all_columns)])
+
+        for idx, data in enumerate(datas, 1):
+            row = pd.DataFrame(columns=columns)
+
+            row.at[0, "Bucket"] = ' @ '.join([
+                (temp
+                if len(temp := cat_bucket_to_string(data['Bucket'][column], cat_encoder.column_woe_lookup[column])) <=12
+                or temp  ==  "[MISSING]"
+                else temp[:12] + '...]')
+                if column in cat_columns
+                else
+                num_bucket_to_string(data["Bucket"][column]) for column in data["Bucket"].keys()])
+            row.at[0, "WoE"] = round(data["WoE"   ],  3)
+            table = table.append(row)
+
+        image_dict[label] = table
+
+    return image_dict

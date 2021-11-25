@@ -30,7 +30,7 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
         self.all_columns = x.columns.tolist()
 
         for column in self.cat_columns:
-            self.column_cat_lookup[column] = CategoricalDtype(categories=np.unique(x[column]).tolist())
+            self.column_cat_lookup[column] = CategoricalDtype(categories=x[column].cat.categories     )
 
             self.column_woe_lookup[column] = y.groupby(x[column]).agg(lambda group:
                     round(np.log((0.0005 if (temp := group.eq(1).sum()) == 0 else temp) /

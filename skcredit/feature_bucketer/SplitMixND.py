@@ -238,25 +238,16 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         if self._table is not None:
             return self._table
 
-        table_list = prepare_table(
+        table_dict = prepare_table(
             self._datas,
             self.cat_columns,
-            self.num_columns,
             self.all_columns,
             self.cat_encoder,
         )
 
         self._table = go.Figure()
 
-        dropdown_buttons = [
-            {'label': "0", 'method': "update", 'args': [{"visible": [True,  False, False, False, False]}]},
-            {'label': "1", 'method': "update", 'args': [{"visible": [False,  True, False, False, False]}]},
-            {'label': "2", 'method': "update", 'args': [{"visible": [False, False,  True, False, False]}]},
-            {'label': "3", 'method': "update", 'args': [{"visible": [False, False, False,  True, False]}]},
-            {'label': "4", 'method': "update", 'args': [{"visible": [False, False, False, False,  True]}]},
-        ]
-
-        for idx, table in enumerate(table_list):
+        for idx, (label, table) in enumerate(table_dict.items()):
             self._table.add_trace(
                 go.Table(
                     header=dict(
@@ -271,7 +262,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                         line_color="rgb(128, 128, 128)",
                         font=dict(family="Courier New", color="black", size=12),
                     ),
-                    name=str(idx),
+                    name=label,
                 ),
             )
 
@@ -287,60 +278,85 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             },
             margin={
                 "t": 60,
-                "b": 20,
-                "l": 20,
-                "r": 20,
-            },
-            updatemenus=[{
-                'buttons': dropdown_buttons
-            }]
+                "b": 5,
+                "l": 5,
+                "r": 5,
+            }
         )
 
         return self._table
 
-    # def build_image(self ):
-    #     if self._image is not None:
-    #         return self._image
-    #
-    #     image = prepare_image(
-    #         self._datas,
-    #         self.cat_columns,
-    #         self.num_columns,
-    #         self.all_columns,
-    #         self.cat_encoder,
-    #     )
-    #
-    #     self._image = go.Figure(
-    #         go.Bar(
-    #
-    #         )
-    #     )
-    #
-    #     self._image.update_layout(
-    #         title={
-    #             "text": f"<b>Bar Plot({' CROSS '.join(self.all_columns)})</b>",
-    #             "x": 0.500,
-    #             "y": 0.975,
-    #             "font": {
-    #                 "family":   "Courier New",   "color": "rgb(128, 128, 128)",
-    #                 "size": 16,
-    #             },
-    #         },
-    #         margin={
-    #             "t": 60,
-    #             "b": 20,
-    #             "l": 20,
-    #             "r": 20,
-    #         }
-    #     )
-    #
-    #     return self._image
+    def build_image(self ):
+        if self._image is not None:
+            return self._image
 
+        image_dict = prepare_image(
+            self._datas,
+            self.cat_columns,
+            self.all_columns,
+            self.cat_encoder,
+        )
 
-if __name__ == "__main__":
-    application_train = pd.read_csv("C:\\Users\\P1352\\Desktop\\application_train.csv",
-                                    usecols=["EXT_SOURCE_1", "EXT_SOURCE_2",  "TARGET"])
+        self._image = go.Figure()
 
-    split = SplitMixND()
-    split.fit(application_train[["EXT_SOURCE_1", "EXT_SOURCE_2"]], application_train["TARGET"])
-    split.build_table().show()
+        for label, image in image_dict.items():
+            self._image.add_trace(
+                go.Bar(
+                    x=image["Bucket"],
+                    y=image["WoE"   ],
+                    name=label
+                )
+            )
+
+        self._image.update_layout(
+            title={
+                "text":  f"<b>WoE Bar({' @ '.join(self.all_columns)})</b>",
+                "x": 0.500,
+                "y": 0.975,
+                "font": {
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 16,
+                },
+            },
+            margin={
+                "t": 60,
+                "b": 5,
+                "l": 5,
+                "r": 5,
+            },
+            legend={
+                "font": {
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 8,
+                },
+            }
+        )
+
+        self._image.update_xaxes(
+            title={
+                "text": "Buckets",
+                "font": {
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 14,
+                },
+            },
+            tickfont={
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 12
+            }
+        )
+        self._image.update_yaxes(
+            title={
+                "text": "WoE",
+                "font": {
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 14,
+                },
+            },
+            tickfont={
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 12
+            }
+        )
+
+        return self._image
