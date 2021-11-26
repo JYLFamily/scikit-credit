@@ -304,7 +304,8 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                 go.Bar(
                     x=image["Bucket"],
                     y=image["WoE"   ],
-                    name=label
+                    name=label,
+                    hovertemplate="Bucket: %{x}<br>WoE: %{y}",
                 )
             )
 
@@ -327,7 +328,15 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             legend={
                 "font": {
                     "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 8,
+                    "size": 14,
+                },
+            },
+            hoverlabel={
+                "bgcolor"    : "rgb(255, 255, 255)",
+                "bordercolor": "rgb(128, 128, 128)",
+                "font": {
+                    "family": "Courier New", "color": "rgb(128, 128, 128)",
+                    "size": 14,
                 },
             }
         )
