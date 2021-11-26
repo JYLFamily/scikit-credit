@@ -15,12 +15,11 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 class SelectBins(Select):
-    def __init__(self,   keep_columns, date_columns):
-        super().__init__(keep_columns, date_columns)
+    def __init__(self):
+        super().__init__()
 
     def fit(self, x, y=None):
-        self.feature_columns = np.array(
-            [column for column in x.columns if column not in self.keep_columns and column not in self.date_columns])
+        self.feature_columns = np.array(x.columns)
 
         intercept   = np.log(y.sum() / (y.shape[0] - y.sum()))
         coefficient = 1

@@ -13,10 +13,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 class Select(BaseEstimator, TransformerMixin):
-    def __init__(self, keep_columns, date_columns):
-        self.keep_columns = keep_columns
-        self.date_columns = date_columns
-
+    def __init__(self):
         self.feature_columns = None
         self.feature_support = None
 
@@ -25,9 +22,7 @@ class Select(BaseEstimator, TransformerMixin):
 
     def transform(self,   x):
 
-        return x[self.keep_columns +
-                 self.date_columns +
-                 self.feature_columns[self.feature_support].tolist()]
+        return x[self.feature_columns[self.feature_support].tolist()]
 
     def fit_transform(self, x, y=None, **fit_params):
         self.fit(x, y)

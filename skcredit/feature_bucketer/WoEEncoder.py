@@ -3,7 +3,6 @@
 import warnings
 import pandas as pd
 import numpy  as np
-from copy import deepcopy
 from pandas.api.types import CategoricalDtype
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)

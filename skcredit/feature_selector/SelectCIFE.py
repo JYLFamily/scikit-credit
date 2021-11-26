@@ -17,13 +17,12 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 class SelectCIFE(Select):
-    def __init__(self,   keep_columns, date_columns, nums_feature):
-        super().__init__(keep_columns, date_columns)
+    def __init__(self, nums_feature):
+        super().__init__()
         self.nums_feature = nums_feature
 
     def fit(self, x, y=None):
-        self.feature_columns = np.array(
-            [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
+        self.feature_columns = np.array(x.columns)
         self.feature_support = np.zeros(self.feature_columns.shape[0], dtype=bool)
 
         f_t_mi = pd.Series([mis(x[column], y) for column in self.feature_columns],

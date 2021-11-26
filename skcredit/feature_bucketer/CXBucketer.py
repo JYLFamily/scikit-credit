@@ -85,3 +85,4 @@ class CXBucketer(_BaseComposition, TransformerMixin):
             bucketers_.append((name, next(fitted_bucketers), column))
 
         self.bucketers = bucketers_
+
