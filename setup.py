@@ -17,7 +17,7 @@ setuptools.setup(
         "numpy",
         "joblib",
         "pandas",
-        "scikit-learn",
+        "sklearn",
         "portion",
         "statsmodels"
     ],
