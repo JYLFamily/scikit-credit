@@ -6,8 +6,8 @@ import numpy  as np
 from pandas.api.types import CategoricalDtype
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
-pd.set_option("max_rows"   , None)
-pd.set_option("max_columns", None)
+pd.set_option("styler.render.max_rows"   , 500)
+pd.set_option("styler.render.max_columns", 500)
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)

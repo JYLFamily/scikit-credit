@@ -16,6 +16,4 @@ __all__ = [
     "get_splits",
     "get_direct",
     "calc_stats",
-    "prepare_table",
-    "prepare_image",
 ]

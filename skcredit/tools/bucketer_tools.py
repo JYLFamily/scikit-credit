@@ -53,125 +53,28 @@ def get_splits(x, y):
     if (x.empty or y.empty) or  y.nunique() <= 1:
         return []
 
-    if x.nunique() <= 128:
-        return x.unique( )
-
-    return np.histogram_bin_edges(x,   bins=128)
+    return x.unique().tolist() if x.nunique() <= 128 else (np.unique(np.sort(x.to_numpy())
+        [[i for i in range(x.shape[0] // 128, x.shape[0], x.shape[0] // 128)]])).tolist( )
 
 
 def get_direct(x, y):
     if (x.empty or y.empty) or  y.nunique() <= 1:
         return "increasing"
 
-    return "increasing" if spearmanr(x, y)[0] > 0 else "decreasing"
+    return  "increasing"  if  spearmanr(x, y)[0] > 0 else "decreasing"
 
 
-def calc_stats(sub_cnt_negative, sub_cnt_positive, all_cnt_negative, all_cnt_positive):
+def calc_stats(sub_cnt_positive,  sub_cnt_negative,  all_cnt_positive,  all_cnt_negative):
     if not sub_cnt_negative and not sub_cnt_positive:
         return 0, 0
 
-    sub_cnt_negative = 0.0005 if not sub_cnt_negative else sub_cnt_negative
     sub_cnt_positive = 0.0005 if not sub_cnt_positive else sub_cnt_positive
+    sub_cnt_negative = 0.0005 if not sub_cnt_negative else sub_cnt_negative
 
-    negative_rate = sub_cnt_negative / all_cnt_negative
     positive_rate = sub_cnt_positive / all_cnt_positive
+    negative_rate = sub_cnt_negative / all_cnt_negative
 
     woe = np.log(positive_rate  /  negative_rate)
     ivs = (positive_rate - negative_rate)  *  woe
 
     return woe, ivs
-
-
-def cat_bucket_to_string(bucket, lookup):
-    return ("[MISSING]" if bucket.lower == bucket.upper ==  NAN
-        else f"[{', '.join([cat for cat, woe in lookup.items() if woe in bucket])}]")
-
-
-def num_bucket_to_string(bucket):
-    return to_string(interval=bucket, conv=lambda element: "MISSING" if isinstance(element, _NaN)
-        else _trim_zeros_single_float(f"{element:.3f}"), sep=', ')
-
-
-def prepare_table( datas, cat_columns, all_columns, cat_encoder):
-    columns = list(chain(["Idx"], all_columns, ["CntP", "CntN", "PctP", "PctN", "WoE", "IvS"]))
-    total = pd.DataFrame(
-        data=[["TOTAL", *["-" for _ in all_columns], 0., 0., 0., 0., 0., 0.]], columns=columns)
-
-    table_dict = dict()
-
-    for masks, datas in zip(product(* [[0, 1] for _ in all_columns]), datas):
-        table   = pd.DataFrame(columns=columns)
-        label   = ' @ '.join([f"{'MISSING' if mask else 'NOTMISS'}({column})"
-            for mask, column in zip(masks, all_columns)])
-
-        for idx, data in enumerate(datas, 1):
-            row = pd.DataFrame(columns=columns)
-
-            row.at[0, "Idx"]  = str(idx)
-
-            for column in data["Bucket"].keys():
-                if column in cat_columns:
-                    row.at[0, column]  =  cat_bucket_to_string(data["Bucket"][column],
-                                          cat_encoder.column_woe_lookup[column])
-                else:
-                    row.at[0, column]  =  num_bucket_to_string(data["Bucket"][column])
-
-            row.at[0, "CntP"] = _trim_zeros_single_float(f"{data['CntPositive']:.3f}")
-            row.at[0, "CntN"] = _trim_zeros_single_float(f"{data['CntNegative']:.3f}")
-
-            row.at[0, "PctP"] = _trim_zeros_single_float(f"{data['PctPositive']:.3f}")
-            row.at[0, "PctN"] = _trim_zeros_single_float(f"{data['PctNegative']:.3f}")
-
-            row.at[0, "WoE"] = _trim_zeros_single_float(f"{data['WoE']:.3f}")
-            row.at[0, "IvS"] = _trim_zeros_single_float(f"{data['IvS']:.3f}")
-
-            table = table.append(row)
-
-            total.at[0, "CntP"] += data['CntPositive']
-            total.at[0, "CntN"] += data['CntNegative']
-            total.at[0, "PctP"] += data['PctPositive']
-            total.at[0, "PctN"] += data['PctNegative']
-            total.at[0, "WoE" ] += data['WoE']
-            total.at[0, "IvS" ] += data['IvS']
-
-        table_dict[label] = table
-
-    total.at[0, "CntP"] = _trim_zeros_single_float(f"{total.at[0, 'CntP']:.3f}")
-    total.at[0, "CntN"] = _trim_zeros_single_float(f"{total.at[0, 'CntN']:.3f}")
-    total.at[0, "PctP"] = _trim_zeros_single_float(f"{total.at[0, 'PctP']:.3f}")
-    total.at[0, "PctN"] = _trim_zeros_single_float(f"{total.at[0, 'PctN']:.3f}")
-    total.at[0, "WoE" ] = _trim_zeros_single_float(f"{total.at[0, 'WoE' ]:.3f}")
-    total.at[0, "IvS" ] = _trim_zeros_single_float(f"{total.at[0, 'IvS' ]:.3f}")
-
-    table_dict["TOTAL"] = pd.concat(table_dict.values()).reset_index(drop=True).append(total)
-
-    return table_dict
-
-
-def prepare_image(datas, cat_columns, all_columns, cat_encoder):
-    columns = ["Bucket", "WoE"]
-
-    image_dict = dict()
-
-    for masks, datas in zip(product(* [[0, 1] for _ in all_columns]),  datas):
-        table   = pd.DataFrame(columns=columns)
-        label   = ' @ '.join( [f"{'MISSING' if mask else 'NOTMISS'}({column})"
-            for mask, column in zip(masks, all_columns)])
-
-        for idx, data in enumerate(datas, 1):
-            row = pd.DataFrame(columns=columns)
-
-            row.at[0, "Bucket"] = ' @ '.join([
-                (temp
-                if len(temp := cat_bucket_to_string(data['Bucket'][column], cat_encoder.column_woe_lookup[column])) <=12
-                or temp  ==  "[MISSING]"
-                else temp[:12] + '...]')
-                if column in cat_columns
-                else
-                num_bucket_to_string(data["Bucket"][column]) for column in data["Bucket"].keys()])
-            row.at[0, "WoE"] = round(data["WoE"   ],  3)
-            table = table.append(row)
-
-        image_dict[label] = table
-
-    return image_dict

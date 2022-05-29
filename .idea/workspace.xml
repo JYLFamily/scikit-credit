@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="">
+    <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/scikit-credit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scikit-credit.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,25 +69,21 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1QOoHOHWMLXBjkL5duaDp8HDYsw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="ToolWindowRun.ShowToolbar" value="false" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/skcredit/feature_discretization" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
-    <property name="settings.editor.splitter.proportion" value="0.21780467" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
+  }
+}]]></component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings module-name="scikit-credit" is-module-sdk="true">
@@ -802,78 +805,15 @@
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="651" y="159" key="#SplitNumND_(1)" timestamp="1636527908987">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="651" y="159" key="#SplitNumND_(1)/0.0.1858.1080@0.0.1858.1080" timestamp="1636527908987" />
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1637114217672">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="659" y="287" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637114217672" />
-    <state x="383" y="0" key="CommitChangelistDialog2" timestamp="1637891760061">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state x="383" y="0" key="CommitChangelistDialog2/0.0.1304.768@0.0.1304.768" timestamp="1637891760061" />
-    <state x="546" y="131" key="CommitChangelistDialog2/0.0.1858.1080@0.0.1858.1080" timestamp="1637659598452" />
-    <state x="92" y="92" width="1674" height="896" key="DiffContextDialog" timestamp="1637300137964">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="92" y="92" width="1674" height="896" key="DiffContextDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637300137964" />
-    <state width="1284" height="165" key="GridCell.Tab.0.bottom" timestamp="1637891827552">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="165" key="GridCell.Tab.0.bottom/0.0.1304.768@0.0.1304.768" timestamp="1637891827552" />
-    <state width="1838" height="119" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1637724750393" />
-    <state width="1284" height="165" key="GridCell.Tab.0.center" timestamp="1637891827552">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="165" key="GridCell.Tab.0.center/0.0.1304.768@0.0.1304.768" timestamp="1637891827552" />
-    <state width="1838" height="119" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1637724750393" />
-    <state width="1284" height="165" key="GridCell.Tab.0.left" timestamp="1637891827552">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="165" key="GridCell.Tab.0.left/0.0.1304.768@0.0.1304.768" timestamp="1637891827552" />
-    <state width="1838" height="119" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1637724750393" />
-    <state width="1284" height="165" key="GridCell.Tab.0.right" timestamp="1637891827552">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="165" key="GridCell.Tab.0.right/0.0.1304.768@0.0.1304.768" timestamp="1637891827552" />
-    <state width="1838" height="119" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1637724750393" />
-    <state width="1284" height="145" key="GridCell.Tab.1.bottom" timestamp="1637820114150">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="145" key="GridCell.Tab.1.bottom/0.0.1304.768@0.0.1304.768" timestamp="1637820114150" />
-    <state width="1284" height="145" key="GridCell.Tab.1.center" timestamp="1637820114150">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="145" key="GridCell.Tab.1.center/0.0.1304.768@0.0.1304.768" timestamp="1637820114150" />
-    <state width="1284" height="145" key="GridCell.Tab.1.left" timestamp="1637820114150">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="145" key="GridCell.Tab.1.left/0.0.1304.768@0.0.1304.768" timestamp="1637820114150" />
-    <state width="1284" height="145" key="GridCell.Tab.1.right" timestamp="1637820114150">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state width="1284" height="145" key="GridCell.Tab.1.right/0.0.1304.768@0.0.1304.768" timestamp="1637820114150" />
-    <state x="366" y="194" key="Vcs.Push.Dialog.v2" timestamp="1637891782022">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state x="366" y="194" key="Vcs.Push.Dialog.v2/0.0.1304.768@0.0.1304.768" timestamp="1637891782022" />
-    <state x="521" y="273" key="Vcs.Push.Dialog.v2/0.0.1858.1080@0.0.1858.1080" timestamp="1637659612535" />
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1637300137964">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1637300137964" />
-    <state x="409" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1637910933256">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state x="409" y="259" key="com.intellij.ide.util.TipDialog/0.0.1304.768@0.0.1304.768" timestamp="1637910933256" />
-    <state x="583" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1636592088301" />
-    <state x="415" y="167" width="672" height="483" key="search.everywhere.popup" timestamp="1637823399878">
-      <screen x="0" y="0" width="1304" height="768" />
-    </state>
-    <state x="415" y="167" width="672" height="483" key="search.everywhere.popup/0.0.1304.768@0.0.1304.768" timestamp="1637823399878" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080@0.0.1858.1080" timestamp="1637657037927" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -4,18 +4,19 @@ import warnings
 import numpy   as np
 import pandas  as pd
 from numbers import Real
+from itertools import   chain
 from skcredit.tools import  *
 from portion import singleton
+from portion import to_string
 from itertools import product
-import plotly.graph_objects as go
 from portion import open   as  oo
 from dataclasses import dataclass
 from portion import openclosed as oc
 from sklearn.base   import BaseEstimator,  TransformerMixin
 from skcredit.feature_bucketer.WoEEncoder import WoEEncoder
 np.random.seed(7)
-pd.set_option("max_rows"   , None)
-pd.set_option("max_columns", None)
+pd.options.display.max_rows    = 999
+pd.options.display.max_columns = 999
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -25,13 +26,13 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 class Node:
     isleaf: bool
     bucket: dict
+    splits: dict
+    direct: dict
     sub_xy: pd.DataFrame
     sub_xy_cnt_negative: Real
     sub_xy_cnt_positive: Real
     sub_xy_woe: Real
     sub_xy_ivs: Real
-    splits: dict
-    direct: dict
     direct_min_value: Real = float('-inf')
     direct_max_value: Real = float('+inf')
     l_child: object = None
@@ -42,7 +43,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
     def __init__(self,
                  min_bin_cnt_negative=75,
                  min_bin_cnt_positive=75,
-                 min_information_value_split_gain=0.015):
+                 min_information_value_split_gain=0.005):
 
         self.min_bin_cnt_negative = min_bin_cnt_negative
         self.min_bin_cnt_positive = min_bin_cnt_positive
@@ -59,9 +60,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         self.all_cnt_positive = None
 
         self._datas = list()
-
         self._table = None
-        self._image = None
 
     def fit( self, x, y):
         self.cat_columns = x.select_dtypes(include="category").columns.tolist()
@@ -82,7 +81,6 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         xy = pd.concat([x.reindex(columns=self.all_columns), y.to_frame(self.target)], axis=1)
 
         for masks in product(* [[0, 1] for _ in self.all_columns]):
-            bucket = dict(zip(self.all_columns,  [singleton(NAN) if mask else oo(NINF, PINF) for mask in masks]))
             sub_xy = xy[np.logical_and.reduce(
                 [xy[column].isna() if  mask else
                 ~xy[column].isna() for column, mask in zip(self.all_columns, masks)], axis=0)]
@@ -90,22 +88,23 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             sub_cnt_negative = sub_xy[self.target].tolist().count(0)
             sub_cnt_positive = sub_xy[self.target].tolist().count(1)
             sub_woe, sub_ivs = calc_stats(
-                sub_cnt_negative,
                 sub_cnt_positive,
-                self.all_cnt_negative,
-                self.all_cnt_positive
+                sub_cnt_negative,
+                self.all_cnt_positive,
+                self.all_cnt_negative
             )
 
             root_node = Node(
                 isleaf=True,
-                bucket=bucket,
+                bucket={column: singleton(NAN) if mask else oo(NINF, PINF)      for
+                        column, mask in zip(self.all_columns, masks)},
+                splits={column: get_splits(sub_xy[column], sub_xy[self.target]) for column in self.all_columns},
+                direct={column: get_direct(sub_xy[column], sub_xy[self.target]) for column in self.all_columns},
                 sub_xy=sub_xy,
                 sub_xy_cnt_negative=sub_cnt_negative,
                 sub_xy_cnt_positive=sub_cnt_positive,
                 sub_xy_woe=sub_woe,
                 sub_xy_ivs=sub_ivs,
-                splits={column: get_splits(sub_xy[column], sub_xy[self.target]) for column in self.all_columns},
-                direct={column: get_direct(sub_xy[column], sub_xy[self.target]) for column in self.all_columns},
             )
 
             self._datas.append([])
@@ -120,15 +119,15 @@ class SplitMixND(BaseEstimator, TransformerMixin):
     def _transform(self, x):
         x_transformed = pd.DataFrame(index=x.index, columns=[f"WOE({', '.join(self.all_columns)})"])
 
-        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),  self._datas):
+        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),     self._datas):
             sub_x = x[np.logical_and.reduce(
                 [x[column].isna() if  mask else
-                ~x[column].isna() for column, mask in zip(self.all_columns, masks)], axis=0)]
+                ~x[column].isna() for column, mask in zip(self.all_columns,   masks)], axis=0)]
             for data in datas:
                 x_transformed.loc[sub_x[np.logical_and.reduce(
-                    [l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
-                    r_bound_operator[bucket.right](sub_x[column], bucket.upper)
-                    for column, bucket in zip(data["Column"], data["Bucket"])], axis=0)].index, :] = data["WoE"]
+                    [ l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
+                     r_bound_operator[bucket.right](sub_x[column], bucket.upper)
+                    for column, bucket in data["Bucket"].items()], axis=0)].index, :] =  data["WoE"]
 
         return x_transformed
 
@@ -137,7 +136,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
 
         return self.transform(x)
 
-    def _build(self,  node):
+    def _build(self, node):
         node = self._split(node)
 
         if node.isleaf:
@@ -156,7 +155,7 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         self._build(node.l_child)
         self._build(node.r_child)
 
-    def _split(self,  node):
+    def _split(self, node):
         largest_ivs_gain = 0.0
 
         for temp_column, temp_splits in node.splits.items():
@@ -175,15 +174,15 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                     temp_sub_xy_r_cnt_positive >= self.min_bin_cnt_positive):
 
                     temp_sub_xy_l_woe, temp_sub_xy_l_ivs = calc_stats(
-                        temp_sub_xy_l_cnt_negative,
                         temp_sub_xy_l_cnt_positive,
-                        self.all_cnt_negative,
-                        self.all_cnt_positive)
+                        temp_sub_xy_l_cnt_negative,
+                        self.all_cnt_positive,
+                        self.all_cnt_negative)
                     temp_sub_xy_r_woe, temp_sub_xy_r_ivs = calc_stats(
-                        temp_sub_xy_r_cnt_negative,
                         temp_sub_xy_r_cnt_positive,
-                        self.all_cnt_negative,
-                        self.all_cnt_positive)
+                        temp_sub_xy_r_cnt_negative,
+                        self.all_cnt_positive,
+                        self.all_cnt_negative)
 
                     if temp_sub_xy_l_ivs + temp_sub_xy_r_ivs - node.sub_xy_ivs > max(
                             self.min_information_value_split_gain, largest_ivs_gain):
@@ -201,14 +200,14 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                                 isleaf=True,
                                 bucket={column: node.bucket[column] & oc(NINF, temp_split)
                                     if column == temp_column else node.bucket[column] for column in node.bucket.keys()},
+                                direct=node.direct,
+                                splits={column: [split for split in node.splits[column] if split <= temp_split]
+                                    if column == temp_column else node.splits[column] for column in node.splits.keys()},
                                 sub_xy=temp_sub_xy_l,
                                 sub_xy_cnt_negative=temp_sub_xy_l_cnt_negative,
                                 sub_xy_cnt_positive=temp_sub_xy_l_cnt_positive,
                                 sub_xy_woe=temp_sub_xy_l_woe,
                                 sub_xy_ivs=temp_sub_xy_l_ivs,
-                                direct=node.direct,
-                                splits={column: [split for split in node.splits[column] if split <= temp_split]
-                                    if column == temp_column else node.splits[column] for column in node.splits.keys()},
                                 direct_min_value=(
                                     node.direct_min_value if node.direct[temp_column] == "increasing" else midd),
                                 direct_max_value=(
@@ -218,14 +217,14 @@ class SplitMixND(BaseEstimator, TransformerMixin):
                                 isleaf=True,
                                 bucket={column: node.bucket[column] & oo(temp_split, PINF)
                                     if column == temp_column else node.bucket[column] for column in node.bucket.keys()},
+                                direct=node.direct,
+                                splits={column: [split for split in node.splits[column] if split > temp_split]
+                                    if column == temp_column else node.splits[column] for column in node.splits.keys()},
                                 sub_xy=temp_sub_xy_r,
                                 sub_xy_cnt_negative=temp_sub_xy_r_cnt_negative,
                                 sub_xy_cnt_positive=temp_sub_xy_r_cnt_positive,
                                 sub_xy_woe=temp_sub_xy_r_woe,
                                 sub_xy_ivs=temp_sub_xy_r_ivs,
-                                splits={column: [split for split in node.splits[column] if split >  temp_split]
-                                    if column == temp_column else node.splits[column] for column in node.splits.keys()},
-                                direct=node.direct,
                                 direct_min_value=(
                                     midd if node.direct[temp_column] == "increasing" else node.direct_min_value),
                                 direct_max_value=(
@@ -235,137 +234,41 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         return node
 
     def build_table(self ):
-        if self._table is not None:
+        if self._table is             not None:
             return self._table
 
-        table_dict = prepare_table(
-            self._datas,
-            self.cat_columns,
-            self.all_columns,
-            self.cat_encoder,
-        )
+        self._table = pd.DataFrame.from_records(chain.from_iterable(                      self._datas))
 
-        self._table = go.Figure()
+        self._table["Column"] = self._table["Bucket"].apply(lambda element: ' @ '.join(element.keys()))
+        self._table["Bucket"] = self._table["Bucket"].apply(lambda element: ' @ '.join(
+            [self._str_bucket(column, bucket) for column, bucket in element.items()] ))
 
-        for idx, (label, table) in enumerate(table_dict.items()):
-            self._table.add_trace(
-                go.Table(
-                    header=dict(
-                        values=[f"<b>{column}</b>" for column in table.columns],
-                        fill_color="rgb(128, 128, 128)",
-                        line_color="rgb(128, 128, 128)",
-                        font=dict(family="Courier New", color="white", size=14),
-                    ),
-                    cells=dict(
-                        values=[column.tolist() for _, column in table.items()],
-                        fill_color="rgb(255, 255, 255)",
-                        line_color="rgb(128, 128, 128)",
-                        font=dict(family="Courier New", color="black", size=12),
-                    ),
-                    name=label,
-                ),
-            )
+        self._table = pd.concat([self._table, pd.DataFrame([[
+            "ALL", "ALL",
+            self._table["CntPositive"].sum(),
+            self._table["CntNegative"].sum(),
+            self._table["PctPositive"].sum(),
+            self._table["PctNegative"].sum(),
+            '-', self._table["IvS"].sum()]],
+            columns=["Column", "Bucket", "CntPositive", "CntNegative", "PctPositive", "PctNegative",
+                     "WoE", "IvS"])])
 
-        self._table.update_layout(
-            title={
-                "text":    f"<b>TABLE({' @ '.join(self.all_columns)})</b>",
-                "x": 0.500,
-                "y": 0.975,
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 16,
-                },
-            },
-            margin={
-                "t": 60,
-                "b": 5,
-                "l": 5,
-                "r": 5,
-            }
-        )
+        self._table = self._table.reindex(
+            columns=["Column", "Bucket", "CntPositive", "CntNegative", "PctPositive", "PctNegative",
+                     "WoE", "IvS"])
 
         return self._table
 
-    def build_image(self ):
-        if self._image is not None:
-            return self._image
+    def _str_bucket(self, column, bucket):
+        if bucket.lower == bucket.upper == NAN:
+            return "[MISSING]"
 
-        image_dict = prepare_image(
-            self._datas,
-            self.cat_columns,
-            self.all_columns,
-            self.cat_encoder,
+        return (
+            to_string(bucket, sep=', ', conv=lambda element: f"{element:.6f}")  if  column in self.num_columns
+            else str([cat for cat, woe in self.cat_encoder.column_woe_lookup[column].items() if woe in bucket])
         )
 
-        self._image = go.Figure()
 
-        for label, image in image_dict.items():
-            self._image.add_trace(
-                go.Bar(
-                    x=image["Bucket"],
-                    y=image["WoE"   ],
-                    name=label,
-                    hovertemplate="Bucket: %{x}<br>WoE: %{y}",
-                )
-            )
 
-        self._image.update_layout(
-            title={
-                "text":  f"<b>WoE Bar({' @ '.join(self.all_columns)})</b>",
-                "x": 0.500,
-                "y": 0.975,
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 16,
-                },
-            },
-            margin={
-                "t": 60,
-                "b": 5,
-                "l": 5,
-                "r": 5,
-            },
-            legend={
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 14,
-                },
-            },
-            hoverlabel={
-                "bgcolor"    : "rgb(255, 255, 255)",
-                "bordercolor": "rgb(128, 128, 128)",
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 14,
-                },
-            }
-        )
 
-        self._image.update_xaxes(
-            title={
-                "text": "Buckets",
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 14,
-                },
-            },
-            tickfont={
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 12
-            }
-        )
-        self._image.update_yaxes(
-            title={
-                "text": "WoE",
-                "font": {
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 14,
-                },
-            },
-            tickfont={
-                    "family": "Courier New", "color": "rgb(128, 128, 128)",
-                    "size": 12
-            }
-        )
 
-        return self._image
