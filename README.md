@@ -16,4 +16,4 @@ pip install skcredit
 
 # 示例
 
-## 完整代码请参见 [example.ipynb](https://github.com/JYLFamily/scikit-credit/blob/master/examples/example.ipynb)
+[example.ipynb](https://github.com/JYLFamily/scikit-credit/blob/master/examples/example.ipynb)
