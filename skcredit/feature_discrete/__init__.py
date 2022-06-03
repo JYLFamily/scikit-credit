@@ -1,10 +1,10 @@
 # coding: utf-8
 
-from ._BDiscrete import _BDiscrete
-from .C1Discrete import C1Discrete
-from .CXDiscrete import CXDiscrete
-from .SplitMixND import SplitMixND
-from .WoEEncoder import WoEEncoder
+from skcredit.feature_discrete._BDiscrete import _BDiscrete
+from skcredit.feature_discrete.C1Discrete import C1Discrete
+from skcredit.feature_discrete.CXDiscrete import CXDiscrete
+from skcredit.feature_discrete.SplitMixND import SplitMixND
+from skcredit.feature_discrete.WoEEncoder import WoEEncoder
 
 __all__ = [
     "_BDiscrete",

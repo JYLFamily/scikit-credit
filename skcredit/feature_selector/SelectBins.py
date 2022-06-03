@@ -3,9 +3,9 @@
 import warnings
 import numpy  as np
 import pandas as pd
-import statsmodels.api as sm
+import statsmodels.api         as sm
 from joblib import Parallel, delayed
-from skcredit.feature_selector import BaseSelect
+from skcredit.feature_selector.BaseSelect import BaseSelect
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999

@@ -5,8 +5,8 @@ import numpy  as np
 import pandas as pd
 from joblib import Parallel,  delayed
 from sklearn.pipeline import _fit_one
-from skcredit.feature_discrete import _BDiscrete
-from skcredit.feature_discrete import SplitMixND
+from skcredit.feature_discrete._BDiscrete import _BDiscrete
+from skcredit.feature_discrete.SplitMixND import SplitMixND
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999
@@ -44,6 +44,3 @@ class C1Discrete(_BDiscrete):
             smnd.build_table() for smnd in self.feature_spliter.values()])
 
         return self
-
-
-

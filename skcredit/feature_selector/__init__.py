@@ -1,8 +1,8 @@
 # coding: utf-8
 
-from .BaseSelect import BaseSelect
-from .SelectBins import SelectBins
-from .SelectCIFE import SelectCIFE
+from skcredit.feature_selector.BaseSelect import BaseSelect
+from skcredit.feature_selector.SelectBins import SelectBins
+from skcredit.feature_selector.SelectCIFE import SelectCIFE
 
 __all__ = [
     "BaseSelect",

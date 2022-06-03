@@ -3,7 +3,7 @@
 import warnings
 import numpy  as np
 import pandas as pd
-from skcredit.feature_discrete import _BDiscrete
+from skcredit.feature_discrete._BDiscrete import _BDiscrete
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999

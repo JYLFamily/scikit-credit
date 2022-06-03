@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from .selector_tools import *
-from .bucketer_tools import *
+from skcredit.tools.selector_tools import *
+from skcredit.tools.bucketer_tools import *
 
 
 __all__ = [

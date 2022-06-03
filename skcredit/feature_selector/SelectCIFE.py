@@ -7,7 +7,7 @@ from skcredit.tools import mis
 from skcredit.tools import cmi
 from joblib import Parallel, delayed
 from itertools   import combinations
-from skcredit.feature_selector import BaseSelect
+from skcredit.feature_selector.BaseSelect import BaseSelect
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999
@@ -47,7 +47,7 @@ class SelectCIFE(BaseSelect):
 
         self.feature_support[f_t_mi.argmax()] = True
 
-        for _ in range(self.nums_feature - 1):
+        for _ in range(self.nums_columns - 1):
             score = ((
                 f_t_mi.loc[self.feature_columns[~self.feature_support]] +
                 f_f_ci.loc[self.feature_columns[~self.feature_support],
