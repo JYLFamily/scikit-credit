@@ -7,22 +7,22 @@ from skcredit.tools import mis
 from skcredit.tools import cmi
 from joblib import Parallel, delayed
 from itertools   import combinations
-from skcredit.feature_selector import Select
+from skcredit.feature_selector import BaseSelect
 np.random.seed(7)
-pd.set_option("max_rows"   , None)
-pd.set_option("max_columns", None)
+pd.options.display.max_rows    = 999
+pd.options.display.max_columns = 999
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class SelectCIFE(Select):
-    def __init__(self, nums_feature):
-        super().__init__()
-        self.nums_feature = nums_feature
+class SelectCIFE(BaseSelect):
+    def __init__(self,   keep_columns, date_columns, nums_columns):
+        super().__init__(keep_columns, date_columns, nums_columns)
 
     def fit(self, x, y=None):
-        self.feature_columns = np.array(x.columns)
+        self.feature_columns = np.array(
+            [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
         self.feature_support = np.zeros(self.feature_columns.shape[0], dtype=bool)
 
         f_t_mi = pd.Series([mis(x[column], y) for column in self.feature_columns],
@@ -47,7 +47,7 @@ class SelectCIFE(Select):
 
         self.feature_support[f_t_mi.argmax()] = True
 
-        for _ in range(self.nums_feature):
+        for _ in range(self.nums_feature - 1):
             score = ((
                 f_t_mi.loc[self.feature_columns[~self.feature_support]] +
                 f_f_ci.loc[self.feature_columns[~self.feature_support],

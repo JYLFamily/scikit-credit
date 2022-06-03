@@ -5,21 +5,23 @@ import numpy  as np
 import pandas as pd
 import statsmodels.api as sm
 from joblib import Parallel, delayed
-from skcredit.feature_selector.Select import Select
+from skcredit.feature_selector import BaseSelect
 np.random.seed(7)
-pd.set_option("max_rows"   , None)
-pd.set_option("max_columns", None)
+pd.options.display.max_rows    = 999
+pd.options.display.max_columns = 999
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class SelectBins(Select):
-    def __init__(self):
-        super().__init__()
+class SelectBins(BaseSelect):
+    def __init__(self,   keep_columns, date_columns):
+        super().__init__(keep_columns, date_columns)
 
     def fit(self, x, y=None):
-        self.feature_columns = np.array(x.columns)
+        self.feature_columns = np.array(
+                   [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
+        self.feature_support = np.zeros(self.feature_columns.shape[0], dtype=bool)
 
         intercept   = np.log(y.sum() / (y.shape[0] - y.sum()))
         coefficient = 1

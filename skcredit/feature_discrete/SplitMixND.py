@@ -13,7 +13,7 @@ from portion import open   as  oo
 from dataclasses import dataclass
 from portion import openclosed as oc
 from sklearn.base   import BaseEstimator,  TransformerMixin
-from skcredit.feature_bucketer.WoEEncoder import WoEEncoder
+from skcredit.feature_discrete.WoEEncoder import WoEEncoder
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999
@@ -117,17 +117,20 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         return self._transform(self.cat_encoder.transform(x))
 
     def _transform(self, x):
-        x_transformed = pd.DataFrame(index=x.index, columns=[f"WOE({', '.join(self.all_columns)})"])
+        x_transformed = pd.DataFrame(index=x.index, columns=[' @ '.join(self.all_columns) ], dtype=np.float)
 
-        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),     self._datas):
+        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]), self._datas):
+
             sub_x = x[np.logical_and.reduce(
                 [x[column].isna() if  mask else
-                ~x[column].isna() for column, mask in zip(self.all_columns,   masks)], axis=0)]
+                ~x[column].isna() for column, mask in       zip(self.all_columns, masks)])]
+
             for data in datas:
-                x_transformed.loc[sub_x[np.logical_and.reduce(
+
+                x_transformed.iloc[sub_x[np.logical_and.reduce(
                     [ l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
                      r_bound_operator[bucket.right](sub_x[column], bucket.upper)
-                    for column, bucket in data["Bucket"].items()], axis=0)].index, :] =  data["WoE"]
+                    for column, bucket in data["Bucket"].items()])].index, :] = data["WoE"]
 
         return x_transformed
 
@@ -264,9 +267,12 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             return "[MISSING]"
 
         return (
-            to_string(bucket, sep=', ', conv=lambda element: f"{element:.6f}")  if  column in self.num_columns
+            to_string(bucket, sep=', ', conv=lambda element: f"{element:.6f}")  if  column  in self.num_columns
             else str([cat for cat, woe in self.cat_encoder.column_woe_lookup[column].items() if woe in bucket])
         )
+
+    def get_feature_names_out(self, name):
+        return f"WOE({', '.join(self.all_columns)})"
 
 
 

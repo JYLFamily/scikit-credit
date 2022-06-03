@@ -6,8 +6,8 @@ import numpy  as np
 from pandas.api.types import CategoricalDtype
 from sklearn.base import BaseEstimator, TransformerMixin
 np.random.seed(7)
-pd.set_option("styler.render.max_rows"   , 500)
-pd.set_option("styler.render.max_columns", 500)
+pd.options.display.max_rows    = 999
+pd.options.display.max_columns = 999
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -19,9 +19,8 @@ class WoEEncoder(BaseEstimator, TransformerMixin):
         self.num_columns = None
         self.all_columns = None
 
-        # cat
-        self.column_cat_lookup = dict()
-        self.column_woe_lookup = dict()
+        self.column_cat_lookup = dict()  # column: cat
+        self.column_woe_lookup = dict()  # column: woe
 
     def fit(self,    x, y):
         self.cat_columns = x.select_dtypes(include="category").columns.tolist()

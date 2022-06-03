@@ -5,14 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scikit-credit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scikit-credit.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/_BDiscrete.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/WoEEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/WoEEncoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_bucketer/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/Select.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/BaseSelect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +78,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/anaconda3/envs/scikit-credit/Lib/site-packages/sklearn/compose/_column_transformer.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -77,13 +89,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;
   }
-}]]></component>
+}</component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <console-settings module-name="scikit-credit" is-module-sdk="true">
@@ -108,8 +120,8 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.SplitMixND">
-    <configuration name="CXBucketer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.C1Discrete">
+    <configuration name="C1Buckter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -121,7 +133,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/CXBucketer.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\jiang\PycharmProjects\scikit-credit\skcredit\feature_bucketer\C1Buckter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -130,7 +142,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SplitCatND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="C1Discrete" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -138,11 +150,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discrete" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitCatND.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -151,7 +163,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SplitMixND (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SelectCIFE" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -159,32 +171,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_selector" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SplitMixND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_bucketer/SplitMixND.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -201,11 +192,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discrete" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_bucketer\SplitMixND.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -235,7 +226,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="bucketer_tools" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SplitMixND" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -243,11 +234,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/tools" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\P1352\PycharmProjects\scikit-credit\skcredit\feature_bucketer\SplitMixND.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="_BDiscrete" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discrete" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/_BDiscrete.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -258,11 +270,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.C1Discrete" />
         <item itemvalue="Python.SplitMixND" />
-        <item itemvalue="Python.bucketer_tools" />
-        <item itemvalue="Python.SplitMixND (1)" />
-        <item itemvalue="Python.CXBucketer (1)" />
-        <item itemvalue="Python.SplitMixND" />
+        <item itemvalue="Python._BDiscrete" />
+        <item itemvalue="Python.SelectCIFE" />
+        <item itemvalue="Python.C1Buckter" />
       </list>
     </recent_temporary>
   </component>
@@ -388,13 +400,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00098" summary="init commit">
-      <created>1632282434914</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1632282434914</updated>
     </task>
     <task id="LOCAL-00099" summary="init commit">
       <created>1632282732291</created>
@@ -732,7 +737,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637891770717</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="init commit">
+      <created>1653818725456</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1653818725456</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -804,16 +816,5 @@
     <MESSAGE value="add example" />
     <MESSAGE value="init commit" />
     <option name="LAST_COMMIT_MESSAGE" value="init commit" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py</url>
-          <line>2</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

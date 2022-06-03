@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="skcredit",
-    version="0.0.3",
+    version="0.0.4",
     author="JYLFamily",
     author_email="jiangyilanf@gmail.com",
     description="scorecard",
@@ -22,14 +22,11 @@ setuptools.setup(
         "statsmodels"
     ],
     classifiers=[
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.7" ,
+        "Programming Language :: Python :: 3.8" ,
+        "Programming Language :: Python :: 3.9" ,
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
-        "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX :: Linux",
-        "Operating System :: Unix",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     ],
 )

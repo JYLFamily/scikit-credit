@@ -8,8 +8,8 @@ import statsmodels.api as sm
 from sklearn.metrics import roc_curve
 from sklearn.base import BaseEstimator, ClassifierMixin
 np.random.seed(7)
-pd.set_option("max_rows"   , None)
-pd.set_option("max_columns", None)
+pd.options.display.max_rows    = 999
+pd.options.display.max_columns = 999
 pd.set_option("display.unicode.east_asian_width" , True)
 pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -70,7 +70,7 @@ def stepwises(x, y, feature_columns, feature_subsets):
 
     return sm.GLM(
             y, sm.add_constant(x[feature_subsets], has_constant='add'),
-            family=sm.families.Binomial()).fit()
+            family=sm.families.Binomial()).fit( )
 
 
 class LMClassifier(BaseEstimator, ClassifierMixin):
@@ -84,28 +84,30 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         self.feature_columns = None
         self.feature_subsets = None
 
-    def fit(self, x, y):
+    def fit(  self, x, y):
         self.feature_columns = np.array(
             [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
 
         self.model = stepwises(
             x, y,
-            set(self.feature_columns),
+            set(self.feature_columns   ),
             set(),
         )
 
-        self.coeff = self.model.params
-        self.feature_subsets = np.array(self.coeff.drop("const").index.tolist())
+        self.coeff  =  self.model.params
+        self.feature_subsets = np.array(
+            self.coeff.drop("const").index.tolist())
 
         return self
 
-    def score(self, x, y=None, sample_weight=None):
+    def score(self, x, y,      sample_weight=None):
         fpr, tpr, _ = roc_curve(y, self.predict_proba(x)["proba_positive"], sample_weight=sample_weight)
 
         return round(max(tpr - fpr), 5)
 
     def predict_proba(self, x):
-        proba_positive = self.model.predict(sm.add_constant(x[self.feature_subsets])).to_frame("proba_positive")
+        proba_positive = self.model.predict(
+              sm.add_constant(x[self.feature_subsets])).to_frame("proba_positive")
         proba_negative = (1 - proba_positive.squeeze()).to_frame("proba_negative")
 
-        return pd.concat([proba_negative, proba_positive], axis=1)
+        return pd.concat([proba_negative, proba_positive], axis="columns")

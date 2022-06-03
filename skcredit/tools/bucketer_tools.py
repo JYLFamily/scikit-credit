@@ -2,12 +2,9 @@
 
 import pandas as pd
 import numpy  as np
-from portion import to_string
 from scipy.stats   import   spearmanr
 from operator  import  lt, le, gt, ge
-from itertools  import product, chain
 from portion.const  import Bound,  _Singleton,  _NInf,  _PInf
-from pandas.io.formats.format import _trim_zeros_single_float
 np.random.seed(7)
 
 
