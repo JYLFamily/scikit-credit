@@ -120,39 +120,3 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         return pd.concat([proba_negative, proba_positive], axis="columns")
 
 
-if __name__ == "__main__":
-    from skcredit.feature_discrete import SplitMixND
-    from skcredit.feature_discrete import CXDiscrete
-    from skcredit.linear_model     import LMCreditcard
-
-    application_train = pd.read_csv("C:\\Users\\Administrator\\Desktop\\application_train.csv").head(100000)
-
-    application_train_input = application_train.drop("TARGET", axis=1)
-    application_train_label = application_train["TARGET"]
-
-    num_columns = application_train_input.select_dtypes(exclude="object").columns.tolist()
-    cat_columns = application_train_input.select_dtypes(include="object").columns.tolist()
-
-    application_train_input[cat_columns] = application_train_input[cat_columns].astype("category")
-
-    cx = CXDiscrete(
-        keep_columns=[],
-        date_columns=[],
-        transformers=[(SplitMixND(), [col]) for col in application_train_input.columns],
-        iv_threshold=0.02, nthread=-1, verbose=20)
-    cx.fit(
-        application_train_input,
-        application_train_label,
-    )
-    application_train_input = cx.transform(application_train_input)
-
-    lm = LMClassifier([], [])
-    lm.fit(
-        application_train_input,
-        application_train_label,
-    )
-
-    lm = LMCreditcard([], [], cx, lm, 500,    200,    application_train_label.sum() / (application_train_label.shape[0] - application_train_label.sum()))
-    print(lm.show_scorecard())
-
-
