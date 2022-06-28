@@ -5,22 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/_BDiscrete.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/BaseSelect.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/BaseSelect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectBINS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -396,20 +382,6 @@
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
     </task>
-    <task id="LOCAL-00100" summary="init commit">
-      <created>1632284279926</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1632284279926</updated>
-    </task>
-    <task id="LOCAL-00101" summary="init commit">
-      <created>1632284372212</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1632284372212</updated>
-    </task>
     <task id="LOCAL-00102" summary="init commit">
       <created>1632289333045</created>
       <option name="number" value="00102" />
@@ -739,7 +711,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654240717839</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="init commit">
+      <created>1656406005140</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1656406005140</updated>
+    </task>
+    <task id="LOCAL-00150" summary="init commit">
+      <created>1656406061725</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1656406061725</updated>
+    </task>
+    <option name="localTasksCounter" value="151" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

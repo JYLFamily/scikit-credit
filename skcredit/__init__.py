@@ -26,4 +26,4 @@ __all__ = [
 ]
 
 __author__  = "JYLFamily"
-__version__ =     "0.0.4"
+__version__ =     "0.0.5"
