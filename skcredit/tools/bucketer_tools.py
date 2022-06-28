@@ -8,8 +8,8 @@ from portion.const  import Bound,  _Singleton,  _NInf,  _PInf
 np.random.seed(7)
 
 
-l_bound_operator = {Bound.OPEN: gt, Bound.CLOSED: ge}
-r_bound_operator = {Bound.OPEN: lt, Bound.CLOSED: le}
+l_bound_operator = {Bound.OPEN: np.greater, Bound.CLOSED: np.greater_equal}
+r_bound_operator = {Bound.OPEN: np.less   , Bound.CLOSED: np.less_equal   }
 
 
 class _NaN(_Singleton):

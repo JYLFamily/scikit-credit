@@ -50,26 +50,37 @@ def exclusion(x, y, feature_subsets):
 
 
 def stepwises(x, y, feature_columns, feature_subsets):
-    best_ks = float('-inf')
+    best_ks = float("-inf")
 
     while True:
-        include_feature, curr_ks = inclusion(x, y, feature_subsets, feature_columns - feature_subsets)
-        if include_feature is None or curr_ks <= best_ks:
+        include_feature, curr_ks =     inclusion(
+                x,
+                y,
+                feature_subsets,
+                feature_columns - feature_subsets
+        )
+
+        if      include_feature is None or curr_ks <= best_ks:
             break
         else:
-            best_ks = curr_ks
-            feature_subsets = feature_subsets | {include_feature}
+            best_ks =     curr_ks
+            feature_subsets     =  feature_subsets | {include_feature}
 
         while True:
-            exclude_feature, curr_ks = exclusion(x, y, feature_subsets)
+            exclude_feature, curr_ks = exclusion(
+                x,
+                y,
+                feature_subsets
+            )
+
             if exclude_feature is None or curr_ks <= best_ks:
                 break
             else:
                 best_ks = curr_ks
-                feature_subsets = feature_subsets - {include_feature}
+                feature_subsets =  feature_subsets - {exclude_feature}
 
     return sm.GLM(
-            y, sm.add_constant(x[feature_subsets], has_constant='add'),
+            y, sm.add_constant(x[feature_subsets], has_constant="add"),
             family=sm.families.Binomial()).fit( )
 
 
@@ -86,13 +97,9 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
 
     def fit(  self, x, y):
         self.feature_columns = np.array(
-            [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
+            [col for col in x.columns if col not in  self.keep_columns and col not in self.date_columns])
 
-        self.model = stepwises(
-            x, y,
-            set(self.feature_columns   ),
-            set(),
-        )
+        self.model = stepwises(x, y, set(self.feature_columns), set())
 
         self.coeff  =  self.model.params
         self.feature_subsets = np.array(
@@ -111,3 +118,41 @@ class LMClassifier(BaseEstimator, ClassifierMixin):
         proba_negative = (1 - proba_positive.squeeze()).to_frame("proba_negative")
 
         return pd.concat([proba_negative, proba_positive], axis="columns")
+
+
+if __name__ == "__main__":
+    from skcredit.feature_discrete import SplitMixND
+    from skcredit.feature_discrete import CXDiscrete
+    from skcredit.linear_model     import LMCreditcard
+
+    application_train = pd.read_csv("C:\\Users\\Administrator\\Desktop\\application_train.csv").head(100000)
+
+    application_train_input = application_train.drop("TARGET", axis=1)
+    application_train_label = application_train["TARGET"]
+
+    num_columns = application_train_input.select_dtypes(exclude="object").columns.tolist()
+    cat_columns = application_train_input.select_dtypes(include="object").columns.tolist()
+
+    application_train_input[cat_columns] = application_train_input[cat_columns].astype("category")
+
+    cx = CXDiscrete(
+        keep_columns=[],
+        date_columns=[],
+        transformers=[(SplitMixND(), [col]) for col in application_train_input.columns],
+        iv_threshold=0.02, nthread=-1, verbose=20)
+    cx.fit(
+        application_train_input,
+        application_train_label,
+    )
+    application_train_input = cx.transform(application_train_input)
+
+    lm = LMClassifier([], [])
+    lm.fit(
+        application_train_input,
+        application_train_label,
+    )
+
+    lm = LMCreditcard([], [], cx, lm, 500,    200,    application_train_label.sum() / (application_train_label.shape[0] - application_train_label.sum()))
+    print(lm.show_scorecard())
+
+

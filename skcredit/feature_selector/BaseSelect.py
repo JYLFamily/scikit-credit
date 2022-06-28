@@ -13,17 +13,23 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
 class BaseSelect(BaseEstimator, TransformerMixin):
-    def __init__(self, keep_columns, date_columns, nums_columns=None):
+    def __init__(self, keep_columns, date_columns, nums_columns, nthread, verbose):
 
         self.keep_columns = keep_columns
         self.date_columns = date_columns
         self.nums_columns = nums_columns
+        self.nthread = nthread
+        self.verbose = verbose
 
         self.feature_columns = None
         self.feature_support = None
 
     def fit(self, x, y=None):
-        pass
+        self.feature_columns = np.array(
+            [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
+        self.feature_support = np.zeros(self.feature_columns.shape[0], dtype=bool)
+
+        return self
 
     def transform(self,   x):
 

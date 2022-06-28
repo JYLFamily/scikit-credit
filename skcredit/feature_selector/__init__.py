@@ -1,11 +1,11 @@
 # coding: utf-8
 
 from skcredit.feature_selector.BaseSelect import BaseSelect
-from skcredit.feature_selector.SelectBins import SelectBins
-from skcredit.feature_selector.SelectCIFE import SelectCIFE
+from skcredit.feature_selector.SelectBINS import SelectBINS
+from skcredit.feature_selector.SelectCMIN import SelectCMIM
 
 __all__ = [
     "BaseSelect",
-    "SelectBins",
-    "SelectCIFE",
+    "SelectBINS",
+    "SelectCMIM",
 ]

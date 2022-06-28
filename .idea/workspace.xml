@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/example.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/examples/example.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/_BDiscrete.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/BaseSelect.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/BaseSelect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectBins.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectBINS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMCreditcard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,9 +76,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/anaconda3/envs/scikit-credit/Lib/site-packages/sklearn/compose/_column_transformer.py" root0="SKIP_INSPECTION" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -113,29 +115,8 @@
       <recent name="C:\Users\P1352\PycharmProjects\scikit-credit\examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.C1Discrete">
-    <configuration name="C1Buckter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="scikit-credit" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_bucketer" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\jiang\PycharmProjects\scikit-credit\skcredit\feature_bucketer\C1Buckter.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="C1Discrete" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.LMClassifier">
+    <configuration name="CXDiscrete (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -147,7 +128,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/C1Discrete.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -156,7 +137,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SelectCIFE" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="LMClassifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="scikit-credit" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/linear_model" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="SelectCMIN (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -168,7 +170,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selector/SelectCIFE.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -240,7 +242,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="_BDiscrete" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="bucketer_tools" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -248,11 +250,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/feature_discrete" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/skcredit/tools" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/_BDiscrete.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/tools/bucketer_tools.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -263,11 +265,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.C1Discrete" />
+        <item itemvalue="Python.LMClassifier" />
+        <item itemvalue="Python.CXDiscrete (1)" />
         <item itemvalue="Python.SplitMixND" />
-        <item itemvalue="Python._BDiscrete" />
-        <item itemvalue="Python.SelectCIFE" />
-        <item itemvalue="Python.C1Buckter" />
+        <item itemvalue="Python.bucketer_tools" />
+        <item itemvalue="Python.SelectCMIN (1)" />
       </list>
     </recent_temporary>
   </component>

@@ -3,6 +3,7 @@
 import warnings
 import numpy   as np
 import pandas  as pd
+import altair as alt
 from numbers import Real
 from itertools import   chain
 from skcredit.tools import  *
@@ -33,8 +34,8 @@ class Node:
     sub_xy_cnt_positive: Real
     sub_xy_woe: Real
     sub_xy_ivs: Real
-    direct_min_value: Real = float('-inf')
-    direct_max_value: Real = float('+inf')
+    direct_min_value: Real = float("-inf")
+    direct_max_value: Real = float("+inf")
     l_child: object = None
     r_child: object = None
 
@@ -60,7 +61,9 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         self.all_cnt_positive = None
 
         self._datas = list()
+
         self._table = None
+        self._image = None
 
     def fit( self, x, y):
         self.cat_columns = x.select_dtypes(include="category").columns.tolist()
@@ -81,9 +84,9 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         xy = pd.concat([x.reindex(columns=self.all_columns), y.to_frame(self.target)], axis=1)
 
         for masks in product(* [[0, 1] for _ in self.all_columns]):
-            sub_xy = xy[np.logical_and.reduce(
-                [xy[column].isna() if  mask else
-                ~xy[column].isna() for column, mask in zip(self.all_columns, masks)], axis=0)]
+            sub_xy = xy.loc[np.logical_and.reduce(
+                [xy[column].isna() if mask else xy[column].notna()
+                 for column, mask in zip(self.all_columns, masks)], axis=0)]
 
             sub_cnt_negative = sub_xy[self.target].tolist().count(0)
             sub_cnt_positive = sub_xy[self.target].tolist().count(1)
@@ -113,23 +116,22 @@ class SplitMixND(BaseEstimator, TransformerMixin):
         return self
 
     def transform( self, x):
-
         return self._transform(self.cat_encoder.transform(x))
 
     def _transform(self, x):
-        x_transformed = pd.DataFrame(index=x.index, columns=[' @ '.join(self.all_columns) ], dtype=np.float)
+        x_transformed = pd.DataFrame(index=x.index, columns=[" @ ".join(self.all_columns)], dtype=np.float)
 
-        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]), self._datas):
+        for masks, datas in zip(product(* [[0, 1] for _ in self.all_columns]),      self._datas):
 
-            sub_x = x[np.logical_and.reduce(
-                [x[column].isna() if  mask else
-                ~x[column].isna() for column, mask in       zip(self.all_columns, masks)])]
+            sub_x = x.loc[np.logical_and.reduce([x[column].isna() if mask else x[column].notna()
+                    for column, mask in zip(self.all_columns, masks)])]
 
+            # https://stackoverflow.com/
+            # questions/54759936/extension-dtypes-in-pandas-appear-to-have-a-bug-with-query
             for data in datas:
-
-                x_transformed.iloc[sub_x[np.logical_and.reduce(
-                    [ l_bound_operator[bucket.left](sub_x[column], bucket.lower) &
-                     r_bound_operator[bucket.right](sub_x[column], bucket.upper)
+                x_transformed.iloc[sub_x.loc[np.logical_and.reduce(
+                    [ l_bound_operator[bucket.left](sub_x[column].to_numpy(), bucket.lower) &
+                     r_bound_operator[bucket.right](sub_x[column].to_numpy(), bucket.upper)
                     for column, bucket in data["Bucket"].items()])].index, :] = data["WoE"]
 
         return x_transformed
@@ -236,23 +238,23 @@ class SplitMixND(BaseEstimator, TransformerMixin):
 
         return node
 
-    def build_table(self ):
-        if self._table is             not None:
+    def build_table(self):
+        if self._table is not None:
             return self._table
 
         self._table = pd.DataFrame.from_records(chain.from_iterable(                      self._datas))
 
-        self._table["Column"] = self._table["Bucket"].apply(lambda element: ' @ '.join(element.keys()))
-        self._table["Bucket"] = self._table["Bucket"].apply(lambda element: ' @ '.join(
+        self._table["Column"] = self._table["Bucket"].apply(lambda element: " @ ".join(element.keys()))
+        self._table["Bucket"] = self._table["Bucket"].apply(lambda element: " @ ".join(
             [self._str_bucket(column, bucket) for column, bucket in element.items()] ))
 
         self._table = pd.concat([self._table, pd.DataFrame([[
-            "ALL", "ALL",
+            " @ ".join(self.all_columns), "ALL",
             self._table["CntPositive"].sum(),
             self._table["CntNegative"].sum(),
             self._table["PctPositive"].sum(),
             self._table["PctNegative"].sum(),
-            '-', self._table["IvS"].sum()]],
+            " - ",  self._table["IvS"].sum()]],
             columns=["Column", "Bucket", "CntPositive", "CntNegative", "PctPositive", "PctNegative",
                      "WoE", "IvS"])])
 
@@ -260,21 +262,36 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             columns=["Column", "Bucket", "CntPositive", "CntNegative", "PctPositive", "PctNegative",
                      "WoE", "IvS"])
 
+        self._table = self._table.reset_index(drop=True)
+
         return self._table
+
+    def build_image(self):
+        if self._image is not None:
+            return self._image
+
+        source = self.build_table()
+
+        self._image = alt.Chart(source).mark_bar().encode(
+            x=   "WoE:Q",
+            y="Bucket:N",
+            color=alt.condition(
+                alt.datum.Bucket ==    "[MISSING]",
+                alt.value("orange"),  # [MISSING]
+                alt.value("purple"),
+            )
+        )
+
+        return self._image
 
     def _str_bucket(self, column, bucket):
         if bucket.lower == bucket.upper == NAN:
             return "[MISSING]"
 
         return (
-            to_string(bucket, sep=', ', conv=lambda element: f"{element:.6f}")  if  column  in self.num_columns
+            to_string(bucket, sep=", ", conv=lambda element: f"{element:.6f}")  if  column  in self.num_columns
             else str([cat for cat, woe in self.cat_encoder.column_woe_lookup[column].items() if woe in bucket])
         )
-
-    def get_feature_names_out(self, name):
-        return f"WOE({', '.join(self.all_columns)})"
-
-
 
 
 

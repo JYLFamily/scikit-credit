@@ -14,14 +14,13 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class SelectBins(BaseSelect):
-    def __init__(self,   keep_columns, date_columns):
-        super().__init__(keep_columns, date_columns)
+class SelectBINS(BaseSelect):
+    def __init__(self,   keep_columns, date_columns, nthread, verbose):
+        super(SelectBINS, self).__init__(
+                         keep_columns, date_columns, nthread, verbose)
 
     def fit(self, x, y=None):
-        self.feature_columns = np.array(
-                   [col for col in x.columns if col not in self.keep_columns and col not in self.date_columns])
-        self.feature_support = np.zeros(self.feature_columns.shape[0], dtype=bool)
+        super(SelectBINS, self).fit(x, y)
 
         intercept   = np.log(y.sum() / (y.shape[0] - y.sum()))
         coefficient = 1
@@ -34,7 +33,8 @@ class SelectBins(BaseSelect):
                     abs(logit_res.params[x_in.name] - coefficient) <= 1e-2)
 
         self.feature_support = np.array(
-            Parallel(n_jobs=-1,  verbose=20)([delayed(_fit)(x[column], y) for column in self.feature_columns]))
+            Parallel(n_jobs=self.nthread, verbose=self.verbose)(
+                [delayed(_fit)(x[column], y) for column in self.feature_columns]))
 
         return self
 
