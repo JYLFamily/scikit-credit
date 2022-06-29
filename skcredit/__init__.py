@@ -6,7 +6,7 @@ from skcredit.feature_discrete import   WoEEncoder
 
 from skcredit.feature_selector import   BaseSelect
 from skcredit.feature_selector import   SelectBINS
-from skcredit.feature_selector import   SelectCMIN
+from skcredit.feature_selector import   SelectCMIM
 
 from skcredit.linear_model     import LMClassifier
 from skcredit.linear_model     import LMCreditcard
@@ -19,7 +19,7 @@ __all__ = [
 
     "BaseSelect"  ,
     "SelectBINS"  ,
-    "SelectCMIN"  ,
+    "SelectCMIM"  ,
 
     "LMClassifier",
     "LMCreditcard",

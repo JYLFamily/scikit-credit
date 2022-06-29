@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +148,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="SelectCMIN (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="SelectCMIM" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -156,7 +160,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Administrator\PycharmProjects\scikit-credit\skcredit\feature_selector\SelectCMIM.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -255,7 +259,7 @@
         <item itemvalue="Python.CXDiscrete (1)" />
         <item itemvalue="Python.SplitMixND" />
         <item itemvalue="Python.bucketer_tools" />
-        <item itemvalue="Python.SelectCMIN (1)" />
+        <item itemvalue="Python.SelectCMIM" />
       </list>
     </recent_temporary>
   </component>
@@ -381,13 +385,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00102" summary="init commit">
-      <created>1632289333045</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1632289333045</updated>
     </task>
     <task id="LOCAL-00103" summary="init commit">
       <created>1632357953032</created>
@@ -725,7 +722,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656406061725</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="init commit">
+      <created>1656406231725</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1656406231725</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

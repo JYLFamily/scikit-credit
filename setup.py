@@ -14,12 +14,13 @@ setuptools.setup(
     url="https://github.com/JYLFamily/scikit-credit",
     packages=setuptools.find_packages(),
     install_requires=[
-        "numpy",
-        "joblib",
-        "pandas",
-        "scikit-learn",
+        "numpy"  ,
+        "altair" ,
+        "joblib" ,
+        "pandas" ,
         "portion",
-        "statsmodels"
+        "statsmodels" ,
+        "scikit-learn",
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7" ,

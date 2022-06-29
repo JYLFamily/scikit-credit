@@ -60,7 +60,7 @@ def stepwises(x, y, feature_columns, feature_subsets):
                 feature_columns - feature_subsets
         )
 
-        if      include_feature is None or curr_ks <= best_ks:
+        if      include_feature is None or curr_ks < best_ks:
             break
         else:
             best_ks =     curr_ks
@@ -73,7 +73,7 @@ def stepwises(x, y, feature_columns, feature_subsets):
                 feature_subsets
             )
 
-            if exclude_feature is None or curr_ks <= best_ks:
+            if exclude_feature is None or curr_ks < best_ks:
                 break
             else:
                 best_ks = curr_ks
