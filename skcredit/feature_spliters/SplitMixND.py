@@ -14,7 +14,7 @@ from portion import open   as  oo
 from dataclasses import dataclass
 from portion import openclosed as oc
 from sklearn.base   import BaseEstimator,  TransformerMixin
-from skcredit.feature_discrete.WoEEncoder import WoEEncoder
+from skcredit.feature_spliters.WoEEncoder import WoEEncoder
 np.random.seed(7)
 pd.options.display.max_rows    = 999
 pd.options.display.max_columns = 999
@@ -276,8 +276,8 @@ class SplitMixND(BaseEstimator, TransformerMixin):
             x=   "WoE:Q",
             y="Bucket:N",
             color=alt.condition(
-                alt.datum.Bucket ==    "[MISSING]",
-                alt.value("orange"),  # [MISSING]
+                alt.datum.Bucket == "[MISSING]",
+                alt.value("orange"),
                 alt.value("purple"),
             )
         )

@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d936baf1-a629-40d8-94f4-c1095a2589d6" name="Default Changelist" comment="init commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/skcredit/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/SelectCMIM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_selector/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/linear_model/LMClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_spliters/CXSpliters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/SplitMixND.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_spliters/SplitMixND.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/WoEEncoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_spliters/WoEEncoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/feature_discrete/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/feature_spliters/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skcredit/tools/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/skcredit/tools/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +107,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.LMClassifier">
-    <configuration name="CXDiscrete (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="CXSpliters" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="scikit-credit" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -118,7 +119,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/skcredit/feature_discrete/CXDiscrete.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Administrator\PycharmProjects\scikit-credit\skcredit\feature_discrete\CXSpliters.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -256,7 +257,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.LMClassifier" />
-        <item itemvalue="Python.CXDiscrete (1)" />
+        <item itemvalue="Python.CXSpliters" />
         <item itemvalue="Python.SplitMixND" />
         <item itemvalue="Python.bucketer_tools" />
         <item itemvalue="Python.SelectCMIM" />
@@ -385,13 +386,6 @@
       <workItem from="1632277029725" duration="250000" />
       <workItem from="1632277635480" duration="15231000" />
       <workItem from="1633930702802" duration="548000" />
-    </task>
-    <task id="LOCAL-00103" summary="init commit">
-      <created>1632357953032</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1632357953032</updated>
     </task>
     <task id="LOCAL-00104" summary="init commit">
       <created>1632358067898</created>
@@ -729,7 +723,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656406231725</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="init commit">
+      <created>1656472435106</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1656472435106</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

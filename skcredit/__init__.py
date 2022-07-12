@@ -1,8 +1,8 @@
 # coding:utf-8
 
-from skcredit.feature_discrete import   CXDiscrete
-from skcredit.feature_discrete import   SplitMixND
-from skcredit.feature_discrete import   WoEEncoder
+from skcredit.feature_spliters import   CXSpliters
+from skcredit.feature_spliters import   SplitMixND
+from skcredit.feature_spliters import   WoEEncoder
 
 from skcredit.feature_selector import   BaseSelect
 from skcredit.feature_selector import   SelectBINS
@@ -12,8 +12,7 @@ from skcredit.linear_model     import LMClassifier
 from skcredit.linear_model     import LMCreditcard
 
 __all__ = [
-    "CXDiscrete"  ,
-    "CXDiscrete"  ,
+    "CXSpliters"  ,
     "SplitMixND"  ,
     "WoEEncoder"  ,
 

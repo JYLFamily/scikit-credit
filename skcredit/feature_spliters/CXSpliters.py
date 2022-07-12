@@ -16,7 +16,7 @@ pd.set_option("display.unicode.ambiguous_as_wide", True)
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
 
-class CXDiscrete(BaseEstimator,  TransformerMixin):
+class CXSpliters(BaseEstimator,  TransformerMixin):
     def __init__(self, keep_columns, date_columns, transformers, iv_threshold, nthread, verbose):
         self.keep_columns = keep_columns
         self.date_columns = date_columns
